@@ -40,3 +40,4 @@ yarn-error.log*
 .production
 .sentryclirc
 .env
+package-lock.json
