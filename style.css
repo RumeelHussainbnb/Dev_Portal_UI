@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.wallet-multi-btn {
+  margin-left: 6px;
+  /*background-color: #10b981 !important;*/
+  font-size: 15px;
+}
+
+.wallet-disconnect-btn {
+  background-color: inherit !important;
+  color: #6b7280 !important;
+  margin-left: -5px;
+}
+
+pre[class*='language-'] {
+  font-size: 0.9em;
+}
+
+.custom-Modal{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50% , -50%);
+  width: 480px;
+  overflow-y: auto;
+  border: 1px solid rgb(230, 232, 234);
+  border-radius: 8px;
+  background: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: column;
+  -webkit-box-pack: start;
+  justify-content: center;
+  -webkit-box-align: stretch;
+  align-items: center;
+  box-shadow: rgb(11 14 17 / 8%) 0px 0px 16px;
+  overflow: hidden;
+  max-height: 400px;
+  height: 100%;
+  max-width: 31.25em;
+  padding: 30px;
+}
+
+.modalWrapper{
+  position: relative;
+}
+
+.closeModal{
+  position: absolute;
+  right: 25px;
+  top: 25px;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.modalbackcolor{
+  box-sizing: border-box;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0px;
+  left: 0px;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  background:  transparent;
+  filter: none;
+  backdrop-filter: blur(0);
+}
+
+.modalbackcolor::after{
+  content: "";
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0px;
+  left: 0px;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+ background: black !important; 
+ opacity: 0.05;
+  z-index: -1;
+}
+
+.webLink{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.toolIcon{
+  align-items: center;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: box-shadow 0.2s ease 0s;
+  background: rgb(255, 255, 255);
+  }

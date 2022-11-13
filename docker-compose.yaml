@@ -1,0 +1,27 @@
+version: "3.5"
+services:
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+        - ./.docker/mongo_data:/data/db
+  frontend:
+    image: rumeelhussain12/frontend:latest
+    ports:
+      - "8000:8000"
+    environment:
+      BACKEND_ADDR: backend:8001
+    restart: always
+  backend:
+    image: rumeelhussain12/backend:latest
+    ports:
+      - "3001:3001"
+    environment:
+      MONGO_DB_ADDR: mongo:27017
+    restart: always
+

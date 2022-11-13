@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://bnbdev.community
+
+# Sitemaps
+Sitemap: https://bnbdev.community/sitemap.xml
