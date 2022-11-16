@@ -1,51 +1,48 @@
-import fetcher from "../../../utils/fetcher";
-import findTags from "../../../utils/find-tags";
-import defineTitle from "../../../utils/define-title";
-import dynamic from "next/dynamic";
-import { Container } from "../../../components/layout";
-import { loadContentTypes } from "../../../lib/load-content-types";
-import { loadPlaylist } from "../../../lib/load-playlist";
-import { loadContent } from "../../../lib/load-content";
+import { useRouter } from 'next/router';
 
-const PublicationsComponent = dynamic(() =>
-  import("../../../components/publications")
-);
+import fetcher from '../../../utils/fetcher';
+import findTags from '../../../utils/find-tags';
+import defineTitle from '../../../utils/define-title';
+import dynamic from 'next/dynamic';
+import { Container } from '../../../components/layout';
+import { loadContentTypes } from '../../../lib/load-content-types';
+import { loadPlaylist } from '../../../lib/load-playlist';
+import { loadContent } from '../../../lib/load-content';
+
+const PublicationsComponent = dynamic(() => import('../../../components/publications'));
 
 export async function getStaticPaths() {
-
   const contentTypes = await loadContentTypes();
 
   const playlists = await loadPlaylist();
 
   const paths = [];
 
-  contentTypes.forEach((type) => {
+  contentTypes.forEach(type => {
     paths.push({
       params: {
-        type,
-      },
+        type
+      }
     });
   });
 
-
-  playlists.forEach((playlist) => {
+  playlists.forEach(playlist => {
     paths.push({
       params: {
-        type: playlist._id,
-      },
+        type: playlist._id
+      }
     });
   });
 
   // All missing paths are going to be server-side rendered and cached
-  return { paths, fallback: "blocking" };
+  return { paths, fallback: 'blocking' };
 }
 
 export async function getStaticProps(context) {
-
   const data = await loadContent(context);
   const contentTypes = await loadContentTypes();
 
-  let contentType = "";
+  let contentType = '';
 
   // Content Type definition
   for (let i = 0; i < contentTypes.length; i++) {
@@ -54,7 +51,7 @@ export async function getStaticProps(context) {
       break;
     }
 
-    contentType = "playlist";
+    contentType = 'playlist';
   }
 
   const title = defineTitle(contentType, data);
@@ -62,21 +59,27 @@ export async function getStaticProps(context) {
 
   return {
     props: { data, title, contentType, tags },
-    revalidate: 60,
+    revalidate: 60
   };
 }
 
 export default function Publications({ data, title, contentType, tags }) {
+  const router = useRouter();
+  const { playlistTitle } = router.query;
+
   // Page description definition
   let pageDescription =
     "Learn to Develop using BNBChain. Tutorials, SDK's, Frameworks, Developer Tools, Security, Scaffolds, and Projects implementations";
-  if (contentType === "playlist") pageDescription = title;
+  if (contentType === 'playlist') {
+    pageDescription = title;
+    title = playlistTitle;
+  }
 
   const metaTags = {
     title: `BNBChainDev - ${title}`,
     description: pageDescription,
     url: `${process.env.NEXT_PUBLIC_API_ENDPOINT}/library/${contentType}`,
-    shouldIndex: true,
+    shouldIndex: true
   };
 
   return (

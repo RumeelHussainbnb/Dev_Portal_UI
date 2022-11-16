@@ -14,7 +14,7 @@ import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { memo, useEffect, useState } from 'react';
 import useUser from '../../hooks/useUser';
-import fetch from "../../utils/fetcher";
+import fetch from '../../utils/fetcher';
 import { useAppDispatch, useAppState } from '../../context/AppContext';
 
 const navigation = [
@@ -42,16 +42,16 @@ const navigation = [
     href: 'https://bugcrowd.com/binance',
     icon: ClipboardCheckIcon,
     disabled: false,
-    rel: "noreferrer",
-    target: "_blank"
+    rel: 'noreferrer',
+    target: '_blank'
   },
   {
     name: 'Jobs',
     href: 'https://www.bnbchain.org/en/careers',
     icon: BriefcaseIcon,
     disabled: false,
-    rel: "noreferrer",
-    target: "_blank"
+    rel: 'noreferrer',
+    target: '_blank'
   }
 ];
 
@@ -74,20 +74,19 @@ const special = [
   {
     name: 'BNB Chain Forum',
     href: 'https://forum.bnbchain.org/',
-    disabled: false,
+    disabled: false
   },
   {
     name: 'Explore Dapps',
     href: 'https://dappbay.bnbchain.org/',
     disabled: false
-  },
-
+  }
 ];
 
 const specialLists = [
   {
     name: 'Getting Started',
-    href: 'https://docs.bnbchain.org/docs/getting-started/',
+    href: 'https://docs.bnbchain.org/docs/getting-started/'
     /*'/library/list/started'*/
   },
   {
@@ -129,7 +128,7 @@ const categories = [
   },
   {
     name: 'Tools',
-    href: 'https://nodereal.io/bnb-dev-tools' 
+    href: 'https://nodereal.io/bnb-dev-tools'
   },
   {
     name: 'Implementations',
@@ -166,11 +165,15 @@ const categories = [
   {
     name: 'Post tweet',
     href: '/library/admin/tweet/post'
+  },
+  {
+    name: 'Add Playlist',
+    href: '/library/admin/playlist/post'
   }
 ];
 
 const courses = [
- /* {
+  /* {
     name: 'Intro to BNBChain',
     href: '/course'
   },*/
@@ -184,7 +187,6 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-
 function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
   const [current, setCurrent] = useState('');
   const [isAdmin, setisAdmin] = useState(false);
@@ -193,29 +195,28 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
   const appState = useAppState();
   const appDispatch = useAppDispatch();
 
-
-
   useEffect(() => {
-
     const fetchData = async () => {
       // const data = await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/user/${window.sessionStorage.getItem('PublicKey')}`);
-      let key = localStorage.getItem("PublicKey")
-      const data = await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/user/${appState.publicKey ? appState.publicKey : key}`);
-      const admin = data?.Role === "admin" ? true : false;
+      let key = localStorage.getItem('PublicKey');
+      const data = await fetch(
+        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/user/${
+          appState.publicKey ? appState.publicKey : key
+        }`
+      );
+      const admin = data?.Role === 'admin' ? true : false;
       await appDispatch({ type: 'handleAdminMode', payload: admin });
-      localStorage.setItem("handleAdminMode", admin);
+      localStorage.setItem('handleAdminMode', admin);
       setisAdmin(admin);
-    }
+    };
 
-    fetchData().catch("Catch error ", console.error);
+    fetchData().catch('Catch error ', console.error);
     if (window && window.sessionStorage.getItem('main-navigation')) {
       setCurrent(window.sessionStorage.getItem('main-navigation'));
     } else {
       setCurrent('Library');
     }
-    setButtonsVisible(showButton)
-
-
+    setButtonsVisible(showButton);
   }, [showButton]);
 
   return (
@@ -239,7 +240,6 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
                   }}
                   aria-current={item.current ? 'page' : undefined}
                   disabled={item.disabled}
-
                 >
                   <item.icon
                     className={classNames(
@@ -368,7 +368,14 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
           </p>
           <div className="mt-2 space-y-1" aria-labelledby="communities-headline">
             {categories.map(item => {
-              if ((item.name === 'Submitted' || item.name === 'Inactive' || item.name === "Post NewsLetter" || item.name === "Post tweet") && appState.isAdminMode == false) {
+              if (
+                (item.name === 'Submitted' ||
+                  item.name === 'Inactive' ||
+                  item.name === 'Post NewsLetter' ||
+                  item.name === 'Post tweet' ||
+                  item.name === 'Add Playlist') &&
+                appState.isAdminMode == false
+              ) {
                 return;
               }
 
@@ -419,7 +426,7 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
 }
 
 NavSidebar.defaultProps = {
-  closeMobileMenu: () => { }
+  closeMobileMenu: () => {}
 };
 
 NavSidebar.prototype = {

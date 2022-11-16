@@ -84,7 +84,7 @@ function Publications({
                 <CardRegular
                   key={content.SK}
                   content={content}
-                  mode={appState.editMode == "true" && cardMode !== 'search' ? 'edit' : cardMode}
+                  mode={appState.editMode == 'true' && cardMode !== 'search' ? 'edit' : cardMode}
                   editContent={editContent}
                   closeSearch={closeSearch}
                 />

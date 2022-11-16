@@ -1,38 +1,31 @@
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
-import draftToHtml from 'draftjs-to-html';
-import { EditorState, convertToRaw } from 'draft-js';
+import { useRouter } from 'next/router';
 
-import { Container } from '../../../../components/layout';
-import EditorComponent from '../../../../components/Editor/Editor';
+import { Container } from '../../../../../components/layout';
 
-const NotificationSuccess = dynamic(() => import('../../../../components/notifications/success'));
-const NotificationError = dynamic(() => import('../../../../components/notifications/error'));
+const NotificationSuccess = dynamic(() =>
+  import('../../../../../components/notifications/success')
+);
+const NotificationError = dynamic(() => import('../../../../../components/notifications/error'));
 
-const Submit = metaTags => {
-  const [editor, setEditor] = useState(() => EditorState.createEmpty());
-  // const [convertedContent, setConvertedContent] = useState('');
+const PlaylistForm = () => {
+  const router = useRouter();
+  const { id } = router.query;
   const [data, setData] = useState({
     Title: '',
     Author: '',
-    //        Img: "",
-    ContentMarkdown: '',
-    Description: ''
+    Description: '',
+    Url: ''
   });
   const [notifySuccess, setNotifySuccess] = useState(false);
   const [notifyError, setNotifyError] = useState(false);
 
-  const createNewsletter = async event => {
+  const createPlaylist = async event => {
     event.preventDefault();
     const key = localStorage.getItem('PublicKey');
-    const formData = new FormData();
-    formData.append('Title', data.Title);
-    formData.append('Author', data.Author);
-    //        formData.append("Img", data.Img);
-    formData.append('ContentMarkdown', data.ContentMarkdown);
-    formData.append('Description', data.Description);
 
-    await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/content/bnb/newsletters`, {
+    await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/content`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -41,53 +34,44 @@ const Submit = metaTags => {
       body: JSON.stringify({
         Title: data.Title,
         Author: data.Author,
-        //                "Img": "https://binance.ghost.io/content/images/2022/10/wide-2--7-.jpg",
-        ContentMarkdown: data.ContentMarkdown,
-        Description: data.Description
+        Description: data.Description,
+        Url: data.Url,
+        PlaylistID: id,
+        Tags: [],
+        SpecialTag: '0',
+        Vertical: 'bnb',
+        List: '',
+        ContentType: 'playlist'
       })
     })
       .then(res => res.json())
       .then(data => {
         if (data.success === true) {
           //Empty editor state
-          setEditor(() => EditorState.createEmpty());
+
           setData({
             Title: '',
             Author: '',
-            //                        Img: "",
-            ContentMarkdown: '',
-            Description: ''
+            Description: '',
+            Url: ''
           });
           setNotifySuccess(true);
+          setTimeout(() => {
+            router.back();
+          }, '1500');
         } else {
           //Empty editor state
-          setEditor(() => EditorState.createEmpty());
+
           setData({
             Title: '',
             Author: '',
-            //                        Img: "",
-            ContentMarkdown: '',
-            Description: ''
+            Description: '',
+            Url: ''
           });
 
           setNotifyError(true);
         }
       });
-  };
-
-  //handle editor state change
-  const handleEditorChange = state => {
-    setEditor(state);
-    convertContentToHTML();
-  };
-
-  //convert editor raw data to html
-  const convertContentToHTML = () => {
-    let currentContentAsHTML = draftToHtml(convertToRaw(editor.getCurrentContent()));
-
-    // convertToHTML(editor.getCurrentContent());
-
-    setData({ ...data, ContentMarkdown: currentContentAsHTML });
   };
 
   return (
@@ -96,7 +80,7 @@ const Submit = metaTags => {
         <div className="relative overflow-hidden bg-white py-16 px-4 dark:bg-gray-800 sm:px-6 lg:px-8 lg:py-14">
           <div className=" mx-auto max-w-3xl">
             <div className="prose prose mx-auto max-w-max text-center prose-h1:mb-2 prose-p:text-lg dark:prose-invert">
-              <h1>Post newsletter</h1>
+              <h1>Add a video to playlist</h1>
             </div>
 
             <div className="mt-12">
@@ -104,7 +88,7 @@ const Submit = metaTags => {
                 action="#"
                 method="POST"
                 className="grid grid-cols-8 gap-y-6 gap-x-8"
-                onSubmit={createNewsletter}
+                onSubmit={createPlaylist}
               >
                 <div className="col-span-12 sm:col-span-4 lg:col-span-6">
                   <label
@@ -145,33 +129,31 @@ const Submit = metaTags => {
                     />
                   </div>
                 </div>
-
-                {/* <div className="col-span-12 sm:col-span-4 lg:col-span-6">
+                <div className="col-span-12 sm:col-span-4 lg:col-span-12">
                   <label
-                    htmlFor="author-name"
+                    htmlFor="content_markdown"
                     className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                   >
-                    Image
+                    Url
                   </label>
                   <div className="mt-1">
                     <input
-                      type="file"
-                      name="author-image"
-                      id="author-image"
-                      value={data.Img}
-                      onChange={e => setData({ ...data, Img: e.target.files[0] })}
-                      className="block w-full rounded-md border border-gray-300 bg-white py-3 px-4 shadow-sm focus:border-yellow-500 focus:outline-none focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
+                      type="text"
+                      name="author-name"
+                      id="author-name"
+                      value={data.Url}
+                      autoComplete="given-name"
+                      onChange={e => setData({ ...data, Url: e.target.value })}
+                      className="block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
                     />
                   </div>
-                  <p className="mt-1 text-sm text-gray-500 text-gray-500">Upload image</p>
-                </div> */}
-
+                </div>
                 <div className="col-span-12 sm:col-span-4 lg:col-span-12">
                   <label
                     htmlFor="long_description"
                     className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                   >
-                    Short Description
+                    Description
                   </label>
                   <div className="mt-1">
                     <textarea
@@ -183,33 +165,6 @@ const Submit = metaTags => {
                       onChange={e => setData({ ...data, Description: e.target.value })}
                       className="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
                     />
-                    <p className="mt-2 text-sm text-gray-500 dark:text-gray-500">
-                      Short description about the content. ~2 to 3 lines
-                    </p>
-                  </div>
-                </div>
-
-                <div className="col-span-12 sm:col-span-4 lg:col-span-12">
-                  <label
-                    htmlFor="content_markdown"
-                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-                  >
-                    Long Description
-                  </label>
-                  <div className="mt-1">
-                    <EditorComponent editorState={editor} EditorChange={handleEditorChange} />
-                    {/* <textarea
-                      id="content_markdown"
-                      name="content_markdown"
-                      required
-                      rows={4}
-                      value={data.ContentMarkdown}
-                      onChange={e => setData({ ...data, ContentMarkdown: e.target.value })}
-                      className="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
-                    /> */}
-                    <p className="mt-2 text-sm text-gray-500 dark:text-gray-500">
-                      Brief description about the content. ~20000 characters
-                    </p>
                   </div>
                 </div>
 
@@ -255,7 +210,7 @@ export default function ContentAdmin({}) {
 
   return (
     <Container metaTags={metaTags}>
-      <Submit metaTags={metaTags} />
+      <PlaylistForm />
     </Container>
   );
 }
