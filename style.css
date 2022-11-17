@@ -102,3 +102,31 @@ pre[class*='language-'] {
   transition: box-shadow 0.2s ease 0s;
   background: rgb(255, 255, 255);
   }
+
+  /* Editor styling for headings */
+  @layer base {
+    h1 {
+      @apply text-4xl;
+      @apply font-bold;
+    }
+    h2 {
+      @apply text-3xl;
+      @apply font-bold;
+    }
+    h3 {
+      @apply text-2xl;
+      @apply font-bold;
+    }
+    h4 {
+      @apply text-xl;
+      @apply font-semibold;
+    }
+    h5 {
+      @apply text-lg; /*or text-lg */
+      @apply font-semibold;
+    }
+    h6 {
+      @apply text-sm;
+      @apply font-semibold;
+    }
+  }

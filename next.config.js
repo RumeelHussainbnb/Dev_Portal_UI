@@ -1,12 +1,12 @@
 /**
  * @type {import('next').NextConfig}
  */
- const moduleExports = {
-  env:{
-    HOME_URL: process.env.SITE_URL,
+const moduleExports = {
+  env: {
+    HOME_URL: process.env.SITE_URL
   },
   swcMinify: true,
-  reactStrictMode: true,
+  reactStrictMode: false,
   images: {
     domains: [
       'cdn.hashnode.com',
@@ -46,7 +46,7 @@
       't.me',
       'bnbchain.org',
       'discord.com',
-      'corite.com',
+      'corite.com'
     ],
     formats: ['image/avif', 'image/webp']
   },
@@ -59,6 +59,5 @@
     ];
   }
 };
-
 
 module.exports = moduleExports;

@@ -1,7 +1,7 @@
-import { Fragment, useEffect, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import PropTypes from "prop-types";
-import ContentForm from "./index";
+import { Fragment, useEffect, useState } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
+import PropTypes from 'prop-types';
+import ContentForm from './index';
 
 export default function Modal({ open, setOpen, content, positions }) {
   const [data, setData] = useState({});
@@ -20,7 +20,7 @@ export default function Modal({ open, setOpen, content, positions }) {
       ContentStatus: content.ContentStatus,
       SpecialTag: content.SpecialTag,
       Position: content.Position,
-      Lists: content.Lists,
+      Lists: content.Lists
     });
   }, [content]);
 
@@ -28,10 +28,10 @@ export default function Modal({ open, setOpen, content, positions }) {
     <Transition.Root show={open} as={Fragment}>
       <Dialog
         as="div"
-        className="fixed z-10 inset-0 overflow-y-auto"
+        className="fixed inset-0 z-10 overflow-y-auto"
         onClose={() => setOpen(false)}
       >
-        <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div className="flex min-h-screen items-end justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0">
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -45,10 +45,7 @@ export default function Modal({ open, setOpen, content, positions }) {
           </Transition.Child>
 
           {/* This element is to trick the browser into centering the modal contents. */}
-          <span
-            className="hidden sm:inline-block sm:align-middle sm:h-screen"
-            aria-hidden="true"
-          >
+          <span className="hidden sm:inline-block sm:h-screen sm:align-middle" aria-hidden="true">
             &#8203;
           </span>
           <Transition.Child
@@ -60,7 +57,7 @@ export default function Modal({ open, setOpen, content, positions }) {
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <div className="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle max-w-4xl sm:p-6">
+            <div className="inline-block max-w-4xl transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all dark:bg-gray-800 sm:my-8 sm:p-6 sm:align-middle">
               <ContentForm
                 type="edit"
                 setOpen={setOpen}
@@ -80,5 +77,5 @@ Modal.propTypes = {
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,
   content: PropTypes.object.isRequired,
-  positions: PropTypes.array,
+  positions: PropTypes.array
 };
