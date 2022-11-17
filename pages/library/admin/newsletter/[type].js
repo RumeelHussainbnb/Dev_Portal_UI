@@ -196,7 +196,7 @@ const Submit = metaTags => {
                   >
                     Long Description
                   </label>
-                  <div className="mt-1">
+                  <div className="mt-1 ">
                     <EditorComponent editorState={editor} EditorChange={handleEditorChange} />
                     {/* <textarea
                       id="content_markdown"
