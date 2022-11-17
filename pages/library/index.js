@@ -1,20 +1,20 @@
 import dynamic from 'next/dynamic';
 import fetch from '../../utils/fetcher';
 import { Container } from '../../components/layout';
-import { loadPinnedTweet } from "../../lib/load-pinned-tweet";
-import { loadNewsletter } from "../../lib/load-newsletter";
-import { loadSpecialTagHot } from "../../lib/load-special-tag-hot";
-import { loadSpecialTagNew } from "../../lib/load-special-tag-new";
+import { loadPinnedTweet } from '../../lib/load-pinned-tweet';
+import { loadNewsletter } from '../../lib/load-newsletter';
+import { loadSpecialTagHot } from '../../lib/load-special-tag-hot';
+import { loadSpecialTagNew } from '../../lib/load-special-tag-new';
 
 const Sidebar = dynamic(() => import('../../components/sidebar'));
 const Tabs = dynamic(() => import('../../components/dashboard/tabs'));
 
 export async function getStaticProps() {
   const newContent = await loadSpecialTagNew();
-  const trendingContent = await loadSpecialTagHot()
+  const trendingContent = await loadSpecialTagHot();
   const tweets = await loadPinnedTweet();
 
-  const latestNewsletter = await loadNewsletter()
+  const latestNewsletter = await loadNewsletter();
 
   return {
     props: { newContent, trendingContent, tweets, latestNewsletter: latestNewsletter[0] },

@@ -5,9 +5,12 @@ function CourseBanner() {
     <div className=" mx-auto mt-10 max-w-2xl rounded-xl bg-yellow-500 dark:bg-yellow-500">
       <div className="mx-auto py-3 px-3 sm:px-5 lg:px-6">
         <div className="pr-16 sm:px-16 sm:text-center">
-          <p className="prose font-medium text-red-900 dark:text-red-50">
-            <span className="">
-              The course is being created by
+          <p className="prose font-bold text-white dark:text-gray-600 text-xl">
+            Coming Soon
+          </p>
+          {/*<span className="font-bold no-underline hover:underline">
+              
+              {/*The course is being created by
               <a
                 href="https:docs.bnbchain.org"
                 target="_blank"
@@ -29,8 +32,7 @@ function CourseBanner() {
                 {' '}
                 contribute.
               </a>
-            </span>
-          </p>
+            </span>*/}
         </div>
       </div>
     </div>

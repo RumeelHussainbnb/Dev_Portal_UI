@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://bnbdev.community
+Host: https://staging.bnbdev.community
 
 # Sitemaps
-Sitemap: https://bnbdev.community/sitemap.xml
+Sitemap: https://staging.bnbdev.community/sitemap.xml
