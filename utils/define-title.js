@@ -20,6 +20,8 @@ export default function defineTitle(contentType, data = []) {
     return "SDKs & Frameworks";
   } else if (contentType === "ama") {
     return "AMA";
+  }else if (contentType === "projects") {
+    return "Dapp Development";
   }else {
     // Capitalize the first char
     return contentType.charAt(0).toUpperCase() + contentType.slice(1);

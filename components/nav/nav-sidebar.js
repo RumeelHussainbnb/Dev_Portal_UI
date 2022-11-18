@@ -112,7 +112,7 @@ const categories = [
   },
   {
     name: 'AMAs',
-    href: 'https://www.bsc.news/category/ama'
+    href: 'library/ama' /*'https://www.bsc.news/category/ama'*/
   },
   {
     name: 'Dapp Development',
@@ -128,7 +128,9 @@ const categories = [
   },
   {
     name: 'Tools',
-    href: 'https://nodereal.io/bnb-dev-tools'
+    href: '/tools', /*'https://nodereal.io/bnb-dev-tools' */
+    rel: "noreferrer",
+    target: "_blank"
   },
   {
     name: 'Implementations',
