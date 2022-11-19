@@ -91,11 +91,11 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
                             reviewed before deciding to publish them to the site.`}
           </p>
         </div>
-        {/* {type === "edit" && (
+        {type === 'edit' && (
           <div className="mx-auto max-w-max">
             <Status data={data} setData={setData} />
           </div>
-        )} */}
+        )}
 
         <div className="mt-12">
           <form

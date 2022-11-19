@@ -2,7 +2,7 @@ import { ChevronRightIcon, FolderIcon, VideoCameraIcon, PlusIcon } from '@heroic
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 
-export default function Playlists({ data }) {
+export default function Playlists({ data, mode }) {
   return (
     <>
       {/* Mobile */}
@@ -48,9 +48,12 @@ export default function Playlists({ data }) {
                 <th className="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300">
                   <span className="lg:pl-2">Name</span>
                 </th>
-                <th className="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300">
-                  <span className="lg:pl-2">Add Video</span>
-                </th>
+                {mode.editMode == 'true' && (
+                  <th className="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300">
+                    <span className="lg:pl-2">Add Video</span>
+                  </th>
+                )}
+
                 <th className="hidden border-b border-gray-200 bg-gray-50 px-3 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 md:table-cell">
                   Platform
                 </th>
@@ -81,14 +84,15 @@ export default function Playlists({ data }) {
                       </Link>
                     </div>
                   </td>
-
-                  <td className="hidden whitespace-nowrap px-12 py-3 text-sm text-gray-500 dark:text-gray-300 md:table-cell">
-                    <Link href={`/library/admin/playlist/video/${playlist._id}`} passHref>
-                      <span className="flex  cursor-pointer items-center">
-                        <PlusIcon className="h-6 w-6 text-gray-500 " aria-hidden="true" />
-                      </span>
-                    </Link>
-                  </td>
+                  {mode.editMode == 'true' && (
+                    <td className="hidden whitespace-nowrap px-12 py-3 text-sm text-gray-500 dark:text-gray-300 md:table-cell">
+                      <Link href={`/library/admin/playlist/video/${playlist._id}`} passHref>
+                        <span className="flex  cursor-pointer items-center">
+                          <PlusIcon className="h-6 w-6 text-gray-500 " aria-hidden="true" />
+                        </span>
+                      </Link>
+                    </td>
+                  )}
 
                   <td className="hidden whitespace-nowrap px-3 py-3 text-sm text-gray-500 dark:text-gray-300 md:table-cell">
                     <div className="flex items-center space-x-2">
