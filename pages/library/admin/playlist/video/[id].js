@@ -41,7 +41,8 @@ const PlaylistForm = () => {
         SpecialTag: '0',
         Vertical: 'bnb',
         List: '',
-        ContentType: 'playlist'
+        ContentType: 'playlist',
+        ContentStatus: 'active'
       })
     })
       .then(res => res.json())
