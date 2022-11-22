@@ -24,12 +24,15 @@ function classNames(...classes) {
 function CardRegular({ content, mode, editContent, closeSearch }) {
   const [isS3Audio, setIsS3Audio] = useState(false);
   const imageUrl = defineImage(content);
-
+  // console.log('imageUrl ==> ', imageUrl);
   const badgeUrl =
     mode === 'search'
       ? `/library/${content.ContentType}`
       : `/library/${content.ContentType}/filter?badge=${content.SpecialTag}`;
 
+  const myLoader = ({ src, width, quality }) => {
+    return `${src}`;
+  };
   function actionButton() {
     if (content.Url.includes('youtube')) {
       return (
@@ -106,6 +109,7 @@ function CardRegular({ content, mode, editContent, closeSearch }) {
               quality="100"
               placeholder="blur"
               blurDataURL={imageUrl}
+              loader={myLoader}
             />
           </a>
         </Link>
@@ -120,6 +124,7 @@ function CardRegular({ content, mode, editContent, closeSearch }) {
             quality="100"
             placeholder="blur"
             blurDataURL={imageUrl}
+            loader={myLoader}
           />
         </Link>
       )}

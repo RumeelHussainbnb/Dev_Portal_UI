@@ -46,7 +46,10 @@ const moduleExports = {
       't.me',
       'bnbchain.org',
       'discord.com',
-      'corite.com'
+      'corite.com',
+      'miro.medium.com',
+      'miro.medium.com/max',
+      'medium.com'
     ],
     formats: ['image/avif', 'image/webp']
   },
