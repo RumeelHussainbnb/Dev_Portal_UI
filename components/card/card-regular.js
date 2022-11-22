@@ -110,7 +110,7 @@ function CardRegular({ content, mode, editContent, closeSearch }) {
           </a>
         </Link>
       ) : (
-        <a href={content.Url} target="_blank" rel="noreferrer">
+        <Link href={`/library/${content.ContentType}/video/${content.SK}`} passHref>
           <Image
             className="cursor-pointer rounded-t-lg object-cover hover:opacity-90"
             src={imageUrl}
@@ -121,7 +121,7 @@ function CardRegular({ content, mode, editContent, closeSearch }) {
             placeholder="blur"
             blurDataURL={imageUrl}
           />
-        </a>
+        </Link>
       )}
 
       <div className="px-5 pt-5">
@@ -144,11 +144,11 @@ function CardRegular({ content, mode, editContent, closeSearch }) {
                   </a>
                 </Link>
               ) : (
-                <a href={content.Url} className="mr-2" target="_blank" rel="noreferrer">
+                <Link href={`/library/${content.ContentType}/video/${content.SK}`} passHref>
                   <p className="text-lg font-semibold text-gray-900 hover:text-yellow-500 dark:text-gray-200 dark:hover:text-yellow-600">
                     {content.Title}
                   </p>
-                </a>
+                </Link>
               )}
               {/*  Badge */}
               {content.ContentType !== 'newsletters' && (
