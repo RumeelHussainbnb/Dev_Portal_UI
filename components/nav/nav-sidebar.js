@@ -112,7 +112,7 @@ const categories = [
   },
   {
     name: 'AMAs',
-    href: 'library/ama' /*'https://www.bsc.news/category/ama'*/
+    href: '/library/ama' /*'https://www.bsc.news/category/ama'*/
   },
   {
     name: 'Dapp Development',

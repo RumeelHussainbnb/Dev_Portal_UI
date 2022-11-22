@@ -9,7 +9,7 @@ function CopyLink({ content }) {
   const [showNotification, setShowNotification] = useState(false);
 
   let url = '';
-  if (content.ContentType === 'Playlist') {
+  if (content.ContentType === 'playlist') {
     url = `${process.env.HOME_URL}/library/${content?.PlaylistID}/video/${content?.SK}`;
   } else if (content?.ContentType === 'newsletters') {
     url = `${process.env.HOME_URL}/newsletters/${content?.SK}`;

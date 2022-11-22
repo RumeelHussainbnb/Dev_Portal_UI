@@ -42,3 +42,5 @@ yarn-error.log*
 .env
 package-lock.json
 yarn.lock
+public/robots.txt
+public/*.xml
