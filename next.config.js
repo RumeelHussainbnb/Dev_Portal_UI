@@ -37,6 +37,7 @@ const moduleExports = {
       'www.crossmint.io',
       'binance.ghost.io',
       'docs.bnbchain.org',
+      'i3.ytimg.com',
       'lh1.googleusercontent.com',
       'lh2.googleusercontent.com',
       'lh3.googleusercontent.com',

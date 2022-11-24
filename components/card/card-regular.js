@@ -149,11 +149,9 @@ function CardRegular({ content, mode, editContent, closeSearch }) {
                   </a>
                 </Link>
               ) : (
-                <Link href={`/library/${content.ContentType}/video/${content.SK}`} passHref>
-                  <p className="text-lg font-semibold text-gray-900 hover:text-yellow-500 dark:text-gray-200 dark:hover:text-yellow-600">
+                <p className="text-lg font-semibold text-gray-900 dark:text-gray-200">
                     {content.Title}
                   </p>
-                </Link>
               )}
               {/*  Badge */}
               {content.ContentType !== 'newsletters' && (
@@ -172,11 +170,9 @@ function CardRegular({ content, mode, editContent, closeSearch }) {
             {/*  Author */}
             <div className="mb-2">
               {content.Author && (
-                <a href={content.Url} className="" rel="noreferrer" target="_blank">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-500">
-                    by {content.Author}
-                  </p>
-                </a>
+                <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-500">
+                by {content.Author}
+                </p>
               )}
             </div>
           </div>
