@@ -99,6 +99,29 @@ function Inputs({ data, setData, type, contentExist, setContentExist }) {
         )}
       </div>
 
+      {/* Preview Image Url */}
+      <div className="col-span-10">
+        <label htmlFor="url" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          Preview Image URL
+        </label>
+        <div className="mt-1">
+          <input
+            type="url"
+            name="url"
+            id="url"
+            //required
+            value={data.ImageUrl}
+            placeholder="https://www.example.com"
+            onChange={async e => {
+              setData({ ...data, ImageUrl: e.target.value });
+            }}
+            className={classNames(
+              'block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800'
+            )}
+          />
+        </div>
+      </div>
+
       {/* Description */}
       <div className="col-span-10">
         <label

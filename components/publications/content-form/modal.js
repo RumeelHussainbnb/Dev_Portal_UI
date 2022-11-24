@@ -14,6 +14,7 @@ export default function Modal({ open, setOpen, content, positions }) {
       Author: content.Author,
       Description: content.Description,
       Url: content.Url,
+      ImageUrl: content.Img,
       Vertical: content.Vertical,
       Tags: content.Tags,
       ContentType: content.ContentType,

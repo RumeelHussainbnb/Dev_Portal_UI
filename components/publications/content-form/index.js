@@ -44,6 +44,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
       Author: '',
       Description: '',
       Url: '',
+      ImageUrl: '',
       Vertical: 'bnb',
       Tags: [],
       ContentType: '',
