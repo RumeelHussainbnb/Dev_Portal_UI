@@ -66,7 +66,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
       headers: {
         'Content-type': 'application/json'
       },
-      body: JSON.stringify([{ ...data }])
+      body: JSON.stringify([{ ...data, Img: data.ImageUrl }])
     });
 
     // call preview mode
