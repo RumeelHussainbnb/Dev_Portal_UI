@@ -128,14 +128,14 @@ const categories = [
   },
   {
     name: 'Tools',
-    href: '/tools', /*'https://nodereal.io/bnb-dev-tools' */
-    rel: "noreferrer",
-    target: "_blank"
+    href: '/tools' /*'https://nodereal.io/bnb-dev-tools' */,
+    rel: 'noreferrer',
+    target: '_blank'
   },
-  {
-    name: 'Implementations',
-    href: '/library/implementations'
-  },
+  // {
+  //   name: 'Implementations',
+  //   href: '/library/implementations'
+  // },
   {
     name: 'Security',
     href: '/library/security'
