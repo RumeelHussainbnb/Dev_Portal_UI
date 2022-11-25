@@ -136,6 +136,7 @@ function Inputs({ data, setData, type, contentExist, setContentExist }) {
             required={type === 'submit'}
             name="description"
             rows={4}
+            maxLength={100}
             value={data.Description}
             onChange={e => setData({ ...data, Description: e.target.value })}
             className="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
