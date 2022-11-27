@@ -24,7 +24,7 @@ function classNames(...classes) {
 function CardRegular({ content, mode, editContent, closeSearch }) {
   const [isS3Audio, setIsS3Audio] = useState(false);
   const imageUrl = defineImage(content);
-  //console.log('content ==> ', content);
+  // console.log('content ==> ', content);
   const badgeUrl =
     mode === 'search'
       ? `/library/${content.ContentType}`
@@ -176,17 +176,18 @@ function CardRegular({ content, mode, editContent, closeSearch }) {
                 // </a>
               )}
               {/*  Badge */}
-              {content.ContentType !== 'newsletters' && (
-                <Link href={badgeUrl} passHref>
-                  <div className="cursor-pointer hover:opacity-80" onClick={() => closeSearch()}>
-                    {mode === 'search' ? (
-                      <Badge text={content.ContentType} />
-                    ) : (
-                      <>{content.SpecialTag !== '0' && <Badge text={content.SpecialTag} />}</>
-                    )}
-                  </div>
-                </Link>
-              )}
+              {content.ContentType !== 'newsletters' ||
+                ('playlist' && (
+                  <Link href={badgeUrl} passHref>
+                    <div className="cursor-pointer hover:opacity-80" onClick={() => closeSearch()}>
+                      {mode === 'search' ? (
+                        <Badge text={content.ContentType} />
+                      ) : (
+                        <>{content.SpecialTag !== '0' && <Badge text={content.SpecialTag} />}</>
+                      )}
+                    </div>
+                  </Link>
+                ))}
             </div>
 
             {/*  Author */}

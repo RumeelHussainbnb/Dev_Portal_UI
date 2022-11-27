@@ -53,24 +53,22 @@ function Publications({
         </h1>
       </div>
 
-      {tags && (
+      {/* Hiding Tags on video list */}
+      {contentType !== 'playlist' && tags && (
         <div className="flex justify-center">
           <TagsSelector tagsList={tagsList} contentType={contentType} badges={badges} tags={tags} />
         </div>
       )}
-
       {contentType === 'newsletters' && (
         <div className="mx-auto mb-20 flex max-w-3xl">
           <CardWide mode="dashboard" content={lastNewsletter} />
         </div>
       )}
-
       {contentType === 'newsletters' && (
         <div className="prose mx-auto flex w-full justify-center text-xl dark:prose-invert">
           Previous issues
         </div>
       )}
-
       <div className="mt-1 flex flex-wrap place-content-start justify-center gap-5 py-4 px-2 md:px-6 xl:gap-10">
         {isLoading ? (
           <Spinner />
