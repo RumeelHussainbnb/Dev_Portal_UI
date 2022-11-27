@@ -10,9 +10,9 @@ export default function defineImage(content) {
     return '/Weekly_Report.jpg';
   }else if (content.ContentType === 'threads') {
     return '/twitter-placeholder.webp';
-  } else if (content.Url && content.Url.includes('twitter')) {
+  } /*else if (content.Url && content.Url.includes('twitter')) {
     return '/twitter-placeholder.webp';
-  } else if (content.ContentType === 'tutorials') {
+  } */else if (content.ContentType === 'tutorials') {
     return '/tutorials-placeholder.jpg';
   } else if (content.ContentType === 'articles') {
     return '/article-pana.svg';

@@ -135,24 +135,24 @@ function CardWide({ content, mode }) {
           <div className="flex justify-between ">
             {/*  Title */}
             {content.ContentType === 'newsletters' ? (
-              <Link href={`/newsletters/${content.SK}`} rel="noreferrer" passHref>
-                <a className="mr-2 focus:outline-none">
-                  <p className="text-lg font-semibold text-gray-900 hover:text-yellow-500 dark:text-gray-200 dark:hover:text-yellow-600">
-                    {content.Title}
-                  </p>
-                </a>
-              </Link>
+              // <Link href={`/newsletters/${content.SK}`} rel="noreferrer" passHref>
+              //   <a className="mr-2 focus:outline-none">
+              <p className="text-lg font-semibold text-gray-900  dark:text-gray-200 ">
+                {content.Title}
+              </p>
             ) : (
-              <a
-                href={content.Url}
-                className="mr-2 focus:outline-none"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <p className="text-lg font-semibold text-gray-900 hover:text-yellow-500 dark:text-gray-200 dark:hover:text-yellow-600">
-                  {content.Title}
-                </p>
-              </a>
+              //   </a>
+              // </Link>
+              // <a
+              //   href={content.Url}
+              //   className="mr-2 focus:outline-none"
+              //   target="_blank"
+              //   rel="noreferrer"
+              // >
+              <p className="text-lg font-semibold text-gray-900  dark:text-gray-200 ">
+                {content.Title}
+              </p>
+              // </a>
             )}
 
             {/*  Content Type */}

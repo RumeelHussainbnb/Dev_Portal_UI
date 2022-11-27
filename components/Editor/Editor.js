@@ -30,6 +30,7 @@ const EditorComponent = ({ editorState, EditorChange }) => {
           component: undefined,
           dropdownClassName: undefined
         }
+
         // image: {
         //   uploadCallback: uploadCallbackk
         // }

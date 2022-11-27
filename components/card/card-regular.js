@@ -24,12 +24,15 @@ function classNames(...classes) {
 function CardRegular({ content, mode, editContent, closeSearch }) {
   const [isS3Audio, setIsS3Audio] = useState(false);
   const imageUrl = defineImage(content);
-
+  // console.log('content ==> ', content);
   const badgeUrl =
     mode === 'search'
       ? `/library/${content.ContentType}`
       : `/library/${content.ContentType}/filter?badge=${content.SpecialTag}`;
 
+  const myLoader = ({ src, width, quality }) => {
+    return `${src}`;
+  };
   function actionButton() {
     if (content.Url.includes('youtube')) {
       return (
@@ -106,11 +109,12 @@ function CardRegular({ content, mode, editContent, closeSearch }) {
               quality="100"
               placeholder="blur"
               blurDataURL={imageUrl}
+              loader={myLoader}
             />
           </a>
         </Link>
-      ) : (
-        <a href={content.Url} target="_blank" rel="noreferrer">
+      ) : content.ContentType === 'playlist' ? (
+        <Link href={`/library/${content.ContentType}/video/${content.SK}`} passHref>
           <Image
             className="cursor-pointer rounded-t-lg object-cover hover:opacity-90"
             src={imageUrl}
@@ -120,6 +124,21 @@ function CardRegular({ content, mode, editContent, closeSearch }) {
             quality="100"
             placeholder="blur"
             blurDataURL={imageUrl}
+            loader={myLoader}
+          />
+        </Link>
+      ) : (
+        <a href={content.Url} rel="noreferrer" target="_blank">
+          <Image
+            className="cursor-pointer rounded-t-lg object-cover hover:opacity-90"
+            src={imageUrl}
+            alt=""
+            height="200"
+            width="400"
+            quality="100"
+            placeholder="blur"
+            blurDataURL={imageUrl}
+            loader={myLoader}
           />
         </a>
       )}
@@ -136,42 +155,49 @@ function CardRegular({ content, mode, editContent, closeSearch }) {
             <div className="flex justify-between">
               {/*  Title */}
               {content.ContentType === 'newsletters' ? (
-                <Link href={`/newsletters/${content.SK}`} rel="noreferrer" passHref>
-                  <a className="mr-2">
-                    <p className="text-lg font-semibold text-gray-900 hover:text-yellow-500 dark:text-gray-200 dark:hover:text-yellow-600">
-                      {content.Title}
-                    </p>
-                  </a>
-                </Link>
+                // <Link href={`/newsletters/${content.SK}`} rel="noreferrer" passHref>
+                // <a className="mr-2">
+                <p className=" mr-2 text-lg font-semibold text-gray-900 dark:text-gray-200 ">
+                  {content.Title}
+                </p>
+              ) : // </a>
+              // </Link>
+              content.ContentType === 'playlist' ? (
+                // <Link href={`/library/${content.ContentType}/video/${content.SK}`} passHref>
+                <p className="text-lg font-semibold text-gray-900  dark:text-gray-200 ">
+                  {content.Title}
+                </p>
               ) : (
-                <a href={content.Url} className="mr-2" target="_blank" rel="noreferrer">
-                  <p className="text-lg font-semibold text-gray-900 hover:text-yellow-500 dark:text-gray-200 dark:hover:text-yellow-600">
-                    {content.Title}
-                  </p>
-                </a>
+                // </Link>
+                // <a href={content.Url} rel="noreferrer" target="_blank">
+                <p className="text-lg font-semibold text-gray-900  dark:text-gray-200 ">
+                  {content.Title}
+                </p>
+                // </a>
               )}
               {/*  Badge */}
-              {content.ContentType !== 'newsletters' && (
-                <Link href={badgeUrl} passHref>
-                  <div className="cursor-pointer hover:opacity-80" onClick={() => closeSearch()}>
-                    {mode === 'search' ? (
-                      <Badge text={content.ContentType} />
-                    ) : (
-                      <>{content.SpecialTag !== '0' && <Badge text={content.SpecialTag} />}</>
-                    )}
-                  </div>
-                </Link>
-              )}
+              {content.ContentType !== 'newsletters' ||
+                ('playlist' && (
+                  <Link href={badgeUrl} passHref>
+                    <div className="cursor-pointer hover:opacity-80" onClick={() => closeSearch()}>
+                      {mode === 'search' ? (
+                        <Badge text={content.ContentType} />
+                      ) : (
+                        <>{content.SpecialTag !== '0' && <Badge text={content.SpecialTag} />}</>
+                      )}
+                    </div>
+                  </Link>
+                ))}
             </div>
 
             {/*  Author */}
             <div className="mb-2">
               {content.Author && (
-                <a href={content.Url} className="" rel="noreferrer" target="_blank">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-500">
-                    by {content.Author}
-                  </p>
-                </a>
+                // <a href={content.Url} className="" rel="noreferrer" target="_blank">
+                <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-500">
+                  by {content.Author}
+                </p>
+                // </a>
               )}
             </div>
           </div>

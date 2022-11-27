@@ -1,16 +1,22 @@
 import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 export default function Player({ content }) {
+  //Go Back Url
+  const router = useRouter();
+
   return (
     <div className="xs:text-xs mx-auto flex max-w-screen-3xl flex-col px-5 text-base">
       <div className="flex justify-between">
-        <Link href={`/library/${content?.PlaylistID}`} passHref>
+        {/* <Link href={`/library/${content?.PlaylistID}`} passHref> */}
+        <div onClick={() => router.back()}>
           <p className="text-md cursor-pointer pb-4 text-yellow-600 hover:text-yellow-700 hover:underline lg:text-lg">
             {content?.PlaylistID && <>&larr; Back to Playlist</>}
           </p>
-        </Link>
+        </div>
+        {/* </Link> */}
 
         <a href={content?.Url} target="_blank" rel="noreferrer">
           <p className="text-md pb-4 text-yellow-600 hover:text-yellow-700 hover:underline lg:text-lg">

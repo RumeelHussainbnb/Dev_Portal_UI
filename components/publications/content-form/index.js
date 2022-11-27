@@ -17,7 +17,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
   const [contentExist, setContentExist] = useState(false);
   const { isAdmin = false } = useUser();
   const router = useRouter();
-
+  //console.log('data ==> ', data);
   const createContent = async event => {
     event.preventDefault();
 
@@ -44,6 +44,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
       Author: '',
       Description: '',
       Url: '',
+      ImageUrl: '',
       Vertical: 'bnb',
       Tags: [],
       ContentType: '',
@@ -65,7 +66,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
       headers: {
         'Content-type': 'application/json'
       },
-      body: JSON.stringify([{ ...data }])
+      body: JSON.stringify([{ ...data, Img: data.ImageUrl }])
     });
 
     // call preview mode
@@ -112,13 +113,15 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
               contentExist={contentExist}
               setContentExist={setContentExist}
             />
-
-            {/*Radios components*/}
-            <Radios data={data} setData={setData} type={type} />
-
-            {/* Tags */}
-            <ContentTags data={data} setData={setData} type={type} />
-
+            {/* Hiding Edit Tags on video edit */}
+            {data.ContentType !== 'playlist' ? (
+              <>
+                {/*Radios components*/}
+                <Radios data={data} setData={setData} type={type} />
+                {/* Tags */}
+                <ContentTags data={data} setData={setData} type={type} />
+              </>
+            ) : null}
             {/* Buttons */}
             <div className="mx-auto flex max-w-3xl justify-end">
               {type === 'edit' && (
