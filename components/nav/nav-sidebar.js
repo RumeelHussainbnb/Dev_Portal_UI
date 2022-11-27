@@ -128,7 +128,9 @@ const categories = [
   },
   {
     name: 'Tools',
-    href: '/tools'
+    href: 'https://nodereal.io/bnb-dev-tools',
+    rel: 'noreferrer',
+    target: '_blank'  
   },
   // {
   //   name: 'Implementations',
@@ -385,6 +387,8 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
                     <a
                       href={item.href}
                       key={item.name}
+                      target="_blank"
+                      rel="noreferrer"
                       onClick={() => closeMobileMenu()}
                     >
                       <button
