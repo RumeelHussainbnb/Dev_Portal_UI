@@ -176,18 +176,17 @@ function CardRegular({ content, mode, editContent, closeSearch }) {
                 // </a>
               )}
               {/*  Badge */}
-              {content.ContentType !== 'newsletters' ||
-                ('playlist' && (
-                  <Link href={badgeUrl} passHref>
-                    <div className="cursor-pointer hover:opacity-80" onClick={() => closeSearch()}>
-                      {mode === 'search' ? (
-                        <Badge text={content.ContentType} />
-                      ) : (
-                        <>{content.SpecialTag !== '0' && <Badge text={content.SpecialTag} />}</>
-                      )}
-                    </div>
-                  </Link>
-                ))}
+              {content.ContentType !== 'newsletters' && content.ContentType !== 'playlist' ? (
+                <Link href={badgeUrl} passHref>
+                  <div className="cursor-pointer hover:opacity-80" onClick={() => closeSearch()}>
+                    {mode === 'search' ? (
+                      <Badge text={content.ContentType} />
+                    ) : (
+                      <>{content.SpecialTag !== '0' && <Badge text={content.SpecialTag} />}</>
+                    )}
+                  </div>
+                </Link>
+              ) : null}
             </div>
 
             {/*  Author */}

@@ -114,7 +114,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
               setContentExist={setContentExist}
             />
             {/* Hiding Edit Tags on video edit */}
-            {data.ContentType !== 'playlist' ? (
+            {data.ContentType !== 'playlist' && data.ContentType !== 'newsletters' ? (
               <>
                 {/*Radios components*/}
                 <Radios data={data} setData={setData} type={type} />

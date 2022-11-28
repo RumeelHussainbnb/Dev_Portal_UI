@@ -139,11 +139,19 @@ function Inputs({ data, setData, type, contentExist, setContentExist }) {
             maxLength={100}
             value={data.Description}
             onChange={e => setData({ ...data, Description: e.target.value })}
-            className="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
+            className={`block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 ${
+              data.Description.length == 100
+                ? 'focus:ring-red-500 dark:border-red-500'
+                : 'focus:ring-yellow-500 dark:border-gray-500'
+            }`}
           />
-          <p className="mt-2 text-sm text-gray-500 dark:text-gray-500">
-            Brief description about the content. ~100 characters
-          </p>
+          {data.Description.length == 100 ? (
+            <p className="mt-2 text-sm text-red-500 dark:text-red-500">Characters Limit Reached</p>
+          ) : (
+            <p className="mt-2 text-sm text-gray-500 dark:text-gray-500">
+              Brief description about the content. ~100 characters
+            </p>
+          )}
         </div>
       </div>
     </>

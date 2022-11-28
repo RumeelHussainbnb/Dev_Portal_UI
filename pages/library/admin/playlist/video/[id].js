@@ -16,7 +16,8 @@ const PlaylistForm = () => {
     Title: '',
     Author: '',
     Description: '',
-    Url: ''
+    Url: '',
+    ImageUrl: ''
   });
   const [notifySuccess, setNotifySuccess] = useState(false);
   const [notifyError, setNotifyError] = useState(false);
@@ -36,6 +37,7 @@ const PlaylistForm = () => {
         Author: data.Author,
         Description: data.Description,
         Url: data.Url,
+        ImageUrl: data.ImageUrl,
         PlaylistID: id,
         Tags: [],
         SpecialTag: '0',
@@ -145,6 +147,25 @@ const PlaylistForm = () => {
                       value={data.Url}
                       autoComplete="given-name"
                       onChange={e => setData({ ...data, Url: e.target.value })}
+                      className="block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
+                    />
+                  </div>
+                </div>
+                <div className="col-span-12 sm:col-span-4 lg:col-span-12">
+                  <label
+                    htmlFor="content_markdown"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >
+                    Image Preview Url
+                  </label>
+                  <div className="mt-1">
+                    <input
+                      type="text"
+                      name="author-name"
+                      id="author-name"
+                      value={data.ImageUrl}
+                      autoComplete="given-name"
+                      onChange={e => setData({ ...data, ImageUrl: e.target.value })}
                       className="block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
                     />
                   </div>

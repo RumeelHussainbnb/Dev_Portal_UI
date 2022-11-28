@@ -50,7 +50,8 @@ const moduleExports = {
       'corite.com',
       'miro.medium.com',
       'miro.medium.com/max',
-      'medium.com'
+      'medium.com',
+      'encrypted-tbn0.gstatic.com'
     ],
     formats: ['image/avif', 'image/webp']
   },
