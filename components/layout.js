@@ -30,16 +30,16 @@ export function Container({ children, metaTags }) {
         <meta property="og:url" content={metaTags.url} />
         <meta property="og:title" content={metaTags.title} />
         <meta property="og:description" content={metaTags.description} />
-        <meta property="og:image" content="https://soldev.app/banner.png" />
+        <meta property="og:image" content="https://bnbdev.community/banner.png" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@soldevapp" />
-        <meta name="twitter:creator" content="@italoacasas" />
+        <meta name="twitter:site" content="@BNBCHAIN" />
+        <meta name="twitter:creator" content="@RumeelHussain" />
         <meta name="twitter:url" content={metaTags.url} />
         <meta name="twitter:title" content={metaTags.title} />
         <meta name="twitter:description" content={metaTags.description} />
-        <meta name="twitter:image" content="https://soldev.app/banner.png" />
+        <meta name="twitter:image" content="https://bnbdev.community/banner.png" />
 
         <link rel="icon" href="/favicon.ico" />
       </Head>
