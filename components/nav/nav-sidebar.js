@@ -63,7 +63,7 @@ const special = [
   },*/
   {
     name: 'BNB Chain Docs',
-    href: 'https://docs.bnbchain.org/docs/bnbIntro',
+    href: 'https://docs.bnbchain.org/',
     disabled: false
   },
   {
