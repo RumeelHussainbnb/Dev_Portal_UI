@@ -586,7 +586,7 @@ export default function BNBDevTools() {
       name: 'Starton',
       desc: 'Starton is the most powerful development suite to build and scale web3 applications. We are the bridge to enable web2 companies to embrace web3',
       website: 'https://www.starton.io/',
-      logo: 'https://www.nodereal.io/static/nodereal/images/bnb-dev-tools/icons/Starton.png?v=3'
+      logo: '/Starton.png'
     },
     {
       category: 'Gaming Tools',
@@ -1463,11 +1463,7 @@ export default function BNBDevTools() {
           {list.map(
             (item, index) =>
               item.groupTitle === 'Development Framework' && (
-                <Grid
-                  className="pl-100 "
-                  key={index}
-                  css={{ justifyItems: 'center', maxwidth: '500' }}
-                >
+                <Grid key={index}>
                   <div
                     onClick={() => {
                       handleShowModal(item);
@@ -1475,13 +1471,13 @@ export default function BNBDevTools() {
                     className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white shadow-md hover:shadow-yellow-700"
                     color="warning"
                   >
-                    <div className="flex grow-0 flex-col px-11 py-3.5 align-middle">
+                    <div className="flex flex-col px-1.5 py-2.5 align-middle">
                       <div className="text-center">
                         <Image
                           src={item.logo}
                           objectFit="fit"
-                          width="40px"
-                          height="40px"
+                          width="40%"
+                          height="20%"
                           alt={item.name}
                         />
                       </div>
