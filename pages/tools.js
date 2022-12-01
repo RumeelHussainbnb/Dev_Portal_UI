@@ -1037,8 +1037,6 @@ export default function BNBDevTools() {
               item.groupTitle === 'Solidity Code Quality' && (
                 <Grid
                   className="pl-100 "
-                  xs={6}
-                  sm={2}
                   key={index}
                   css={{ justifyItems: 'center', maxwidth: '500' }}
                 >
@@ -1046,11 +1044,11 @@ export default function BNBDevTools() {
                     onClick={() => {
                       handleShowModal(item);
                     }}
-                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white hover:shadow-gray-700"
+                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white shadow-md hover:shadow-yellow-700"
                     color="warning"
                   >
-                    <div className="flex grow-0 flex-col align-middle">
-                      <div className="text-center">
+                    <div className="flex grow-0 flex-col px-1.5 py-2.5 align-middle">
+                      <div className="text-center ">
                         <Image
                           src={item.logo}
                           objectFit="fill"
@@ -1146,8 +1144,6 @@ export default function BNBDevTools() {
               item.groupTitle === 'Front-End Programming' && (
                 <Grid
                   className="pl-100 "
-                  xs={6}
-                  sm={2}
                   key={index}
                   css={{ justifyItems: 'center', maxwidth: '500' }}
                 >
@@ -1155,10 +1151,10 @@ export default function BNBDevTools() {
                     onClick={() => {
                       handleShowModal(item);
                     }}
-                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white hover:shadow-gray-700"
+                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white shadow-md hover:shadow-yellow-700"
                     color="warning"
                   >
-                    <div className="flex grow-0 flex-col align-middle">
+                    <div className="flex grow-0 flex-col px-1.5 py-2.5 align-middle">
                       <div className="text-center">
                         <Image
                           src={item.logo}
@@ -1257,8 +1253,6 @@ export default function BNBDevTools() {
               item.groupTitle === 'Back-End Programming' && (
                 <Grid
                   className="pl-100 "
-                  xs={6}
-                  sm={2}
                   key={index}
                   css={{ justifyItems: 'center', maxwidth: '500' }}
                 >
@@ -1266,10 +1260,10 @@ export default function BNBDevTools() {
                     onClick={() => {
                       handleShowModal(item);
                     }}
-                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white hover:shadow-gray-700"
+                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white shadow-md hover:shadow-yellow-700"
                     color="warning"
                   >
-                    <div className="flex grow-0 flex-col align-middle">
+                    <div className="flex grow-0 flex-col px-1.5 py-2.5 align-middle">
                       <div className="text-center">
                         <Image
                           src={item.logo}
@@ -1365,15 +1359,15 @@ export default function BNBDevTools() {
           {list.map(
             (item, index) =>
               item.groupTitle === 'IDE' && (
-                <Grid xs={6} sm={2} key={index}>
+                <Grid key={index}>
                   <div
                     onClick={() => {
                       handleShowModal(item);
                     }}
-                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white hover:shadow-gray-700"
+                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white shadow-md hover:shadow-yellow-700"
                     color="warning"
                   >
-                    <div className="flex flex-col align-middle">
+                    <div className="flex flex-col px-1.5 py-2.5 align-middle">
                       <div className="text-center">
                         <Image
                           src={item.logo}
@@ -1471,8 +1465,6 @@ export default function BNBDevTools() {
               item.groupTitle === 'Development Framework' && (
                 <Grid
                   className="pl-100 "
-                  xs={6}
-                  sm={2}
                   key={index}
                   css={{ justifyItems: 'center', maxwidth: '500' }}
                 >
@@ -1480,16 +1472,16 @@ export default function BNBDevTools() {
                     onClick={() => {
                       handleShowModal(item);
                     }}
-                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white hover:shadow-gray-700"
+                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white shadow-md hover:shadow-yellow-700"
                     color="warning"
                   >
-                    <div className="flex grow-0 flex-col align-middle">
+                    <div className="flex grow-0 flex-col px-11 py-3.5 align-middle">
                       <div className="text-center">
                         <Image
                           src={item.logo}
-                          objectFit="fill"
-                          width="40%"
-                          height="20%"
+                          objectFit="fit"
+                          width="40px"
+                          height="40px"
                           alt={item.name}
                         />
                       </div>
@@ -1581,8 +1573,6 @@ export default function BNBDevTools() {
               item.groupTitle === 'Wallet SDK' && (
                 <Grid
                   className="pl-100 "
-                  xs={6}
-                  sm={2}
                   key={index}
                   css={{ justifyItems: 'center', maxwidth: '500' }}
                 >
@@ -1590,10 +1580,10 @@ export default function BNBDevTools() {
                     onClick={() => {
                       handleShowModal(item);
                     }}
-                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white hover:shadow-gray-700"
+                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white shadow-md hover:shadow-yellow-700"
                     color="warning"
                   >
-                    <div className="flex grow-0 flex-col align-middle">
+                    <div className="flex grow-0 flex-col px-1.5 py-2.5 align-middle">
                       <div className="text-center">
                         <Image
                           src={item.logo}
@@ -1691,8 +1681,6 @@ export default function BNBDevTools() {
               item.groupTitle === 'MPC Wallets/Multisig' && (
                 <Grid
                   className="pl-100 "
-                  xs={6}
-                  sm={2}
                   key={index}
                   css={{ justifyItems: 'center', maxwidth: '500' }}
                 >
@@ -1700,10 +1688,10 @@ export default function BNBDevTools() {
                     onClick={() => {
                       handleShowModal(item);
                     }}
-                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white hover:shadow-gray-700"
+                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white shadow-md hover:shadow-gray-700 hover:shadow-yellow-700"
                     color="warning"
                   >
-                    <div className=" flex grow-0 flex-col align-middle">
+                    <div className=" flex grow-0 flex-col px-1.5 py-2.5 align-middle">
                       <div className="text-center">
                         <Image
                           src={item.logo}
@@ -1800,8 +1788,6 @@ export default function BNBDevTools() {
               item.category === 'Decentralized Storage' && (
                 <Grid
                   className="pl-100 "
-                  xs={6}
-                  sm={2}
                   key={index}
                   css={{ justifyItems: 'center', maxwidth: '500' }}
                 >
@@ -1809,10 +1795,10 @@ export default function BNBDevTools() {
                     onClick={() => {
                       handleShowModal(item);
                     }}
-                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white hover:shadow-gray-700"
+                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white shadow-md hover:shadow-yellow-700"
                     color="warning"
                   >
-                    <div className="flex grow-0 flex-col align-middle">
+                    <div className="flex grow-0 flex-col px-1.5 py-2.5 align-middle">
                       <div className="text-center">
                         <Image
                           src={item.logo}
@@ -1909,8 +1895,6 @@ export default function BNBDevTools() {
               item.category === 'Data Oracles' && (
                 <Grid
                   className="pl-100 "
-                  xs={6}
-                  sm={2}
                   key={index}
                   css={{ justifyItems: 'center', maxwidth: '500' }}
                 >
@@ -1918,10 +1902,10 @@ export default function BNBDevTools() {
                     onClick={() => {
                       handleShowModal(item);
                     }}
-                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white hover:shadow-gray-700"
+                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white shadow-md hover:shadow-yellow-700"
                     color="warning"
                   >
-                    <div className="flex grow-0 flex-col align-middle">
+                    <div className="flex grow-0 flex-col px-1.5 py-2.5 align-middle">
                       <div className="text-center">
                         <Image
                           src={item.logo}
@@ -2026,8 +2010,6 @@ export default function BNBDevTools() {
               item.groupTitle === 'Block Explorers' && (
                 <Grid
                   className="pl-100 "
-                  xs={6}
-                  sm={2}
                   key={index}
                   css={{ justifyItems: 'center', maxwidth: '500' }}
                 >
@@ -2035,10 +2017,10 @@ export default function BNBDevTools() {
                     onClick={() => {
                       handleShowModal(item);
                     }}
-                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white hover:shadow-gray-700"
+                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white shadow-md hover:shadow-yellow-700"
                     color="warning"
                   >
-                    <div className="flex grow-0 flex-col align-middle">
+                    <div className="flex grow-0 flex-col px-1.5 py-2.5 align-middle">
                       <div className="text-center">
                         <Image
                           src={item.logo}
@@ -2136,8 +2118,6 @@ export default function BNBDevTools() {
               item.groupTitle === 'Node and Archive Services' && (
                 <Grid
                   className="pl-100 "
-                  xs={6}
-                  sm={2}
                   key={index}
                   css={{ justifyItems: 'center', maxwidth: '500' }}
                 >
@@ -2145,10 +2125,10 @@ export default function BNBDevTools() {
                     onClick={() => {
                       handleShowModal(item);
                     }}
-                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white hover:shadow-gray-700"
+                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white shadow-md hover:shadow-yellow-700"
                     color="warning"
                   >
-                    <div className="flex grow-0 flex-col align-middle">
+                    <div className="flex grow-0 flex-col px-1.5 py-2.5 align-middle">
                       <div className="text-center">
                         <Image
                           src={item.logo}
@@ -2246,8 +2226,6 @@ export default function BNBDevTools() {
               item.groupTitle === 'NFT Tools' && (
                 <Grid
                   className="pl-100 "
-                  xs={6}
-                  sm={2}
                   key={index}
                   css={{ justifyItems: 'center', maxwidth: '500' }}
                 >
@@ -2255,10 +2233,10 @@ export default function BNBDevTools() {
                     onClick={() => {
                       handleShowModal(item);
                     }}
-                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white hover:shadow-gray-700"
+                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white shadow-md hover:shadow-yellow-700"
                     color="warning"
                   >
-                    <div className="flex grow-0 flex-col align-middle">
+                    <div className="flex grow-0 flex-col px-1.5 py-2.5 align-middle">
                       <div className="text-center">
                         <Image
                           src={item.logo}
@@ -2356,8 +2334,6 @@ export default function BNBDevTools() {
               item.groupTitle === 'Data Indexing' && (
                 <Grid
                   className="pl-100 "
-                  xs={6}
-                  sm={2}
                   key={index}
                   css={{ justifyItems: 'center', maxwidth: '500' }}
                 >
@@ -2365,10 +2341,10 @@ export default function BNBDevTools() {
                     onClick={() => {
                       handleShowModal(item);
                     }}
-                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white hover:shadow-gray-700"
+                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white shadow-md hover:shadow-yellow-700"
                     color="warning"
                   >
-                    <div className="flex grow-0 flex-col align-middle">
+                    <div className="flex grow-0 flex-col px-1.5 py-2.5 align-middle">
                       <div className="text-center">
                         <Image
                           src={item.logo}
@@ -2466,8 +2442,6 @@ export default function BNBDevTools() {
               item.category === 'Browser' && (
                 <Grid
                   className="pl-100 "
-                  xs={6}
-                  sm={2}
                   key={index}
                   css={{ justifyItems: 'center', maxwidth: '500' }}
                 >
@@ -2475,10 +2449,10 @@ export default function BNBDevTools() {
                     onClick={() => {
                       handleShowModal(item);
                     }}
-                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white hover:shadow-gray-700"
+                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white shadow-md hover:shadow-yellow-700"
                     color="warning"
                   >
-                    <div className="flex grow-0 flex-col align-middle">
+                    <div className="flex grow-0 flex-col px-1.5 py-2.5 align-middle">
                       <div className="text-center">
                         <Image
                           src={item.logo}
@@ -2576,8 +2550,6 @@ export default function BNBDevTools() {
               item.category === 'Gasless Solutions' && (
                 <Grid
                   className="pl-100 "
-                  xs={6}
-                  sm={2}
                   key={index}
                   css={{ justifyItems: 'center', maxwidth: '500' }}
                 >
@@ -2585,10 +2557,10 @@ export default function BNBDevTools() {
                     onClick={() => {
                       handleShowModal(item);
                     }}
-                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white hover:shadow-gray-700"
+                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white shadow-md hover:shadow-yellow-700"
                     color="warning"
                   >
-                    <div className="flex grow-0 flex-col align-middle">
+                    <div className="flex grow-0 flex-col px-1.5 py-2.5 align-middle">
                       <div className="text-center">
                         <Image
                           src={item.logo}
@@ -2686,8 +2658,6 @@ export default function BNBDevTools() {
               item.category === 'Security Audit' && (
                 <Grid
                   className="pl-100 "
-                  xs={6}
-                  sm={2}
                   key={index}
                   css={{ justifyItems: 'center', maxwidth: '500' }}
                 >
@@ -2695,10 +2665,10 @@ export default function BNBDevTools() {
                     onClick={() => {
                       handleShowModal(item);
                     }}
-                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white hover:shadow-gray-700"
+                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white shadow-md hover:shadow-yellow-700"
                     color="warning"
                   >
-                    <div className="flex grow-0 flex-col align-middle">
+                    <div className="flex grow-0 flex-col px-1.5 py-2.5 align-middle">
                       <div className="text-center">
                         <Image
                           src={item.logo}
@@ -2796,8 +2766,6 @@ export default function BNBDevTools() {
               item.category === 'Analytics & Dashboards' && (
                 <Grid
                   className="pl-100 "
-                  xs={6}
-                  sm={2}
                   key={index}
                   css={{ justifyItems: 'center', maxwidth: '500' }}
                 >
@@ -2805,10 +2773,10 @@ export default function BNBDevTools() {
                     onClick={() => {
                       handleShowModal(item);
                     }}
-                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white hover:shadow-gray-700"
+                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white shadow-md hover:shadow-yellow-700"
                     color="warning"
                   >
-                    <div className="flex grow-0 flex-col align-middle">
+                    <div className="flex grow-0 flex-col px-1.5 py-2.5 align-middle">
                       <div className="text-center">
                         <Image
                           src={item.logo}
@@ -2906,8 +2874,6 @@ export default function BNBDevTools() {
               item.category === 'Payment Gateway' && (
                 <Grid
                   className="pl-100 "
-                  xs={6}
-                  sm={2}
                   key={index}
                   css={{ justifyItems: 'center', maxwidth: '500' }}
                 >
@@ -2915,10 +2881,10 @@ export default function BNBDevTools() {
                     onClick={() => {
                       handleShowModal(item);
                     }}
-                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white hover:shadow-gray-700"
+                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white shadow-md hover:shadow-gray-700 hover:shadow-yellow-700"
                     color="warning"
                   >
-                    <div className="flex grow-0 flex-col align-middle">
+                    <div className="flex grow-0 flex-col px-1.5 py-2.5 align-middle">
                       <div className="text-center">
                         <Image
                           src={item.logo}
@@ -3016,8 +2982,6 @@ export default function BNBDevTools() {
               item.category === 'DAO Tools' && (
                 <Grid
                   className="pl-100 "
-                  xs={6}
-                  sm={2}
                   key={index}
                   css={{ justifyItems: 'center', maxwidth: '500' }}
                 >
@@ -3025,10 +2989,10 @@ export default function BNBDevTools() {
                     onClick={() => {
                       handleShowModal(item);
                     }}
-                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white hover:shadow-gray-700"
+                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white shadow-md hover:shadow-yellow-700"
                     color="warning"
                   >
-                    <div className="flex grow-0 flex-col align-middle">
+                    <div className="flex grow-0 flex-col px-1.5 py-2.5 align-middle">
                       <div className="text-center">
                         <Image
                           src={item.logo}
@@ -3126,8 +3090,6 @@ export default function BNBDevTools() {
               item.category === 'Gaming Tools' && (
                 <Grid
                   className="pl-100 "
-                  xs={6}
-                  sm={2}
                   key={index}
                   css={{ justifyItems: 'center', maxwidth: '500' }}
                 >
@@ -3135,10 +3097,10 @@ export default function BNBDevTools() {
                     onClick={() => {
                       handleShowModal(item);
                     }}
-                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white hover:shadow-gray-700"
+                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white shadow-md hover:shadow-yellow-700"
                     color="warning"
                   >
-                    <div className="flex grow-0 flex-col align-middle">
+                    <div className="flex grow-0 flex-col px-1.5 py-2.5 align-middle">
                       <div className="text-center">
                         <Image
                           src={item.logo}
@@ -3236,8 +3198,6 @@ export default function BNBDevTools() {
               item.category === 'Decentralized Identity/Social Graph' && (
                 <Grid
                   className="pl-100 "
-                  xs={6}
-                  sm={2}
                   key={index}
                   css={{ justifyItems: 'center', maxwidth: '500' }}
                 >
@@ -3245,10 +3205,10 @@ export default function BNBDevTools() {
                     onClick={() => {
                       handleShowModal(item);
                     }}
-                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white hover:shadow-gray-700"
+                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white shadow-md hover:shadow-yellow-700"
                     color="warning"
                   >
-                    <div className="flex grow-0 flex-col align-middle">
+                    <div className="flex grow-0 flex-col px-1.5 py-2.5 align-middle">
                       <div className="text-center">
                         <Image
                           src={item.logo}
@@ -3346,8 +3306,6 @@ export default function BNBDevTools() {
               item.category === 'NFT Marketplace' && (
                 <Grid
                   className="pl-100 "
-                  xs={6}
-                  sm={2}
                   key={index}
                   css={{ justifyItems: 'center', maxwidth: '500' }}
                 >
@@ -3355,10 +3313,10 @@ export default function BNBDevTools() {
                     onClick={() => {
                       handleShowModal(item);
                     }}
-                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white hover:shadow-gray-700"
+                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white shadow-md hover:shadow-yellow-700 "
                     color="warning"
                   >
-                    <div className="flex grow-0 flex-col align-middle">
+                    <div className="flex grow-0 flex-col px-1.5 py-2.5 align-middle">
                       <div className="text-center">
                         <Image
                           src={item.logo}
@@ -3456,8 +3414,6 @@ export default function BNBDevTools() {
               item.category === 'Cross-chain Bridges' && (
                 <Grid
                   className="pl-100 "
-                  xs={6}
-                  sm={2}
                   key={index}
                   css={{ justifyItems: 'center', maxwidth: '500' }}
                 >
@@ -3465,10 +3421,10 @@ export default function BNBDevTools() {
                     onClick={() => {
                       handleShowModal(item);
                     }}
-                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white hover:shadow-gray-700"
+                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white shadow-md hover:shadow-yellow-700"
                     color="warning"
                   >
-                    <div className="flex grow-0 flex-col align-middle">
+                    <div className="flex grow-0 flex-col px-1.5 py-2.5 align-middle">
                       <div className="text-center">
                         <Image
                           src={item.logo}
@@ -3566,8 +3522,6 @@ export default function BNBDevTools() {
               item.category === 'Wallets' && (
                 <Grid
                   className="pl-100 "
-                  xs={6}
-                  sm={2}
                   key={index}
                   css={{ justifyItems: 'center', maxwidth: '500' }}
                 >
@@ -3575,10 +3529,10 @@ export default function BNBDevTools() {
                     onClick={() => {
                       handleShowModal(item);
                     }}
-                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white hover:shadow-gray-700"
+                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white shadow-md hover:shadow-yellow-700"
                     color="warning"
                   >
-                    <div className="flex grow-0 flex-col align-middle">
+                    <div className="flex grow-0 flex-col px-1.5 py-2.5 align-middle">
                       <div className="text-center">
                         <Image
                           src={item.logo}
@@ -3675,8 +3629,6 @@ export default function BNBDevTools() {
               item.category === 'Dapp Store' && (
                 <Grid
                   className="pl-100 "
-                  xs={6}
-                  sm={2}
                   key={index}
                   css={{ justifyItems: 'center', maxwidth: '500' }}
                 >
@@ -3684,10 +3636,10 @@ export default function BNBDevTools() {
                     onClick={() => {
                       handleShowModal(item);
                     }}
-                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white hover:shadow-gray-700"
+                    className="toolIcon h-700 max-w-300 max-h-700 rounded-md bg-white shadow-md hover:shadow-yellow-700"
                     color="warning"
                   >
-                    <div className=" flex grow-0 flex-col align-middle">
+                    <div className=" flex grow-0 flex-col px-1.5 py-2.5 align-middle">
                       <div className="text-center">
                         <Image
                           src={item.logo}
