@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic';
 const CardWide = dynamic(() => import('../card/card-wide'));
 const CardVideo = dynamic(() => import('../card/card-video'));
 const CardRegular = dynamic(() => import('../card/card-regular'));
+const CardBase = dynamic(() => import('../card/card-base'));
 const TagsSelector = dynamic(() => import('../badges/tags-selector'));
 const Spinner = dynamic(() => import('../spinner'));
 const ContentFormModal = dynamic(() => import('./content-form/modal'));
@@ -79,7 +80,7 @@ function Publications({
 
             if (content.ContentType !== 'Playlist') {
               return (
-                <CardRegular
+                <CardBase
                   key={content.SK}
                   content={content}
                   mode={appState.editMode == 'true' && cardMode !== 'search' ? 'edit' : cardMode}
