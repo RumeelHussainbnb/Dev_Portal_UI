@@ -14,7 +14,7 @@ import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { memo, useEffect, useState } from 'react';
 import useUser from '../../hooks/useUser';
-import fetch from '../../utils/fetcher';
+import axios from '../../utils/http';
 import { useAppDispatch, useAppState } from '../../context/AppContext';
 
 const navigation = [
@@ -201,12 +201,8 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
     const fetchData = async () => {
       // const data = await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/user/${window.sessionStorage.getItem('PublicKey')}`);
       let key = localStorage.getItem('PublicKey');
-      const data = await fetch(
-        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/user/${
-          appState.publicKey ? appState.publicKey : key
-        }`
-      );
-      const admin = data?.Role === 'admin' ? true : false;
+      const response = await axios(`/user/${appState.publicKey ? appState.publicKey : key}`);
+      const admin = response?.data?.Role === 'admin' ? true : false;
       await appDispatch({ type: 'handleAdminMode', payload: admin });
       localStorage.setItem('handleAdminMode', admin);
       setisAdmin(admin);

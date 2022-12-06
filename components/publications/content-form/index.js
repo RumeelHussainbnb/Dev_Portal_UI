@@ -8,7 +8,7 @@ import Status from './status';
 import Position from './position';
 import { useRouter } from 'next/router';
 import useUser from '../../../hooks/useUser';
-
+import axios from '../../../utils/http';
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
@@ -27,15 +27,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
       content.ContentStatus = 'active';
     }
 
-    await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/content`, {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify({
-        ...content
-      })
-    });
+    const response = await axios.post(`/content`, content);
 
     // After submitting we need to restart the
     // component state
@@ -61,13 +53,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
   const updateContent = async event => {
     event.preventDefault();
 
-    await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/content`, {
-      method: 'PUT',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify([{ ...data, Img: data.ImageUrl }])
-    });
+    await axios.put(`/content`, { ...data, Img: data.ImageUrl });
 
     // call preview mode
     await fetch(`/api/preview?type=${data.ContentType}`);

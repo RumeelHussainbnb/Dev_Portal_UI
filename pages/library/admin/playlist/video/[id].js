@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { Container } from '../../../../../components/layout';
+import axios from '../../../../../utils/http';
 
 const NotificationSuccess = dynamic(() =>
   import('../../../../../components/notifications/success')
@@ -24,15 +25,8 @@ const PlaylistForm = () => {
 
   const createPlaylist = async event => {
     event.preventDefault();
-    const key = localStorage.getItem('PublicKey');
-
-    await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/content`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: key
-      },
-      body: JSON.stringify({
+    try {
+      const response = await axios.post(`/content`, {
         Title: data.Title,
         Author: data.Author,
         Description: data.Description,
@@ -45,36 +39,33 @@ const PlaylistForm = () => {
         List: '',
         ContentType: 'playlist',
         ContentStatus: 'active'
-      })
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success === true) {
-          //Empty editor state
-
-          setData({
-            Title: '',
-            Author: '',
-            Description: '',
-            Url: ''
-          });
-          setNotifySuccess(true);
-          setTimeout(() => {
-            router.back();
-          }, '1500');
-        } else {
-          //Empty editor state
-
-          setData({
-            Title: '',
-            Author: '',
-            Description: '',
-            Url: ''
-          });
-
-          setNotifyError(true);
-        }
       });
+      if (response?.data?.success === true) {
+        //Empty editor state
+
+        setData({
+          Title: '',
+          Author: '',
+          Description: '',
+          Url: ''
+        });
+        setNotifySuccess(true);
+        setTimeout(() => {
+          router.back();
+        }, '1500');
+      }
+    } catch (error) {
+      //Empty editor state
+
+      setData({
+        Title: '',
+        Author: '',
+        Description: '',
+        Url: ''
+      });
+
+      setNotifyError(true);
+    }
   };
 
   return (

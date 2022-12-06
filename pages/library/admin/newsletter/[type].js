@@ -5,6 +5,7 @@ import { EditorState, convertToRaw } from 'draft-js';
 
 import { Container } from '../../../../components/layout';
 import EditorComponent from '../../../../components/Editor/Editor';
+import axios from '../../../../utils/http';
 
 const NotificationSuccess = dynamic(() => import('../../../../components/notifications/success'));
 const NotificationError = dynamic(() => import('../../../../components/notifications/error'));
@@ -22,57 +23,33 @@ const Submit = metaTags => {
   const [notifySuccess, setNotifySuccess] = useState(false);
   const [notifyError, setNotifyError] = useState(false);
 
+  //Clear States
+  const clearStatsDate = () => {
+    setEditor(() => EditorState.createEmpty());
+    setData({
+      Title: '',
+      Author: '',
+      //                        Img: "",
+      ContentMarkdown: '',
+      Description: ''
+    });
+  };
   const createNewsletter = async event => {
     event.preventDefault();
-    const key = localStorage.getItem('PublicKey');
-    const formData = new FormData();
-    formData.append('Title', data.Title);
-    formData.append('Author', data.Author);
-    //        formData.append("Img", data.Img);
-    formData.append('ContentMarkdown', data.ContentMarkdown);
-    formData.append('Description', data.Description);
 
-    await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/content/bnb/newsletters`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: key
-      },
-      body: JSON.stringify({
-        Title: data.Title,
-        Author: data.Author,
-        //                "Img": "https://binance.ghost.io/content/images/2022/10/wide-2--7-.jpg",
-        ContentMarkdown: data.ContentMarkdown,
-        Description: data.Description
-      })
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success === true) {
-          //Empty editor state
-          setEditor(() => EditorState.createEmpty());
-          setData({
-            Title: '',
-            Author: '',
-            //                        Img: "",
-            ContentMarkdown: '',
-            Description: ''
-          });
-          setNotifySuccess(true);
-        } else {
-          //Empty editor state
-          setEditor(() => EditorState.createEmpty());
-          setData({
-            Title: '',
-            Author: '',
-            //                        Img: "",
-            ContentMarkdown: '',
-            Description: ''
-          });
+    try {
+      const response = await axios.post(`/content/bnb/newsletters`, data);
+      if (response?.data?.success === true) {
+        //Empty editor state
+        clearStatsDate();
+        setNotifySuccess(true);
+      }
+    } catch (error) {
+      //Empty editor state
+      clearStatsDate();
 
-          setNotifyError(true);
-        }
-      });
+      setNotifyError(true);
+    }
   };
 
   //handle editor state change
