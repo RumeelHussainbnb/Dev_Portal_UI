@@ -21,6 +21,9 @@ const CopyLink = dynamic(() => import('./copy-link.js'));
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
+const myLoader = ({ src, width, quality }) => {
+  return `${src}`;
+};
 
 function CardWide({ content, mode }) {
   const [isS3Audio, setIsS3Audio] = useState(false);
@@ -109,6 +112,7 @@ function CardWide({ content, mode }) {
                 quality="100"
                 placeholder="blur"
                 blurDataURL={imageUrl}
+                loader={myLoader}
               />
             </div>
           </a>
@@ -125,6 +129,7 @@ function CardWide({ content, mode }) {
               quality="100"
               placeholder="blur"
               blurDataURL={imageUrl}
+              loader={myLoader}
             />
           </div>
         </a>
