@@ -22,6 +22,10 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
+const myLoader = ({ src, width, quality }) => {
+  return `${src}`;
+};
+
 function CardWide({ content, mode }) {
   const [isS3Audio, setIsS3Audio] = useState(false);
   const imageUrl = defineImage(content);
@@ -109,6 +113,7 @@ function CardWide({ content, mode }) {
                 quality="100"
                 placeholder="blur"
                 blurDataURL={imageUrl}
+                loader={myLoader}
               />
             </div>
           </a>
@@ -125,6 +130,7 @@ function CardWide({ content, mode }) {
               quality="100"
               placeholder="blur"
               blurDataURL={imageUrl}
+              loader={myLoader}
             />
           </div>
         </a>
