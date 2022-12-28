@@ -174,6 +174,17 @@ const categories = [
   }
 ];
 
+const martian = [
+  {
+    name: 'Martian Tracker',
+    href: '/library/admin/mvp'
+  },
+  {
+    name: 'Add Martian',
+    href: '/library/admin/mvp/create'
+  }
+];
+
 const courses = [
   /* {
     name: 'Intro to BNBChain',
@@ -197,6 +208,7 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
   const appState = useAppState();
   const appDispatch = useAppDispatch();
 
+  //console.log('appState => ', appState);
   useEffect(() => {
     const fetchData = async () => {
       // const data = await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/user/${window.sessionStorage.getItem('PublicKey')}`);
@@ -371,7 +383,8 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
                   item.name === 'Inactive' ||
                   item.name === 'Post NewsLetter' ||
                   item.name === 'Post tweet' ||
-                  item.name === 'Add Playlist') &&
+                  item.name === 'Add Playlist' ||
+                  item.name === 'Add mvp') &&
                 appState.isAdminMode == false
               ) {
                 return;
@@ -418,6 +431,44 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
             })}
           </div>
         </div>
+
+        {/* Martian */}
+
+        {appState.isAdminMode == true && appState.editMode == 'true' ? (
+          <div>
+            <p
+              className="text-md px-3 font-semibold uppercase tracking-wider text-gray-500 lg:text-xs"
+              id="communities-headline"
+            >
+              Martians
+            </p>
+            <div className="mt-2 space-y-1" aria-labelledby="communities-headline">
+              {martian.map(item => {
+                // if (
+                //   (item.name === 'Martian Tracker' || item.name === 'Add Martian') &&
+                //   appState.isAdminMode == false
+                // ) {
+                //   return;
+                // }
+
+                return (
+                  <Link href={item.href} passHref key={item.name}>
+                    <button
+                      onClick={() => closeMobileMenu()}
+                      className="group flex min-w-full cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-sm"
+                    >
+                      <PaperClipIcon
+                        className="h-4 w-4 text-yellow-400 dark:text-yellow-500"
+                        aria-hidden="true"
+                      />
+                      <span className="truncate leading-6">{item.name}</span>
+                    </button>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        ) : null}
       </div>
     </nav>
   );

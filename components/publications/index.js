@@ -23,6 +23,7 @@ function Publications({
   cardMode,
   lastNewsletter
 }) {
+  console.log('contentType => ', contentType);
   const [open, setOpen] = useState(false);
   const appState = useAppState();
   const [content, setContent] = useState({});

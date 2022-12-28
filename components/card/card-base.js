@@ -366,7 +366,7 @@ const BaseContent = ({ imageUrl, content, mode, editContent, closeSearch }) => {
 };
 
 const CardBase = ({ content, mode, editContent, closeSearch }) => {
-  // console.log('closeSearch =>', closeSearch);
+  // console.log('content =>', content);
   //This Card Will return diffrent cards on basis on contentType
   const imageUrl = defineImage(content);
   let CardTemplate;
