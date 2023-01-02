@@ -52,9 +52,8 @@ const moduleExports = {
       'miro.medium.com/max',
       'medium.com',
       'encrypted-tbn0.gstatic.com',
-      'asdjasdas',
-      'images.pexels.com',
-      'www.svgrepo.com'
+      'img.youtube.com',
+      'public.bnbstatic.com'
     ],
     formats: ['image/avif', 'image/webp']
   },
