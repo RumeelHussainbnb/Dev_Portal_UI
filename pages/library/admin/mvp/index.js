@@ -267,6 +267,13 @@ const Index = ({ userData }) => {
                   <Spacer y={0.5} x={1} />
                 </Grid>
               ))}
+              {userData?.data?.length <= 0 && (
+                <div className="prose dark:prose-invert sm:ml-6">
+                  <div className="sm:pl-6 dark:sm:border-gray-500">
+                    <p>No Data Found</p>
+                  </div>
+                </div>
+              )}
             </Grid.Container>
 
             <Pagination
