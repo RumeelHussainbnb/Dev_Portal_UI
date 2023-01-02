@@ -434,7 +434,7 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
 
         {/* Martian */}
 
-        {appState.isAdminMode == true && appState.editMode == 'true' ? (
+        {appState.isAdminMode == true ? (
           <div>
             <p
               className="text-md px-3 font-semibold uppercase tracking-wider text-gray-500 lg:text-xs"
@@ -444,12 +444,9 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
             </p>
             <div className="mt-2 space-y-1" aria-labelledby="communities-headline">
               {martian.map(item => {
-                // if (
-                //   (item.name === 'Martian Tracker' || item.name === 'Add Martian') &&
-                //   appState.isAdminMode == false
-                // ) {
-                //   return;
-                // }
+                if (item.name === 'Add Martian' && appState.editMode == 'false') {
+                  return;
+                }
 
                 return (
                   <Link href={item.href} passHref key={item.name}>
