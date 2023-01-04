@@ -1,16 +1,19 @@
-import dynamic from 'next/dynamic';
+import { DocumentTextIcon } from '@heroicons/react/solid';
 import React, { useEffect } from 'react';
 import { Grid, Text, Spacer, Button, Image } from '@nextui-org/react';
 import { useState, useId } from 'react';
 import Select from 'react-select';
 import { Country, State, City } from 'country-state-city';
-import router from 'next/router';
-
+import router, { useRouter } from 'next/router';
 import Pagination from '../../../../components/pagination/Pagination';
 import { Container } from '../../../../components/layout';
 import axios from '../../../../utils/http';
+import { useAppState } from '../../../../context/AppContext';
 
 const Index = ({ userData }) => {
+  const appState = useAppState();
+
+  const router = useRouter();
   const [data, setData] = useState({
     keyword: '',
     country: { label: '', name: '' },
@@ -85,6 +88,21 @@ const Index = ({ userData }) => {
       pathname: currentPath,
       query: currentQuery
     });
+  };
+
+  const updateMartian = (eachMartian, event) => {
+    event.preventDefault();
+    // console.log(eachMartian)
+    //router.push({
+    //pathname: '/library/admin/mvp/update',
+    router.push(
+      {
+        pathname: '/library/admin/mvp/update',
+        query: eachMartian
+      },
+      '/library/admin/mvp/update'
+    );
+    // query:eachMartian,
   };
 
   const handleDataReset = e => {
@@ -227,7 +245,7 @@ const Index = ({ userData }) => {
                   key={index}
                   css={{ justifyItems: 'center', maxwidth: '500' }}
                 >
-                  <div className=" flex h-64 w-48 max-w-xs flex-col rounded-xl p-2 shadow-md dark:bg-gray-900 dark:text-gray-100 sm:px-3">
+                  <div className=" h-70 flex w-48 max-w-xs flex-col rounded-xl p-2 shadow-md dark:bg-gray-900 dark:text-gray-100 sm:px-3">
                     {eachMartian?.ImageUrl ? (
                       <img
                         src={eachMartian?.ImageUrl}
@@ -263,6 +281,15 @@ const Index = ({ userData }) => {
                         </p>
                       </div>
                     </div>
+                    {appState.editMode == 'true' ? (
+                      <button
+                        className="mt-1 inline-flex items-center justify-center space-x-2 text-yellow-600 hover:text-yellow-400 dark:text-yellow-500 dark:hover:text-yellow-400"
+                        onClick={event => updateMartian(eachMartian, event)}
+                      >
+                        <DocumentTextIcon className="h-5 w-5" aria-hidden="true" />
+                        <span className="font-medium">Edit Data</span>
+                      </button>
+                    ) : null}
                   </div>
                   <Spacer y={0.5} x={1} />
                 </Grid>
