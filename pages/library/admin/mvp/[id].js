@@ -1,7 +1,258 @@
-import React from 'react';
+import { useState } from 'react';
+import dynamic from 'next/dynamic';
+import { Container } from '../../../../components/layout';
+import { loadMartians } from '../../../../lib/load-martians-list';
+import { TagIcon, TrendingUpIcon } from '@heroicons/react/solid';
+import Image from 'next/image';
+import fetch from '../../../../utils/fetcher';
 
-const Id = () => {
-  return <div></div>;
+export const getStaticPaths = async () => {
+  const response = await loadMartians();
+  const paths = response.data.data.map(content => {
+    return {
+      params: {
+        slug: content.id
+      }
+    };
+  });
+
+  // All missing paths are going to be server-side rendered and cached
+  return { paths, fallback: 'blocking' };
 };
 
-export default Id;
+export async function getStaticProps({ params }) {
+  try {
+    const martian = await fetch(
+      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/martian/byId?id=${params.id}`
+    );
+
+    return {
+      props: {
+        martian: martian.data
+      },
+      revalidate: 60
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      props: {
+        martian: {}
+      },
+      revalidate: 60
+    };
+  }
+}
+export default function Profile({ martian }) {
+  const metaTags = {
+    title: 'BNBChainDev - Profile',
+    description:
+      'Stay up-to-date with the BNBChain ecosystem. BNBChain Projects and Developers in one place.',
+    url: `${process.env.NEXT_PUBLIC_API_ENDPOINT}/profile`,
+    shouldIndex: true
+  };
+
+  return (
+    <Container metaTags={metaTags}>
+      <div className="flex gap-6 px-2 md:pl-0">
+        <main className="w-full">
+          <div className="px-4 sm:px-0">
+            <div className="relative z-0 flex flex-col divide-gray-200 rounded-md bg-white p-2 shadow dark:divide-gray-700 dark:bg-gray-800">
+              {/* Profile Detail */}
+              <div className="flex flex-row">
+                <div className="h-44 w-44 overflow-hidden rounded-full">
+                  {martian.ImageUrl ? (
+                    <Image src={martian.ImageUrl} width="250px" height="250px" />
+                  ) : (
+                    <Image src={'/martianImage.png'} width="250px" height="250px" />
+                  )}
+                </div>
+                <div className="ml-3 mt-6 w-[70%]">
+                  <p className="mb-2 text-lg font-medium uppercase text-gray-500 dark:text-gray-500">
+                    {martian.FirstName + ' ' + martian.LastName}
+                  </p>
+                  <div className="flex flex-row">
+                    {/* <div className="h-3 w-3">
+                      <Image src={'/place.png'} width="250px" height="250px" />
+                    </div> */}
+                    <p className="text-sm text-gray-500 dark:text-gray-500">{martian.Country}</p>
+                  </div>
+                  <div className="flex flex-row">
+                    {/* <div className="mr-1 h-3 w-3">
+                      <Image src={'/time.png'} width="250px" height="250px" />
+                    </div> */}
+                    <p className="text-sm text-gray-500 dark:text-gray-500">
+                      Members since ,12 Dec 2019
+                    </p>
+                  </div>
+
+                  <div className="flex flex-row">
+                    {/* <div className="mr-1 h-3 w-3">
+                      <Image src={'/account.png'} width="250px" height="250px" />
+                    </div> */}
+                    <p className="text-sm text-gray-500 dark:text-gray-500">
+                      {martian.MartianType}
+                    </p>
+                  </div>
+                  <p className="mt-2 mb-2 text-xs text-gray-500 dark:text-gray-500">
+                    {martian.Expertise}
+                  </p>
+                  <a
+                    className="text-sm text-gray-500 dark:text-gray-500"
+                    href="https://www.c-sharpcorner.com/members/Williambeniamin"
+                  >
+                    Personal Blog: https://www.c-sharpcorner.com/members/Williambeniamin
+                  </a>
+                </div>
+              </div>
+              {/* Achievement */}
+              {/* <div className="mt-2 flex flex-row justify-around">
+                <div className="flex h-16 w-36 flex-row">
+                  <div className="h-10 w-10">
+                    <TagIcon className="h-6 w-6" aria-hidden="true" />
+                   
+                  </div>
+                  <div className="ml-1">
+                    <p className="text-base font-medium text-black">AI</p>
+                    <p className="text-[12px] font-normal">Award Category</p>
+                  </div>
+                </div>
+                <div className="flex h-16 w-36 flex-row">
+                  <div className="h-10 w-10">
+                    <Image src={'/martianImage.png'} width="250px" height="250px" />
+                  </div>
+                  <div className="ml-1">
+                    <p className="text-base font-medium text-black">2019</p>
+                    <p className="text-[12px] font-normal">First Year Awarded</p>
+                  </div>
+                </div>
+                <div className="flex h-16 w-36 flex-row">
+                  <div className="h-10 w-10">
+                    <TrendingUpIcon className="h-6 w-6" aria-hidden="true" />
+                  </div>
+                  <div className="ml-1">
+                    <p className="text-base font-medium text-black">13k</p>
+                    <p className="text-[12px] font-normal">Number of MVP Awards</p>
+                  </div>
+                </div>
+             
+              </div> */}
+            </div>
+            {/* Share & Authar Part */}
+            <div className="mt-2 flex flex-row justify-between ">
+              <div className="relative z-0 flex w-[49%] flex-col items-center justify-center divide-x divide-gray-200 rounded-md bg-white p-2 shadow dark:divide-gray-700 dark:bg-gray-800">
+                <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Social:</p>
+                <div className="flex flex-row">
+                  <div className="mr-1 h-6 w-6 hover:cursor-pointer">
+                    <Image src={'/facebook.png'} width="250px" height="250px" />
+                  </div>
+                  <div className="mr-1 h-6 w-6 hover:cursor-pointer">
+                    <Image src={'/linkedin.png'} width="250px" height="250px" />
+                  </div>
+                  <div className="mr-1 h-6 w-6 hover:cursor-pointer">
+                    <Image src={'/twitter.png'} width="250px" height="250px" />
+                  </div>
+                </div>
+              </div>
+              <div className="relative z-0 flex w-[49%] flex-col items-center justify-center divide-x divide-gray-200 rounded-md bg-white p-2 shadow dark:divide-gray-700 dark:bg-gray-800">
+                <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Languages:</p>
+                <div className="flex flex-row">
+                  <div className="mr-1 h-6 w-6 text-sm text-gray-500 hover:cursor-pointer dark:text-gray-500">
+                    {martian.Languages}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
+              <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Biography:</p>
+              {martian.BioGraphy}
+            </div>
+            <div className="relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
+              <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Activities:</p>
+              {martian.Activities.length > 0 ? (
+                <div className="mb-1 w-full py-8">
+                  <div className="relative max-h-72 overflow-y-auto shadow-md  sm:rounded-lg">
+                    <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
+                      <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                          <th scope="col" className="px-4 py-3">
+                            Date
+                          </th>
+                          <th scope="col" className="px-4 py-3">
+                            Activity
+                          </th>
+                          <th scope="col" className="px-4 py-3">
+                            Type
+                          </th>
+                          <th scope="col" className="px-4 py-3">
+                            Primary Contribution Area
+                          </th>
+                          <th scope="col" className="px-4 py-3">
+                            Additional Contribution Areas
+                          </th>
+                          {/* <th scope="col" className="px-4 py-3">
+                            Action
+                          </th> */}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {martian.Activities.map((data, index) => (
+                          <tr
+                            key={index}
+                            className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
+                          >
+                            <th
+                              scope="row"
+                              className="whitespace-nowrap px-1 py-4 font-medium text-gray-900 dark:text-white"
+                            >
+                              {data.date}
+                            </th>
+                            <td className="px-4 py-4">
+                              <a
+                                href={data.activityLink}
+                                rel="noreferrer"
+                                target="_blank"
+                                className=" hover:underline "
+                              >
+                                {data.activity}
+                              </a>
+                            </td>
+                            <td className="px-4 py-4">{data.type}</td>
+                            <td className="px-4 py-4">{data.primaryContributionArea}</td>
+
+                            <td className="px-4 py-4">{data.additionalContributionArea}</td>
+
+                            {/* <td className="px-4 py-4 text-right">
+                              <a
+                                href="#"
+                                onClick={event => handleEditActivity(data, event)}
+                                className="font-medium text-yellow-600 hover:underline dark:text-yellow-500"
+                              >
+                                Edit
+                              </a>
+                              /
+                              <a
+                                href="#"
+                                onClick={() => handleDeleteActivity(data._id)}
+                                className="font-medium text-red-600 hover:underline dark:text-red-500"
+                              >
+                                Delete
+                              </a>
+                            </td> */}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              ) : null}
+            </div>
+          </div>
+        </main>
+
+        {/* <aside className="hidden max-w-sm xl:block">
+          <Sidebar tweets={tweets} latestNewsletter={latestNewsletter} />
+        </aside> */}
+      </div>
+    </Container>
+  );
+}

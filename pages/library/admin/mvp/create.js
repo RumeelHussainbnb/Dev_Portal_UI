@@ -17,6 +17,7 @@ const MvpForm = () => {
   const [data, setData] = useState({
     firstName: '',
     lastName: '',
+    email: '',
     country: { label: '', name: '' },
     state: { label: '', name: '' },
     city: '',
@@ -35,19 +36,20 @@ const MvpForm = () => {
 
   const createMvp = async event => {
     event.preventDefault();
-    console.log('data => ', data);
+    // console.log('data => ', data);
     let parms = {
       ImageUrl: data.imageUrl,
       FirstName: data.firstName,
       LastName: data.lastName,
+      Email: data.email,
       Expertise: data.expertise,
       MartianType: data.martian.value,
-      Country: data.country.name,
+      Country: data.country.label,
       City: data.city,
       Languages: data.language,
       BioGraphy: data.bioGraphy
     };
-    console.log('parms => ', parms);
+    // console.log('parms => ', parms);
     try {
       const response = await axios.post(`/martian`, parms);
       if (response?.data?.success === true) {
@@ -55,6 +57,7 @@ const MvpForm = () => {
         setData({
           firstName: '',
           lastName: '',
+          Email: '',
           country: { label: '', name: '' },
           state: { label: '', name: '' },
           city: '',
@@ -70,6 +73,7 @@ const MvpForm = () => {
       setData({
         firstName: '',
         lastName: '',
+        Email: '',
         country: { label: '', name: '' },
         state: { label: '', name: '' },
         city: '',
@@ -85,8 +89,8 @@ const MvpForm = () => {
 
   const martianOptions = [
     {
-      label: 'Comunity Martian',
-      value: 'Comunity Martian'
+      label: 'Community Martian',
+      value: 'Community Martian'
     },
 
     {
@@ -104,8 +108,7 @@ const MvpForm = () => {
 
   const updatedCountries = countries.map(country => ({
     label: country.name,
-    value: country.id,
-    ...country
+    value: country.name
   }));
 
   const updatedStates = country => {
@@ -276,8 +279,11 @@ const MvpForm = () => {
                       classNames={{
                         control: state =>
                           'py-1.5 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500',
+
                         option: state =>
-                          'dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500'
+                          state.isSelected
+                            ? ' dark:bg-gray-400 bg-white dark:text-gray-800 '
+                            : 'bg-white'
                       }}
                       options={updatedCountries}
                       value={data.country.label ? data.country : ''}
@@ -376,7 +382,9 @@ const MvpForm = () => {
                         control: state =>
                           'py-1.5 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500',
                         option: state =>
-                          'dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500'
+                          state.isSelected
+                            ? ' dark:bg-gray-400 bg-white dark:text-gray-800 '
+                            : 'bg-white'
                       }}
                       options={martianOptions}
                       value={data.martian.label ? data.martian : ''}
@@ -406,6 +414,24 @@ const MvpForm = () => {
                       autoComplete="given-name"
                       onChange={e => setData({ ...data, language: e.target.value })}
                       className="block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
+                    />
+                  </div>
+                </div>
+                <div className="col-span-12 sm:col-span-4 lg:col-span-10">
+                  <label
+                    htmlFor="expertise"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >
+                    Email
+                  </label>
+                  <div className="mt-1">
+                    <input
+                      id="email"
+                      name="email"
+                      required
+                      value={data.email}
+                      onChange={e => setData({ ...data, email: e.target.value })}
+                      className="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
                     />
                   </div>
                 </div>
@@ -464,7 +490,6 @@ const MvpForm = () => {
           </div>
         </div>
       </main>
-
       <NotificationError
         show={notifyError}
         setShow={setNotifyError}

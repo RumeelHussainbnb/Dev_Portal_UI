@@ -53,7 +53,8 @@ const moduleExports = {
       'medium.com',
       'encrypted-tbn0.gstatic.com',
       'img.youtube.com',
-      'public.bnbstatic.com'
+      'public.bnbstatic.com',
+      'bnbchain-dev-s3.s3.ap-northeast-1.amazonaws.com'
     ],
     formats: ['image/avif', 'image/webp']
   },

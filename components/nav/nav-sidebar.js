@@ -182,6 +182,10 @@ const martian = [
   {
     name: 'Add Martian',
     href: '/library/admin/mvp/create'
+  },
+  {
+    name: 'Add Martian Activities',
+    href: '/library/admin/mvp/activity'
   }
 ];
 

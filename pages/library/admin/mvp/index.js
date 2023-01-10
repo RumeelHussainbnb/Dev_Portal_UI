@@ -9,6 +9,7 @@ import Pagination from '../../../../components/pagination/Pagination';
 import { Container } from '../../../../components/layout';
 import axios from '../../../../utils/http';
 import { useAppState } from '../../../../context/AppContext';
+import Link from 'next/link';
 
 const Index = ({ userData }) => {
   const appState = useAppState();
@@ -25,8 +26,8 @@ const Index = ({ userData }) => {
 
   const awardCategory = [
     {
-      label: 'Comunity Martian',
-      value: 'Comunity Martian'
+      label: 'Community Martian',
+      value: 'Community Martian'
     },
 
     {
@@ -44,8 +45,7 @@ const Index = ({ userData }) => {
 
   const updatedCountries = countries.map(country => ({
     label: country.name,
-    value: country.id,
-    ...country
+    value: country.name
   }));
 
   const pagginationHandler = (page, perPage) => {
@@ -174,7 +174,7 @@ const Index = ({ userData }) => {
                         control: state =>
                           'block w-full rounded-md border-gray-300 py-1.5 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800',
                         option: state =>
-                          'block w-full border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800'
+                          'block w-full border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500  dark:text-gray-800'
                       }}
                       options={updatedCountries}
                       value={data.country.label ? data.country : ''}
@@ -194,11 +194,11 @@ const Index = ({ userData }) => {
                     htmlFor="awardCategory"
                     className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                   >
-                    AwardCategory
+                    Award Category
                   </label>
                   <div className="mt-1">
                     <Select
-                      placeholder="Select a awardCategory"
+                      placeholder="Select a Award Category"
                       instanceId={useId()}
                       name="awardCategory"
                       label="awardCategory"
@@ -206,7 +206,7 @@ const Index = ({ userData }) => {
                         control: state =>
                           'block w-full rounded-md border-gray-300 py-1.5 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800',
                         option: state =>
-                          'block w-full rounded-md border-gray-300 py-1.5 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800'
+                          'block w-full rounded-md border-gray-300 py-1.5 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500  dark:text-gray-800'
                       }}
                       options={awardCategory}
                       value={data.awardCategory.label ? data.awardCategory : ''}
@@ -220,7 +220,7 @@ const Index = ({ userData }) => {
                   </div>
                 </div>
 
-                <div className="mx-auto flex max-w-3xl justify-between">
+                <div className="mx-auto mb-4 flex max-w-3xl justify-between">
                   <button
                     onClick={handleDataReset}
                     className="mr-2 inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-3 px-16 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200"
@@ -245,52 +245,58 @@ const Index = ({ userData }) => {
                   key={index}
                   css={{ justifyItems: 'center', maxwidth: '500' }}
                 >
-                  <div className=" h-70 flex w-48 max-w-xs flex-col rounded-xl p-2 shadow-md dark:bg-gray-900 dark:text-gray-100 sm:px-3">
-                    {eachMartian?.ImageUrl ? (
-                      <img
-                        src={eachMartian?.ImageUrl}
-                        alt=""
-                        className="aspect-square mx-auto h-24 w-24 rounded-full dark:bg-gray-500"
-                      />
-                    ) : (
-                      <img
-                        className="aspect-square mx-auto h-24 w-24 rounded-full dark:bg-gray-500"
-                        src="/martianImage.png"
-                        alt=""
-                      />
-                    )}
+                  <Link href={`/library/admin/mvp/${eachMartian._id}`} passHref key={index}>
+                    <a>
+                      <div className=" h-70 flex w-48 max-w-xs flex-col rounded-xl p-2 shadow-md dark:bg-gray-900 dark:text-gray-100 sm:px-3">
+                        {eachMartian?.ImageUrl ? (
+                          <img
+                            src={eachMartian?.ImageUrl}
+                            alt=""
+                            className="aspect-square mx-auto h-24 w-24 rounded-full dark:bg-gray-500"
+                          />
+                        ) : (
+                          <img
+                            className="aspect-square mx-auto h-24 w-24 rounded-full dark:bg-gray-500"
+                            src="/martianImage.png"
+                            alt=""
+                          />
+                        )}
 
-                    <div className=" space-y-2 divide-y divide-gray-600 text-center">
-                      <div className="my-2 space-y-1">
-                        <h3 className="sm:text-1xl truncate text-sm font-semibold hover:text-clip">
-                          {eachMartian.FirstName}
-                        </h3>
+                        <div className=" space-y-2 divide-y divide-gray-600 text-center">
+                          <div className="my-2 space-y-1">
+                            <h3 className="sm:text-1xl truncate text-lg font-semibold hover:text-clip">
+                              {eachMartian.FirstName}
+                            </h3>
+                          </div>
+                          <div className=" space-x-4 pt-2">
+                            <h5 className="sm:text-1xl px-2 text-sm font-semibold">
+                              Martian Category
+                            </h5>
+                            <p className="px-1 text-sm dark:text-gray-400 ">
+                              {eachMartian.MartianType}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="space-y-4  text-center">
+                          <div className=" space-x-1 pt-2">
+                            <h4 className="sm:text-1.5xl text-sm font-semibold">Country</h4>
+                            <p className="px-5 text-sm dark:text-gray-400 sm:text-base">
+                              {eachMartian.Country}
+                            </p>
+                          </div>
+                        </div>
+                        {appState.editMode == 'true' ? (
+                          <button
+                            className="mt-1 inline-flex items-center justify-center space-x-2 text-yellow-600 hover:text-yellow-400 dark:text-yellow-500 dark:hover:text-yellow-400"
+                            onClick={event => updateMartian(eachMartian, event)}
+                          >
+                            <DocumentTextIcon className="h-5 w-5" aria-hidden="true" />
+                            <span className="font-medium">Edit Data</span>
+                          </button>
+                        ) : null}
                       </div>
-                      <div className=" space-x-4 pt-2">
-                        <h5 className="sm:text-1xl px-2 text-sm font-semibold">Martian Category</h5>
-                        <p className="px-1 text-sm dark:text-gray-400 ">
-                          {eachMartian.MartianType}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="space-y-4  text-center">
-                      <div className=" space-x-1 pt-2">
-                        <h4 className="sm:text-1.5xl text-sm font-semibold">Country</h4>
-                        <p className="px-5 text-sm dark:text-gray-400 sm:text-base">
-                          {eachMartian.Country}
-                        </p>
-                      </div>
-                    </div>
-                    {appState.editMode == 'true' ? (
-                      <button
-                        className="mt-1 inline-flex items-center justify-center space-x-2 text-yellow-600 hover:text-yellow-400 dark:text-yellow-500 dark:hover:text-yellow-400"
-                        onClick={event => updateMartian(eachMartian, event)}
-                      >
-                        <DocumentTextIcon className="h-5 w-5" aria-hidden="true" />
-                        <span className="font-medium">Edit Data</span>
-                      </button>
-                    ) : null}
-                  </div>
+                    </a>
+                  </Link>
                   <Spacer y={0.5} x={1} />
                 </Grid>
               ))}

@@ -37,6 +37,7 @@ const MvpForm = ({ router }) => {
 
   const updateMvp = async event => {
     event.preventDefault();
+    // console.log('data => ', data);
     let parms = {
       id: routerData._id,
       ImageUrl: data.imageUrl,
@@ -44,7 +45,7 @@ const MvpForm = ({ router }) => {
       LastName: data.lastName,
       Expertise: data.expertise,
       MartianType: data.martian.value,
-      Country: data.country.name,
+      Country: data.country.label,
       City: data.city,
       Languages: data.language,
       BioGraphy: data.bioGraphy
@@ -108,8 +109,7 @@ const MvpForm = ({ router }) => {
 
   const updatedCountries = countries.map(country => ({
     label: country.name,
-    value: country.id,
-    ...country
+    value: country.name
   }));
 
   const updatedStates = country => {
@@ -272,7 +272,9 @@ const MvpForm = ({ router }) => {
                         control: state =>
                           'py-1.5 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500',
                         option: state =>
-                          'dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500'
+                          state.isSelected
+                            ? ' dark:bg-gray-400 bg-white dark:text-gray-800 '
+                            : 'bg-white'
                       }}
                       options={updatedCountries}
                       value={data.country.label ? data.country : ''}
@@ -371,7 +373,9 @@ const MvpForm = ({ router }) => {
                         control: state =>
                           'py-1.5 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500',
                         option: state =>
-                          'dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500'
+                          state.isSelected
+                            ? ' dark:bg-gray-400 bg-white dark:text-gray-800 '
+                            : 'bg-white'
                       }}
                       options={martianOptions}
                       value={data.martian.label ? data.martian : ''}
