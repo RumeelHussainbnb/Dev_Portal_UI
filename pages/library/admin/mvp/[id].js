@@ -5,6 +5,8 @@ import { loadMartians } from '../../../../lib/load-martians-list';
 import { TagIcon, TrendingUpIcon } from '@heroicons/react/solid';
 import Image from 'next/image';
 import fetch from '../../../../utils/fetcher';
+import Pagination from '../../../../components/pagination/Pagination';
+import axios from '../../../../utils/http';
 
 export const getStaticPaths = async () => {
   const response = await loadMartians();
@@ -28,7 +30,7 @@ export async function getStaticProps({ params }) {
 
     return {
       props: {
-        martian: martian.data
+        martian: { ...martian.data, ActivitiesSize: martian.martianActivitySize.ActivitiesSize }
       },
       revalidate: 60
     };
@@ -43,6 +45,36 @@ export async function getStaticProps({ params }) {
   }
 }
 export default function Profile({ martian }) {
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(10);
+  const [activities, setActivities] = useState(martian.Activities);
+
+  const handlePageChange = async newPage => {
+    setPage(newPage.selected + 1);
+    try {
+      const response = await axios.get(
+        `/martian/martianActivity?pageNumber=${
+          newPage.selected + 1
+        }&limit=${perPage}&id=${'63a464bcf290584bd478452a'}`
+      );
+      if (response?.data?.success === true) {
+        setActivities(response?.data.data?.Activities);
+      }
+    } catch (error) {}
+  };
+
+  const handlePageSizeChange = async newSize => {
+    setPerPage(newSize);
+    try {
+      const response = await axios.get(
+        `/martian/martianActivity?pageNumber=${page}&limit=${newSize}&id=${'63a464bcf290584bd478452a'}`
+      );
+      if (response?.data?.success === true) {
+        setActivities(response?.data?.data?.Activities);
+      }
+    } catch (error) {}
+  };
+
   const metaTags = {
     title: 'BNBChainDev - Profile',
     description:
@@ -168,9 +200,9 @@ export default function Profile({ martian }) {
             </div>
             <div className="relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
               <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Activities:</p>
-              {martian.Activities.length > 0 ? (
+              {activities.length > 0 ? (
                 <div className="mb-1 w-full py-8">
-                  <div className="relative max-h-72 overflow-y-auto shadow-md  sm:rounded-lg">
+                  <div className="relative  shadow-md  sm:rounded-lg">
                     <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
                       <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
@@ -195,7 +227,7 @@ export default function Profile({ martian }) {
                         </tr>
                       </thead>
                       <tbody>
-                        {martian.Activities.map((data, index) => (
+                        {activities.map((data, index) => (
                           <tr
                             key={index}
                             className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
@@ -245,6 +277,12 @@ export default function Profile({ martian }) {
                   </div>
                 </div>
               ) : null}
+              <Pagination
+                pageCount={Math.ceil(martian.ActivitiesSize / perPage)}
+                pageSize={perPage}
+                onPageChange={handlePageChange}
+                onPageSizeChange={handlePageSizeChange}
+              />
             </div>
           </div>
         </main>
