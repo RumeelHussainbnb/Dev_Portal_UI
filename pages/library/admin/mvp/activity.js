@@ -27,7 +27,6 @@ export async function getStaticProps() {
       revalidate: 60
     };
   } catch (error) {
-    console.log(error);
     return {
       props: {
         martian: {}
@@ -143,7 +142,6 @@ const ActivityForm = ({ martian }) => {
       try {
         const addActivity = await axios.post(`martian/martianActivity`, newActivity);
         if (addActivity?.data?.success === true) {
-          // console.log('addActivity => ', addActivity);
           // let copiedActivity = [...activity];
           // copiedActivity.push(addActivity?.data?.data?.Activities);
           setActivity(addActivity?.data?.data?.Activities);
@@ -244,9 +242,6 @@ const ActivityForm = ({ martian }) => {
         params
       );
       if (deleteActivity?.data?.success === true) {
-        // console.log('addActivity => ', deleteActivity);
-        // let copiedActivity = [...activity];
-        // copiedActivity.push(addActivity?.data?.data?.Activities);
         setActivity(deleteActivity?.data?.data?.Activities);
 
         setNotifySuccess(true);

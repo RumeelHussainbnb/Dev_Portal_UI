@@ -212,7 +212,6 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
   const appState = useAppState();
   const appDispatch = useAppDispatch();
 
-  //console.log('appState => ', appState);
   useEffect(() => {
     const fetchData = async () => {
       // const data = await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/user/${window.sessionStorage.getItem('PublicKey')}`);

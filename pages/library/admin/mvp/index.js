@@ -92,9 +92,6 @@ const Index = ({ userData }) => {
 
   const updateMartian = (eachMartian, event) => {
     event.preventDefault();
-    // console.log(eachMartian)
-    //router.push({
-    //pathname: '/library/admin/mvp/update',
     router.push(
       {
         pathname: '/library/admin/mvp/update',

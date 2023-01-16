@@ -37,7 +37,6 @@ const MvpForm = ({ router }) => {
 
   const updateMvp = async event => {
     event.preventDefault();
-    // console.log('data => ', data);
     let parms = {
       id: routerData._id,
       ImageUrl: data.imageUrl,

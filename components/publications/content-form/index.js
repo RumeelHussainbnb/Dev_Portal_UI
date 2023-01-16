@@ -17,7 +17,6 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
   const [contentExist, setContentExist] = useState(false);
   const { isAdmin = false } = useUser();
   const router = useRouter();
-  //console.log('data ==> ', data);
   const createContent = async event => {
     event.preventDefault();
 

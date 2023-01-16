@@ -35,7 +35,6 @@ export async function getStaticProps({ params }) {
       revalidate: 60
     };
   } catch (error) {
-    console.log(error);
     return {
       props: {
         martian: {}

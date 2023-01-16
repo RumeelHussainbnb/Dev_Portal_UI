@@ -36,7 +36,6 @@ const MvpForm = () => {
 
   const createMvp = async event => {
     event.preventDefault();
-    // console.log('data => ', data);
     let parms = {
       ImageUrl: data.imageUrl,
       FirstName: data.firstName,
@@ -49,7 +48,6 @@ const MvpForm = () => {
       Languages: data.language,
       BioGraphy: data.bioGraphy
     };
-    // console.log('parms => ', parms);
     try {
       const response = await axios.post(`/martian`, parms);
       if (response?.data?.success === true) {
@@ -133,7 +131,6 @@ const MvpForm = () => {
 
   const onIconClick = () => {
     inputFile.current.click();
-    //console.log('inputFile => ', inputFile);
   };
   const handleFileUpload = async e => {
     setIsLoading(true);
@@ -150,9 +147,6 @@ const MvpForm = () => {
       //sucess
       if (allowedExtensions.includes(fileType)) {
         const response = await axios.get(`/martian/s3Url`);
-        //console.log('response => ', response);
-        // post the image direclty to the s3 bucket
-        // post the image direclty to the s3 bucket
         const imageResponse = await fetch(response.data.url, {
           method: 'PUT',
           headers: {
@@ -164,14 +158,9 @@ const MvpForm = () => {
         const imageUrl = response.data.url.split('?')[0];
         setImageURl(imageUrl);
         setData({ ...data, imageUrl: imageUrl });
-        // console.log(imageUrl);
-        // console.log(imageResponse);
       } else {
         //through image type error
       }
-      //console.log('fileType', fileType); //ex: zip, rar, jpg, svg etc.
-
-      //setImage(files[0]);
     }
     setIsLoading(false);
   };
