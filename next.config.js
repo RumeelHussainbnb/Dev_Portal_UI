@@ -54,7 +54,8 @@ const moduleExports = {
       'encrypted-tbn0.gstatic.com',
       'asdjasdas',
       'images.pexels.com',
-      'www.svgrepo.com'
+      'www.svgrepo.com',
+      'bnbchain-dev-s3.s3.ap-northeast-1.amazonaws.com'
     ],
     formats: ['image/avif', 'image/webp']
   },

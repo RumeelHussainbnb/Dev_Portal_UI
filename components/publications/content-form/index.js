@@ -9,6 +9,7 @@ import Position from './position';
 import { useRouter } from 'next/router';
 import useUser from '../../../hooks/useUser';
 import axios from '../../../utils/http';
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
@@ -25,8 +26,9 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
     const content = data;
     if (isAdmin) {
       content.ContentStatus = 'active';
-    }
-
+      }
+      content.PublicKey = localStorage.getItem('PublicKey');
+      console.log(content);
     const response = await axios.post(`/content`, content);
 
     // After submitting we need to restart the
