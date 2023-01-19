@@ -407,26 +407,22 @@ export async function getServerSideProps(context) {
     let response;
     const userToken = context.req.cookies.userToken;
     // .req.cookies.get('userToken');
-    //console.log('user Token ====>', JSON.parse(userToken));
-
+    console.log('user Token ====>', JSON.parse(userToken));
     let user = JSON.parse(userToken);
     try {
-        response = await axios.get(
-            `${EndPoint.BASE_URL}${EndPoint.GET_PROFILE}/${user.data?._id}`,
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + user.token,
-                },
+        response = await axios.get(`${EndPoint.BASE_URL}${EndPoint.GET_PROFILE}/${user.data?._id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + user.token
             }
-        );
-        console.log("User Data ===>", response?.data?.data);
+        });
+        console.log('User Data ===>', response?.data?.data);
     } catch (error) {
-        console.log("hello", error);
+        console.log('hello', error);
     }
     return {
         props: {
-            data: response?.data?.data,
-        },
+            data: response?.data?.data
+        }
     };
 }

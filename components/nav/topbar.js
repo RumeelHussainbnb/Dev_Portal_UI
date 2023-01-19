@@ -90,7 +90,9 @@ function TopBar({ setSearch, search, childrens }) {
                         .catch(err => {
                             console.log('ERROR ========>', err);
                         });
-                };
+                }
+                else
+                    Cookies.set('userToken', JSON.stringify(user));
             }
         }
         else {
