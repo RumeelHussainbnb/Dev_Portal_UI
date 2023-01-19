@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic';
 import { useState, useId, useRef } from 'react';
+import { useRouter } from 'next/router';
 
 // import Image from 'next/image';
 import Select from 'react-select';
@@ -12,35 +13,35 @@ import axios from '../../../../utils/http';
 const NotificationSuccess = dynamic(() => import('../../../../components/notifications/success'));
 const NotificationError = dynamic(() => import('../../../../components/notifications/error'));
 
-const MvpForm = () => {
+const MvpForm = ({ router }) => {
   const inputFile = useRef(null);
+  const routerData = router.query;
   const [data, setData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    country: { label: '', name: '' },
-    state: { label: '', name: '' },
-    city: '',
-    martian: { label: '', name: '' },
-    imageUrl: '',
-    language: '',
-    expertise: '',
-    bioGraphy: ''
+    firstName: routerData.FirstName,
+    lastName: routerData.LastName,
+    country: { label: routerData.Country, name: routerData.Country },
+    state: { label: routerData.State, name: routerData.State },
+    city: routerData.City,
+    martian: { label: routerData.MartianType, name: routerData.MartianType },
+    language: routerData.Languages,
+    expertise: routerData.Expertise,
+    bioGraphy: routerData.BioGraphy
   });
+
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
   const [notifySuccess, setNotifySuccess] = useState(false);
   const [notifyError, setNotifyError] = useState(false);
-  const [imageURL, setImageURl] = useState('');
+  const [imageURL, setImageURl] = useState(routerData?.ImageUrl);
   const [isLoading, setIsLoading] = useState(false);
 
-  const createMvp = async event => {
+  const updateMvp = async event => {
     event.preventDefault();
     let parms = {
+      id: routerData._id,
       ImageUrl: data.imageUrl,
       FirstName: data.firstName,
       LastName: data.lastName,
-      Email: data.email,
       Expertise: data.expertise,
       MartianType: data.martian.value,
       Country: data.country.label,
@@ -49,13 +50,12 @@ const MvpForm = () => {
       BioGraphy: data.bioGraphy
     };
     try {
-      const response = await axios.post(`/martian`, parms);
+      const response = await axios.put(`/martian`, parms);
       if (response?.data?.success === true) {
         //Empty editor state
         setData({
           firstName: '',
           lastName: '',
-          Email: '',
           country: { label: '', name: '' },
           state: { label: '', name: '' },
           city: '',
@@ -65,13 +65,15 @@ const MvpForm = () => {
           bioGraphy: ''
         });
         setNotifySuccess(true);
+        setTimeout(() => {
+          router.back();
+        }, '1500');
       }
     } catch (error) {
       //Empty editor state
       setData({
         firstName: '',
         lastName: '',
-        Email: '',
         country: { label: '', name: '' },
         state: { label: '', name: '' },
         city: '',
@@ -87,8 +89,8 @@ const MvpForm = () => {
 
   const martianOptions = [
     {
-      label: 'Community Martian',
-      value: 'Community Martian'
+      label: 'Comunity Martian',
+      value: 'Comunity Martian'
     },
 
     {
@@ -134,7 +136,7 @@ const MvpForm = () => {
   };
   const handleFileUpload = async e => {
     setIsLoading(true);
-    //file Validation Extentions
+
     let allowedExtensions = ['jpg', 'jpeg', 'png'];
     const { files } = e.target;
 
@@ -147,6 +149,7 @@ const MvpForm = () => {
       //sucess
       if (allowedExtensions.includes(fileType)) {
         const response = await axios.get(`/martian/s3Url`);
+
         const imageResponse = await fetch(response.data.url, {
           method: 'PUT',
           headers: {
@@ -159,7 +162,6 @@ const MvpForm = () => {
         setImageURl(imageUrl);
         setData({ ...data, imageUrl: imageUrl });
       } else {
-        //through image type error
       }
     }
     setIsLoading(false);
@@ -171,7 +173,7 @@ const MvpForm = () => {
         <div className="relative overflow-hidden bg-white py-16 px-4 dark:bg-gray-800 sm:px-6 lg:px-8 lg:py-14">
           <div className=" mx-auto max-w-3xl">
             <div className="prose prose mx-auto max-w-max text-center prose-h1:mb-2 prose-p:text-lg dark:prose-invert">
-              <h1>ADD MARTIAN</h1>
+              <h1>UPDATE MARTIAN</h1>
             </div>
 
             <div className="mx-auto mt-10 h-24 w-28 text-center" onClick={onIconClick}>
@@ -210,7 +212,7 @@ const MvpForm = () => {
                 action="#"
                 method="POST"
                 className="grid grid-cols-8 gap-y-8 gap-x-20"
-                onSubmit={createMvp}
+                onSubmit={updateMvp}
               >
                 <div className="col-span-12 sm:col-span-4 lg:col-span-5">
                   <label
@@ -268,7 +270,6 @@ const MvpForm = () => {
                       classNames={{
                         control: state =>
                           'py-1.5 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500',
-
                         option: state =>
                           state.isSelected
                             ? ' dark:bg-gray-400 bg-white dark:text-gray-800 '
@@ -406,24 +407,6 @@ const MvpForm = () => {
                     />
                   </div>
                 </div>
-                <div className="col-span-12 sm:col-span-4 lg:col-span-10">
-                  <label
-                    htmlFor="expertise"
-                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-                  >
-                    Email
-                  </label>
-                  <div className="mt-1">
-                    <input
-                      id="email"
-                      name="email"
-                      required
-                      value={data.email}
-                      onChange={e => setData({ ...data, email: e.target.value })}
-                      className="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
-                    />
-                  </div>
-                </div>
 
                 <div className="col-span-12 sm:col-span-4 lg:col-span-10">
                   <label
@@ -479,6 +462,7 @@ const MvpForm = () => {
           </div>
         </div>
       </main>
+
       <NotificationError
         show={notifyError}
         setShow={setNotifyError}
@@ -496,17 +480,18 @@ const MvpForm = () => {
   );
 };
 
-export default function ContentMartians({}) {
+export default function UpdateMartians({}) {
   const metaTags = {
     title: 'BNB Chain - Library Admin Martians',
     description: 'Library Admin Martians',
-    url: `${process.env.NEXT_PUBLIC_API_ENDPOINT}/admin/mvp/create`,
+    url: `${process.env.NEXT_PUBLIC_API_ENDPOINT}/admin/mvp/update`,
     shouldIndex: false
   };
+  const router = useRouter();
 
   return (
     <Container metaTags={metaTags}>
-      <MvpForm />
+      <MvpForm router={router} />
     </Container>
   );
 }

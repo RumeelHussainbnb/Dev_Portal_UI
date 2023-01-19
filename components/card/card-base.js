@@ -129,7 +129,6 @@ const NewsLetterContent = ({ imageUrl, content, mode, editContent, closeSearch }
 };
 
 const PlaylistContent = ({ imageUrl, content, mode, editContent, closeSearch }) => {
-  //console.log('content ==> ', content);
   return (
     <>
       <Link href={`/library/${content.ContentType}/video/${content.SK}`} passHref>
@@ -366,8 +365,6 @@ const BaseContent = ({ imageUrl, content, mode, editContent, closeSearch }) => {
 };
 
 const CardBase = ({ content, mode, editContent, closeSearch }) => {
-  // console.log('content =>', content);
-  //This Card Will return diffrent cards on basis on contentType
   const imageUrl = defineImage(content);
   let CardTemplate;
   CardTemplate = (
