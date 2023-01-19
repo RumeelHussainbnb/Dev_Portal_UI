@@ -6,7 +6,6 @@ const Editor = dynamic(() => import('react-draft-wysiwyg').then(mod => mod.Edito
 
 const EditorComponent = ({ editorState, EditorChange }) => {
   const uploadCallbackk = (file, callback) => {
-    console.log(file);
     return new Promise((resolve, reject) => {
       const reader = new window.FileReader();
       console.log(reader);

@@ -16,7 +16,6 @@ export default function BNBDevTools() {
   const [selectedItem, setSelectedItem] = useState(undefined);
 
   const handleShowModal = item => {
-    console.log(item);
     setSelectedItem(item);
   };
 

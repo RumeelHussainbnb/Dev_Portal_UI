@@ -24,7 +24,6 @@ function classNames(...classes) {
 function CardRegular({ content, mode, editContent, closeSearch }) {
   const [isS3Audio, setIsS3Audio] = useState(false);
   const imageUrl = defineImage(content);
-  // console.log('content ==> ', content);
   const badgeUrl =
     mode === 'search'
       ? `/library/${content.ContentType}`
