@@ -164,8 +164,7 @@ export default function Profile({ martian }) {
                     <p className="text-base font-medium text-black">13k</p>
                     <p className="text-[12px] font-normal">Number of MVP Awards</p>
                   </div>
-                </div>
-             
+                </div>             
               </div> */}
             </div>
             {/* Share & Authar Part */}
@@ -269,27 +268,27 @@ export default function Profile({ martian }) {
                                 Delete
                               </a>
                             </td> */}
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              ) : null}
-              <Pagination
-                pageCount={Math.ceil(martian.ActivitiesSize / perPage)}
-                pageSize={perPage}
-                onPageChange={handlePageChange}
-                onPageSizeChange={handlePageSizeChange}
-              />
-            </div>
-          </div>
-        </main>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            ) : null}
+                            <Pagination
+                                pageCount={Math.ceil(martian.ActivitiesSize / perPage)}
+                                pageSize={perPage}
+                                onPageChange={handlePageChange}
+                                onPageSizeChange={handlePageSizeChange}
+                            />
+                        </div>
+                    </div>
+                </main>
 
-        {/* <aside className="hidden max-w-sm xl:block">
+                {/* <aside className="hidden max-w-sm xl:block">
           <Sidebar tweets={tweets} latestNewsletter={latestNewsletter} />
         </aside> */}
-      </div>
-    </Container>
-  );
+            </div>
+        </Container>
+    );
 }

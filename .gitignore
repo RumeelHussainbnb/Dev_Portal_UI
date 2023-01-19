@@ -44,3 +44,4 @@ package-lock.json
 yarn.lock
 public/robots.txt
 public/*.xml
+/.vs
