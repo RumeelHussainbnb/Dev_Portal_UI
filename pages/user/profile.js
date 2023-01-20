@@ -15,7 +15,6 @@ function classNames(...classes) {
 
 export default function Profile({ data }) {
     const router = useRouter();
-    console.log("profile data", data);
     const metaTags = {
         title: "BNBChainDev - Profile",
         description:
@@ -407,7 +406,6 @@ export async function getServerSideProps(context) {
     let response;
     const userToken = context.req.cookies.userToken;
     // .req.cookies.get('userToken');
-    console.log('user Token ====>', JSON.parse(userToken));
     let user = JSON.parse(userToken);
     try {
         response = await axios.get(`${EndPoint.BASE_URL}${EndPoint.GET_PROFILE}/${user.data?._id}`, {
@@ -416,9 +414,8 @@ export async function getServerSideProps(context) {
                 Authorization: 'Bearer ' + user.token
             }
         });
-        console.log('User Data ===>', response?.data?.data);
     } catch (error) {
-        console.log('hello', error);
+        console.log(error);
     }
     return {
         props: {

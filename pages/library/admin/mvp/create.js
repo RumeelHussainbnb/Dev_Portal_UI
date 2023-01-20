@@ -50,6 +50,7 @@ const MvpForm = () => {
     };
     try {
       const response = await axios.post(`/martian`, parms);
+      console.log("data ---- ", parms);
       if (response?.data?.success === true) {
         //Empty editor state
         setData({

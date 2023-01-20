@@ -79,9 +79,7 @@ function TopBar({ setSearch, search, childrens }) {
                     }
                     axios.post(`${endpoints.BASE_URL}/auth/register`, payload)
                         .then(res => {
-                            console.log('res====>', res.data);
                             if (res?.data?.success == true) {
-                                console.log('SignUp ===>', res.data);
                                 localStorage.setItem('usrData', JSON.stringify(res.data));
                                 Cookies.set('userToken', JSON.stringify(res.data));
                                 router.push('/user/edit-profile');
