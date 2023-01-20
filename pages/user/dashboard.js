@@ -13,8 +13,10 @@ export default function Contents({ data }) {
   let { statusinactive } = data;
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
-  const handlePageChange = async newPage => {
-    setPage(newPage.selected + 1);
+  const handlePageChange = async (page, tableType) => {
+    console.log('page ==> ', page);
+    console.log('tableType ==> ', tableType);
+    //setPage(newPage.selected + 1);
     // try {
     //   const response = await axios.get(
     //     `/martian/martianActivity?pageNumber=${
@@ -27,8 +29,9 @@ export default function Contents({ data }) {
     // } catch (error) {}
   };
 
+  //No need to for this function because we removd page size
   const handlePageSizeChange = async newSize => {
-    setPerPage(newSize);
+    //setPerPage(newSize);
     // try {
     //   const response = await axios.get(
     //     `/martian/martianActivity?pageNumber=${page}&limit=${newSize}&id=${'63a464bcf290584bd478452a'}`
@@ -110,8 +113,8 @@ export default function Contents({ data }) {
           showPerPage={false}
           pageCount={10}
           pageSize={perPage}
-          onPageChange={handlePageChange}
-          onPageSizeChange={handlePageSizeChange}
+          onPageChange={page => handlePageChange(page, 'Active')}
+          onPageSizeChange={page => handlePageSizeChange(page, 'Active')}
         />
       </div>
 
@@ -175,6 +178,13 @@ export default function Contents({ data }) {
             </table>
           </div>
         ) : null}
+        <Pagination
+          showPerPage={false}
+          pageCount={10}
+          pageSize={perPage}
+          onPageChange={page => handlePageChange(page, 'Rejected')}
+          onPageSizeChange={page => handlePageSizeChange(page, 'Rejected')}
+        />
       </div>
     </Container>
   );
