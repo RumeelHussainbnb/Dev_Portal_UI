@@ -4,7 +4,14 @@ import Select from 'react-select';
 // import SelectDropdown from './../select-dropdown/SelectDropdown';
 import styles from './Pagination.module.scss';
 
-function Pagination({ pageCount, pageSize, onPageChange, onPageSizeChange, classNamePrefix = '' }) {
+function Pagination({
+  pageCount,
+  pageSize,
+  onPageChange,
+  onPageSizeChange,
+  classNamePrefix = '',
+  showPerPage = true
+}) {
   const PREVIOUS_LABEL = 'Prev';
   const NEXT_LABEL = 'Next';
   const MARGIN_PAGES_DISPLAYED = 2;
@@ -45,20 +52,21 @@ function Pagination({ pageCount, pageSize, onPageChange, onPageSizeChange, class
         activeClassName={styles.selected}
         // activeLinkClassName={styles.selected}
       />
-
-      <Select
-        classNames={{
-          control: state =>
-            'w-42 h-4 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500',
-          option: state =>
-            'dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500'
-        }}
-        defaultValue={selectedOption}
-        onChange={handlePageSizeChange}
-        options={options}
-        placeholder="No option selected"
-        menuPlacement="top"
-      />
+      {showPerPage && (
+        <Select
+          classNames={{
+            control: state =>
+              'w-42 h-4 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500',
+            option: state =>
+              'dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500'
+          }}
+          defaultValue={selectedOption}
+          onChange={handlePageSizeChange}
+          options={options}
+          placeholder="No option selected"
+          menuPlacement="top"
+        />
+      )}
     </div>
   );
 }
