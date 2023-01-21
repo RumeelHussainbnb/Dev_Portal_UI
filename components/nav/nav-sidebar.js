@@ -238,15 +238,6 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
     setButtonsVisible(showButton);
   }, [showButton]);
 
-        fetchData().catch('Catch error ', console.error);
-        if (window && window.sessionStorage.getItem('main-navigation')) {
-            setCurrent(window.sessionStorage.getItem('main-navigation'));
-        } else {
-            setCurrent('Library');
-        }
-        setButtonsVisible(showButton);
-    }, [showButton]);
-
     return (
         <nav aria-label="Sidebar" className="top-4 divide-y divide-gray-300 dark:divide-gray-500">
             <div className="pb-4">
