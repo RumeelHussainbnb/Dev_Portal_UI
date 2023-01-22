@@ -247,13 +247,13 @@ const Index = ({ userData }) => {
                     <a>
                       <div className=" h-70 flex w-48 max-w-xs flex-col rounded-xl p-2 shadow-md dark:bg-gray-900 dark:text-gray-100 sm:px-3">
                         {eachMartian?.ImageUrl ? (
-                          <Image
+                          <img
                             src={eachMartian?.ImageUrl}
                             alt=""
                             className="aspect-square mx-auto h-24 w-24 rounded-full dark:bg-gray-500"
                           />
                         ) : (
-                          <Image
+                          <img
                             className="aspect-square mx-auto h-24 w-24 rounded-full dark:bg-gray-500"
                             src="/martianImage.png"
                             alt=""
