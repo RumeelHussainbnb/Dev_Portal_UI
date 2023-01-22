@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
   HeartIcon as Liked,
   DocumentTextIcon,
@@ -30,12 +31,16 @@ const myLoader = ({ src, width, quality }) => {
 
 function PostWide({ content, mode }) {
   const [isS3Audio, setIsS3Audio] = useState(false);
-  const [contentState, setContentState] = useState({
-    ...content,
-    isLiked: contentState?.LikedBy.includes(localStorage.getItem('PublicKey'))
-  });
+  const [contentState, setContentState] = useState(content);
   const imageUrl = defineImage(content);
-  console.log('contentState ==> ', contentState);
+
+  // Perform localStorage action & Like
+  useEffect(() => {
+    setContentState({
+      ...contentState,
+      isLiked: contentState?.LikedBy.includes(localStorage.getItem('PublicKey'))
+    });
+  }, []);
 
   const likeContent = async event => {
     event.preventDefault();
@@ -44,9 +49,10 @@ function PostWide({ content, mode }) {
       const response = await axios.post(`/content/like`, content);
       if (response?.data?.success === true) {
         // This is th eblock where icon will be turned yellow
-        // content.Author = 'loil';
-        setContentState({ ...contentState, Author: 'lol' });
-        console.log('Post liked', response);
+        setContentState({
+          ...response.data?.data,
+          isLiked: response.data?.data?.LikedBy.includes(localStorage.getItem('PublicKey'))
+        });
       }
     } catch (error) {
       console.log('Error ', error);
@@ -253,10 +259,14 @@ function PostWide({ content, mode }) {
             className="flex h-9 w-9 items-center justify-center rounded-full border border-gray-500"
             onClick={likeContent}
           >
-            <Unliked
-              className="h-5 w-5 stroke-gray-500 hover:fill-yellow-500 hover:stroke-yellow-500"
-              aria-hidden="true"
-            />
+            {contentState.isLiked ? (
+              <Liked className="h-6 w-6 fill-yellow-500" aria-hidden="true" />
+            ) : (
+              <Unliked
+                className="h-5 w-5 stroke-gray-500 hover:fill-yellow-500 hover:stroke-yellow-500"
+                aria-hidden="true"
+              />
+            )}
           </div>
 
           <div className="flex h-9 w-9 items-center justify-center rounded-full border border-gray-500">
