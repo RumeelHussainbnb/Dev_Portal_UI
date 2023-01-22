@@ -6,6 +6,7 @@ import Select from 'react-select';
 import { Container } from '../../../../components/layout';
 import { Country, State, City } from 'country-state-city';
 const Spinner = dynamic(() => import('../../../../components/spinner'));
+import Image from 'next/image';
 
 import axios from '../../../../utils/http';
 
@@ -191,9 +192,9 @@ const MvpForm = () => {
                   {isLoading ? (
                     <Spinner />
                   ) : imageURL ? (
-                    <img className="absolute h-28 w-28 rounded-full" src={imageURL} alt="" />
+                    <Image className="absolute h-28 w-28 rounded-full" src={imageURL} alt="" />
                   ) : (
-                    <img
+                    <Image
                       className="absolute h-28 w-28 rounded-full"
                       src="/martianImage.png"
                       alt=""
@@ -202,7 +203,7 @@ const MvpForm = () => {
 
                   {!isLoading && (
                     <div className="group absolute flex h-28 w-28 cursor-pointer items-center justify-center rounded-full opacity-60 transition duration-500 hover:bg-gray-200">
-                      <img className="hidden w-5 group-hover:block" src="/upload.svg" alt="" />
+                      <Image className="hidden w-5 group-hover:block" src="/upload.svg" alt="" />
                     </div>
                   )}
                 </div>
