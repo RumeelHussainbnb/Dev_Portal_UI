@@ -37,6 +37,7 @@ export default function Profile({ data }) {
                                         width="300px"
                                         height="300px"
                                         className="rounded-full"
+                                        alt=""
                                     />
                                 </div>
                                 <div className="ml-3 mt-6 w-[70%]">
@@ -47,12 +48,12 @@ export default function Profile({ data }) {
                                     ) : null}
                                     {data?.Country != "" ? (<div className="mt-1 flex flex-row">
                                         <div className="w-4 h-4">
-                                            <Image src={"/place.png"} height={"100px"} width={"100px"} /></div>
+                                            <Image src={"/place.png"} height={"100px"} width={"100px"} alt=""/></div>
                                         <p className="ml-1 text-[12px]">{data?.Country}</p>
                                     </div>) : null}
                                     <div className="mt-1 flex flex-row">
                                         <div className="w-4 h-4">
-                                            <Image src={"/time.png"} height={"100px"} width={"100px"} /></div>
+                                            <Image src={"/time.png"} height={"100px"} width={"100px"} alt=""/></div>
                                         <p className="ml-1 text-[12px]">
                                             Member since,{" "}
                                             {moment(data?.CreatedAt).format("MMMM,YYYY")}
@@ -60,7 +61,7 @@ export default function Profile({ data }) {
                                     </div>
                                     {data?.Skils.length > 0 ? (<div className="mt-1 flex flex-row">
                                         <div className="w-4 h-4">
-                                            <Image src={"/account.png"} height={"100px"} width={"100px"} /></div>
+                                            <Image src={"/account.png"} height={"100px"} width={"100px"} alt=""/></div>
                                         {data?.Skils?.map((item, index) => (
                                             <p key={index} className="ml-1 text-[12px]">
                                                 {item},
@@ -80,7 +81,7 @@ export default function Profile({ data }) {
                                 <div className="flex h-fit w-full flex-row flex-wrap justify-between px-4">
                                     <div className="flex h-16 w-36 flex-row">
                                         <div className="h-14 w-14">
-                                            <Image src={"/rank.png"} width="250px" height="250px" />
+                                            <Image src={"/rank.png"} width="250px" height="250px" alt=""/>
                                         </div>
                                         <div className="ml-1">
                                             <p className="text-base font-medium text-black">
@@ -91,7 +92,7 @@ export default function Profile({ data }) {
                                     </div>
                                     <div className="flex h-16 w-36 flex-row">
                                         <div className="h-14 w-14">
-                                            <Image src={"/read.png"} width="250px" height="250px" />
+                                            <Image src={"/read.png"} width="250px" height="250px" alt=""/>
                                         </div>
                                         <div className="ml-1">
                                             <p className="text-base font-medium text-black">
@@ -106,6 +107,7 @@ export default function Profile({ data }) {
                                                 src={"/reputation.png"}
                                                 width="250px"
                                                 height="250px"
+                                                alt=""
                                             />
                                         </div>
                                         <div className="ml-1">
@@ -117,7 +119,7 @@ export default function Profile({ data }) {
                                     </div>
                                     <div className="flex h-16 w-36 flex-row">
                                         <div className="h-12 w-12">
-                                            <Image src={"/member.png"} width="250px" height="250px" />
+                                            <Image src={"/member.png"} width="250px" height="250px" alt=""/>
                                         </div>
                                         <div className="ml-1">
                                             <p className="text-base font-medium text-black">
@@ -128,7 +130,7 @@ export default function Profile({ data }) {
                                     </div>
                                     <div className="flex h-16 w-36 flex-row">
                                         <div className="h-12 w-12">
-                                            <Image src={"/likes.png"} width="250px" height="250px" />
+                                            <Image src={"/likes.png"} width="250px" height="250px" alt=""/>
                                         </div>
                                         <div className="ml-1">
                                             <p className="text-base font-medium text-black">
@@ -249,6 +251,7 @@ export default function Profile({ data }) {
                                         src={"/employee-of-the-month-selected.png"}
                                         width="300px"
                                         height="300px"
+                                        alt=""
                                     />
                                 </div>
                                 <div className="m-h-[80px] mr-3 flex h-fit w-[30%] max-w-[80px] items-center justify-center overflow-hidden ">
@@ -256,13 +259,14 @@ export default function Profile({ data }) {
                                         src={"/mvp-selected.png"}
                                         width="300px"
                                         height="300px"
+                                        alt=""
                                     />
                                 </div>
                                 <div className="m-h-[80px] mr-3 flex h-fit w-[30%] max-w-[80px] items-center justify-center overflow-hidden">
-                                    <Image src={"/vip.png"} width="300px" height="300px" />
+                                    <Image src={"/vip.png"} width="300px" height="300px" alt=""/>
                                 </div>
                                 <div className="m-h-[80px] mr-3 flex h-fit w-[30%] max-w-[80px] items-center justify-center overflow-hidden">
-                                    <Image src={"/speaker.png"} width="300px" height="300px" />
+                                    <Image src={"/speaker.png"} width="300px" height="300px" alt=""/>
                                 </div>
                             </div>
                         </div>
@@ -296,6 +300,7 @@ export default function Profile({ data }) {
                                                         src={"/certificate.png"}
                                                         width={"30px"}
                                                         height={"30px"}
+                                                        alt=""
                                                     />
                                                 </td>
 
@@ -333,6 +338,7 @@ export default function Profile({ data }) {
                                                 src={"/facebook.png"}
                                                 width="250px"
                                                 height="250px"
+                                                alt=""
                                             />
                                         </div>
                                     </Link>
@@ -348,6 +354,7 @@ export default function Profile({ data }) {
                                                 src={"/linkedin.png"}
                                                 width="250px"
                                                 height="250px"
+                                                alt=""
                                             />
                                         </div>
                                     </Link>
@@ -363,6 +370,7 @@ export default function Profile({ data }) {
                                                 src={"/twitter.png"}
                                                 width="250px"
                                                 height="250px"
+                                                alt=""
                                             />
                                         </div>
                                     </Link>
@@ -376,6 +384,7 @@ export default function Profile({ data }) {
                                             src={"/icons8-add-friend-58.png"}
                                             width="250px"
                                             height="250px"
+                                            alt=""
                                         />
                                     </div>
                                     <div className="mr-2 h-8 w-8 hover:cursor-pointer">
@@ -383,6 +392,7 @@ export default function Profile({ data }) {
                                             src={"/icons8-certification-64.png"}
                                             width="250px"
                                             height="250px"
+                                            alt=""
                                         />
                                     </div>
                                     <div className="mr-2 h-8 w-8 hover:cursor-pointer">
@@ -390,6 +400,7 @@ export default function Profile({ data }) {
                                             src={"/icons8-graph-64.png"}
                                             width="250px"
                                             height="250px"
+                                            alt=""
                                         />
                                     </div>
                                 </div>

@@ -10,6 +10,7 @@ import { Container } from '../../../../components/layout';
 import axios from '../../../../utils/http';
 import { useAppState } from '../../../../context/AppContext';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const Index = ({ userData }) => {
   const appState = useAppState();
@@ -246,13 +247,13 @@ const Index = ({ userData }) => {
                     <a>
                       <div className=" h-70 flex w-48 max-w-xs flex-col rounded-xl p-2 shadow-md dark:bg-gray-900 dark:text-gray-100 sm:px-3">
                         {eachMartian?.ImageUrl ? (
-                          <img
+                          <Image
                             src={eachMartian?.ImageUrl}
                             alt=""
                             className="aspect-square mx-auto h-24 w-24 rounded-full dark:bg-gray-500"
                           />
                         ) : (
-                          <img
+                          <Image
                             className="aspect-square mx-auto h-24 w-24 rounded-full dark:bg-gray-500"
                             src="/martianImage.png"
                             alt=""

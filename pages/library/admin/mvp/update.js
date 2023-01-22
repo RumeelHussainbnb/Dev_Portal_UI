@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic';
 import { useState, useId, useRef } from 'react';
 import { useRouter } from 'next/router';
 
-// import Image from 'next/image';
+import Image from 'next/image';
 import Select from 'react-select';
 import { Container } from '../../../../components/layout';
 import { Country, State, City } from 'country-state-city';
@@ -189,9 +189,9 @@ const MvpForm = ({ router }) => {
                   {isLoading ? (
                     <Spinner />
                   ) : imageURL ? (
-                    <img className="absolute h-28 w-28 rounded-full" src={imageURL} alt="" />
+                    <Image className="absolute h-28 w-28 rounded-full" src={imageURL} alt="" />
                   ) : (
-                    <img
+                    <Image
                       className="absolute h-28 w-28 rounded-full"
                       src="/martianImage.png"
                       alt=""
@@ -200,7 +200,7 @@ const MvpForm = ({ router }) => {
 
                   {!isLoading && (
                     <div className="group absolute flex h-28 w-28 cursor-pointer items-center justify-center rounded-full opacity-60 transition duration-500 hover:bg-gray-200">
-                      <img className="hidden w-5 group-hover:block" src="/upload.svg" alt="" />
+                      <Image className="hidden w-5 group-hover:block" src="/upload.svg" alt="" />
                     </div>
                   )}
                 </div>

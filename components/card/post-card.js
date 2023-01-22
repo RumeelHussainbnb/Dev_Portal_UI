@@ -163,7 +163,7 @@ import {
               {content.Author && (
                 <div className="flex flex-row items-center gap-x-1">
                   <div className="col-span-12 sm:col-span-4 lg:col-span-10">
-                    <img className=" h-10 w-10 rounded-full" src="/martianImage.png" alt="" />
+                    <Image className=" h-10 w-10 rounded-full" src="/martianImage.png" alt="" />
                   </div>
                   <a href={content.Url} className="" rel="noreferrer" target="_blank">
                     <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-500">

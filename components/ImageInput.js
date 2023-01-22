@@ -45,6 +45,7 @@ const ImageInput = ({
               width={'300px'}
               objectFit="contain"
               className="flex-1 bg-inherit"
+              alt=""
               // layout="fill"
             />
           ) : (
@@ -52,6 +53,7 @@ const ImageInput = ({
               src={selectedImage === null ? '/photo.png' : selectedImage}
               height={selectedImage === null ? 40 : 100}
               width={selectedImage === null ? 40 : 220}
+              alt=""
             />
           )}
         </div>
