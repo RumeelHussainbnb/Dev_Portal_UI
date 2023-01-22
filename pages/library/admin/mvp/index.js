@@ -1,6 +1,6 @@
 import { DocumentTextIcon } from '@heroicons/react/solid';
 import React, { useEffect } from 'react';
-import { Grid, Text, Spacer, Button, Image } from '@nextui-org/react';
+import { Grid, Text, Spacer, Button } from '@nextui-org/react';
 import { useState, useId } from 'react';
 import Select from 'react-select';
 import { Country, State, City } from 'country-state-city';
