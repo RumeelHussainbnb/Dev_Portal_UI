@@ -16,7 +16,9 @@ import {
   import defineImage from '../../utils/content-imagen';
   import Audio from '../audio';
   import { useState } from 'react';
+  import axios from "../../utils/http";
   
+
   const Badge = dynamic(() => import('../badges/badge.js'));
   const CopyLink = dynamic(() => import('./copy-link.js'));
   
@@ -33,8 +35,17 @@ import {
   
     const likeContent = async (event) => {
         event.preventDefault();
+        content.PublicKey = localStorage.getItem('PublicKey');
+        try{
+          const response = await axios.post(`/content/like`, content);
+          if (response?.data?.success === true) {
+            // This is th eblock where icon will be turned yellow
+            console.log("Post liked");
 
-        console.log("content ", content);
+          }
+        }catch(error){
+          console.log("Error ", error);
+        }
         // If the user is an admin, content will be active by default
         // Send success notification
       };
