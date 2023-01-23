@@ -61,7 +61,7 @@ export default function Contents({ data }) {
 
       <div className="relative z-0 mt-2  flex w-11/12 flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
         <p className="p-4 text-lg font-medium text-gray-500 dark:text-gray-500">Active Content:</p>
-        {activeContent.length > 0 ? (
+        {activeContent?.length > 0 ? (
           <div className="scrollbar-hide max-h-100 relative  mb-2 overflow-y-auto shadow-md  sm:rounded-lg">
             <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
               <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
@@ -133,7 +133,7 @@ export default function Contents({ data }) {
         <p className="p-4 text-lg font-medium text-gray-500 dark:text-gray-500">
           Rejected Content:
         </p>
-        {inactiveContent.length > 0 ? (
+        {inactiveContent?.length > 0 ? (
           <>
             <div className="scrollbar-hide max-h-100 relative  mb-2 overflow-y-auto shadow-md  sm:rounded-lg">
               <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
