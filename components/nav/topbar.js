@@ -336,7 +336,7 @@ function TopBar({ setSearch, search, childrens }) {
 
                 <div className="min-h-full">
                     <div className="flex py-7 sm:pl-6 lg:gap-8 lg:pl-8">
-                        <div className="hidden min-w-[190px] content-between lg:block">
+                        <div className="hidden min-w-[190px] content-between lg:block w-72">
                             <NavSidebar showButton={showButton} publicKey={publicKey} />
                         </div>
 
