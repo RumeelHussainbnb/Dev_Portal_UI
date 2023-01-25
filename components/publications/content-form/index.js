@@ -27,7 +27,6 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
       content.ContentStatus = 'active';
       }
       content.PublicKey = localStorage.getItem('PublicKey');
-      console.log(content);
     const response = await axios.post(`/content`, content);
 
     // After submitting we need to restart the

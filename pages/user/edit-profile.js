@@ -51,7 +51,6 @@ export default function Profile({ data, userData }) {
     });
     const onIconClick = () => {
         inputFile.current.click();
-        //console.log('inputFile => ', inputFile);
     };
     const handleFileUpload = async e => {
         setIsLoading(true);
@@ -68,9 +67,6 @@ export default function Profile({ data, userData }) {
             //sucess
             if (allowedExtensions.includes(fileType)) {
                 const response = await axios.get(`${EndPoint.BASE_URL}/martian/s3Url`);
-                //console.log('response => ', response);
-                // post the image direclty to the s3 bucket
-                // post the image direclty to the s3 bucket
                 const imageResponse = await fetch(response.data.url, {
                     method: 'PUT',
                     headers: {
@@ -175,7 +171,6 @@ export default function Profile({ data, userData }) {
                 Certification: mergedArray.filter(x=>x.Organization != '' && x.Name != '')
             }
         };
-        console.log('Payload ===>', payload);
         var formDataa = new FormData();
         axiosInstance
             .put(`${EndPoint.BASE_URL}${EndPoint.UPDATE_PROFILE}${data._id}`, payload, {

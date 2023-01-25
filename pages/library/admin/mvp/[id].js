@@ -92,9 +92,9 @@ export default function Profile({ martian }) {
               <div className="flex flex-row">
                 <div className="h-44 w-44 overflow-hidden rounded-full">
                   {martian.ImageUrl ? (
-                    <Image src={martian.ImageUrl} width="250px" height="250px" />
+                    <Image src={martian.ImageUrl} width={"250px"} height={"250px"} />
                   ) : (
-                    <Image src={'/martianImage.png'} width="250px" height="250px" />
+                    <Image src={'/martianImage.png'} width={"250px"} height={"250px"} />
                   )}
                 </div>
                 <div className="ml-3 mt-6 w-[70%]">

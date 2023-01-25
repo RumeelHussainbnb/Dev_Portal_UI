@@ -3,7 +3,7 @@ import { useAppState } from '../../context/AppContext';
 import PropTypes from 'prop-types';
 import dynamic from 'next/dynamic';
 
-const CardWide = dynamic(() => import('../card/card-wide'));
+const CardWide = dynamic(() => import('../card/post-card'));
 const CardVideo = dynamic(() => import('../card/card-video'));
 const CardRegular = dynamic(() => import('../card/card-regular'));
 const CardBase = dynamic(() => import('../card/card-base'));

@@ -18,6 +18,7 @@ const MvpForm = () => {
     firstName: '',
     lastName: '',
     email: '',
+    publicKey: '',
     country: { label: '', name: '' },
     state: { label: '', name: '' },
     city: '',
@@ -41,6 +42,7 @@ const MvpForm = () => {
       FirstName: data.firstName,
       LastName: data.lastName,
       Email: data.email,
+      publicKey: data.publicKey,
       Expertise: data.expertise,
       MartianType: data.martian.value,
       Country: data.country.label,
@@ -48,8 +50,10 @@ const MvpForm = () => {
       Languages: data.language,
       BioGraphy: data.bioGraphy
     };
+    console.log('parms ==> ', parms);
     try {
       const response = await axios.post(`/martian`, parms);
+      console.log("data ---- ", parms);
       if (response?.data?.success === true) {
         //Empty editor state
         setData({
@@ -424,7 +428,24 @@ const MvpForm = () => {
                     />
                   </div>
                 </div>
-
+                <div className="col-span-12 sm:col-span-4 lg:col-span-10">
+                  <label
+                    htmlFor="expertise"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >
+                    Public Key
+                  </label>
+                  <div className="mt-1">
+                    <input
+                      id="publicKey"
+                      name="publicKey"
+                      required
+                      value={data.publicKey}
+                      onChange={e => setData({ ...data, publicKey: e.target.value })}
+                      className="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
+                    />
+                  </div>
+                </div>
                 <div className="col-span-12 sm:col-span-4 lg:col-span-10">
                   <label
                     htmlFor="expertise"
