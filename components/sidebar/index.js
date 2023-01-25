@@ -55,59 +55,59 @@ function Sidebar({ tweets, latestNewsletter }) {
                         </h2>
                     </div>
                     <hr className="mt-2" />
-                    <ul class="news-box">
+                    <ul className="news-box">
                         <li className="mt-5">
-                            <div class="flex flex-row">
-                                <div class="w-1/6">
-                                    <img class="w-full h-auto rounded-full" src="/read.png" alt="Article photo" />
+                            <div className="flex flex-row">
+                                <div className="w-1/6">
+                                    <img className="w-full h-auto rounded-full" src="/read.png" alt="Article photo" />
                                 </div>
-                                <div class="w-full flex flex-col items-left px-2">
-                                    <a href="#" class="text-sm font-medium">A Detailed Tour of the BNB Smart Chain Euler Upgrade</a>
-                                    <p class="text-sm text-gray-600">Date: Jan 20, 2023</p>
+                                <div className="w-full flex flex-col items-left px-2">
+                                    <a href="#" className="text-sm font-medium">A Detailed Tour of the BNB Smart Chain Euler Upgrade</a>
+                                    <p className="text-sm text-gray-600">Date: Jan 20, 2023</p>
                                 </div>
                             </div>
                         </li>
                         <li className="mt-5">
-                            <div class="flex flex-row">
-                                <div class="w-1/6">
-                                    <img class="w-full h-auto rounded-full" src="/read.png" alt="Article photo" />
+                            <div className="flex flex-row">
+                                <div className="w-1/6">
+                                    <img className="w-full h-auto rounded-full" src="/read.png" alt="Article photo" />
                                 </div>
-                                <div class="w-full flex flex-col items-left px-2">
-                                    <a href="#" class="text-sm font-medium">A Detailed Tour of the BNB Smart Chain Euler Upgrade</a>
-                                    <p class="text-sm text-gray-600">Date: Jan 20, 2023</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li className="mt-5">
-                            <div class="flex flex-row">
-                                <div class="w-1/6">
-                                    <img class="w-full h-auto rounded-full" src="/read.png" alt="Article photo" />
-                                </div>
-                                <div class="w-full flex flex-col items-left px-2">
-                                    <a href="#" class="text-sm font-medium">A Detailed Tour of the BNB Smart Chain Euler Upgrade</a>
-                                    <p class="text-sm text-gray-600">Date: Jan 20, 2023</p>
+                                <div className="w-full flex flex-col items-left px-2">
+                                    <a href="#" className="text-sm font-medium">A Detailed Tour of the BNB Smart Chain Euler Upgrade</a>
+                                    <p className="text-sm text-gray-600">Date: Jan 20, 2023</p>
                                 </div>
                             </div>
                         </li>
                         <li className="mt-5">
-                            <div class="flex flex-row">
-                                <div class="w-1/6">
-                                    <img class="w-full h-auto rounded-full" src="/read.png" alt="Article photo" />
+                            <div className="flex flex-row">
+                                <div className="w-1/6">
+                                    <img className="w-full h-auto rounded-full" src="/read.png" alt="Article photo" />
                                 </div>
-                                <div class="w-full flex flex-col items-left px-2">
-                                    <a href="#" class="text-sm font-medium">A Detailed Tour of the BNB Smart Chain Euler Upgrade</a>
-                                    <p class="text-sm text-gray-600">Date: Jan 20, 2023</p>
+                                <div className="w-full flex flex-col items-left px-2">
+                                    <a href="#" className="text-sm font-medium">A Detailed Tour of the BNB Smart Chain Euler Upgrade</a>
+                                    <p className="text-sm text-gray-600">Date: Jan 20, 2023</p>
                                 </div>
                             </div>
                         </li>
                         <li className="mt-5">
-                            <div class="flex flex-row">
-                                <div class="w-1/6">
-                                    <img class="w-full h-auto rounded-full" src="/read.png" alt="Article photo" />
+                            <div className="flex flex-row">
+                                <div className="w-1/6">
+                                    <img className="w-full h-auto rounded-full" src="/read.png" alt="Article photo" />
                                 </div>
-                                <div class="w-full flex flex-col items-left px-2">
-                                    <a href="#" class="text-sm font-medium">A Detailed Tour of the BNB Smart Chain Euler Upgrade</a>
-                                    <p class="text-sm text-gray-600">Date: Jan 20, 2023</p>
+                                <div className="w-full flex flex-col items-left px-2">
+                                    <a href="#" className="text-sm font-medium">A Detailed Tour of the BNB Smart Chain Euler Upgrade</a>
+                                    <p className="text-sm text-gray-600">Date: Jan 20, 2023</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li className="mt-5">
+                            <div className="flex flex-row">
+                                <div className="w-1/6">
+                                    <img className="w-full h-auto rounded-full" src="/read.png" alt="Article photo" />
+                                </div>
+                                <div className="w-full flex flex-col items-left px-2">
+                                    <a href="#" className="text-sm font-medium">A Detailed Tour of the BNB Smart Chain Euler Upgrade</a>
+                                    <p className="text-sm text-gray-600">Date: Jan 20, 2023</p>
                                 </div>
                             </div>
                         </li>
