@@ -458,7 +458,7 @@ const ActivityForm = ({ martian }) => {
               </form>
             </div>
 
-            {activity.length > 0 ? (
+            {activity?.length > 0 ? (
               <div className="mb-1 w-full py-8">
                 <div className="relative max-h-96 overflow-y-auto shadow-md  sm:rounded-lg">
                   <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">

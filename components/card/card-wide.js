@@ -96,7 +96,7 @@ function CardWide({ content, mode }) {
       className={classNames(
         'flex min-h-full flex-col rounded-lg bg-white dark:bg-gray-800',
         mode === 'dashboard' &&
-          'border border-gray-300 shadow-lg hover:opacity-95 hover:shadow-yellow-500/30 dark:border-gray-700/60 dark:hover:shadow-yellow-400/20'
+          'border border-gray-300 shadow-lg hover:opacity-95 hover:shadow-yellow-500/30 dark:border-gray-700/60'
       )}
     >
       {imageUrl && content.ContentType === 'newsletters' ? (
@@ -199,7 +199,7 @@ function CardWide({ content, mode }) {
         {/*  Description */}
         <div
           className={classNames(
-            'prose flex-none overflow-hidden text-ellipsis',
+            'flex-none overflow-hidden text-ellipsis',
             audioPlayer ? 'min-h-[85px]' : 'min-h-[125px]'
           )}
         >

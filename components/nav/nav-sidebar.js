@@ -241,8 +241,8 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
   }, [showButton]);
 
   return (
-    <nav aria-label="Sidebar" className="top-4 divide-y divide-gray-300 dark:divide-gray-500">
-      <div className="pb-4">
+    <nav aria-label="Sidebar" className="top-4 w-full">
+      <div className="w-[270px]">
         {navigation.map(item => {
           return (
             <Link href={item.href} passHref key={item.name} target={item.target}>
@@ -250,9 +250,9 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
                 <button
                   className={classNames(
                     item.name === current
-                      ? 'bg-gray-200 text-gray-900 dark:bg-gray-800 dark:text-gray-200'
+                      ? 'bg-yellow-400 text-gray-900 dark:bg-gray-800 dark:text-gray-200'
                       : 'text-gray-800 dark:text-gray-300',
-                    'group flex min-w-full max-w-[190px] items-center rounded-md px-3 py-2 text-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-700 lg:text-sm'
+                    'group flex min-w-full max-w-[190px] items-center rounded-md px-3 py-2 text-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-700 lg:text-base'
                   )}
                   onClick={() => {
                     setCurrent(item.name);
@@ -277,7 +277,6 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
           );
         })}
       </div>
-
       <div className="space-y-4 pt-4">
         { isConnected ?
           <Link href="/submit" passHref>
@@ -288,13 +287,19 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
           </Link>        
         : null
         } 
+        {/* Add new content*/}
+        <Link href="/submit" passHref>
+          <div className="group flex cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-base">
+            <FolderAddIcon className="h-5 w-5 text-yellow-500" aria-hidden="true" />
+            <span className="truncate leading-6"> Submit content</span>
+          </div>
+        </Link>
 
         {/* Courses */}
-        <div>
+        <div className="mt-3 w-[270px]">
           <p
-            className="text-md px-3 font-semibold uppercase tracking-wider text-gray-500 lg:text-xs"
-            id="communities-headline"
-          >
+            className="text-md rounded-md bg-[#FACC15] px-3 py-2 font-semibold uppercase tracking-wider text-black lg:text-sm"
+            id="communities-headline bg-yellow-400">
             Courses
           </p>
           <div className="mt-2 space-y-1" aria-labelledby="communities-headline">
@@ -303,8 +308,7 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
                 <Link href={item.href} passHref key={item.name}>
                   <div
                     onClick={() => closeMobileMenu()}
-                    className="group flex cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-sm"
-                  >
+                    className="group flex cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-base">
                     <AcademicCapIcon
                       className="h-4 w-4 text-yellow-400 dark:text-yellow-500"
                       aria-hidden="true"
@@ -323,11 +327,10 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
         </div>
 
         {/* Special */}
-        <div>
+        <div className="mt-3 w-[270px]">
           <p
-            className="text-md px-3 font-semibold uppercase tracking-wider text-gray-500 lg:text-xs"
-            id="communities-headline"
-          >
+            className="text-md rounded-md bg-[#FACC15] px-3 py-2 font-semibold uppercase tracking-wider text-black lg:text-sm"
+            id="communities-headline">
             Reference
           </p>
           <div className="mt-2 space-y-1" aria-labelledby="communities-headline">
@@ -340,7 +343,7 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
                   rel="noreferrer"
                   onClick={() => closeMobileMenu()}
                 >
-                  <div className="group flex cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-sm">
+                  <div className="group flex cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-base">
                     <ExternalLinkIcon
                       className="h-4 w-4 text-yellow-400 dark:text-yellow-500"
                       aria-hidden="true"
@@ -354,11 +357,10 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
         </div>
 
         {/* Lists */}
-        <div>
+        <div className="mt-3 w-[270px]">
           <p
-            className="text-md px-3 font-semibold uppercase tracking-wider text-gray-500 lg:text-xs"
-            id="communities-headline"
-          >
+            className="text-md rounded-md bg-[#FACC15] px-3 py-2 font-semibold uppercase tracking-wider text-black lg:text-sm"
+            id="communities-headline">
             Lists
           </p>
           <div className="mt-2 space-y-1" aria-labelledby="communities-headline">
@@ -367,8 +369,7 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
                 <Link href={item.href} passHref key={item.name}>
                   <button
                     onClick={() => closeMobileMenu()}
-                    className="group flex min-w-full cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-sm"
-                  >
+                    className="group flex min-w-full cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-base">
                     <SparklesIcon
                       className="h-4 w-4 text-yellow-400 dark:text-yellow-500"
                       aria-hidden="true"
@@ -382,11 +383,10 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
         </div>
 
         {/* Categories */}
-        <div>
+        <div className="mt-3 w-[270px]">
           <p
-            className="text-md px-3 font-semibold uppercase tracking-wider text-gray-500 lg:text-xs"
-            id="communities-headline"
-          >
+            className="text-md rounded-md bg-[#FACC15] px-3 py-2 font-semibold uppercase tracking-wider text-black lg:text-sm"
+            id="communities-headline">
             Categories
           </p>
           <div className="mt-2 space-y-1" aria-labelledby="communities-headline">
@@ -415,8 +415,7 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
                     >
                       <button
                         onClick={() => closeMobileMenu()}
-                        className="group flex min-w-full cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-sm"
-                      >
+                        className="group flex min-w-full cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-base">
                         <PaperClipIcon
                           className="h-4 w-4 text-yellow-400 dark:text-yellow-500"
                           aria-hidden="true"
@@ -431,8 +430,7 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
                 <Link href={item.href} passHref key={item.name}>
                   <button
                     onClick={() => closeMobileMenu()}
-                    className="group flex min-w-full cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-sm"
-                  >
+                    className="group flex min-w-full cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-base">
                     <PaperClipIcon
                       className="h-4 w-4 text-yellow-400 dark:text-yellow-500"
                       aria-hidden="true"
@@ -445,9 +443,9 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
           </div>
         </div>
 
-        <div>
+        <div className="mt-3 w-[270px]">
           <p
-            className="text-md px-3 font-semibold uppercase tracking-wider text-gray-500 lg:text-xs"
+            className="text-md rounded-md bg-[#FACC15] px-3 py-2 font-semibold uppercase tracking-wider text-black lg:text-sm"
             id="communities-headline"
           >
             Martians
@@ -462,7 +460,7 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
                 <Link href={item.href} passHref key={item.name}>
                   <button
                     onClick={() => closeMobileMenu()}
-                    className="group flex min-w-full cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-sm"
+                    className="group flex min-w-full cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-base"
                   >
                     <PaperClipIcon
                       className="h-4 w-4 text-yellow-400 dark:text-yellow-500"

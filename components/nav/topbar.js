@@ -342,6 +342,22 @@ function TopBar({ setSearch, search, childrens }) {
                           >
                             Connect
                           </button>
+                            </Popover.Panel>
+                        </>
+                    )}
+                </Popover>
+
+
+                <div className="min-h-full">
+                    <div className="flex py-7 sm:pl-6 lg:gap-8 lg:pl-8">
+                        <div className="top-4 divide-y divide-gray-300 dark:divide-gray-500 hidden min-w-[190px] content-between lg:block">
+                            <NavSidebar showButton={showButton} publicKey={publicKey} />
+                        </div>
+
+                        <div className="min-h-screen w-full overflow-x-hidden overflow-y-visible">
+                            <div className="flex justify-center gap-6 px-2 md:pl-0">
+                                {!search && childrens}
+                                </div>
                         </div>
                       )}
                     </div>
