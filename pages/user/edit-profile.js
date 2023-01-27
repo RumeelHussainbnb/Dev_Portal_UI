@@ -94,15 +94,8 @@ export default function Profile({ data, userData }) {
         }
     ) => {
         // validating
-        // image
-        if (validate?.type?.length > 0 && validate.type === 'image') {
-            setErrors({
-                ...errors,
-                [propertyName]: validation(change.target.files[0].name, validate)
-            });
-        }
         // others
-        else if (validate?.type?.length > 0) {
+        if (validate?.type?.length > 0) {
             setErrors({
                 ...errors,
                 [propertyName]: validation(change.target.value, validate)
@@ -124,12 +117,6 @@ export default function Profile({ data, userData }) {
             Bio: validation(state.Bio, { required: true }),
             Country: validation(state.Country, { required: true }),
             Skils: validation(state.Skils, { required: false }),
-            ProfilePicture: validation(
-                state.ProfilePicture ? state.ProfilePicture : state.ProfilePicture,
-                {
-                    required: true
-                }
-            )
         };
         setErrors({ ...errors, ...errorsChecked });
         let foundErrors =

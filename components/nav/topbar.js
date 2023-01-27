@@ -48,7 +48,7 @@ function TopBar({ setSearch, search, childrens }) {
     const [ethereumError, setEthereumError] = useState(false);
     // ETHEREUM ERROR end
 
-    const { user, isAdmin = false, connected_, error } = useUser(publicKey, connected);
+    //const { user, isAdmin = false, connected_, error } = useUser(publicKey, connected);
 
     const [editModeNotificationOn, setEditModeNotificationOn] = useState(false);
     const [editModeNotificationOff, setEditModeNotificationOff] = useState(false);
@@ -63,34 +63,50 @@ function TopBar({ setSearch, search, childrens }) {
             if (ethereum.isMetaMask) {
                 const provider = new ethers.providers.Web3Provider(ethereum, "any");
                 const accounts = await provider.send("eth_requestAccounts", []);
+                // debugger;
                 const { name, chainId } = await provider.getNetwork();
-                await appDispatch({ type: 'handleWalletConnection', payload: true });
-                await appDispatch({ type: 'savePublicKey', payload: accounts[0] });
-                setNetwork(name);
-                setChainId(chainId);
-                setPublickey(accounts[0]);
-                setConnected(true);
-                localStorage.setItem("PublicKey", accounts[0]);
-                //setisAdmin(true);
-                setShowButtons(prev => prev + 1);
-                if (user == undefined) {
-                    let payload = {
-                        PublicKey: localStorage.getItem("PublicKey")
-                    }
-                    axios.post(`${endpoints.BASE_URL}/auth/register`, payload)
-                        .then(res => {
-                            console.log('res====>', res.data);
-                            if (res?.data?.success == true) {
-                                console.log('SignUp ===>', res.data);
-                                localStorage.setItem('usrData', JSON.stringify(res.data));
-                                Cookies.set('userToken', JSON.stringify(res.data));
+
+                // now call the api 
+                let payload = {
+                    PublicKey: accounts[0]
+                }
+                axios.post(`${endpoints.BASE_URL}/auth/register`, payload)
+                    .then(async res => {
+                        console.log('res====>', res.data);
+                        if (res?.data?.success == true) {
+
+                            // update context
+                            await appDispatch({ type: 'handleWalletConnection', payload: true });
+                            await appDispatch({ type: 'savePublicKey', payload: accounts[0] });
+
+                            // update state 
+                            setNetwork(name);
+                            setChainId(chainId);
+                            setPublickey(accounts[0]);
+                            setConnected(true);
+                            setShowButtons(prev => prev + 1);
+
+                            localStorage.setItem("PublicKey", accounts[0]);
+                            localStorage.setItem('usrData', JSON.stringify(res.data));
+                            Cookies.set('userToken', JSON.stringify(res.data));
+
+                            if (res?.data?.isNewUser) {
+                                // navigate user
                                 router.push('/user/edit-profile');
                             }
-                        })
-                        .catch(err => {
-                            console.log('ERROR ========>', err);
-                        });
-                };
+
+                        } else {
+                            // TODO SHOW PROPER ALERT
+                            //alert("something went wrong 1")
+                        }
+                    })
+                    .catch(err => {
+                        console.log('ERROR ========>', err);
+                        // TODO SHOW PROPER ALERT
+                        //alert("something went wrong 2")
+                    });
+
+
             }
         }
         else {
