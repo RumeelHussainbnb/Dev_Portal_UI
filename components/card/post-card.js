@@ -61,6 +61,22 @@ function PostWide({ content, mode }) {
     // Send success notification
   };
 
+  const handleViewApi = async event => {
+    let publicKey = localStorage.getItem('PublicKey' || '{}');
+    let param = {
+      _id: content._id,
+      PublicKey: publicKey
+    };
+    try {
+      const response = await axios.post(`/content/view`, param);
+      //    if (response?.data?.success === true) {
+
+      // }
+    } catch (error) {
+      console.log('Error ', error);
+    }
+  };
+
   let audioPlayer = '';
   if (contentState.Url) audioPlayer = contentState.Url.includes('bnbchain-twitter-spaces');
 
@@ -125,6 +141,7 @@ function PostWide({ content, mode }) {
 
   return (
     <div
+      onClick={handleViewApi}
       className={classNames(
         'flex min-h-full flex-col rounded-lg bg-white dark:bg-gray-800',
         mode === 'dashboard' &&

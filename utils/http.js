@@ -19,6 +19,8 @@ client.interceptors.request.use(
   function (config) {
     // Do something before request is sent
     config.headers.Authorization = key;
+    //* To DO: Add 'Bearer ' + userData.token across application
+    // config.headers.Authorization: 'Bearer ' + userData.token
     return config;
   },
   function (error) {

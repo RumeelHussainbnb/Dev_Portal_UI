@@ -50,10 +50,10 @@ const MvpForm = () => {
       Languages: data.language,
       BioGraphy: data.bioGraphy
     };
-    console.log('parms ==> ', parms);
+
     try {
       const response = await axios.post(`/martian`, parms);
-      console.log("data ---- ", parms);
+
       if (response?.data?.success === true) {
         //Empty editor state
         setData({

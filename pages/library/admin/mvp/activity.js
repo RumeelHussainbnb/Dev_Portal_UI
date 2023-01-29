@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic';
-import { useState, useId, useRef } from 'react';
+import { useState, useId, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { format } from 'date-fns';
@@ -14,29 +14,7 @@ import axios from '../../../../utils/http';
 const NotificationSuccess = dynamic(() => import('../../../../components/notifications/success'));
 const NotificationError = dynamic(() => import('../../../../components/notifications/error'));
 
-export async function getStaticProps() {
-  try {
-    const martian = await fetch(
-      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/martian/byId?id=${'63a464bcf290584bd478452a'}`
-    );
-
-    return {
-      props: {
-        martian: martian.data
-      },
-      revalidate: 60
-    };
-  } catch (error) {
-    return {
-      props: {
-        martian: {}
-      },
-      revalidate: 60
-    };
-  }
-}
-
-const ActivityForm = ({ martian }) => {
+const ActivityForm = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [data, setData] = useState({
     id: null,
@@ -47,10 +25,24 @@ const ActivityForm = ({ martian }) => {
     primaryContributionArea: { label: '', name: '' },
     additionalContributionArea: { label: '', name: '' }
   });
-  const [activity, setActivity] = useState(martian.Activities);
+  const [activity, setActivity] = useState(null);
   const [mode, setMode] = useState(false);
   const [notifySuccess, setNotifySuccess] = useState(false);
   const [notifyError, setNotifyError] = useState(false);
+
+  useEffect(() => {
+    let userData = JSON.parse(localStorage.getItem('userData') || '{}');
+    const fetchData = async () => {
+      try {
+        const martian = await fetch(
+          `${process.env.NEXT_PUBLIC_API_ENDPOINT}/martian/byId?id=${userData?.data?.MartianId}`
+        );
+        setActivity(martian?.data?.Activities);
+        // console.log('martian ==> ', martian);
+      } catch (error) {}
+    };
+    fetchData();
+  }, []);
 
   const type = [
     {
@@ -125,12 +117,13 @@ const ActivityForm = ({ martian }) => {
   const createActivity = async event => {
     event.preventDefault();
     const formattedDate = selectedDate ? format(selectedDate, 'dd/MM/yyyy') : '';
+    let userData = JSON.parse(localStorage.getItem('userData') || '{}');
 
     //create Mode
     if (mode == false) {
       let newActivity = {
         id: null,
-        martianId: '63a464bcf290584bd478452a',
+        martianId: userData?.data?.MartianId,
         date: formattedDate,
         activity: data.activity,
         activityLink: data.activityLink,
@@ -178,7 +171,7 @@ const ActivityForm = ({ martian }) => {
     if (mode == true) {
       let updateActivity = {
         id: data.id,
-        martianId: '63a464bcf290584bd478452a',
+        martianId: userData?.data?.MartianId,
         date: formattedDate,
         activity: data.activity,
         activityLink: data.activityLink,
@@ -232,14 +225,11 @@ const ActivityForm = ({ martian }) => {
 
   const handleDeleteActivity = async id => {
     event.preventDefault();
-    let params = {
-      id: id,
-      martianId: '63a464bcf290584bd478452a'
-    };
+    let userData = JSON.parse(localStorage.getItem('userData') || '{}');
+
     try {
       const deleteActivity = await axios.delete(
-        `martian/martianActivity?id=${id}&martianId=${'63a464bcf290584bd478452a'}`,
-        params
+        `martian/martianActivity?id=${id}&martianId=${userData?.data?.MartianId}`
       );
       if (deleteActivity?.data?.success === true) {
         setActivity(deleteActivity?.data?.data?.Activities);

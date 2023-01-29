@@ -30,7 +30,8 @@ export async function getStaticProps({ params }) {
 
     return {
       props: {
-        martian: { ...martian.data, ActivitiesSize: martian.martianActivitySize.ActivitiesSize }
+        martian: { ...martian.data, ActivitiesSize: martian.martianActivitySize.ActivitiesSize },
+        id: params.id
       },
       revalidate: 60
     };
@@ -43,7 +44,7 @@ export async function getStaticProps({ params }) {
     };
   }
 }
-export default function Profile({ martian }) {
+export default function Profile({ martian, id }) {
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
   const [activities, setActivities] = useState(martian.Activities);
@@ -52,9 +53,7 @@ export default function Profile({ martian }) {
     setPage(newPage.selected + 1);
     try {
       const response = await axios.get(
-        `/martian/martianActivity?pageNumber=${
-          newPage.selected + 1
-        }&limit=${perPage}&id=${'63a464bcf290584bd478452a'}`
+        `/martian/martianActivity?pageNumber=${newPage.selected + 1}&limit=${perPage}&id=${id}`
       );
       if (response?.data?.success === true) {
         setActivities(response?.data.data?.Activities);
@@ -66,7 +65,7 @@ export default function Profile({ martian }) {
     setPerPage(newSize);
     try {
       const response = await axios.get(
-        `/martian/martianActivity?pageNumber=${page}&limit=${newSize}&id=${'63a464bcf290584bd478452a'}`
+        `/martian/martianActivity?pageNumber=${page}&limit=${newSize}&id=${id}`
       );
       if (response?.data?.success === true) {
         setActivities(response?.data?.data?.Activities);
@@ -92,9 +91,9 @@ export default function Profile({ martian }) {
               <div className="flex flex-row">
                 <div className="h-44 w-44 overflow-hidden rounded-full">
                   {martian.ImageUrl ? (
-                    <Image src={martian.ImageUrl} width={"250px"} height={"250px"} />
+                    <Image src={martian.ImageUrl} width={'250px'} height={'250px'} />
                   ) : (
-                    <Image src={'/martianImage.png'} width={"250px"} height={"250px"} />
+                    <Image src={'/martianImage.png'} width={'250px'} height={'250px'} />
                   )}
                 </div>
                 <div className="ml-3 mt-6 w-[70%]">
@@ -268,27 +267,27 @@ export default function Profile({ martian }) {
                                 Delete
                               </a>
                             </td> */}
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            ) : null}
-                            <Pagination
-                                pageCount={Math.ceil(martian.ActivitiesSize / perPage)}
-                                pageSize={perPage}
-                                onPageChange={handlePageChange}
-                                onPageSizeChange={handlePageSizeChange}
-                            />
-                        </div>
-                    </div>
-                </main>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              ) : null}
+              <Pagination
+                pageCount={Math.ceil(martian.ActivitiesSize / perPage)}
+                pageSize={perPage}
+                onPageChange={handlePageChange}
+                onPageSizeChange={handlePageSizeChange}
+              />
+            </div>
+          </div>
+        </main>
 
-                {/* <aside className="hidden max-w-sm xl:block">
+        {/* <aside className="hidden max-w-sm xl:block">
           <Sidebar tweets={tweets} latestNewsletter={latestNewsletter} />
         </aside> */}
-            </div>
-        </Container>
-    );
+      </div>
+    </Container>
+  );
 }

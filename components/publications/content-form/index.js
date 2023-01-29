@@ -21,12 +21,15 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
   const createContent = async event => {
     event.preventDefault();
 
+    let userData = JSON.parse(localStorage.getItem('userData') || '{}');
+
     // If the user is an admin, content will be active by default
     const content = data;
     if (isAdmin) {
       content.ContentStatus = 'active';
-      }
-      content.PublicKey = localStorage.getItem('PublicKey');
+    }
+    content.PublicKey = localStorage.getItem('PublicKey');
+    content.UserID = userData?.data?._id;
     const response = await axios.post(`/content`, content);
 
     // After submitting we need to restart the
@@ -52,7 +55,6 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
 
   const updateContent = async event => {
     event.preventDefault();
-
     await axios.put(`/content`, { ...data, Img: data.ImageUrl });
 
     // call preview mode
