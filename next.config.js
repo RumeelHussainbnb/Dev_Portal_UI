@@ -5,6 +5,9 @@ const moduleExports = {
   env: {
     HOME_URL: process.env.SITE_URL
   },
+  // time in seconds of no pages generating during static
+  // generation before timing out
+  staticPageGenerationTimeout: 1000,
   swcMinify: true,
   reactStrictMode: false,
   images: {
