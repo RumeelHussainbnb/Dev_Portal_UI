@@ -4,9 +4,9 @@ import Banner from '../../components/course/banner';
 
 export default function Course() {
   const metaTags = {
-    title: 'BNBChain Development Course',
+    title: 'Check Our Best Blockchain & Web3 Development Courses - BNB Chain Dev',
     description:
-      'This course is designed to be the absolute best starting point for Web Developers looking to learn Web3 Development. BNBChain is the ideal network for starting your Web3 journey because of its high speed, low cost, energy efficiency, and more.',
+      'Know more about the Best Blockchain Development Course only at the BNB dev community website. Learn and develop your career path with Web3 Development.',
     url: `${process.env.HOME_URL}/course`,
     shouldIndex: true
   };

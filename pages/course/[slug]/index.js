@@ -56,7 +56,7 @@ export async function getStaticProps({ params }) {
 
 export default function CourseContent({ content }) {
   const metaTags = {
-    title: `BNBChainDev - ${content.title}`,
+    title: `BNBChain101 - ${content.title}`,
     description: content.description,
     url: `${process.env.HOME_URL}/newsletters/${content.id}`,
     shouldIndex: true
@@ -72,7 +72,7 @@ export default function CourseContent({ content }) {
             </div>
           </Link>
           <div className="py-5">
-            <p dangerouslySetInnerHTML={{ __html: content.markdown }} />
+          <span dangerouslySetInnerHTML={{ __html: content.markdown }} />
           </div>
           <Link href="/course" passHref>
             <div className="text-md flex cursor-pointer justify-center text-yellow-600 hover:text-yellow-700 hover:underline lg:text-lg">

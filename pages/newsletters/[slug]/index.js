@@ -60,19 +60,20 @@ export default function Article({ content }) {
       <div className="lg:mr-5">
         <div className="prose mx-auto max-w-6xl rounded-lg px-10 py-20 dark:prose-invert dark:border-none lg:border lg:bg-white dark:lg:bg-gray-800 xl:px-32">
           <div className="align-center flex flex-col content-center items-center pb-10">
-            <h1 className="mb-4">{content.Title}</h1>
-            <h3 className="mt-0 tracking-wide text-gray-500 dark:text-gray-400">
-              <a
+          <h1 className="mb-2">{content.Title}</h1>
+            <h2 className="mt-0 mb-0 racking-wide text-gray-500 dark:text-gray-400">
+              {/*<a
                 className="tracking-wide text-gray-500 no-underline hover:text-blue-400 dark:text-gray-400 dark:hover:text-blue-500"
-                href="https://twitter.com/Cryptar2"
+                href="https://twitter.com/BNBCHAIN"
                 target="_blank"
                 rel="noreferrer"
               >
                 by {content.Author}
               </a>
-              {' · '}
-              <span>{content.PublishedAt}</span>
-            </h3>
+              {' · '}*/}
+              {/*<span>{content.PublishedAt}</span>*/}
+              {content.PublishedAt}
+            </h2>
           </div>
           <div dangerouslySetInnerHTML={{ __html: content.ContentMarkdown }} />
           </div>

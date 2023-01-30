@@ -37,9 +37,9 @@ export default function Community({ tweets, latestNewsletter }) {
   const [projectsTweetsAmount, setProjectsTweetsAmount] = useState(10);
 
   const metaTags = {
-    title: 'BNBChainDev - Community',
+    title: 'BNB Chain Projects & Developers - BNB Chain Dev',
     description:
-      'Stay up-to-date with the BNBChain ecosystem. BNBChain Projects and Developers in one place.',
+      'BNB Chain has a rich Dev Community where you can learn more about new developers, projects, and initiatives. Enlighten yourself with the BNB chain community today!',
     url: `${process.env.NEXT_PUBLIC_API_ENDPOINT}/community`,
     shouldIndex: true
   };

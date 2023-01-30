@@ -123,10 +123,10 @@ function TopBar({ setSearch, search, childrens }) {
                     <Link href="/" passHref>
                       <a className="flex content-center">
                         {mode === 'light' && (
-                          <Image src="/devlogolight.png" alt="BNBChainDev Logo" height="60px" width="200px" />
+                          <Image title="BNBChainDEV" src="/devlogolight.png" alt="BNBChainDev Logo" height="60px" width="200px" />
                         )}
                         {mode === 'dark' && (
-                          <Image src="/devlogodark.png" alt="BNBChainDev Logo" height="60px" width="200px" />
+                          <Image title="BNBChainDEV" src="/devlogodark.png" alt="BNBChainDev Logo" height="60px" width="200px" />
                         )}
                       </a>
                     </Link>

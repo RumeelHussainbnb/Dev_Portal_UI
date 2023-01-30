@@ -18,9 +18,9 @@ export async function getStaticProps() {
 export default function Video({ playlists }) {
   const appState = useAppState();
   const metaTags = {
-    title: 'BNB Chain - Video Playlists',
+    title: 'Checkout Our Curated Playlists on Web3 Dev, Solidity & Blockchain - BNB Chain Dev',
     description:
-      'Watch BNB Chain conferences, live streams and stay up to date with the latest Podcasts.',
+      'Learn Blockchain Development through Online Blockchain Courses, Seminars, Live Streams, Video Tutorials, and Discussions where you become the master and mold your career in the best way possible.',
     url: `${process.env.NEXT_PUBLIC_API_ENDPOINT}/library/playlists`,
     shouldIndex: true
   };

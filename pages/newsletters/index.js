@@ -19,8 +19,8 @@ export async function getStaticProps() {
 
 export default function Newsletter({ newsletters, lastNewsletter }) {
   const metaTags = {
-    title: 'BNBChainDev - Newsletter',
-    description: 'BNBChain community newsletter',
+    title: 'BNB Chain Weekly Newsletters - BNB Chain Dev',
+    description: 'BNB Chain is ever growing and evolving for providing its users with top-notch blockchain solutions, to keep our users updated we release our weekly ecosystem reports. BNB Chain is the right platform for beginning your Web3 journey.',
     url: `${process.env.NEXT_PUBLIC_API_ENDPOINT}/content/bnb/newsletters`,
     shouldIndex: true
   };

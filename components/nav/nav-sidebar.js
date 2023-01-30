@@ -251,7 +251,7 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
                     )}
                     aria-hidden="true"
                   />
-                  <span className="truncate">{item.name}</span>
+                  <span className="truncate" title={item.name}>{item.name}</span>
                 </button>
               </a>
             </Link>
@@ -264,7 +264,7 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
         <Link href="/submit" passHref>
           <div className="group flex cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-sm">
             <FolderAddIcon className="h-5 w-5 text-yellow-500" aria-hidden="true" />
-            <span className="truncate leading-6"> Submit content</span>
+            <span className="truncate leading-6" title="Submit Content"> Submit content</span>
           </div>
         </Link>
 
@@ -272,7 +272,7 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
         <div>
           <p
             className="text-md px-3 font-semibold uppercase tracking-wider text-gray-500 lg:text-xs"
-            id="communities-headline"
+            id="communities-headline" title="Courses"
           >
             Courses
           </p>
@@ -288,7 +288,7 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
                       className="h-4 w-4 text-yellow-400 dark:text-yellow-500"
                       aria-hidden="true"
                     />
-                    <span className="truncate leading-6">{item.name}</span>
+                    <span className="truncate leading-6" title={item.name}>{item.name}</span>
                     {item.name === '"The" Course' && (
                       <span className="ml-1 inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800 dark:bg-red-500 dark:text-red-50">
                         New
@@ -305,7 +305,7 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
         <div>
           <p
             className="text-md px-3 font-semibold uppercase tracking-wider text-gray-500 lg:text-xs"
-            id="communities-headline"
+            id="communities-headline" title="References"
           >
             Reference
           </p>
@@ -324,7 +324,7 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
                       className="h-4 w-4 text-yellow-400 dark:text-yellow-500"
                       aria-hidden="true"
                     />
-                    <span className="truncate leading-6">{item.name}</span>
+                    <span className="truncate leading-6" title={item.name}>{item.name}</span>
                   </div>
                 </a>
               );
@@ -336,7 +336,7 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
         <div>
           <p
             className="text-md px-3 font-semibold uppercase tracking-wider text-gray-500 lg:text-xs"
-            id="communities-headline"
+            id="communities-headline" title="Lists"
           >
             Lists
           </p>
@@ -352,7 +352,7 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
                       className="h-4 w-4 text-yellow-400 dark:text-yellow-500"
                       aria-hidden="true"
                     />
-                    <span className="truncate leading-6">{item.name}</span>
+                    <span className="truncate leading-6" title={item.name}>{item.name}</span>
                   </button>
                 </Link>
               );
@@ -364,7 +364,7 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
         <div>
           <p
             className="text-md px-3 font-semibold uppercase tracking-wider text-gray-500 lg:text-xs"
-            id="communities-headline"
+            id="communities-headline" title="Categories"
           >
             Categories
           </p>
@@ -399,7 +399,7 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
                           className="h-4 w-4 text-yellow-400 dark:text-yellow-500"
                           aria-hidden="true"
                         />
-                        <span className="truncate leading-6">{item.name}</span>
+                        <span className="truncate leading-6" title={item.name}>{item.name}</span>
                       </button>
                     </a>
                   </Link>
@@ -415,7 +415,7 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
                       className="h-4 w-4 text-yellow-400 dark:text-yellow-500"
                       aria-hidden="true"
                     />
-                    <span className="truncate leading-6">{item.name}</span>
+                    <span className="truncate leading-6" title={item.name}>{item.name}</span>
                   </button>
                 </Link>
               );

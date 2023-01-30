@@ -24,9 +24,9 @@ export async function getStaticProps() {
 
 export default function Library({ newContent, trendingContent, tweets, latestNewsletter }) {
   const metaTags = {
-    title: 'BNBChainDev - Library',
+    title: 'BNBChainDEV – For Anyone Wanting to Learn Blockchain Development',
     description:
-      "Learn to Develop using BNBChain. Tutorials, SDK's, Frameworks, Developer Tools, Security, Scaffolds, and Projects implementations",
+      "If you looking to make your career in a development program then you must get connected with the BNB chain for Best Blockchain Developer articles, tutorials, and courses today!",
     url: `${process.env.NEXT_PUBLIC_API_ENDPOINT}/library`,
     shouldIndex: true
   };
