@@ -80,7 +80,7 @@ function breadcrumbs(){
           rel="stylesheet"
         />
 
-        <script
+        {/*<script
           type="application/ld+json"
           dangerouslySetInnerHTML={richSnippet()}
           key="product-jsonld"
@@ -91,7 +91,7 @@ function breadcrumbs(){
           dangerouslySetInnerHTML={breadcrumbs()}
           key="product-jsonld"
         />
-
+      */}
       </Head>
       <body>
         <Main />
