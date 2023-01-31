@@ -289,30 +289,30 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
         })}
         {isConnected ? (
           <Link href="/submit" passHref>
-            <a href="/submit" rel="submit">
-              <button
-                onClick={() => {
-                  setCurrent('Submit Content');
-                  window.sessionStorage.setItem('main-navigation', 'Submit Content');
-                  closeMobileMenu();
-                }}
+            {/* <a href="/submit" rel="submit"> */}
+            <button
+              onClick={() => {
+                setCurrent('Submit Content');
+                window.sessionStorage.setItem('main-navigation', 'Submit Content');
+                closeMobileMenu();
+              }}
+              className={classNames(
+                'Submit Content' === current
+                  ? 'bg-yellow-400 text-gray-900 dark:bg-gray-800 dark:text-gray-200'
+                  : 'text-gray-800 dark:text-gray-300',
+                'group flex min-w-full max-w-[190px] items-center rounded-md px-3 py-2 text-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-700 lg:text-base'
+              )}
+            >
+              <FolderAddIcon
                 className={classNames(
-                  'Submit Content' === current
-                    ? 'bg-yellow-400 text-gray-900 dark:bg-gray-800 dark:text-gray-200'
-                    : 'text-gray-800 dark:text-gray-300',
-                  'group flex min-w-full max-w-[190px] items-center rounded-md px-3 py-2 text-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-700 lg:text-base'
+                  'Submit Content' === current ? 'text-gray-500' : 'text-yellow-400 ',
+                  '-ml-1 mr-3 h-6 w-6 flex-shrink-0'
                 )}
-              >
-                <FolderAddIcon
-                  className={classNames(
-                    'Submit Content' === current ? 'text-gray-500' : 'text-yellow-400 ',
-                    '-ml-1 mr-3 h-6 w-6 flex-shrink-0'
-                  )}
-                  aria-hidden="true"
-                />
-                <span className="truncate">Submit Content</span>
-              </button>
-            </a>
+                aria-hidden="true"
+              />
+              <span className="truncate">Submit Content</span>
+            </button>
+            {/* </a> */}
           </Link>
         ) : null}
       </div>

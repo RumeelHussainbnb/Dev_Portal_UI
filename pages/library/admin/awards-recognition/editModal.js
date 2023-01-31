@@ -14,9 +14,7 @@ export default function Modal({ open, setOpen, content }) {
   const [notifySuccess, setNotifySuccess] = useState(false);
   const [notifyError, setNotifyError] = useState(false);
 
-  useEffect(() => {
-    setData({ ...content });
-  }, []);
+  // setData({ ...content });
 
   const setAwards = award => {
     let copyUserData = { ...data };
@@ -61,7 +59,7 @@ export default function Modal({ open, setOpen, content }) {
   };
 
   return (
-    <Transition.Root show={open} as={Fragment}>
+    <Transition.Root show={true} as={Fragment}>
       <Dialog
         as="div"
         className="fixed inset-0 z-10 overflow-y-auto"
@@ -102,8 +100,9 @@ export default function Modal({ open, setOpen, content }) {
 
                   <div className="mt-12">
                     <div className="flex items-center justify-center space-x-8 py-24 ">
-                      {RecognizationsAndAwards.map(award => (
+                      {RecognizationsAndAwards.map((award, index) => (
                         <div
+                          key={index}
                           onClick={() => {
                             setAwards(award);
                           }}

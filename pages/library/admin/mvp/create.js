@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 import { useState, useId, useRef } from 'react';
 
-// import Image from 'next/image';
+import Image from 'next/image';
 import Select from 'react-select';
 import { Container } from '../../../../components/layout';
 import { Country, State, City } from 'country-state-city';
@@ -191,18 +191,20 @@ const MvpForm = () => {
                   {isLoading ? (
                     <Spinner />
                   ) : imageURL ? (
-                    <img className="absolute h-28 w-28 rounded-full" src={imageURL} alt="" />
+                    <div className="absolute h-28 w-28 rounded-full">
+                      <Image src={imageURL} alt="" height={'112px '} width={'112px '} />
+                    </div>
                   ) : (
-                    <img
-                      className="absolute h-28 w-28 rounded-full"
-                      src="/martianImage.png"
-                      alt=""
-                    />
+                    <div className="absolute h-28 w-28 rounded-full">
+                      <Image src="/martianImage.png" alt="" height={'112px '} width={'112px '} />
+                    </div>
                   )}
 
                   {!isLoading && (
                     <div className="group absolute flex h-28 w-28 cursor-pointer items-center justify-center rounded-full opacity-60 transition duration-500 hover:bg-gray-200">
-                      <img className="hidden w-5 group-hover:block" src="/upload.svg" alt="" />
+                      <div className="hidden w-5 group-hover:block">
+                        <Image src="/upload.svg" alt="" height={'112px '} width={'112px '} />
+                      </div>
                     </div>
                   )}
                 </div>

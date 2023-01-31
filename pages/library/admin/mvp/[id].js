@@ -91,9 +91,9 @@ export default function Profile({ martian, id }) {
               <div className="flex flex-row">
                 <div className="h-44 w-44 overflow-hidden rounded-full">
                   {martian.ImageUrl ? (
-                    <Image src={martian.ImageUrl} width={'250px'} height={'250px'} />
+                    <Image alt="" src={martian.ImageUrl} width={'250px'} height={'250px'} />
                   ) : (
-                    <Image src={'/martianImage.png'} width={'250px'} height={'250px'} />
+                    <Image alt="" src={'/martianImage.png'} width={'250px'} height={'250px'} />
                   )}
                 </div>
                 <div className="ml-3 mt-6 w-[70%]">
@@ -172,13 +172,13 @@ export default function Profile({ martian, id }) {
                 <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Social:</p>
                 <div className="flex flex-row">
                   <div className="mr-1 h-6 w-6 hover:cursor-pointer">
-                    <Image src={'/facebook.png'} width="250px" height="250px" />
+                    <Image alt="" src={'/facebook.png'} width="250px" height="250px" />
                   </div>
                   <div className="mr-1 h-6 w-6 hover:cursor-pointer">
-                    <Image src={'/linkedin.png'} width="250px" height="250px" />
+                    <Image alt="" src={'/linkedin.png'} width="250px" height="250px" />
                   </div>
                   <div className="mr-1 h-6 w-6 hover:cursor-pointer">
-                    <Image src={'/twitter.png'} width="250px" height="250px" />
+                    <Image alt="" src={'/twitter.png'} width="250px" height="250px" />
                   </div>
                 </div>
               </div>

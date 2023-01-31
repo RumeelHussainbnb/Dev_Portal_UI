@@ -1,10 +1,10 @@
 import { DocumentTextIcon } from '@heroicons/react/solid';
-import React, { useEffect } from 'react';
-import { Grid, Text, Spacer, Button } from '@nextui-org/react';
+import React from 'react';
+import { Grid, Spacer } from '@nextui-org/react';
 import { useState, useId } from 'react';
 import Select from 'react-select';
-import { Country, State, City } from 'country-state-city';
-import router, { useRouter } from 'next/router';
+import { Country } from 'country-state-city';
+import { useRouter } from 'next/router';
 import Pagination from '../../../../components/pagination/Pagination';
 import { Container } from '../../../../components/layout';
 import axios from '../../../../utils/http';
@@ -247,17 +247,18 @@ const Index = ({ userData }) => {
                     <a>
                       <div className=" h-70 flex w-48 max-w-xs flex-col rounded-xl p-2 shadow-md dark:bg-gray-900 dark:text-gray-100 sm:px-3">
                         {eachMartian?.ImageUrl ? (
-                          <img
-                            src={eachMartian?.ImageUrl}
-                            alt=""
-                            className="aspect-square mx-auto h-24 w-24 rounded-full dark:bg-gray-500"
-                          />
+                          <div className=" mx-auto h-24 w-24 overflow-hidden rounded-full">
+                            <Image
+                              src={eachMartian?.ImageUrl}
+                              alt=""
+                              height={'96px'}
+                              width={'96px'}
+                            />
+                          </div>
                         ) : (
-                          <img
-                            className="aspect-square mx-auto h-24 w-24 rounded-full dark:bg-gray-500"
-                            src="/martianImage.png"
-                            alt=""
-                          />
+                          <div className=" mx-auto h-24 w-24 overflow-hidden rounded-full">
+                            <Image src="/martianImage.png" alt="" height={'96px'} width={'96px'} />
+                          </div>
                         )}
 
                         <div className=" space-y-2 divide-y divide-gray-600 text-center">

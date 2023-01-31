@@ -191,7 +191,10 @@ function PostWide({ content, mode }) {
             {contentState.Author && (
               <div className="flex flex-row items-center gap-x-1">
                 <div className="col-span-12 sm:col-span-4 lg:col-span-10">
-                  <img className=" h-10 w-10 rounded-full" src="/martianImage.png" alt="" />
+                  <div className=" h-10 w-10 rounded-full">
+                    <Image src="/martianImage.png" alt="" height={'40px '} width={'40px '} />
+                  </div>
+                  {/* <img className="" src="/martianImage.png" alt="" /> */}
                 </div>
                 <a href={contentState.Url} className="" rel="noreferrer" target="_blank">
                   <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-500">
