@@ -1,7 +1,7 @@
 import { Head, Html, Main, NextScript } from 'next/document';
 
 export default function Document() {
-  function richSnippet(){
+/*  function richSnippet(){
     return {
       __html: `{
         "@context": "https://schema.org/",
@@ -66,6 +66,8 @@ function breadcrumbs(){
     }`
   }
 }
+
+*/
   return (
     <Html>
       <Head>
@@ -80,7 +82,8 @@ function breadcrumbs(){
           rel="stylesheet"
         />
 
-        {/*<script
+        {/*
+        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={richSnippet()}
           key="product-jsonld"
@@ -91,7 +94,7 @@ function breadcrumbs(){
           dangerouslySetInnerHTML={breadcrumbs()}
           key="product-jsonld"
         />
-      */}
+        */}
       </Head>
       <body>
         <Main />

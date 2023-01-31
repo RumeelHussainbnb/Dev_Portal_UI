@@ -62,7 +62,7 @@ export default function Article({ content }) {
           <div className="align-center flex flex-col content-center items-center pb-10">
           <h1 className="mb-2">{content.Title}</h1>
             <h2 className="mt-0 mb-0 racking-wide text-gray-500 dark:text-gray-400">
-              {/*<a
+              <a
                 className="tracking-wide text-gray-500 no-underline hover:text-blue-400 dark:text-gray-400 dark:hover:text-blue-500"
                 href="https://twitter.com/BNBCHAIN"
                 target="_blank"
@@ -70,9 +70,9 @@ export default function Article({ content }) {
               >
                 by {content.Author}
               </a>
-              {' · '}*/}
-              {/*<span>{content.PublishedAt}</span>*/}
-              {content.PublishedAt}
+              {' · '}
+              <span>{content.PublishedAt}</span>
+              {/*{content.PublishedAt}*/}
             </h2>
           </div>
           <div dangerouslySetInnerHTML={{ __html: content.ContentMarkdown }} />

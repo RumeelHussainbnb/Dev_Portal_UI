@@ -67,7 +67,7 @@ export default function Publications({ data, title, contentType, tags }) {
   const router = useRouter();
   const { playlistTitle } = router.query;
 
-  let pageTitle = title;
+  //let pageTitle = title;
 
   // Page description definition
   let pageDescription =
@@ -75,8 +75,9 @@ export default function Publications({ data, title, contentType, tags }) {
   if (contentType === 'playlist') {
     pageDescription = title;
     title = playlistTitle;
-    pageTitle = playlistTitle;
-  }else if (contentType === 'tutorials') {
+    //pageTitle = playlistTitle;
+  }
+ /* else if (contentType === 'tutorials') {
     pageDescription = "BNB Chain Dev platform is one of the best websites where you will get tutorials to understand Web3 Development and Smart Contract Development. Visit the website today!";
     title = "Learn Smart Contract & Dapp Development - BNB Chain Dev";
     pageTitle = "Tutorials";
@@ -105,6 +106,7 @@ export default function Publications({ data, title, contentType, tags }) {
     title = "BNB Chain Dev Twitter Threads - BNB Chain Dev";
     pageTitle = "Twitter Threads";
   }
+*/
 
   const metaTags = {
     title: `BNBChainDev - ${title}`,
@@ -117,7 +119,8 @@ export default function Publications({ data, title, contentType, tags }) {
     <Container metaTags={metaTags}>
       <PublicationsComponent
         data={data}
-        title={pageTitle}
+       // title={pageTitle}
+        title={title}
         contentType={contentType}
         isLoading={false}
         tagsList={tags}
