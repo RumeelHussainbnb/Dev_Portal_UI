@@ -72,7 +72,6 @@ export default function Article({ content }) {
               </a>
               {' · '}
               <span>{content.PublishedAt}</span>
-              {/*{content.PublishedAt}*/}
             </h2>
           </div>
           <div dangerouslySetInnerHTML={{ __html: content.ContentMarkdown }} />
