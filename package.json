@@ -34,7 +34,6 @@
     "isomorphic-unfetch": "^3.1.0",
     "js-cookie": "^3.0.1",
     "jsonwebtoken": "^8.5.1",
-    "jwt-decode": "^3.1.2",
     "moment": "^2.29.4",
     "mongoose": "^6.5.2",
     "next": "^12.2.2",
