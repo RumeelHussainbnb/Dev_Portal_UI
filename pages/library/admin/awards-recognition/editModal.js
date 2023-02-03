@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import dynamic from 'next/dynamic';
 
 import { RecognizationsAndAwards } from '../../../../constant/enums';
-import axios from '../../../../utils/axios';
+import axios from '../../../../utils/http';
 
 const NotificationSuccess = dynamic(() => import('../../../../components/notifications/success'));
 const NotificationError = dynamic(() => import('../../../../components/notifications/error'));
@@ -34,18 +34,8 @@ export default function Modal({ open, setOpen, content }) {
   const updateUserRewards = async e => {
     e.preventDefault();
     //console.log('updateUserRewards data ==> ', data);
-    let userData = JSON.parse(localStorage.getItem('userData') || '{}');
 
-    const response = await axios.put(
-      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/user/updateUserProfile/${data._id}`,
-      data,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + userData?.token
-        }
-      }
-    );
+    const response = await axios.put(`/user/updateUserProfile/${data._id}`, data);
     if (response.data.success) {
       setNotifySuccess(true);
     } else {

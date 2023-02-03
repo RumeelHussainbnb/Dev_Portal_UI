@@ -18,7 +18,7 @@ import useTheme from '../../hooks/useTheme';
 import useUser from '../../hooks/useUser';
 import { useRouter } from 'next/router';
 import { ethers } from 'ethers';
-import axios from '../../utils/axios';
+import axios from '../../utils/http';
 import endpoints from '../../constant/endPoints';
 import Cookies from 'js-cookie';
 
@@ -67,7 +67,7 @@ function TopBar({ setSearch, search, childrens }) {
           PublicKey: accounts[0]
         };
         axios
-          .post(`${endpoints.BASE_URL}/auth/register`, payload)
+          .post(`/auth/register`, payload)
           .then(async res => {
             if (res?.data?.success == true) {
               // update context

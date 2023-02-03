@@ -3,11 +3,10 @@ import { useEffect, useState, useRef } from 'react';
 import { Container } from '../../components/layout';
 import Image from 'next/image';
 import 'react-circular-progressbar/dist/styles.css';
-import axiosInstance from '../../utils/axios';
+import axios from '../../utils/http';
 import EndPoint from '../../constant/endPoints';
 import InputField from '../../components/InputField';
 import MultiSelection from '../../components/MultiSelection';
-import axios from 'axios';
 import validation from '../../utils/validation';
 import Loader from '../../components/Loader';
 import { useRouter } from 'next/router';
@@ -159,13 +158,8 @@ export default function Profile({ data, userData }) {
       }
     };
     var formDataa = new FormData();
-    axiosInstance
-      .put(`${EndPoint.BASE_URL}${EndPoint.UPDATE_PROFILE}${data._id}`, payload, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + userData.token
-        }
-      })
+    axios
+      .put(`${EndPoint.BASE_URL}${EndPoint.UPDATE_PROFILE}${data._id}`, payload)
       .then(response => {
         console.log(response);
       })

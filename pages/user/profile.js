@@ -60,7 +60,7 @@ export default function Profile({ data }) {
                       Member since, {moment(data?.CreatedAt).format('MMMM,YYYY')}
                     </p>
                   </div>
-                  {data?.Skils.length > 0 ? (
+                  {data?.Skils?.length > 0 ? (
                     <div className="mt-1 flex flex-row">
                       <div className="h-4 w-4">
                         <Image src={'/account.png'} height={'100px'} width={'100px'} alt="" />
@@ -365,22 +365,19 @@ export default function Profile({ data }) {
 
 export async function getServerSideProps(context) {
   let response;
-  const userToken = context.req.cookies.userToken;
-  // .req.cookies.get('userToken');
-  let user = JSON.parse(userToken);
   try {
-    response = await axios.get(`${EndPoint.BASE_URL}${EndPoint.GET_PROFILE}/${user.data?._id}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + user.token
+    response = await axios.get(`${EndPoint.BASE_URL}${EndPoint.GET_PROFILE}/${user.data?._id}`);
+    return {
+      props: {
+        data: response?.data?.data
       }
-    });
+    };
   } catch (error) {
-    console.log(error);
+    //console.log(error);
+    return {
+      props: {
+        data: {}
+      }
+    };
   }
-  return {
-    props: {
-      data: response?.data?.data
-    }
-  };
 }
