@@ -178,13 +178,14 @@ export default function Profile() {
     axios
       .put(`/user/updateUserProfile/${state._id}`, payload)
       .then(response => {
+        setloader(false);
         console.log(response);
+        router.push('/user/profile');
       })
       .catch(error => {
+        setloader(false);
         console.log(error);
       });
-    setloader(false);
-    router.push('/user/profile');
   };
   //create location
   const [certificateArray, setcertificateArray] = useState([

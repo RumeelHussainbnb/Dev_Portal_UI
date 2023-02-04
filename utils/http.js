@@ -9,16 +9,16 @@ const options = {
 };
 
 const client = axios.create(options);
-let key = '';
-let userData = {};
-if (typeof window !== 'undefined') {
-  key = localStorage.getItem('PublicKey');
-  userData = JSON.parse(localStorage.getItem('userData') || '{}');
-}
 
 // Add a request interceptor
 client.interceptors.request.use(
   function (config) {
+    let key = '';
+    let userData = {};
+    if (typeof window !== 'undefined') {
+      key = localStorage.getItem('PublicKey');
+      userData = JSON.parse(localStorage.getItem('userData') || '{}');
+    }
     // console.log('client.interceptors.request => ');
     // Do something before request is sent
     config.headers.Authorization = 'Bearer ' + userData.token;

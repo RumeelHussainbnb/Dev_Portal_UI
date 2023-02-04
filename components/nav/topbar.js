@@ -329,6 +329,7 @@ function TopBar({ setSearch, search, childrens }) {
                                       localStorage.removeItem('handleAdminMode');
                                       localStorage.removeItem('PublicKey');
                                       localStorage.removeItem('editMode');
+                                      localStorage.removeItem('userData');
                                       router.push('/');
                                     }}
                                   >
