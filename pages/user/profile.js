@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Container } from '../../components/layout';
 import Image from 'next/image';
 import 'react-circular-progressbar/dist/styles.css';
-import axios from '../../utils/axios';
+import axios from '../../utils/http';
 import EndPoint from '../../constant/endPoints';
 import Link from 'next/link';
 import moment from 'moment';
@@ -13,8 +13,23 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function Profile({ data }) {
+export default function Profile() {
   const router = useRouter();
+  const [data, setData] = useState();
+  const [selectedTab, setSelectedTab] = useState('Contributions');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      let userData = JSON.parse(localStorage.getItem('userData') || '{}');
+      try {
+        const user = await axios.get(`/user/getUserProfile/${userData.data?._id}`);
+
+        setData(user?.data?.data);
+      } catch (error) {}
+    };
+    fetchData();
+  }, []);
+
   const metaTags = {
     title: 'BNBChainDev - Profile',
     description:
@@ -22,7 +37,6 @@ export default function Profile({ data }) {
     url: `${process.env.NEXT_PUBLIC_API_ENDPOINT}/profile`,
     shouldIndex: true
   };
-  const [selectedTab, setSelectedTab] = useState('Contributions');
 
   return (
     <Container metaTags={metaTags}>
@@ -361,23 +375,4 @@ export default function Profile({ data }) {
       </div>
     </Container>
   );
-}
-
-export async function getServerSideProps(context) {
-  let response;
-  try {
-    response = await axios.get(`${EndPoint.BASE_URL}${EndPoint.GET_PROFILE}/${user.data?._id}`);
-    return {
-      props: {
-        data: response?.data?.data
-      }
-    };
-  } catch (error) {
-    //console.log(error);
-    return {
-      props: {
-        data: {}
-      }
-    };
-  }
 }

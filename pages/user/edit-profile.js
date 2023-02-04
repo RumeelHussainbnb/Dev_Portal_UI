@@ -11,24 +11,13 @@ import validation from '../../utils/validation';
 import Loader from '../../components/Loader';
 import { useRouter } from 'next/router';
 const Spinner = dynamic(() => import('../../components/spinner'));
-export default function Profile({ data, userData }) {
+
+export default function Profile() {
   const inputFile = useRef(null);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const createData = {
-    Username: data.Username,
-    Bio: data.Bio,
-    Country: data.Country,
-    Email: data?.Email,
-    ProfilePicture: data.ProfilePicture,
-    Facebook: data?.Author?.SocialLinks[0]?.Link,
-    Linkedin: data?.Author?.SocialLinks[1]?.Link,
-    Twitter: data?.Author?.SocialLinks[2]?.Link,
-    Telegram: data?.Author?.SocialLinks[3]?.Link,
-    Skils: data?.Skils,
-    Certification: data?.Author?.Certification
-  };
-  const [state, setState] = useState(createData);
+
+  const [state, setState] = useState();
   const [loader, setloader] = useState(false);
   const metaTags = {
     title: 'BNBChainDev - Update Profile',
@@ -37,9 +26,37 @@ export default function Profile({ data, userData }) {
     url: `${process.env.NEXT_PUBLIC_API_ENDPOINT}/edit-profile`,
     shouldIndex: true
   };
-  //   useEffect(() => {
-  //     setState(createData);
-  //   }, []);
+  useEffect(() => {
+    let userData = JSON.parse(localStorage.getItem('userData') || '{}');
+
+    let { data } = userData;
+    const createData = {
+      _id: data._id,
+      Username: data.Username,
+      Bio: data.Bio,
+      Country: data.Country,
+      Email: data?.Email,
+      ProfilePicture: data.ProfilePicture,
+      Facebook: data?.Author?.SocialLinks[0]?.Link,
+      Linkedin: data?.Author?.SocialLinks[1]?.Link,
+      Twitter: data?.Author?.SocialLinks[2]?.Link,
+      Telegram: data?.Author?.SocialLinks[3]?.Link,
+      Skils: data?.Skils,
+      Certification: data?.Author?.Certification
+    };
+    setState(createData);
+    const fetchData = async () => {
+      try {
+        // const user = await axios.get(
+        //   `/user/getUserProfile/${user.data?._id}`
+        // );
+        // setActivity(martian?.data?.Activities);
+        // console.log('martian ==> ', martian);
+      } catch (error) {}
+    };
+    fetchData();
+  }, []);
+
   const [errors, setErrors] = useState({
     Username: '',
     Email: '',
@@ -159,7 +176,7 @@ export default function Profile({ data, userData }) {
     };
     var formDataa = new FormData();
     axios
-      .put(`${EndPoint.BASE_URL}${EndPoint.UPDATE_PROFILE}${data._id}`, payload)
+      .put(`/user/updateUserProfile/${state._id}`, payload)
       .then(response => {
         console.log(response);
       })
@@ -215,7 +232,7 @@ export default function Profile({ data, userData }) {
                     ) : state?.ProfilePicture ? (
                       <div className="absolute h-28 w-28 rounded-full">
                         <Image
-                          src={data.ProfilePicture}
+                          src={state.ProfilePicture}
                           alt=""
                           height={'112px '}
                           width={'112px '}
@@ -242,7 +259,7 @@ export default function Profile({ data, userData }) {
                 </div>
               </div>
               <p className="mt-6 flex self-center text-lg font-bold text-black">
-                Welcome, {data.Username}
+                Welcome, {state?.Username}
               </p>
               <div className="mt-2 flex flex-wrap">
                 <InputField
@@ -437,7 +454,7 @@ export default function Profile({ data, userData }) {
             >
               <div className="block w-full overflow-x-auto">
                 {/* Projects table */}
-                {data?.Author?.Certification.length > 0 ? (
+                {state?.Author?.Certification.length > 0 ? (
                   <table className="w-full border-collapse items-center bg-transparent">
                     <thead>
                       <tr>
@@ -453,7 +470,7 @@ export default function Profile({ data, userData }) {
                         ))}
                       </tr>
                     </thead>
-                    {data.Author.Certification.map(item => (
+                    {state?.Author?.Certification.map(item => (
                       <tbody key={item._id}>
                         <tr>
                           <td className="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-6 text-xs text-black">
@@ -482,26 +499,4 @@ export default function Profile({ data, userData }) {
       </div>
     </Container>
   );
-}
-export async function getServerSideProps(context) {
-  let response;
-  const userToken = context.req.cookies.userToken;
-  let user = JSON.parse(userToken);
-  try {
-    response = await axiosInstance.get(
-      `${EndPoint.BASE_URL}${EndPoint.GET_PROFILE}/${user.data?._id}`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + user.token
-        }
-      }
-    );
-  } catch (error) {}
-  return {
-    props: {
-      data: response?.data?.data,
-      userData: user
-    }
-  };
 }
