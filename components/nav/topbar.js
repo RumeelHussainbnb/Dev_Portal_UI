@@ -314,7 +314,7 @@ function TopBar({ setSearch, search, childrens }) {
                                       setChainId(null);
                                       setPublickey(null);
                                       setConnected(false);
-                                      setShowButtons(false);
+                                      //setShowButtons(false);
                                       await appDispatch({
                                         type: 'handleWalletConnection',
                                         payload: false

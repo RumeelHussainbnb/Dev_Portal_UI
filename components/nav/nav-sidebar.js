@@ -426,6 +426,7 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
                   item.name === 'Post NewsLetter' ||
                   item.name === 'Post tweet' ||
                   item.name === 'Add Playlist' ||
+                  item.name === 'Awards & Recognition' ||
                   item.name === 'Add mvp') &&
                 appState.isAdminMode == false
               ) {
