@@ -83,9 +83,9 @@ export default function Profile({ martian, id }) {
 
   return (
     <Container metaTags={metaTags}>
-      <div className="flex gap-6 px-2 md:pl-0">
+      <div className="flex gap-6 px-2 sm:px-6">
         <main className="w-full">
-          <div className="px-4 sm:px-0">
+          <div className="px-4 sm:px-6">
             <div className="relative z-0 flex flex-col divide-gray-200 rounded-md bg-white p-2 shadow dark:divide-gray-700 dark:bg-gray-800">
               {/* Profile Detail */}
               <div className="flex flex-row">
@@ -191,15 +191,15 @@ export default function Profile({ martian, id }) {
                 </div>
               </div>
             </div>
-            <div className="relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
+            <div className="relative z-0 mt-2 p-4 flex flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
               <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Biography:</p>
               {martian.BioGraphy}
             </div>
-            <div className="relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
+            <div className="relative z-0 p-6 mt-2 flex flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
               <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Activities:</p>
               {activities.length > 0 ? (
                 <div className="mb-1 w-full py-8">
-                  <div className="relative  shadow-md  sm:rounded-lg">
+                  <div className="relative  p-10 shadow-md  sm:rounded-lg">
                     <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
                       <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
