@@ -42,7 +42,7 @@ export default function Profile() {
     <Container metaTags={metaTags}>
       <div className="flex w-full gap-3 self-center md:pl-0">
         <main className="">
-          <div className="px-4 sm:px-0">
+          <div className="px-4 sm:px-6">
             <div className="relative z-0 flex flex-col divide-gray-200 rounded-md bg-white p-2 px-8 py-8 shadow dark:divide-gray-700">
               <div className="flex flex-row">
                 <div className="m-h-[150px] flex h-fit w-[30%] max-w-[150px] items-center justify-center overflow-hidden rounded-full">
