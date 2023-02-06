@@ -185,22 +185,24 @@ const MvpForm = ({ router }) => {
                 type="file"
               />
               <div className="relative w-28">
-                <div className="col-span-12 sm:col-span-4 lg:col-span-10">
+              <div className="col-span-12 sm:col-span-4 lg:col-span-10">
                   {isLoading ? (
                     <Spinner />
                   ) : imageURL ? (
-                    <Image className="absolute h-28 w-28 rounded-full" src={imageURL} alt="" />
+                    <div className="absolute h-28 w-28 rounded-full">
+                      <Image src={imageURL} alt="" height={'112px '} width={'112px '} />
+                    </div>
                   ) : (
-                    <Image
-                      className="absolute h-28 w-28 rounded-full"
-                      src="/martianImage.png"
-                      alt=""
-                    />
+                    <div className="absolute h-28 w-28 rounded-full">
+                      <Image src="/martianImage.png" alt="" height={'112px '} width={'112px '} />
+                    </div>
                   )}
 
                   {!isLoading && (
                     <div className="group absolute flex h-28 w-28 cursor-pointer items-center justify-center rounded-full opacity-60 transition duration-500 hover:bg-gray-200">
-                      <Image className="hidden w-5 group-hover:block" src="/upload.svg" alt="" />
+                      <div className="hidden w-5 group-hover:block">
+                        <Image src="/upload.svg" alt="" height={'112px '} width={'112px '} />
+                      </div>
                     </div>
                   )}
                 </div>
