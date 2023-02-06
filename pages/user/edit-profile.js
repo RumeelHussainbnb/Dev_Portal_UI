@@ -216,7 +216,7 @@ export default function Profile() {
       <Loader loader={loader} />
       <div className="flex w-full gap-3 md:pl-0">
         <main className="">
-          <div className="px-1 sm:px-0">
+          <div className="px-1 sm:px-6">
             <div className="relative flex flex-col divide-gray-200 rounded-md bg-white p-2 px-6 py-8 shadow dark:divide-gray-700">
               <p className="text-lg font-bold">Personal Information:</p>
               <div className="mx-auto mt-10 h-24 w-28 text-center" onClick={onIconClick}>

@@ -59,7 +59,7 @@ export default function AwardsRecognition({ data, user }) {
 
   return (
     <Container metaTags={metaTags}>
-      <div className="relative z-0 mt-2  flex w-11/12 flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
+      <div className="relative p-4 z-0 mt-2 w-11/12 divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
         <p className="p-4 text-lg font-medium text-gray-500 dark:text-gray-500">Active Users:</p>
         <form action="#" className="mb-4 flex items-center justify-center" onSubmit={makeApiCall}>
           <label htmlFor="simple-search" className="sr-only">
