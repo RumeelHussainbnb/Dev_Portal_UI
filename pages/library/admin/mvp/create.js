@@ -42,7 +42,7 @@ const MvpForm = () => {
       FirstName: data.firstName,
       LastName: data.lastName,
       Email: data.email,
-      publicKey: data.publicKey,
+      publicKey: data.publicKey?.toLowerCase,
       Expertise: data.expertise,
       MartianType: data.martian.value,
       Country: data.country.label,
