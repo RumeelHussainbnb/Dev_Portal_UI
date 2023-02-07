@@ -11,15 +11,13 @@ import {
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
-import PropTypes from 'prop-types';
-import React, { Fragment, memo, useState } from 'react';
+import React, { Fragment, memo, useState, useEffect } from 'react';
 import { useAppDispatch, useAppState } from '../../context/AppContext';
 import useTheme from '../../hooks/useTheme';
-import useUser from '../../hooks/useUser';
 import { useRouter } from 'next/router';
 import { ethers } from 'ethers';
 import axios from '../../utils/http';
-import endpoints from '../../constant/endPoints';
+
 import Cookies from 'js-cookie';
 
 const Search = dynamic(() => import('./search'));
@@ -33,77 +31,80 @@ function classNames(...classes) {
 const NotificationError = dynamic(() => import('../notifications/error'));
 // ETHEREUM ERROR end
 
-function TopBar({ setSearch, search, childrens }) {
-  const [publicKey, setPublickey] = useState();
-  //const [isAdmin, setisAdmin] = useState();
-  const [connected, setConnected] = useState(false);
-  const [network, setNetwork] = useState();
-  const [chainId, setChainId] = useState();
-  const [showButton, setShowButtons] = useState(false);
-  // ETHEREUM ERROR start
-  const [ethereumError, setEthereumError] = useState(false);
-  // ETHEREUM ERROR end
-
-  //const { user, isAdmin = false, connected_, error } = useUser(publicKey, connected);
-
+function TopBar({ childrens }) {
+  const [publicKey, setPublickey] = useState('');
+  const [ethereumError, setEthereumError] = useState({ message: '', show: false });
   const [editModeNotificationOn, setEditModeNotificationOn] = useState(false);
   const [editModeNotificationOff, setEditModeNotificationOff] = useState(false);
+
   let { mode, setSetting } = useTheme();
   const appDispatch = useAppDispatch();
   const appState = useAppState();
   const router = useRouter();
 
+  useEffect(() => {
+    setPublickey(localStorage.getItem('PublicKey' || ''));
+  }, []);
+
   const connectButton = async () => {
-    const { ethereum } = window;
-    if (ethereum) {
-      if (ethereum.isMetaMask) {
-        const provider = new ethers.providers.Web3Provider(ethereum, 'any');
-        const accounts = await provider.send('eth_requestAccounts', []);
-        // debugger;
-        const { name, chainId } = await provider.getNetwork();
+    try {
+      const { ethereum } = window;
+      if (ethereum) {
+        if (ethereum.isMetaMask) {
+          const provider = new ethers.providers.Web3Provider(window.ethereum);
+          const accounts = await provider.send('eth_requestAccounts', []);
+          //* Can be use if needed
+          // const providerAccounts = await provider.listAccounts();
+          // const signer = provider.getSigner();
+          // const walletAddress = providerAccounts[0];
+          // now call the api
+          let payload = {
+            PublicKey: accounts[0]
+          };
+          axios
+            .post(`/auth/register`, payload)
+            .then(async res => {
+              if (res?.data?.success == true) {
+                // update context
+                await appDispatch({ type: 'handleWalletConnection', payload: true });
+                await appDispatch({ type: 'savePublicKey', payload: accounts[0] });
 
-        // now call the api
-        let payload = {
-          PublicKey: accounts[0]
-        };
-        axios
-          .post(`/auth/register`, payload)
-          .then(async res => {
-            if (res?.data?.success == true) {
-              // update context
-              await appDispatch({ type: 'handleWalletConnection', payload: true });
-              await appDispatch({ type: 'savePublicKey', payload: accounts[0] });
+                // update state
+                setPublickey(accounts[0]);
+                localStorage.setItem('PublicKey', accounts[0]);
+                localStorage.setItem('userData', JSON.stringify(res.data));
+                Cookies.set('userToken', JSON.stringify(res.data));
 
-              // update state
-              setNetwork(name);
-              setChainId(chainId);
-              setPublickey(accounts[0]);
-              setConnected(true);
-              setShowButtons(prev => prev + 1);
-
-              localStorage.setItem('PublicKey', accounts[0]);
-              localStorage.setItem('userData', JSON.stringify(res.data));
-              Cookies.set('userToken', JSON.stringify(res.data));
-
-              if (res?.data?.isNewUser) {
-                // navigate user
-                router.push('/user/edit-profile');
+                if (res?.data?.isNewUser) {
+                  // navigate user
+                  router.push('/user/edit-profile');
+                }
               }
-            } else {
-              // TODO SHOW PROPER ALERT
-              //alert("something went wrong 1")
-            }
-          })
-          .catch(err => {
-            console.log('ERROR ========>', err);
-            // TODO SHOW PROPER ALERT
-            //alert("something went wrong 2")
-          });
+            })
+            .catch(err => {
+              setEthereumError({
+                message: 'Failed to register user',
+                show: true
+              });
+            });
+        }
+      } else {
+        //if not meta mask on browser
+        setEthereumError({
+          message:
+            'Failed connecting to wallet, no ethereum found in your browser, please use the latest version of firefox browser or chromium browsers.',
+          show: true
+        });
       }
-    } else {
-      // ETHEREUM ERROR start
-      setEthereumError(true);
-      // ETHEREUM ERROR end
+    } catch (error) {
+      setEthereumError({ message: 'Upgrade Plans Failed: ' + error.message, show: true });
+      if (error.message === 'Already processing eth_requestAccounts. Please wait.') {
+        setEthereumError({ message: 'Please sign in to your MetaMask.', show: true });
+        window.ethereum.request({
+          method: 'wallet_requestPermissions',
+          params: [{ eth_accounts: {} }]
+        });
+      }
     }
   };
 
@@ -311,10 +312,7 @@ function TopBar({ setSearch, search, childrens }) {
                                       'text-md block flex w-full px-4 py-2 text-gray-700 dark:text-gray-300'
                                     )}
                                     onClick={async () => {
-                                      setChainId(null);
                                       setPublickey(null);
-                                      setConnected(false);
-                                      //setShowButtons(false);
                                       await appDispatch({
                                         type: 'handleWalletConnection',
                                         payload: false
@@ -360,7 +358,7 @@ function TopBar({ setSearch, search, childrens }) {
               <Popover.Panel as="nav" className="lg:hidden" aria-label="Global">
                 {({ close }) => (
                   <div className="mx-auto max-w-3xl space-y-1 px-2 pt-2 pb-3 sm:px-4">
-                    <NavSidebar showButton={showButton} publicKey={publicKey} />
+                    <NavSidebar publicKey={publicKey} />
                   </div>
                 )}
               </Popover.Panel>
@@ -371,28 +369,24 @@ function TopBar({ setSearch, search, childrens }) {
         <div className="min-h-full">
           <div className="flex py-7 sm:pl-6 lg:gap-8 lg:pl-8">
             <div className="top-4 hidden min-w-[190px] content-between divide-y divide-gray-300 dark:divide-gray-500 lg:block">
-              <NavSidebar showButton={showButton} publicKey={publicKey} />
+              <NavSidebar publicKey={publicKey} />
             </div>
 
             <div className="min-h-screen w-full overflow-x-hidden overflow-y-visible">
-              <div className="flex justify-center gap-6 px-2 md:pl-0">{!search && childrens}</div>
+              <div className="flex justify-center gap-6 px-2 md:pl-0">{childrens}</div>
             </div>
           </div>
         </div>
       </div>
       {/* ETHEREUM ERROR start */}
       <NotificationError
-        show={ethereumError}
-        setShow={setEthereumError}
-        text="Please Install Metamask Extension"
+        show={ethereumError.show}
+        setShow={isShow => setEthereumError({ message: '', show: isShow })}
+        text={ethereumError.message}
       />
       {/* ETHEREUM ERROR end */}
     </>
   );
 }
-
-TopBar.propTypes = {
-  setSearch: PropTypes.func.isRequired
-};
 
 export default memo(TopBar);

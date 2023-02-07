@@ -7,11 +7,9 @@ function classNames(...classes) {
 }
 
 function Nav({ children }) {
-  const [search, setSearch] = useState(false);
-
   return (
-    <div className={classNames(search && 'min-h-[5050px] xl:min-h-[3500px]', 'min-h-screen')}>
-      <TopBar setSearch={setSearch} search={search} childrens={children} />
+    <div className={classNames('min-h-screen')}>
+      <TopBar childrens={children} />
     </div>
   );
 }

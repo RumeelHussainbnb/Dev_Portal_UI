@@ -11,11 +11,11 @@ import {
   NewspaperIcon
 } from '@heroicons/react/outline';
 import Link from 'next/link';
-import PropTypes from 'prop-types';
+import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import { memo, useEffect, useState } from 'react';
-import useUser from '../../hooks/useUser';
-import axios from '../../utils/http';
 import { useAppDispatch, useAppState } from '../../context/AppContext';
+const Notification = dynamic(() => import('../notifications/error'));
 
 const navigation = [
   {
@@ -214,47 +214,48 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
+function NavSidebar({ publicKey }) {
+  const [notification, setNotification] = useState({ message: '', show: false });
   const [current, setCurrent] = useState('');
   const [isMartian, setIsMartian] = useState(false);
-  const [isAdmin, setisAdmin] = useState(false);
-  const [buttonsVisible, setButtonsVisible] = useState(showButton);
-  const { user, isAdmin_ = true, connected, error } = useUser();
   const appState = useAppState();
   const appDispatch = useAppDispatch();
-  const [isConnected, setPublicKey] = useState('');
+  const [isConnected, setIsConnected] = useState('');
+  const router = useRouter();
+
+  const fetchData = async () => {
+    let key = localStorage.getItem('PublicKey' || '');
+    let userState = JSON.parse(localStorage.getItem('userData' || '{}'));
+    const admin = userState?.data?.Role === 'admin' ? true : false;
+
+    await appDispatch({ type: 'handleAdminMode', payload: admin });
+    setIsMartian(userState?.data?.MartianId ? true : false);
+    setIsConnected(key);
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      // const data = await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/user/${window.sessionStorage.getItem('PublicKey')}`);
-      let key = localStorage.getItem('PublicKey');
-
-      setPublicKey(key);
-      const response = await axios(`/user/${appState.publicKey ? appState.publicKey : key}`);
-      const admin = response?.data?.Role === 'admin' ? true : false;
-      await appDispatch({ type: 'handleAdminMode', payload: admin });
-      localStorage.setItem('handleAdminMode', admin);
-      let userState = JSON.parse(localStorage.getItem('userData') || '{}');
-
-      localStorage.setItem('userData', JSON.stringify({ ...userState, data: response?.data }));
-
-      setisAdmin(admin);
-      setIsMartian(response?.data?.MartianId ? true : false);
-    };
-
-    fetchData().catch('Catch error ', console.error);
-    if (window && window.sessionStorage.getItem('main-navigation')) {
-      setCurrent(window.sessionStorage.getItem('main-navigation'));
-    } else {
-      setCurrent('Library');
+    //* if wallet connected fetch data
+    if (publicKey) {
+      fetchData();
     }
-    setButtonsVisible(showButton);
-  }, [showButton]);
+    //* else clear state
+    else {
+      setIsConnected('');
+      setIsMartian(false);
+    }
+
+    router.pathname === '/library'
+      ? setCurrent('Home')
+      : setCurrent(localStorage.getItem('main-navigation' || ''));
+  }, [publicKey]);
 
   return (
     <nav aria-label="Sidebar" className="top-4 w-full">
       <div className="w-[270px]">
         {navigation.map(item => {
+          if (item.name === 'Profile' && !isConnected) {
+            return;
+          }
           return (
             <Link href={item.href} passHref key={item.name} target={item.target}>
               <a target={item.target} rel={item.rel}>
@@ -267,8 +268,7 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
                   )}
                   onClick={() => {
                     setCurrent(item.name);
-                    window.sessionStorage.setItem('main-navigation', item.name);
-                    closeMobileMenu();
+                    window.localStorage.setItem('main-navigation', item.name);
                   }}
                   aria-current={item.current ? 'page' : undefined}
                   disabled={item.disabled}
@@ -287,34 +287,33 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
             </Link>
           );
         })}
-        {isConnected ? (
-          <Link href="/submit" passHref>
-            {/* <a href="/submit" rel="submit"> */}
-            <button
-              onClick={() => {
-                setCurrent('Submit Content');
-                window.sessionStorage.setItem('main-navigation', 'Submit Content');
-                closeMobileMenu();
-              }}
-              className={classNames(
-                'Submit Content' === current
-                  ? 'bg-yellow-400 text-gray-900 dark:bg-gray-800 dark:text-gray-200'
-                  : 'text-gray-800 dark:text-gray-300',
-                'group flex min-w-full max-w-[190px] items-center rounded-md px-3 py-2 text-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-700 lg:text-base'
-              )}
-            >
-              <FolderAddIcon
-                className={classNames(
-                  'Submit Content' === current ? 'text-gray-500' : 'text-yellow-400 ',
-                  '-ml-1 mr-3 h-6 w-6 flex-shrink-0'
-                )}
-                aria-hidden="true"
-              />
-              <span className="truncate">Submit Content</span>
-            </button>
-            {/* </a> */}
-          </Link>
-        ) : null}
+
+        <button
+          onClick={() => {
+            if (!isConnected) {
+              setNotification({ message: 'Please Connect Wallet', show: true });
+            } else {
+              setCurrent('Submit Content');
+              window.localStorage.setItem('main-navigation', 'Submit Content');
+              router.push('/submit');
+            }
+          }}
+          className={classNames(
+            'Submit Content' === current
+              ? 'bg-yellow-400 text-gray-900 dark:bg-gray-800 dark:text-gray-200'
+              : 'text-gray-800 dark:text-gray-300',
+            'group flex min-w-full max-w-[190px] items-center rounded-md px-3 py-2 text-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-700 lg:text-base'
+          )}
+        >
+          <FolderAddIcon
+            className={classNames(
+              'Submit Content' === current ? 'text-gray-500' : 'text-yellow-400 ',
+              '-ml-1 mr-3 h-6 w-6 flex-shrink-0'
+            )}
+            aria-hidden="true"
+          />
+          <span className="truncate">Submit Content</span>
+        </button>
       </div>
       {/* Add new content*/}
       <div className="space-y-4 pt-4">
@@ -330,10 +329,7 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
             {courses.map(item => {
               return (
                 <Link href={item.href} passHref key={item.name}>
-                  <div
-                    onClick={() => closeMobileMenu()}
-                    className="group flex cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-base"
-                  >
+                  <div className="group flex cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-base">
                     <AcademicCapIcon
                       className="h-4 w-4 text-yellow-400 dark:text-yellow-500"
                       aria-hidden="true"
@@ -362,13 +358,7 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
           <div className="mt-2 space-y-1" aria-labelledby="communities-headline">
             {special.map(item => {
               return (
-                <a
-                  href={item.href}
-                  key={item.name}
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={() => closeMobileMenu()}
-                >
+                <a href={item.href} key={item.name} target="_blank" rel="noreferrer">
                   <div className="group flex cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-base">
                     <ExternalLinkIcon
                       className="h-4 w-4 text-yellow-400 dark:text-yellow-500"
@@ -394,10 +384,7 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
             {specialLists.map(item => {
               return (
                 <Link href={item.href} passHref key={item.name}>
-                  <button
-                    onClick={() => closeMobileMenu()}
-                    className="group flex min-w-full cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-base"
-                  >
+                  <button className="group flex min-w-full cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-base">
                     <SparklesIcon
                       className="h-4 w-4 text-yellow-400 dark:text-yellow-500"
                       aria-hidden="true"
@@ -436,17 +423,8 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
               if (item.name === 'Tools') {
                 return (
                   <Link href={item.href} passHref key={item.name}>
-                    <a
-                      href={item.href}
-                      key={item.name}
-                      target="_blank"
-                      rel="noreferrer"
-                      onClick={() => closeMobileMenu()}
-                    >
-                      <button
-                        onClick={() => closeMobileMenu()}
-                        className="group flex min-w-full cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-base"
-                      >
+                    <a href={item.href} key={item.name} target="_blank" rel="noreferrer">
+                      <button className="group flex min-w-full cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-base">
                         <PaperClipIcon
                           className="h-4 w-4 text-yellow-400 dark:text-yellow-500"
                           aria-hidden="true"
@@ -459,10 +437,7 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
               }
               return (
                 <Link href={item.href} passHref key={item.name}>
-                  <button
-                    onClick={() => closeMobileMenu()}
-                    className="group flex min-w-full cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-base"
-                  >
+                  <button className="group flex min-w-full cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-base">
                     <PaperClipIcon
                       className="h-4 w-4 text-yellow-400 dark:text-yellow-500"
                       aria-hidden="true"
@@ -493,10 +468,7 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
 
               return (
                 <Link href={item.href} passHref key={item.name}>
-                  <button
-                    onClick={() => closeMobileMenu()}
-                    className="group flex min-w-full cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-base"
-                  >
+                  <button className="group flex min-w-full cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-base">
                     <PaperClipIcon
                       className="h-4 w-4 text-yellow-400 dark:text-yellow-500"
                       aria-hidden="true"
@@ -509,16 +481,13 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
           </div>
         </div>
       </div>
+      <Notification
+        show={notification.show}
+        setShow={isShow => setNotification({ message: '', show: isShow })}
+        text={notification.message}
+      />
     </nav>
   );
 }
-
-NavSidebar.defaultProps = {
-  closeMobileMenu: () => {}
-};
-
-NavSidebar.prototype = {
-  closeMobileMenu: PropTypes.func
-};
 
 export default memo(NavSidebar);
