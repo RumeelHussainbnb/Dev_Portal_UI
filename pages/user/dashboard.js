@@ -173,7 +173,7 @@ export default function Contents() {
 
         <div className="h-100 relative z-0  mt-8  flex w-11/12 flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
           <p className="p-4 text-lg font-medium text-gray-500 dark:text-gray-500">
-            Rejected Content:
+            In-active Content:
           </p>
           <div className="scrollbar-hide max-h-100 relative  mb-2 overflow-y-auto shadow-md  sm:rounded-lg">
             {inactiveContent?.length > 0 ? (

@@ -72,14 +72,15 @@ const Index = ({ userData }) => {
 
   const handleDataSearch = e => {
     e.preventDefault();
+    //console.log('data ==> ', data);
     const currentPath = router.pathname;
     const currentQuery = { ...router.query }; //Copy current query to avoid its removing
     currentQuery.page = page;
     currentQuery.perPage = perPage;
 
     data.keyword !== '' ? (currentQuery.keyword = data.keyword) : delete currentQuery['keyword'];
-    data.country.name !== ''
-      ? (currentQuery.country = data.country.name)
+    data.country.value !== ''
+      ? (currentQuery.country = data.country.value)
       : delete currentQuery['country'];
     data.awardCategory.name !== ''
       ? (currentQuery.martian = data.awardCategory.value)

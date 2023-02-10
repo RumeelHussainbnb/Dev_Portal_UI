@@ -16,7 +16,7 @@ export async function getServerSideProps(context) {
 }
 
 export default function AwardsRecognition({ data, user }) {
-  // console.log('data ==> ', data);
+  //console.log('data ==> ', data);
 
   const [users, setUsers] = useState(data.users);
   const [selectedUsers, setSelectedUsers] = useState();
@@ -59,7 +59,7 @@ export default function AwardsRecognition({ data, user }) {
 
   return (
     <Container metaTags={metaTags}>
-      <div className="relative p-4 z-0 mt-2 w-11/12 divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
+      <div className="relative z-0 mt-2 w-11/12 divide-gray-200 rounded-md bg-white p-4 p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
         <p className="p-4 text-lg font-medium text-gray-500 dark:text-gray-500">Active Users:</p>
         <form action="#" className="mb-4 flex items-center justify-center" onSubmit={makeApiCall}>
           <label htmlFor="simple-search" className="sr-only">
@@ -149,7 +149,11 @@ export default function AwardsRecognition({ data, user }) {
                     >
                       {data.Username}
                     </th>
-                    <td className="px-4 py-4">{String(data?.Author?.RecognizationsAndAwards)}</td>
+                    <td className="px-4 py-4">
+                      {String(
+                        data?.Author?.RecognizationsAndAwards?.map(award => award.split('_')[0])
+                      )}
+                    </td>
                     <td className="px-4 py-4">N/A</td>
                     {/* <td className="flex flex-row px-4 py-4">
                       <CheckCircleIcon className="mr-2 h-6 w-6 fill-green-500" aria-hidden="true" />

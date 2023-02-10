@@ -18,6 +18,9 @@ import defineImage from '../../utils/content-imagen';
 import Audio from '../audio';
 import { useState } from 'react';
 import axios from '../../utils/http';
+import ReactHtmlParser from 'react-html-parser';
+const Notification = dynamic(() => import('../notifications/error'));
+import { useAppDispatch, useAppState } from '../../context/AppContext';
 
 const Badge = dynamic(() => import('../badges/badge.js'));
 const CopyLink = dynamic(() => import('./copy-link.js'));
@@ -32,33 +35,41 @@ const myLoader = ({ src, width, quality }) => {
 function PostWide({ content, mode }) {
   const [isS3Audio, setIsS3Audio] = useState(false);
   const [contentState, setContentState] = useState(content);
+  const [notification, setNotification] = useState({ message: '', show: false });
   const imageUrl = defineImage(content);
+  const appState = useAppState();
 
   // Perform localStorage action & Like
   useEffect(() => {
     setContentState({
       ...contentState,
-      isLiked: contentState?.LikedBy.includes(localStorage.getItem('PublicKey'))
+      isLiked: contentState?.LikedBy.includes(appState.publicKey)
     });
-  }, []);
+  }, [appState.publicKey]);
 
   const likeContent = async event => {
     event.preventDefault();
-    content.PublicKey = localStorage.getItem('PublicKey');
-    try {
-      const response = await axios.post(`/content/like`, content);
-      if (response?.data?.success === true) {
-        // This is th eblock where icon will be turned yellow
-        setContentState({
-          ...response.data?.data,
-          isLiked: response.data?.data?.LikedBy.includes(localStorage.getItem('PublicKey'))
-        });
+
+    if (!appState.publicKey) {
+      setNotification({ message: 'Please Connect Wallet', show: true });
+      setTimeout(() => {
+        setNotification({ message: 'Please Connect Wallet', show: false });
+      }, 1500);
+    } else {
+      content.PublicKey = localStorage.getItem('PublicKey');
+      try {
+        const response = await axios.post(`/content/like`, content);
+        if (response?.data?.success === true) {
+          // This is th eblock where icon will be turned yellow
+          setContentState({
+            ...response.data?.data,
+            isLiked: response.data?.data?.LikedBy.includes(localStorage.getItem('PublicKey'))
+          });
+        }
+      } catch (error) {
+        console.log('Error ', error);
       }
-    } catch (error) {
-      console.log('Error ', error);
     }
-    // If the user is an admin, content will be active by default
-    // Send success notification
   };
 
   const handleViewApi = async event => {
@@ -263,7 +274,9 @@ function PostWide({ content, mode }) {
             audioPlayer ? 'min-h-[85px]' : 'min-h-[125px]'
           )}
         >
-          <p className="text-gray-600 dark:text-gray-400">{contentState.Description}</p>
+          <div className="text-gray-600 dark:text-gray-400">
+            {ReactHtmlParser(content.Description)}
+          </div>
         </div>
 
         {audioPlayer && (
@@ -289,29 +302,31 @@ function PostWide({ content, mode }) {
             )}
           </div>
 
-          <div className="flex h-9 w-9 items-center justify-center rounded-full border border-gray-500">
+          {/* <div className="flex h-9 w-9 items-center justify-center rounded-full border border-gray-500">
             <ChatIcon
               className="h-5 w-5 stroke-gray-500 hover:fill-yellow-500 hover:stroke-yellow-500"
               aria-hidden="true"
             />
-          </div>
+          </div> */}
           <div className="flex h-9 w-9 items-center justify-center rounded-full border border-gray-500">
-            <ShareIcon
-              className="h-5 w-5 stroke-gray-500 hover:fill-yellow-500 hover:stroke-yellow-500"
-              aria-hidden="true"
-            />
+            <CopyLink content={content} />
           </div>
           {/* Old JSX */}
           {/* <div>{actionButton()}</div> */}
 
           {/* Copy Link Btn */}
           {/* <div>
-              <div className="flex flex-row items-end">
-                <CopyLink content={content} />
-              </div>
-            </div> */}
+            <div className="flex flex-row items-end">
+              <CopyLink content={content} />
+            </div>
+          </div> */}
         </div>
       </div>
+      <Notification
+        show={notification.show}
+        setShow={isShow => setNotification({ message: '', show: isShow })}
+        text={notification.message}
+      />
     </div>
   );
 }

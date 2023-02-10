@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic';
 import { Container } from '../../../../components/layout';
 import { loadMartians } from '../../../../lib/load-martians-list';
 import { TagIcon, TrendingUpIcon } from '@heroicons/react/solid';
+import moment from 'moment';
 import Image from 'next/image';
 import fetch from '../../../../utils/fetcher';
 import Pagination from '../../../../components/pagination/Pagination';
@@ -111,7 +112,7 @@ export default function Profile({ martian, id }) {
                       <Image src={'/time.png'} width="250px" height="250px" />
                     </div> */}
                     <p className="text-sm text-gray-500 dark:text-gray-500">
-                      Members since ,12 Dec 2019
+                      Members since ,{moment(martian?.CreatedAt).format('MMMM,YYYY')}
                     </p>
                   </div>
 
@@ -126,12 +127,12 @@ export default function Profile({ martian, id }) {
                   <p className="mt-2 mb-2 text-xs text-gray-500 dark:text-gray-500">
                     {martian.Expertise}
                   </p>
-                  <a
+                  {/* <a
                     className="text-sm text-gray-500 dark:text-gray-500"
                     href="https://www.c-sharpcorner.com/members/Williambeniamin"
                   >
                     Personal Blog: https://www.c-sharpcorner.com/members/Williambeniamin
-                  </a>
+                  </a> */}
                 </div>
               </div>
               {/* Achievement */}
@@ -191,11 +192,11 @@ export default function Profile({ martian, id }) {
                 </div>
               </div>
             </div>
-            <div className="relative z-0 mt-2 p-4 flex flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
+            <div className="relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md bg-white p-4 p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
               <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Biography:</p>
               {martian.BioGraphy}
             </div>
-            <div className="relative z-0 p-6 mt-2 flex flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
+            <div className="relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md bg-white p-6 p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
               <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Activities:</p>
               {activities?.length > 0 ? (
                 <div className="mb-1 w-full py-8">

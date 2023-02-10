@@ -81,7 +81,7 @@ export default function Profile() {
                       </div>
                       {data?.Skils?.map((item, index) => (
                         <p key={index} className="ml-1 text-[12px]">
-                          {item},
+                          {item}
                         </p>
                       ))}
                     </div>

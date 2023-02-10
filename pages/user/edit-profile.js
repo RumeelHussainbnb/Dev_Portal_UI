@@ -17,7 +17,7 @@ export default function Profile() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const [state, setState] = useState();
+  const [state, setState] = useState({});
   const [loader, setloader] = useState(false);
   const metaTags = {
     title: 'BNBChainDev - Update Profile',
@@ -27,33 +27,30 @@ export default function Profile() {
     shouldIndex: true
   };
   useEffect(() => {
-    let userData = JSON.parse(localStorage.getItem('userData') || '{}');
-
-    let { data } = userData;
-    const createData = {
-      _id: data._id,
-      Username: data.Username,
-      Bio: data.Bio,
-      Country: data.Country,
-      Email: data?.Email,
-      ProfilePicture: data.ProfilePicture,
-      Facebook: data?.Author?.SocialLinks[0]?.Link,
-      Linkedin: data?.Author?.SocialLinks[1]?.Link,
-      Twitter: data?.Author?.SocialLinks[2]?.Link,
-      Telegram: data?.Author?.SocialLinks[3]?.Link,
-      Skils: data?.Skils,
-      Certification: data?.Author?.Certification
-    };
-    setState(createData);
     const fetchData = async () => {
       try {
-        // const user = await axios.get(
-        //   `/user/getUserProfile/${user.data?._id}`
-        // );
-        // setActivity(martian?.data?.Activities);
-        // console.log('martian ==> ', martian);
+        let userData = JSON.parse(localStorage.getItem('userData') || '{}');
+        const user = await axios.get(`/user/getUserProfile/${userData.data?._id}`);
+        let { data } = user?.data;
+        const createData = {
+          _id: data._id,
+          Username: data.Username,
+          Bio: data.Bio,
+          Country: data.Country,
+          Email: data?.Email,
+          ProfilePicture: data.ProfilePicture,
+          Facebook: data?.Author?.SocialLinks[0]?.Link,
+          Linkedin: data?.Author?.SocialLinks[1]?.Link,
+          Twitter: data?.Author?.SocialLinks[2]?.Link,
+          Telegram: data?.Author?.SocialLinks[3]?.Link,
+          Skils: data?.Skils,
+          Certification: data?.Author?.Certification
+        };
+        //console.log('createData ==> ', createData);
+        setState(createData);
       } catch (error) {}
     };
+
     fetchData();
   }, []);
 
@@ -130,7 +127,7 @@ export default function Profile() {
     const errorsChecked = {
       Username: validation(state.Username, { required: true }),
       Email: validation(state.Email, { type: 'email', required: true }),
-      Bio: validation(state.Bio, { required: true }),
+      Bio: validation(state.Bio, { required: false }),
       Country: validation(state.Country, { required: true }),
       Skils: validation(state.Skils, { required: false })
     };

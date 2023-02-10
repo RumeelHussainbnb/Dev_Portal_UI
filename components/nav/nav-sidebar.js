@@ -214,13 +214,12 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-function NavSidebar({ publicKey }) {
+function NavSidebar() {
   const [notification, setNotification] = useState({ message: '', show: false });
   const [current, setCurrent] = useState('');
   const [isMartian, setIsMartian] = useState(false);
   const appState = useAppState();
   const appDispatch = useAppDispatch();
-  const [isConnected, setIsConnected] = useState('');
   const router = useRouter();
 
   const fetchData = async () => {
@@ -230,30 +229,28 @@ function NavSidebar({ publicKey }) {
 
     await appDispatch({ type: 'handleAdminMode', payload: admin });
     setIsMartian(userState?.data?.MartianId ? true : false);
-    setIsConnected(key);
   };
 
   useEffect(() => {
     //* if wallet connected fetch data
-    if (publicKey) {
+    if (appState.publicKey) {
       fetchData();
     }
     //* else clear state
     else {
-      setIsConnected('');
       setIsMartian(false);
     }
 
     router.pathname === '/library'
       ? setCurrent('Home')
       : setCurrent(localStorage.getItem('main-navigation' || ''));
-  }, [publicKey]);
+  }, [appState.publicKey]);
 
   return (
     <nav aria-label="Sidebar" className="top-4 w-full">
       <div className="w-[270px]">
         {navigation.map(item => {
-          if (item.name === 'Profile' && !isConnected) {
+          if (item.name === 'Profile' && !appState.publicKey) {
             return;
           }
           return (
@@ -290,8 +287,11 @@ function NavSidebar({ publicKey }) {
 
         <button
           onClick={() => {
-            if (!isConnected) {
+            if (!appState.publicKey) {
               setNotification({ message: 'Please Connect Wallet', show: true });
+              setTimeout(() => {
+                setNotification({ message: 'Please Connect Wallet', show: false });
+              }, 1500);
             } else {
               setCurrent('Submit Content');
               window.localStorage.setItem('main-navigation', 'Submit Content');
@@ -415,7 +415,7 @@ function NavSidebar({ publicKey }) {
                   item.name === 'Add Playlist' ||
                   item.name === 'Awards & Recognition' ||
                   item.name === 'Add mvp') &&
-                appState.isAdminMode == false
+                (appState.isAdminMode == false || appState.editMode == 'false')
               ) {
                 return;
               }

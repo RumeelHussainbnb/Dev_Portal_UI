@@ -32,7 +32,6 @@ const NotificationError = dynamic(() => import('../notifications/error'));
 // ETHEREUM ERROR end
 
 function TopBar({ childrens }) {
-  const [publicKey, setPublickey] = useState('');
   const [ethereumError, setEthereumError] = useState({ message: '', show: false });
   const [editModeNotificationOn, setEditModeNotificationOn] = useState(false);
   const [editModeNotificationOff, setEditModeNotificationOff] = useState(false);
@@ -43,7 +42,26 @@ function TopBar({ childrens }) {
   const router = useRouter();
 
   useEffect(() => {
-    setPublickey(localStorage.getItem('PublicKey' || ''));
+    //event
+    const { ethereum } = window;
+    if (ethereum) {
+      if (ethereum.isMetaMask) {
+        window.ethereum.on('accountsChanged', function (accounts) {
+          //console.log('accounts ==> ', accounts);
+          //! TODO
+          //if (appState.publicKey)
+          removeConnection();
+
+          // Time to reload your interface with accounts[0]!
+        });
+        // cleanup this component
+        return () => {
+          window.ethereum.removeListener('accountsChanged', function (accounts) {
+            //console.log('removeListener accounts ==> ', accounts);
+          });
+        };
+      }
+    }
   }, []);
 
   const connectButton = async () => {
@@ -65,12 +83,16 @@ function TopBar({ childrens }) {
             .post(`/auth/register`, payload)
             .then(async res => {
               if (res?.data?.success == true) {
+                let isAdmin = res?.data?.data?.Role === 'admin' ? true : false;
                 // update context
                 await appDispatch({ type: 'handleWalletConnection', payload: true });
                 await appDispatch({ type: 'savePublicKey', payload: accounts[0] });
+                await appDispatch({
+                  type: 'handleAdminMode',
+                  payload: isAdmin
+                });
 
                 // update state
-                setPublickey(accounts[0]);
                 localStorage.setItem('PublicKey', accounts[0]);
                 localStorage.setItem('userData', JSON.stringify(res.data));
                 Cookies.set('userToken', JSON.stringify(res.data));
@@ -91,8 +113,7 @@ function TopBar({ childrens }) {
       } else {
         //if not meta mask on browser
         setEthereumError({
-          message:
-            'Failed connecting to wallet, no ethereum found in your browser, please use the latest version of firefox browser or chromium browsers.',
+          message: 'Failed connecting to wallet, please install MetaMask.',
           show: true
         });
       }
@@ -106,6 +127,27 @@ function TopBar({ childrens }) {
         });
       }
     }
+  };
+
+  const removeConnection = async () => {
+    await appDispatch({
+      type: 'handleWalletConnection',
+      payload: false
+    });
+    await appDispatch({ type: 'savePublicKey', payload: '' });
+    await appDispatch({
+      type: 'handleAdminMode',
+      payload: false
+    });
+    await appDispatch({ type: 'editMode', payload: 'false' });
+    localStorage.removeItem('handleWalletConnection');
+    localStorage.removeItem('handleAdminMode');
+    localStorage.removeItem('PublicKey');
+    localStorage.removeItem('editMode');
+    localStorage.removeItem('userData');
+    //console.log('router ==> ', router.pathname);
+
+    router.push('/');
   };
 
   // Change edit mode state send notification
@@ -288,14 +330,14 @@ function TopBar({ childrens }) {
                                   )}
                                 </Menu.Item>
                               )}
-                              <Menu.Item>
+                              {/* <Menu.Item>
                                 <button
                                   className="text-md block flex w-full bg-gray-100 px-4 py-2 text-gray-700 hover:opacity-80 dark:bg-gray-700 dark:text-gray-300"
                                   onClick={() => router.push('/user/dashboard')}
                                 >
                                   <span>Dashboard</span>
                                 </button>
-                              </Menu.Item>
+                              </Menu.Item> */}
                               <Menu.Item>
                                 <button
                                   className="text-md block flex w-full bg-gray-100 px-4 py-2 text-gray-700 hover:opacity-80 dark:bg-gray-700 dark:text-gray-300"
@@ -311,25 +353,7 @@ function TopBar({ childrens }) {
                                       active && 'bg-gray-100 hover:opacity-80 dark:bg-gray-700',
                                       'text-md block flex w-full px-4 py-2 text-gray-700 dark:text-gray-300'
                                     )}
-                                    onClick={async () => {
-                                      setPublickey(null);
-                                      await appDispatch({
-                                        type: 'handleWalletConnection',
-                                        payload: false
-                                      });
-                                      await appDispatch({ type: 'savePublicKey', payload: '' });
-                                      await appDispatch({
-                                        type: 'handleAdminMode',
-                                        payload: false
-                                      });
-                                      await appDispatch({ type: 'editMode', payload: 'false' });
-                                      localStorage.removeItem('handleWalletConnection');
-                                      localStorage.removeItem('handleAdminMode');
-                                      localStorage.removeItem('PublicKey');
-                                      localStorage.removeItem('editMode');
-                                      localStorage.removeItem('userData');
-                                      router.push('/');
-                                    }}
+                                    onClick={removeConnection}
                                   >
                                     <span>Disconnect Wallet</span>
                                   </button>
@@ -358,7 +382,7 @@ function TopBar({ childrens }) {
               <Popover.Panel as="nav" className="lg:hidden" aria-label="Global">
                 {({ close }) => (
                   <div className="mx-auto max-w-3xl space-y-1 px-2 pt-2 pb-3 sm:px-4">
-                    <NavSidebar publicKey={publicKey} />
+                    <NavSidebar />
                   </div>
                 )}
               </Popover.Panel>
@@ -369,7 +393,7 @@ function TopBar({ childrens }) {
         <div className="min-h-full">
           <div className="flex py-7 sm:pl-6 lg:gap-8 lg:pl-8">
             <div className="top-4 hidden min-w-[190px] content-between divide-y divide-gray-300 dark:divide-gray-500 lg:block">
-              <NavSidebar publicKey={publicKey} />
+              <NavSidebar />
             </div>
 
             <div className="min-h-screen w-full overflow-x-hidden overflow-y-visible">
