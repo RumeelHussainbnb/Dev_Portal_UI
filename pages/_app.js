@@ -1,4 +1,5 @@
 import '../style.css';
+import '../styles.scss';
 import Script from 'next/script';
 import { AppWrapper } from '../context/AppContext';
 
