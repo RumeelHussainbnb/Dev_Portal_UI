@@ -1,5 +1,5 @@
 import { memo, useState } from 'react';
-import { LinkIcon } from '@heroicons/react/solid';
+import { ShareIcon } from '@heroicons/react/outline';
 import dynamic from 'next/dynamic';
 import PropTypes from 'prop-types';
 
@@ -23,12 +23,14 @@ function CopyLink({ content }) {
         type="button"
         className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-400 dark:text-gray-300 dark:hover:text-gray-500"
         onClick={() => {
-          navigator.clipboard.writeText(url?url : "");
+          navigator.clipboard.writeText(url ? url : '');
           setShowNotification(true);
         }}
       >
-        <LinkIcon className="h-5 w-5" aria-hidden="true" />
-        <span className="font-medium">Link</span>
+        <ShareIcon
+          className="h-5 w-5 stroke-gray-500 hover:fill-yellow-500 hover:stroke-yellow-500"
+          aria-hidden="true"
+        />
       </button>
 
       <NotificationSuccess

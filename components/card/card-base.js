@@ -12,7 +12,7 @@ import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { memo, useState } from 'react';
 import defineImage from '../../utils/content-imagen';
-import Audio from '../audio';
+import ReactHtmlParser from 'react-html-parser';
 
 const Badge = dynamic(() => import('../badges/badge.js'));
 const CopyLink = dynamic(() => import('./copy-link.js'));
@@ -317,7 +317,7 @@ const BaseContent = ({ imageUrl, content, mode, editContent, closeSearch }) => {
           )}
 
           {/*  Description */}
-          <p className="text-gray-600 dark:text-gray-400">{content.Description}</p>
+          <p className="text-gray-600 dark:text-gray-400">{ReactHtmlParser(content.Description)}</p>
         </div>
 
         {/*  Actions */}

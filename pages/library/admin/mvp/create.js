@@ -42,7 +42,7 @@ const MvpForm = () => {
       FirstName: data.firstName,
       LastName: data.lastName,
       Email: data.email,
-      publicKey: data.publicKey?.toLowerCase,
+      publicKey: data.publicKey.toLowerCase(),
       Expertise: data.expertise,
       MartianType: data.martian.value,
       Country: data.country.label,
@@ -50,7 +50,6 @@ const MvpForm = () => {
       Languages: data.language,
       BioGraphy: data.bioGraphy
     };
-
     try {
       const response = await axios.post(`/martian`, parms);
 
@@ -59,7 +58,8 @@ const MvpForm = () => {
         setData({
           firstName: '',
           lastName: '',
-          Email: '',
+          email: '',
+          publicKey: '',
           country: { label: '', name: '' },
           state: { label: '', name: '' },
           city: '',
@@ -68,6 +68,7 @@ const MvpForm = () => {
           expertise: '',
           bioGraphy: ''
         });
+        setImageURl('');
         setNotifySuccess(true);
       }
     } catch (error) {
@@ -75,7 +76,8 @@ const MvpForm = () => {
       setData({
         firstName: '',
         lastName: '',
-        Email: '',
+        email: '',
+        publicKey: '',
         country: { label: '', name: '' },
         state: { label: '', name: '' },
         city: '',
@@ -84,7 +86,7 @@ const MvpForm = () => {
         expertise: '',
         bioGraphy: ''
       });
-
+      setImageURl('');
       setNotifyError(true);
     }
   };
@@ -228,6 +230,7 @@ const MvpForm = () => {
                   <div className="mt-1">
                     <input
                       type="text"
+                      required
                       name="first-name"
                       id="first-name"
                       value={data.firstName}
@@ -248,6 +251,7 @@ const MvpForm = () => {
                   <div className="mt-1">
                     <input
                       type="text"
+                      required
                       name="last-name"
                       id="last-name"
                       value={data.lastName}
@@ -269,6 +273,7 @@ const MvpForm = () => {
                     <Select
                       placeholder="Select a country"
                       instanceId={useId()}
+                      required
                       name="country"
                       label="country"
                       classNames={{
@@ -333,6 +338,7 @@ const MvpForm = () => {
                   <div className="mt-1">
                     <input
                       type="text"
+                      required
                       name="city-name"
                       id="city-name"
                       value={data.city}
@@ -370,6 +376,7 @@ const MvpForm = () => {
                   <div className="mt-1">
                     <Select
                       placeholder="Select a martian"
+                      required
                       instanceId={useId()}
                       name="martian"
                       label="martian"
@@ -403,6 +410,7 @@ const MvpForm = () => {
                   <div className="mt-1">
                     <input
                       type="text"
+                      required
                       name="language"
                       id="language"
                       value={data.language}
@@ -479,7 +487,6 @@ const MvpForm = () => {
                     <textarea
                       id="biography"
                       name="biography"
-                      required
                       rows={2}
                       value={data.bioGraphy}
                       onChange={e => setData({ ...data, bioGraphy: e.target.value })}
@@ -493,7 +500,6 @@ const MvpForm = () => {
                     type="submit"
                     className="inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-3 px-16 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200"
                   >
-                    {' '}
                     Save
                   </button>
                 </div>

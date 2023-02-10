@@ -9,6 +9,8 @@ import Position from './position';
 import { useRouter } from 'next/router';
 import useUser from '../../../hooks/useUser';
 import axios from '../../../utils/http';
+import { convertToRaw } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -16,11 +18,20 @@ function classNames(...classes) {
 
 function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions }) {
   const [contentExist, setContentExist] = useState(false);
+  const [editorLimitError, setEditorLimitError] = useState(false);
   const { isAdmin = false } = useUser();
   const router = useRouter();
+
+  //convert editor raw data to html
+  const convertContentToHTML = () => {
+    return draftToHtml(convertToRaw(data.Description.getCurrentContent()));
+  };
+
   const createContent = async event => {
     event.preventDefault();
-
+    if (editorLimitError) {
+      return;
+    }
     let userData = JSON.parse(localStorage.getItem('userData') || '{}');
 
     // If the user is an admin, content will be active by default
@@ -30,6 +41,8 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
     }
     content.PublicKey = localStorage.getItem('PublicKey');
     content.UserID = userData?.data?._id;
+    content.Author = userData?.data?.Username;
+    content.Description = convertContentToHTML();
     const response = await axios.post(`/content`, content);
 
     // After submitting we need to restart the
@@ -55,7 +68,16 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
 
   const updateContent = async event => {
     event.preventDefault();
-    await axios.put(`/content`, { ...data, Img: data.ImageUrl });
+
+    let currentContentAsHTML = draftToHtml(convertToRaw(data.Description.getCurrentContent()));
+    if (editorLimitError) {
+      return;
+    }
+    await axios.put(`/content`, {
+      ...data,
+      Img: data.ImageUrl,
+      Description: convertContentToHTML()
+    });
 
     // call preview mode
     await fetch(`/api/preview?type=${data.ContentType}`);
@@ -100,6 +122,8 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
               type={type}
               contentExist={contentExist}
               setContentExist={setContentExist}
+              editorLimitError={editorLimitError}
+              setEditorLimitError={setEditorLimitError}
             />
             {/* Hiding Edit Tags on video edit */}
             {data.ContentType !== 'playlist' && data.ContentType !== 'newsletters' ? (

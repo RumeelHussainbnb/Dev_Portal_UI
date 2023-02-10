@@ -7,32 +7,32 @@ const InputField = ({
   required,
   error,
   disabled,
-  widthFull = false,
+  widthFull = false
 }) => {
   return (
-    <div className={`w-full ${widthFull ? "" : "lg:w-6/12"} px-4`}>
-      <div className="relative w-full mb-3">
+    <div className={`w-full ${widthFull ? '' : 'lg:w-6/12'} px-4`}>
+      <div className="relative mb-3 w-full">
         <label
-          className="uppercase text-slate-600 text-xs font-bold mb-2 flex "
+          className="mb-2 flex text-xs font-bold uppercase text-slate-600 "
           htmlFor="grid-password"
         >
           {label}
-          {required ? " (" : ""}
-          <div className="text-red-500">{required ? "*" : ""}</div>
-          {required ? ")" : ""}
+          {required ? ' (' : ''}
+          <div className="text-red-500">{required ? '*' : ''}</div>
+          {required ? ')' : ''}
         </label>
         <input
           disabled={disabled}
           required={required}
           onChange={onChange}
-          value={value}
+          value={value || ''}
           type={type}
           className={`${
-            error?.length > 0 ? "border-[1px] border-red-500" : ""
-          } px-3 py-3 placeholder-slate-300 text-slate-600 bg-white border-slate-300 rounded text-sm border-[1px] focus:outline-none focus:ring w-full ease-linear transition-all duration-150`}
+            error?.length > 0 ? 'border-[1px] border-red-500' : ''
+          } w-full rounded border-[1px] border-slate-300 bg-white px-3 py-3 text-sm text-slate-600 placeholder-slate-300 transition-all duration-150 ease-linear focus:outline-none focus:ring`}
           placeholder={placeholder}
         />
-        {error?.length > 0 && <div className="text-red-500 mt-1">{error}</div>}
+        {error?.length > 0 && <div className="mt-1 text-red-500">{error}</div>}
       </div>
     </div>
   );

@@ -45,6 +45,10 @@ client.interceptors.response.use(
       error.response?.data?.message === 'token is expire' &&
       !originalRequest._retry
     ) {
+      let key = '';
+      if (typeof window !== 'undefined') {
+        key = localStorage.getItem('PublicKey');
+      }
       //console.log('error interceptors Token Expired => ', error);
       originalRequest._retry = true;
       let newToken = '';
@@ -52,6 +56,7 @@ client.interceptors.response.use(
         `${process.env.NEXT_PUBLIC_API_ENDPOINT}/auth/register`,
         { PublicKey: key }
       );
+      // console.log('access_token => ', access_token);
       if (access_token?.data?.success == true) {
         // console.log('access_token?.data? =>  ', access_token?.data?.data);
         newToken = access_token?.data?.token;
