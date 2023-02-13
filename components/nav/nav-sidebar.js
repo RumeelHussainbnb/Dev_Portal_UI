@@ -187,15 +187,15 @@ const categories = [
 const martian = [
   {
     name: 'Martian Tracker',
-    href: '/library/admin/mvp'
+    href: '/library/admin/martian'
   },
   {
     name: 'Add Martian',
-    href: '/library/admin/mvp/create'
+    href: '/library/admin/martian/create'
   },
   {
     name: 'Add Martian Activities',
-    href: '/library/admin/mvp/activity'
+    href: '/library/admin/martian/activity'
   }
 ];
 
@@ -414,7 +414,7 @@ function NavSidebar() {
                   item.name === 'Post tweet' ||
                   item.name === 'Add Playlist' ||
                   item.name === 'Awards & Recognition' ||
-                  item.name === 'Add mvp') &&
+                  item.name === 'Add Add martian') &&
                 (appState.isAdminMode == false || appState.editMode == 'false')
               ) {
                 return;

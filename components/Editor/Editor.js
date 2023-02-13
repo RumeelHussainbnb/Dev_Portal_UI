@@ -2,6 +2,8 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
+import axios from '../../utils/http';
+
 const Editor = dynamic(() => import('react-draft-wysiwyg').then(mod => mod.Editor), { ssr: false });
 
 const EditorComponent = ({ editorState, EditorChange }) => {
@@ -10,11 +12,30 @@ const EditorComponent = ({ editorState, EditorChange }) => {
       const reader = new window.FileReader();
       console.log(reader);
       reader.onloadend = async () => {
-        const form_data = new FormData();
-        form_data.append('file', file);
-        const res = await uploadFile(form_data);
-        setValue('thumbnail', res.data);
-        resolve({ data: { link: process.env.REACT_APP_API + res.data } });
+        //file Validation Extentions
+        let allowedExtensions = ['jpg', 'jpeg', 'png'];
+        const filename = file.name;
+        let parts = filename.split('.');
+        const fileType = parts[parts.length - 1];
+        if (allowedExtensions.includes(fileType)) {
+          const response = await axios.get(`/martian/s3Url`);
+          const imageResponse = await fetch(response.data.url, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            },
+            body: file
+          });
+          const imageUrl = response.data.url.split('?')[0];
+          // console.log('imageUrl ==> ', imageUrl);
+          resolve({ data: { link: imageUrl } });
+        }
+        // console.log('file ==> ', file);
+        // const form_data = new FormData();
+        // form_data.append('file', file);
+        //const res = await uploadFile(form_data);
+        // setValue('thumbnail', res.data);
+        // resolve({ data: { link: process.env.REACT_APP_API + res.data } });
       };
       reader.readAsDataURL(file);
     });
@@ -28,11 +49,12 @@ const EditorComponent = ({ editorState, EditorChange }) => {
           className: undefined,
           component: undefined,
           dropdownClassName: undefined
-        }
+        },
 
-        // image: {
-        //   uploadCallback: uploadCallbackk
-        // }
+        image: {
+          previewImage: true,
+          uploadCallback: uploadCallbackk
+        }
       }}
       handlePastedText={() => false}
       editorState={editorState}

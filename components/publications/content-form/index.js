@@ -29,6 +29,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
 
   const createContent = async event => {
     event.preventDefault();
+
     if (editorLimitError) {
       return;
     }
@@ -43,6 +44,15 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
     content.UserID = userData?.data?._id;
     content.Author = userData?.data?.Username;
     content.Description = convertContentToHTML();
+    //set image privew
+    // var elem = document.createElement('div');
+    // elem.style.display = 'none';
+    // document.body.appendChild(elem);
+    // elem.innerHTML = content.Description;
+    // console.log('elem ==> ', elem);
+    // let isImageUrl = elem.querySelector('img')?.src;
+    // console.log('isImageUrl ==> ', isImageUrl);
+    // content.ImageUrl = isImageUrl ? isImageUrl : '';
     const response = await axios.post(`/content`, content);
 
     // After submitting we need to restart the
