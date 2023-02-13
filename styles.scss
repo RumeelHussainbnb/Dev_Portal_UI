@@ -89,6 +89,9 @@
             }
         }
     }
+    .mt-sm-2 {
+        margin-top: 0.5em;
+    }
 }
 .awards-wrap {
     display: flex;
@@ -122,5 +125,30 @@ aside {
 .certification-wrapper {
     > div {
         width: 100%;
+    }
+}
+
+.page-overlay {
+    position: relative;
+    &::before {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        content: "";
+        background-color: rgba(0, 0, 0, 0.5);
+        pointer-events: none;
+        z-index: 3;
+    }
+    nav,
+    .mobile-nav {
+        position: relative;
+        z-index: 2;
+        pointer-events: none;
+    }
+    .edit-profile-page {
+        position: relative;
+        z-index: 6;
     }
 }

@@ -209,7 +209,7 @@ export default function Profile() {
     console.log('Add certificate--------->', tempArr);
   };
   return (
-    <Container metaTags={metaTags}>
+    <Container className="page-overlay" metaTags={metaTags}>
       <Loader loader={loader} />
       <div className="edit-profile-page flex w-full gap-3 md:pl-0">
         <main className="">
@@ -409,7 +409,7 @@ export default function Profile() {
           </div>
         </main>
         <aside className="w-fit">
-          <div className="relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md  bg-white p-2 px-8 py-8 shadow dark:divide-gray-700">
+          <div className="relative z-0 flex flex-col divide-gray-200 rounded-md  bg-white p-2 px-8 py-8 shadow dark:divide-gray-700">
             <p className="mb-3 text-lg font-medium uppercase">Certification: </p>
             {certificateArray.map((item, index) => (
               <div key={index} className="mt-2 flex flex-wrap certification-wrapper">
@@ -440,7 +440,7 @@ export default function Profile() {
 
             <div
               onClick={Addcertificate}
-              className={`mt-2 ml-4 mb-3 flex w-32 cursor-pointer items-center justify-center self-center rounded bg-[#FACC15] p-2 px-4 font-bold text-white`}
+              className={`flex w-32 cursor-pointer items-center justify-center self-center rounded bg-[#FACC15] p-2 px-4 font-bold text-white`}
             >
               Add More
             </div>

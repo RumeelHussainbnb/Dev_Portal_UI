@@ -139,7 +139,7 @@ export default function Profile() {
               <p className="text-lg font-medium uppercase">Bio: </p>
               <p className="text-[12px]">{data?.Bio}</p>
             </div>
-            <div className="horizontal-tabs bg-white px-4 sm:px-0">
+            <div className="horizontal-tabs bg-white px-4 sm:px-0 rounded-md">
               <nav
                 className="relative z-0 mt-2 flex divide-gray-200 rounded-lg shadow dark:divide-gray-700"
                 aria-label="Tabs"
@@ -225,7 +225,7 @@ export default function Profile() {
         </main>
         <aside className="w-fit">
           <div className="block w-full overflow-x-auto">
-            <div className="relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md bg-white p-2 px-4 py-4 shadow dark:divide-gray-700">
+            <div className="relative z-0 mt-sm-2 flex flex-col divide-gray-200 rounded-md bg-white p-2 px-4 py-4 shadow dark:divide-gray-700">
               <p className="mb-3 text-lg font-medium uppercase">Awards & Recognitions: </p>
               <div className="flex flex-row items-start justify-start self-start">
                 {data?.Author?.RecognizationsAndAwards?.includes('MOM_medal') && (
