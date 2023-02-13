@@ -211,7 +211,7 @@ export default function Profile() {
   return (
     <Container metaTags={metaTags}>
       <Loader loader={loader} />
-      <div className="flex w-full gap-3 md:pl-0">
+      <div className="edit-profile-page flex w-full gap-3 md:pl-0">
         <main className="">
           <div className="px-1 sm:px-6">
             <div className="relative flex flex-col divide-gray-200 rounded-md bg-white p-2 px-6 py-8 shadow dark:divide-gray-700">
@@ -412,7 +412,7 @@ export default function Profile() {
           <div className="relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md  bg-white p-2 px-8 py-8 shadow dark:divide-gray-700">
             <p className="mb-3 text-lg font-medium uppercase">Certification: </p>
             {certificateArray.map((item, index) => (
-              <div key={index} className="mt-2 flex flex-wrap">
+              <div key={index} className="mt-2 flex flex-wrap certification-wrapper">
                 <InputField
                   type="text"
                   onChange={e =>

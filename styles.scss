@@ -1,0 +1,126 @@
+.dark {
+    .news-box {
+        .items-left {
+            a,
+            p {
+                color: #fff;
+            }
+        }       
+    }
+}
+@media (max-width: 991px) and (min-width: 768px){
+    header {
+        position: relative;
+        .menu-btn {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+        }
+        .logo {
+            margin-left: 50px;
+        }
+    }
+}
+@media (max-width: 991px) {
+    nav {
+        background-color: rgb(243 244 246 / var(--tw-bg-opacity));
+    }
+    .dark {
+        nav {
+            background-color: inherit;
+        }
+    }
+    .profile-page {
+        flex-direction: column;
+        .profile-wrapper {
+            padding: 0;
+        }
+    }
+    aside {
+        width: 100% !important;
+    }
+    .porfile-section {
+        margin-bottom: 15px;
+    }
+    .edit-profile-page {
+        flex-direction: column; 
+    }
+}
+@media (max-width: 767px) {
+    .main-content-wrapper {
+        width: 100%;
+        main {
+            max-width: 100%;
+
+        }
+    }
+    .px-sm-0 {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .mobile-view {
+        display: block;
+    }
+    .profile-detail {
+        display: inline-block;
+        .profile-img {
+            display: inline-block;
+        }
+        .profile-discription {
+            display: inline-block;
+        }
+        button {
+            margin: 0;
+            width: 100%;
+        }
+    }
+    .awards-wrap {
+        width: 33%;
+        margin-top: 10px;
+    }
+    .horizontal-tabs {
+        padding: 0;
+        border-radius: 8px;
+        nav {
+            overflow: auto;
+            white-space: nowrap;
+            button {
+                font-size: 12px;
+            }
+        }
+    }
+}
+.awards-wrap {
+    display: flex;
+    align-items: center;
+    padding-right: 5px;
+    img {
+        width: 60px !important;
+    }
+    p {
+        font-size: 12px;
+        line-height: 14px;
+        margin-bottom: 2px;
+    }
+}
+aside {
+    p {
+        font-size: 14px !important;
+        line-height: 20px !important;
+    }
+}
+.social-links {
+    .links {
+        img {
+            border-radius: 100%;
+        }
+    }
+}
+.b-0 {
+    border: 0;
+}
+.certification-wrapper {
+    > div {
+        width: 100%;
+    }
+}

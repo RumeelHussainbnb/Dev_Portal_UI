@@ -40,12 +40,12 @@ export default function Profile() {
 
   return (
     <Container metaTags={metaTags}>
-      <div className="flex w-full gap-3 self-center md:pl-0">
-        <main className="">
-          <div className="px-4 sm:px-6">
-            <div className="relative z-0 flex flex-col divide-gray-200 rounded-md bg-white p-2 px-8 py-8 shadow dark:divide-gray-700">
-              <div className="flex flex-row">
-                <div className="m-h-[150px] flex h-fit w-[30%] max-w-[150px] items-center justify-center overflow-hidden rounded-full">
+      <div className="profile-page flex w-full gap-3 self-center md:pl-0">
+        <main className="profile">
+          <div className="profile-wrapper px-4 sm:px-6">
+            <div className="porfile-section relative z-0 flex flex-col divide-gray-200 rounded-md bg-white p-2 px-4 py-4 shadow dark:divide-gray-700">
+              <div className="flex flex-row profile-detail">
+                <div className="profile-img m-h-[150px] flex h-fit w-[30%] max-w-[150px] items-center justify-center overflow-hidden rounded-full">
                   <Image
                     src={data?.ProfilePicture ? data?.ProfilePicture : '/profilepicture.png'}
                     width="300px"
@@ -54,7 +54,7 @@ export default function Profile() {
                     alt=""
                   />
                 </div>
-                <div className="ml-3 mt-6 w-[70%]">
+                <div className="profile-discription w-[70%]">
                   {data?.Username != '' ? (
                     <p className="mb-2 text-lg font-medium uppercase">{data?.Username}</p>
                   ) : null}
@@ -88,56 +88,46 @@ export default function Profile() {
                   ) : null}
                 </div>
                 <button
-                  className="ml-2 mb-28 flex w-36 items-center justify-center self-end rounded bg-gradient-to-r from-gray-800 to-gray-600 py-2 px-4 font-bold text-white hover:to-yellow-600"
+                  className="ml-2 mb-28 flex w-36 items-center justify-center self-end rounded bg-gradient-to-r from-gray-800 to-gray-600 py-2 px-2 font-bold text-white hover:to-yellow-600"
                   id="connectButton"
                   onClick={() => router.push('/user/edit-profile')}
                 >
                   <p>Edit Profile</p>
                 </button>
               </div>
-              <div className="mt-5 h-fit">
-                <div className="flex h-fit w-full flex-row flex-wrap justify-between px-4">
-                  <div className="flex h-16 w-36 flex-row">
-                    <div className="h-14 w-14">
-                      <Image src={'/rank.png'} width="250px" height="250px" alt="" />
-                    </div>
-                    <div className="ml-1">
+              <div className="awards">
+                <div className="flex h-fit w-full flex-row flex-wrap px-4">
+                  <div className="awards-wrap">
+                      <Image src={'/rank.png'} width="100" height="100" alt="" />
+                    <div className="">
                       <p className="text-base font-medium text-black">{data?.Author?.Rank}</p>
                       <p className="font-normal text-slate-400">Rank</p>
                     </div>
                   </div>
-                  <div className="flex h-16 w-36 flex-row">
-                    <div className="h-14 w-14">
+                  <div className="awards-wrap">
                       <Image src={'/read.png'} width="250px" height="250px" alt="" />
-                    </div>
-                    <div className="ml-1">
+                    <div>
                       <p className="text-base font-medium text-black">{data?.Author?.Read}</p>
                       <p className="font-normal text-slate-400">Read</p>
                     </div>
                   </div>
-                  <div className="flex h-16 w-36 flex-row">
-                    <div className="h-12 w-12">
+                  <div className="awards-wrap">
                       <Image src={'/reputation.png'} width="250px" height="250px" alt="" />
-                    </div>
-                    <div className="ml-1">
+                    <div>
                       <p className="text-base font-medium text-black">{data?.Author?.Reputation}</p>
                       <p className="font-normal text-slate-400">Reputation</p>
                     </div>
                   </div>
-                  <div className="flex h-16 w-36 flex-row">
-                    <div className="h-12 w-12">
+                  <div className="awards-wrap">
                       <Image src={'/member.png'} width="250px" height="250px" alt="" />
-                    </div>
-                    <div className="ml-1">
+                    <div>
                       <p className="text-base font-medium text-black">{data?.Author?.Member}</p>
                       <p className="font-normal text-slate-400">Member</p>
                     </div>
                   </div>
-                  <div className="flex h-16 w-36 flex-row">
-                    <div className="h-12 w-12">
+                  <div className="awards-wrap">
                       <Image src={'/likes.png'} width="250px" height="250px" alt="" />
-                    </div>
-                    <div className="ml-1">
+                    <div>
                       <p className="text-base font-medium text-black">{data?.Author?.Like}</p>
                       <p className="font-normal text-slate-400">Likes</p>
                     </div>
@@ -145,11 +135,11 @@ export default function Profile() {
                 </div>
               </div>
             </div>
-            <div className="relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md bg-white p-2 px-8 py-8 shadow  dark:divide-gray-700">
+            <div className="porfile-section relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md bg-white p-2 px-8 py-8 shadow  dark:divide-gray-700">
               <p className="text-lg font-medium uppercase">Bio: </p>
               <p className="text-[12px]">{data?.Bio}</p>
             </div>
-            <div className="bg-white px-4 sm:px-0">
+            <div className="horizontal-tabs bg-white px-4 sm:px-0">
               <nav
                 className="relative z-0 mt-2 flex divide-gray-200 rounded-lg shadow dark:divide-gray-700"
                 aria-label="Tabs"
@@ -235,7 +225,7 @@ export default function Profile() {
         </main>
         <aside className="w-fit">
           <div className="block w-full overflow-x-auto">
-            <div className="relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md bg-white p-2 px-8 py-8 shadow dark:divide-gray-700">
+            <div className="relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md bg-white p-2 px-4 py-4 shadow dark:divide-gray-700">
               <p className="mb-3 text-lg font-medium uppercase">Awards & Recognitions: </p>
               <div className="flex flex-row items-start justify-start self-start">
                 {data?.Author?.RecognizationsAndAwards?.includes('MOM_medal') && (
@@ -308,10 +298,10 @@ export default function Profile() {
                 </div>
               )}
             </div>
-            <div className="mt-2 flex flex-row justify-between">
-              <div className="relative z-0 flex w-[49%] flex-col items-center justify-center divide-x divide-gray-200 rounded-md bg-white p-2 px-8 py-8 shadow dark:divide-gray-700">
+            <div className="social-links mt-2 flex flex-row justify-between">
+              <div className="links relative z-0 flex w-[49%] flex-col items-center justify-center divide-x divide-gray-200 rounded-md bg-white p-2 shadow dark:divide-gray-700">
                 <p className="text-lg font-medium">Social Links:</p>
-                <div className="flex flex-row">
+                <div className="flex flex-row b-0">
                   <Link
                     href={
                       data?.Author?.SocialLinks.length != 0 &&
@@ -350,9 +340,9 @@ export default function Profile() {
                   </Link>
                 </div>
               </div>
-              <div className="relative z-0 flex w-[49%] flex-col items-center justify-center divide-x divide-gray-200 rounded-md bg-white p-2 shadow  dark:divide-gray-700">
+              <div className="links relative z-0 flex w-[49%] flex-col items-center justify-center divide-x divide-gray-200 rounded-md bg-white p-2 shadow  dark:divide-gray-700">
                 <p className="text-lg font-medium">Author:</p>
-                <div className="flex flex-row">
+                <div className="flex flex-row b-0">
                   <div className="mr-2 h-8 w-8 hover:cursor-pointer">
                     <Image src={'/icons8-add-friend-58.png'} width="250px" height="250px" alt="" />
                   </div>

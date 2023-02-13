@@ -33,7 +33,7 @@ export default function Tabs({ newContent, trendingContent }) {
 
   return (
     <>
-      <div className="px-9">
+      <div className="px-9 px-sm-0">
         <nav
           className="relative z-0 flex divide-x divide-gray-200 rounded-lg shadow dark:divide-gray-700"
           aria-label="Tabs"
@@ -70,7 +70,7 @@ export default function Tabs({ newContent, trendingContent }) {
         </nav>
       </div>
       <div className="mt-5">
-        <div className="flex flex-col justify-between gap-5 px-9">
+        <div className="flex flex-col justify-between gap-5 px-9 px-sm-0">
           {selectedTab === 'New' && loadMoreContent(newContent, contentAmount, setContentAmount)}
         </div>
       </div>

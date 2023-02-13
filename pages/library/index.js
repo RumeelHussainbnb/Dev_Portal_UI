@@ -33,8 +33,9 @@ export default function Library({ newContent, trendingContent, tweets, latestNew
 
     return (
         <Container metaTags={metaTags}>
-            <div className="flex justify-center gap-6 px-2 md:pl-0flex justify-center gap-6 px-2 md:pl-0">
-                <main className="max-w-2xl">
+            <div className="main-content-wrapper flex justify-center gap-6 px-2 md:pl-0flex justify-center gap-6 px-2 md:pl-0">
+                {/* <main className="max-w-2xl"> */}
+                <main className="">
                     <Tabs newContent={newContent} trendingContent={trendingContent} />
                 </main>
 
