@@ -10,7 +10,8 @@ export default function Submit() {
   const [data, setData] = useState({
     Title: '',
     Author: '',
-    Description: EditorState.createEmpty(),
+    Description: '',
+    ContentMarkdown: EditorState.createEmpty(),
     Url: '',
     ImageUrl: '',
     Vertical: 'BNBChain',

@@ -284,10 +284,6 @@ export default function Profile({ martian, id }) {
             </div>
           </div>
         </main>
-
-        {/* <aside className="hidden max-w-sm xl:block">
-          <Sidebar tweets={tweets} latestNewsletter={latestNewsletter} />
-        </aside> */}
       </div>
     </Container>
   );

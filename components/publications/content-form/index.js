@@ -24,7 +24,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
 
   //convert editor raw data to html
   const convertContentToHTML = () => {
-    return draftToHtml(convertToRaw(data.Description.getCurrentContent()));
+    return draftToHtml(convertToRaw(data.ContentMarkdown.getCurrentContent()));
   };
 
   const createContent = async event => {
@@ -43,16 +43,18 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
     content.PublicKey = localStorage.getItem('PublicKey');
     content.UserID = userData?.data?._id;
     content.Author = userData?.data?.Username;
-    content.Description = convertContentToHTML();
+    content.ContentMarkdown = convertContentToHTML();
+
     //set image privew
-    // var elem = document.createElement('div');
-    // elem.style.display = 'none';
-    // document.body.appendChild(elem);
-    // elem.innerHTML = content.Description;
-    // console.log('elem ==> ', elem);
-    // let isImageUrl = elem.querySelector('img')?.src;
-    // console.log('isImageUrl ==> ', isImageUrl);
-    // content.ImageUrl = isImageUrl ? isImageUrl : '';
+    var elem = document.createElement('div');
+    elem.style.display = 'none';
+    document.body.appendChild(elem);
+    elem.innerHTML = content.ContentMarkdown;
+    //console.log('elem ==> ', elem);
+    let isImageUrl = elem.querySelector('img')?.src;
+    //console.log('isImageUrl ==> ', isImageUrl);
+    content.ImageUrl = isImageUrl ? isImageUrl : '';
+
     const response = await axios.post(`/content`, content);
 
     // After submitting we need to restart the
@@ -79,14 +81,13 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
   const updateContent = async event => {
     event.preventDefault();
 
-    let currentContentAsHTML = draftToHtml(convertToRaw(data.Description.getCurrentContent()));
     if (editorLimitError) {
       return;
     }
     await axios.put(`/content`, {
       ...data,
       Img: data.ImageUrl,
-      Description: convertContentToHTML()
+      ContentMarkdown: convertContentToHTML()
     });
 
     // call preview mode

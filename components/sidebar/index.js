@@ -1,13 +1,13 @@
 import dynamic from 'next/dynamic';
 import PropTypes from 'prop-types';
 import React, { memo, useState } from 'react';
-import Image from 'next/image';
 import Hackathon from './hackathon';
+import TopContents from './topContents';
 
 const Tweet = dynamic(() => import('../twitter/tweet'));
 const LatestNewsletter = dynamic(() => import('./latestNewsletter'));
 
-function Sidebar({ tweets, latestNewsletter }) {
+function Sidebar({ tweets, latestNewsletter, topContent }) {
   const [loadMore, setLoadMore] = useState(false);
 
   // This helper function allow me to have infinity loading without having
@@ -46,94 +46,7 @@ function Sidebar({ tweets, latestNewsletter }) {
     <div className="flex flex-col gap-6">
       {/* Announcements */}
       <div className="rounded-lg bg-white shadow dark:bg-gray-800">
-        <div className="p-6">
-          <div className="flex justify-between">
-            <h2
-              id="trending-heading"
-              className="text-base font-bold text-gray-900 dark:text-gray-200"
-            >
-              Top Contents
-            </h2>
-          </div>
-          <hr className="mt-2" />
-          <ul className="news-box">
-            <li className="mt-5">
-              <div className="flex flex-row">
-                <div className="w-1/6">
-                  <div className="h-9 w-9 overflow-hidden rounded-full">
-                    <Image src="/read.png" alt="Article photo" height={'36px'} width={'36px'} />
-                  </div>
-                </div>
-                <div className="items-left flex w-full flex-col px-2">
-                  <a href="#" className="text-sm font-medium">
-                    A Detailed Tour of the BNB Smart Chain Euler Upgrade
-                  </a>
-                  <p className="text-sm text-gray-600">Date: Jan 20, 2023</p>
-                </div>
-              </div>
-            </li>
-            <li className="mt-5">
-              <div className="flex flex-row">
-                <div className="w-1/6">
-                  <div className="h-9 w-9 overflow-hidden rounded-full">
-                    <Image src="/read.png" alt="Article photo" height={'36px'} width={'36px'} />
-                  </div>
-                </div>
-                <div className="items-left flex w-full flex-col px-2">
-                  <a href="#" className="text-sm font-medium">
-                    A Detailed Tour of the BNB Smart Chain Euler Upgrade
-                  </a>
-                  <p className="text-sm text-gray-600">Date: Jan 20, 2023</p>
-                </div>
-              </div>
-            </li>
-            <li className="mt-5">
-              <div className="flex flex-row">
-                <div className="w-1/6">
-                  <div className="h-9 w-9 overflow-hidden rounded-full">
-                    <Image src="/read.png" alt="Article photo" height={'36px'} width={'36px'} />
-                  </div>
-                </div>
-                <div className="items-left flex w-full flex-col px-2">
-                  <a href="#" className="text-sm font-medium">
-                    A Detailed Tour of the BNB Smart Chain Euler Upgrade
-                  </a>
-                  <p className="text-sm text-gray-600">Date: Jan 20, 2023</p>
-                </div>
-              </div>
-            </li>
-            <li className="mt-5">
-              <div className="flex flex-row">
-                <div className="w-1/6">
-                  <div className="h-9 w-9 overflow-hidden rounded-full">
-                    <Image src="/read.png" alt="Article photo" height={'36px'} width={'36px'} />
-                  </div>
-                </div>
-                <div className="items-left flex w-full flex-col px-2">
-                  <a href="#" className="text-sm font-medium">
-                    A Detailed Tour of the BNB Smart Chain Euler Upgrade
-                  </a>
-                  <p className="text-sm text-gray-600">Date: Jan 20, 2023</p>
-                </div>
-              </div>
-            </li>
-            <li className="mt-5">
-              <div className="flex flex-row">
-                <div className="w-1/6">
-                  <div className="h-9 w-9 overflow-hidden rounded-full">
-                    <Image src="/read.png" alt="Article photo" height={'36px'} width={'36px'} />
-                  </div>
-                </div>
-                <div className="items-left flex w-full flex-col px-2">
-                  <a href="#" className="text-sm font-medium">
-                    A Detailed Tour of the BNB Smart Chain Euler Upgrade
-                  </a>
-                  <p className="text-sm text-gray-600">Date: Jan 20, 2023</p>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
+        <TopContents topContent={topContent} />
       </div>
       <div className="rounded-lg bg-white shadow dark:bg-gray-800">
         <Hackathon />

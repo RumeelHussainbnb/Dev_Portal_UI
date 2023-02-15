@@ -28,9 +28,9 @@ function Inputs({
 }) {
   //handle editor state change
   const handleEditorChange = state => {
-    isContentLimitExceed(state);
+    //isContentLimitExceed(state);
 
-    setData({ ...data, Description: state });
+    setData({ ...data, ContentMarkdown: state });
   };
 
   //content charachter limit
@@ -110,7 +110,7 @@ function Inputs({
             </div> */}
 
       {/* Content Link */}
-      <div className="col-span-10">
+      {/* <div className="col-span-10">
         <label htmlFor="url" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
           Content URL
         </label>
@@ -136,10 +136,10 @@ function Inputs({
             Content already included in the Library.
           </p>
         )}
-      </div>
+      </div> */}
 
       {/* Preview Image Url */}
-      <div className="col-span-10">
+      {/* <div className="col-span-10">
         <label htmlFor="url" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
           Preview Image URL
         </label>
@@ -159,7 +159,7 @@ function Inputs({
             )}
           />
         </div>
-      </div>
+      </div> */}
 
       {/* Description */}
       <div className="col-span-10">
@@ -170,6 +170,35 @@ function Inputs({
           Description
         </label>
         <div className="mt-1">
+          <textarea
+            id="description"
+            required={type === 'submit'}
+            name="description"
+            rows={4}
+            maxLength={250}
+            value={data.Description}
+            onChange={e => setData({ ...data, Description: e.target.value })}
+            className="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
+          />
+
+          {/* <p
+            className={classNames(
+              'mt-2 text-sm text-gray-500 dark:text-gray-500',
+              editorLimitError && 'text-red-500 dark:text-red-500'
+            )}
+          >
+            Brief description about the content. ~250 characters
+          </p> */}
+        </div>
+      </div>
+      <div className="col-span-10">
+        <label
+          htmlFor="description"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+        >
+          Content
+        </label>
+        <div className="mt-1 ">
           {/* <textarea
             id="description"
             required={type === 'submit'}
@@ -181,15 +210,15 @@ function Inputs({
             className="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
           /> */}
 
-          <EditorComponent editorState={data.Description} EditorChange={handleEditorChange} />
-          <p
+          <EditorComponent editorState={data.ContentMarkdown} EditorChange={handleEditorChange} />
+          {/* <p
             className={classNames(
               'mt-2 text-sm text-gray-500 dark:text-gray-500',
               editorLimitError && 'text-red-500 dark:text-red-500'
             )}
           >
             Brief description about the content. ~250 characters
-          </p>
+          </p> */}
         </div>
       </div>
     </>

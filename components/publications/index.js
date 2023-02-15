@@ -10,6 +10,14 @@ const CardBase = dynamic(() => import('../card/card-base'));
 const TagsSelector = dynamic(() => import('../badges/tags-selector'));
 const Spinner = dynamic(() => import('../spinner'));
 const ContentFormModal = dynamic(() => import('./content-form/modal'));
+import htmlToDraft from 'html-to-draftjs';
+import {
+  EditorState,
+  convertToRaw,
+  convertFromHTML,
+  ContentState,
+  createWithContent
+} from 'draft-js';
 
 function Publications({
   data,
@@ -42,7 +50,9 @@ function Publications({
   }, [data]);
 
   const editContent = data => {
-    setContent(data);
+    const contentBlock = htmlToDraft(data.ContentMarkdown);
+    const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+    setContent({ ...data, ContentMarkdown: EditorState.createWithContent(contentState) });
     setOpen(true);
   };
 

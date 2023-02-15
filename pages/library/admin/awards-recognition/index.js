@@ -61,7 +61,15 @@ export default function AwardsRecognition({ data, user }) {
     <Container metaTags={metaTags}>
       <div className="relative z-0 mt-2 w-11/12 divide-gray-200 rounded-md bg-white p-4 p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
         <p className="p-4 text-lg font-medium text-gray-500 dark:text-gray-500">Active Users:</p>
-        <form action="#" className="mb-4 flex items-center justify-center" onSubmit={makeApiCall}>
+        <form
+          action="#"
+          method="GET"
+          className="mb-4 flex items-center justify-center"
+          onSubmit={e => {
+            e.preventDefault();
+            makeApiCall();
+          }}
+        >
           <label htmlFor="simple-search" className="sr-only">
             Search
           </label>
@@ -86,7 +94,7 @@ export default function AwardsRecognition({ data, user }) {
               id="simple-search"
               className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
               placeholder="Search By Name"
-              required
+              //required
               value={search}
               onChange={e => setSearch(e.target.value)}
             />

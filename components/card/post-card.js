@@ -178,7 +178,8 @@ function PostWide({ content, mode }) {
           </a>
         </Link>
       ) : (
-        <a href={contentState.Url} className="focus:outline-none" target="_blank" rel="noreferrer">
+        <Link href={`/library/content/${contentState._id}`}>
+          {/* <a href={contentState.Url} className="focus:outline-none" target="_blank" rel="noreferrer"> */}
           <div>
             <Image
               className="cursor-pointer rounded-t-lg object-cover hover:opacity-90"
@@ -192,7 +193,7 @@ function PostWide({ content, mode }) {
               loader={myLoader}
             />
           </div>
-        </a>
+        </Link>
       )}
 
       <div className="px-5 pt-4 pb-5 ">

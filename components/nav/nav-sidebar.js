@@ -30,12 +30,12 @@ const navigation = [
     icon: LibraryIcon,
     disabled: false
   },
-  {
-    name: 'Community',
-    href: '/community',
-    icon: ChatAlt2Icon,
-    disabled: false
-  },
+  // {
+  //   name: 'Community',
+  //   href: '/community',
+  //   icon: ChatAlt2Icon,
+  //   disabled: false
+  // },
 
   {
     name: 'Newsletters',

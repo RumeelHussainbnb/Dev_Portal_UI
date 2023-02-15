@@ -4,8 +4,8 @@ import loadTweets from '../utils/loadTweets';
 import dynamic from 'next/dynamic';
 import fetch from '../utils/fetcher';
 import { Container } from '../components/layout';
-import { loadPinnedTweet } from "../lib/load-pinned-tweet";
-import { loadNewsletter } from "../lib/load-newsletter";
+import { loadPinnedTweet } from '../lib/load-pinned-tweet';
+import { loadNewsletter } from '../lib/load-newsletter';
 
 const Sidebar = dynamic(() => import('../components/sidebar'));
 const Spinner = dynamic(() => import('../components/spinner'));
@@ -17,7 +17,6 @@ function classNames(...classes) {
 }
 
 export async function getStaticProps() {
-  
   const tweets = await loadPinnedTweet();
   const latestNewsletter = await loadNewsletter();
 

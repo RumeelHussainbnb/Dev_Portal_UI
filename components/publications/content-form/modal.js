@@ -1,31 +1,20 @@
 import { Fragment, useEffect, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import PropTypes from 'prop-types';
-import {
-  EditorState,
-  convertToRaw,
-  convertFromHTML,
-  ContentState,
-  createWithContent
-} from 'draft-js';
+
 import ContentForm from './index';
 
 export default function Modal({ open, setOpen, content, positions }) {
   const [data, setData] = useState({});
 
   useEffect(() => {
-    //console.log('content.Description => ', content.Description);
-    const blocksFromHTML = convertFromHTML(content.Description ? content.Description : '<p></p>');
-    const state = ContentState.createFromBlockArray(
-      blocksFromHTML.contentBlocks,
-      blocksFromHTML.entityMap
-    );
     setData({
       PK: content.PK,
       SK: content.SK,
       Title: content.Title,
       Author: content.Author,
-      Description: EditorState.createWithContent(state),
+      Description: content.Description,
+      ContentMarkdown: content.ContentMarkdown,
       Url: content.Url,
       ImageUrl: content.Img,
       Vertical: content.Vertical,
