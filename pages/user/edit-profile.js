@@ -2,6 +2,7 @@ import dynamic from 'next/dynamic';
 import { useEffect, useState, useRef } from 'react';
 import { Container } from '../../components/layout';
 import Image from 'next/image';
+import { TrashIcon } from '@heroicons/react/solid';
 import 'react-circular-progressbar/dist/styles.css';
 import axios from '../../utils/http';
 import EndPoint from '../../constant/endPoints';
@@ -10,13 +11,14 @@ import MultiSelection from '../../components/MultiSelection';
 import validation from '../../utils/validation';
 import Loader from '../../components/Loader';
 import { useRouter } from 'next/router';
+const Notification = dynamic(() => import('../../components/notifications/error'));
 const Spinner = dynamic(() => import('../../components/spinner'));
 
 export default function Profile() {
   const inputFile = useRef(null);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-
+  const [notification, setNotification] = useState({ message: '', show: false });
   const [state, setState] = useState({});
   const [loader, setloader] = useState(false);
   const metaTags = {
@@ -48,6 +50,7 @@ export default function Profile() {
         };
         //console.log('createData ==> ', createData);
         setState(createData);
+        setcertificateArray(createData?.Certification);
       } catch (error) {}
     };
 
@@ -140,7 +143,7 @@ export default function Profile() {
     return !foundErrors;
   };
   const _updateProfile = item => {
-    let mergedArray = [...item?.Certification, ...certificateArray];
+    let mergedArray = [...certificateArray];
     setloader(true);
     let payload = {
       Username: item.Username,
@@ -193,20 +196,33 @@ export default function Profile() {
     }
   ]);
   //add certificate
-  const Addcertificate = () => {
+  const Addcertificate = index => {
     const tempArr = [...certificateArray];
-    let lastElement = tempArr.slice(-1);
-    console.log('Last Object--------->', lastElement[0]._id);
-    let index = lastElement[0]._id + 1;
-    console.log('Index--------->', index);
-    tempArr.push({
-      _id: index.toString(),
-      Name: '',
-      Organization: ''
-    });
-    // // update state
+    if (tempArr[index].Name != '' && tempArr[index].Organization != '') {
+      let lastElement = tempArr.slice(-1);
+      console.log('Last Object--------->', lastElement[0]._id);
+      let index = lastElement[0]._id + 1;
+      console.log('Index--------->', index);
+      tempArr.push({
+        _id: index.toString(),
+        Name: '',
+        Organization: ''
+      });
+      // // update state
+      setcertificateArray(tempArr);
+      console.log('Add certificate--------->', tempArr);
+    } else {
+      setNotification({ message: 'Please fill out certification fields', show: true });
+      setTimeout(() => {
+        setNotification({ message: '', show: false });
+      }, 1000);
+    }
+  };
+
+  const DeleteCertifcate = index => {
+    const tempArr = [...certificateArray];
+    tempArr.splice(index, 1);
     setcertificateArray(tempArr);
-    console.log('Add certificate--------->', tempArr);
   };
   return (
     <Container metaTags={metaTags}>
@@ -411,39 +427,48 @@ export default function Profile() {
         <aside className="w-fit">
           <div className="relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md  bg-white p-2 px-8 py-8 shadow dark:divide-gray-700">
             <p className="mb-3 text-lg font-medium uppercase">Certification: </p>
-            {certificateArray.map((item, index) => (
-              <div key={index} className="mt-2 flex flex-wrap">
-                <InputField
-                  type="text"
-                  onChange={e =>
-                    handleChange('Name', e, {
-                      index: index
-                    })
-                  }
-                  value={certificateArray?.Name}
-                  label={'Certification Title'}
-                  placeholder="Title"
-                />
-                <InputField
-                  type="text"
-                  onChange={e =>
-                    handleChange('Organization', e, {
-                      index: index
-                    })
-                  }
-                  value={certificateArray?.Organization}
-                  label={'Organization'}
-                  placeholder="Enter Organization"
-                />
-              </div>
-            ))}
+            {certificateArray.map((item, index, array) => (
+              <>
+                <div key={index} className="mt-2 flex flex-wrap">
+                  <InputField
+                    type="text"
+                    onChange={e =>
+                      handleChange('Name', e, {
+                        index: index
+                      })
+                    }
+                    value={certificateArray[index]?.Name}
+                    label={'Certification Title'}
+                    placeholder="Title"
+                  />
+                  <InputField
+                    type="text"
+                    onChange={e =>
+                      handleChange('Organization', e, {
+                        index: index
+                      })
+                    }
+                    value={certificateArray[index]?.Organization}
+                    label={'Organization'}
+                    placeholder="Enter Organization"
+                  />
 
-            <div
-              onClick={Addcertificate}
-              className={`mt-2 ml-4 mb-3 flex w-32 cursor-pointer items-center justify-center self-center rounded bg-[#FACC15] p-2 px-4 font-bold text-white`}
-            >
-              Add More
-            </div>
+                  <TrashIcon
+                    onClick={() => DeleteCertifcate(index)}
+                    className="h-6 w-6 fill-yellow-500"
+                    aria-hidden="true"
+                  />
+                </div>
+                {index + 1 === array.length && (
+                  <div
+                    onClick={() => Addcertificate(index)}
+                    className={`mt-2 ml-4 mb-3 flex w-32 cursor-pointer items-center justify-center self-center rounded bg-[#FACC15] p-2 px-4 font-bold text-white`}
+                  >
+                    Add More
+                  </div>
+                )}
+              </>
+            ))}
 
             <div
               className={
@@ -495,6 +520,11 @@ export default function Profile() {
           </div>
         </aside>
       </div>
+      <Notification
+        show={notification.show}
+        setShow={isShow => setNotification({ message: '', show: isShow })}
+        text={notification.message}
+      />
     </Container>
   );
 }
