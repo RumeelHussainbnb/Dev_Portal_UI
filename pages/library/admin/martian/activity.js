@@ -551,7 +551,7 @@ export default function ContentMartians({ martian }) {
   const metaTags = {
     title: 'BNB Chain - Library Admin Martians',
     description: 'Library Admin Martians',
-    url: `${process.env.NEXT_PUBLIC_API_ENDPOINT}/admin/mvp/create`,
+    url: `${process.env.NEXT_PUBLIC_API_ENDPOINT}/admin/martian/create`,
     shouldIndex: false
   };
 

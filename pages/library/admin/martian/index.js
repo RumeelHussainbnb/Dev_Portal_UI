@@ -96,10 +96,10 @@ const Index = ({ userData }) => {
     event.preventDefault();
     router.push(
       {
-        pathname: '/library/admin/mvp/update',
+        pathname: '/library/admin/martian/update',
         query: eachMartian
       },
-      '/library/admin/mvp/update'
+      '/library/admin/martian/update'
     );
     // query:eachMartian,
   };
@@ -244,7 +244,7 @@ const Index = ({ userData }) => {
                   key={index}
                   css={{ justifyItems: 'center', maxwidth: '500' }}
                 >
-                  <Link href={`/library/admin/mvp/${eachMartian._id}`} passHref key={index}>
+                  <Link href={`/library/admin/martian/${eachMartian._id}`} passHref key={index}>
                     <a>
                       <div className=" h-70 flex w-48 max-w-xs flex-col rounded-xl p-2 shadow-md dark:bg-gray-900 dark:text-gray-100 sm:px-3">
                         {eachMartian?.ImageUrl ? (
@@ -343,7 +343,7 @@ export default function Martians({ userData }) {
   const metaTags = {
     title: 'BNB Chain - Library Admin Martians',
     description: 'Library Admin Martians',
-    url: `${process.env.NEXT_PUBLIC_API_ENDPOINT}/admin/mvp/index`,
+    url: `${process.env.NEXT_PUBLIC_API_ENDPOINT}/admin/martian/index`,
     shouldIndex: false
   };
 

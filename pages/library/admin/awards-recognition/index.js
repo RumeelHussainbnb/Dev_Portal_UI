@@ -53,7 +53,7 @@ export default function AwardsRecognition({ data, user }) {
     title: 'BNBChainDev - Profile',
     description:
       'Stay up-to-date with the BNBChain ecosystem. BNBChain Projects and Developers in one place.',
-    url: `${process.env.NEXT_PUBLIC_API_ENDPOINT}/mvp/content`,
+    url: `${process.env.NEXT_PUBLIC_API_ENDPOINT}/martian/content`,
     shouldIndex: true
   };
 
