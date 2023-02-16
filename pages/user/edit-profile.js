@@ -1,5 +1,7 @@
 import dynamic from 'next/dynamic';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useId } from 'react';
+import { Country, State, City } from 'country-state-city';
+import Select from 'react-select';
 import { Container } from '../../components/layout';
 import Image from 'next/image';
 import { TrashIcon } from '@heroicons/react/solid';
@@ -38,7 +40,7 @@ export default function Profile() {
           _id: data._id,
           Username: data.Username,
           Bio: data.Bio,
-          Country: data.Country,
+          Country: { label: data.Country, name: data.Country },
           Email: data?.Email,
           ProfilePicture: data.ProfilePicture,
           Facebook: data?.Author?.SocialLinks[0]?.Link,
@@ -151,6 +153,7 @@ export default function Profile() {
       Country: item.Country,
       Skils: item.Skils.map(skills => skills),
       Email: item.Email,
+      Country: item.Country.label,
       ProfilePicture: item.ProfilePicture,
       Author: {
         SocialLinks: [
@@ -224,6 +227,14 @@ export default function Profile() {
     tempArr.splice(index, 1);
     setcertificateArray(tempArr);
   };
+
+  const countries = Country.getAllCountries();
+
+  const updatedCountries = countries.map(country => ({
+    label: country.name,
+    value: country.name
+  }));
+
   return (
     <Container metaTags={metaTags}>
       <Loader loader={loader} />
@@ -302,7 +313,7 @@ export default function Profile() {
                   placeholder="Email"
                   error={errors.Email}
                 />
-                <InputField
+                {/* <InputField
                   onChange={e =>
                     handleChange('Country', e, {
                       type: 'required',
@@ -314,7 +325,48 @@ export default function Profile() {
                   label={'Country'}
                   placeholder="Enter Country"
                   error={errors.Country}
-                />
+                /> */}
+                <div className="w-full px-4 lg:w-6/12">
+                  <div className="relative mb-3 w-full">
+                    <label
+                      className="mb-2 flex text-xs font-bold uppercase text-slate-600 "
+                      htmlFor="grid-password"
+                    >
+                      Country
+                    </label>
+                    <Select
+                      placeholder="Select a country"
+                      instanceId={useId()}
+                      required
+                      name="country"
+                      label="country"
+                      // className={`${
+                      //   error?.length > 0 ? 'border-[1px] border-red-500' : ''
+                      // } w-full rounded border-[1px] border-slate-300 bg-white px-3 py-3 text-sm text-slate-600 placeholder-slate-300 transition-all duration-150 ease-linear focus:outline-none focus:ring`}
+                      classNames={{
+                        control: state =>
+                          'py-1.5 dark:border-slate-300 dark:bg-white-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500',
+
+                        option: state =>
+                          state.isSelected
+                            ? ' dark:bg-white-400 bg-white dark:text-gray-800 '
+                            : 'bg-white'
+                      }}
+                      options={updatedCountries}
+                      value={state.Country?.label ? state.Country : ''}
+                      onChange={countryObject => {
+                        setState({
+                          ...state,
+                          Country: countryObject
+                        });
+                      }}
+                    />
+
+                    {errors.Country?.length > 0 && (
+                      <div className="mt-1 text-red-500">{errors.Country}</div>
+                    )}
+                  </div>
+                </div>
               </div>
               <div className="flex flex-wrap">
                 <div className="lg:w-12/12 w-full px-4">
