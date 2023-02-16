@@ -48,7 +48,10 @@ export default function Profile() {
           Twitter: data?.Author?.SocialLinks[2]?.Link,
           Telegram: data?.Author?.SocialLinks[3]?.Link,
           Skils: data?.Skils,
-          Certification: data?.Author?.Certification
+          Certification:
+            data?.Author?.Certification.length === 0
+              ? certificateArray
+              : data?.Author?.Certification
         };
         //console.log('createData ==> ', createData);
         setState(createData);
@@ -505,11 +508,13 @@ export default function Profile() {
                     placeholder="Enter Organization"
                   />
 
-                  <TrashIcon
-                    onClick={() => DeleteCertifcate(index)}
-                    className="h-6 w-6 fill-yellow-500"
-                    aria-hidden="true"
-                  />
+                  {index + 1 !== array.length && (
+                    <TrashIcon
+                      onClick={() => DeleteCertifcate(index)}
+                      className="h-6 w-6 fill-yellow-500"
+                      aria-hidden="true"
+                    />
+                  )}
                 </div>
                 {index + 1 === array.length && (
                   <div
