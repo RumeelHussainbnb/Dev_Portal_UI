@@ -1,5 +1,8 @@
 .dark {
     .news-box {
+        img {
+            background-color: transparent !important;
+        }
         .items-left {
             a,
             p {
@@ -100,6 +103,11 @@
     .mt-sm-2 {
         margin-top: 0.5em;
     }
+    .tools-page {
+        .custom-Modal {
+            width: 90%;
+        }
+    }
 }
 .awards-wrap {
     display: flex;
@@ -165,6 +173,9 @@ aside {
     .profile {
         flex: 0 0 80%;
     }
+    .profile-page {
+        padding: 0 50px !important;
+    }
 }
 
 #ulArticles {
@@ -212,43 +223,50 @@ aside {
                     }
                 }
             }
+            span {
+                display: inline-block;
+                vertical-align: middle;
+                svg {
+                    width: 22px;
+                    height: 25px;
+                    margin-right: 5px;
+                }
+            }
             .article_date {
                 padding-left: 0;
                 margin-right: 0;
                 display: inline-block;
                 position: relative;
-                &::before {
-                    content: '';
-                    background: url(/_next/image?url=%2Ftime.png&w=256&q=75) top center no-repeat;
-                    width: 20px !important;
-                    height: 20px !important;
-                    display: inline-block;
-                    background-size: cover;
-                    position: relative;
-                    top: 3px;
-                }
+                // &::before {
+                //     content: '';
+                //     background: url(/_next/image?url=%2Ftime.png&w=256&q=75) top center no-repeat;
+                //     width: 20px !important;
+                //     height: 20px !important;
+                //     display: inline-block;
+                //     background-size: cover;
+                //     position: relative;
+                //     top: 3px;
+                // }
 
             }
             .article_view {
-                background: url(/Images/newSpriteIcons_20161122.png) 4px -3507px no-repeat;
                 padding-left: 15px;
                 margin-right: 0;
                 display: inline-block;
                 position: relative;
-                &::before {
-                    content: '';
-                    background: url(/_next/image?url=%2Faccount.png&w=256&q=75) top center no-repeat;
-                    width: 20px !important;
-                    height: 20px !important;
-                    display: inline-block;
-                    background-size: cover;
-                    position: relative;
-                    top: 3px;
-                    margin-right: 5px;
-                }
+                // &::before {
+                //     content: '';
+                //     background: url(/_next/image?url=%2Faccount.png&w=256&q=75) top center no-repeat;
+                //     width: 20px !important;
+                //     height: 20px !important;
+                //     display: inline-block;
+                //     background-size: cover;
+                //     position: relative;
+                //     top: 3px;
+                //     margin-right: 5px;
+                // }
             }
             .article_comment {
-                background: url(/Images/newSpriteIcons_20161122.png) 2px -3535px no-repeat;
                 padding-left: 29px;
                 margin-right: 0;
                 display: inline-block; 
@@ -268,4 +286,29 @@ aside {
 }
 .justify-evently {
     justify-content: space-evenly;
+}
+
+.home-banner-wrapper {
+    span {
+        width: 100% !important;
+        display: block !important;
+    }
+}
+
+.tools-page {
+    .modalWrapper {
+        img.nextui-image {
+            width: 120px !important;
+            margin: 0 auto;
+        }
+    } 
+}
+.certification-wrapper {
+    position: relative;
+    svg {
+        position: absolute;
+        right: 20px;
+        top: -5px;
+        cursor: pointer;
+    }
 }

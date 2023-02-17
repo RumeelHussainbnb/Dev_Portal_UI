@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Container } from '../../components/layout';
 import Image from 'next/image';
+import { EyeIcon, ChatIcon, ClockIcon } from '@heroicons/react/solid';
 import 'react-circular-progressbar/dist/styles.css';
 import axios from '../../utils/http';
 import EndPoint from '../../constant/endPoints';
@@ -218,9 +219,32 @@ export default function Profile() {
                                 </span>
                               </a>
                             </h3>
-                            <span className="article_date"> Jul 15, 2020</span>
-                            <span className="article_view">14.9k</span>
-                            <span className="article_comment">0</span>
+                            <span className="article_date">
+                            <span>
+                                <ClockIcon
+                                  className="icon fill-yellow-500"
+                                  aria-hidden="true"
+                                />  
+                              </span> 
+                              Jul 15, 2020
+                              </span>
+                            <span className="article_view">
+                              <span>
+                                <EyeIcon
+                                  className="icon fill-yellow-500"
+                                  aria-hidden="true"
+                                />  
+                              </span>
+                              14.9k
+                              </span>
+                            <span className="article_comment">
+                              <span>
+                                  <ChatIcon
+                                    className="fill-yellow-500"
+                                    aria-hidden="true"
+                                  />  
+                              </span>
+                            0</span>
                           </div>
                         </li>
                         <li>
@@ -241,9 +265,32 @@ export default function Profile() {
                                 </span>
                               </a>
                             </h3>
-                            <span className="article_date"> Jul 15, 2020</span>
-                            <span className="article_view">14.9k</span>
-                            <span className="article_comment">0</span>
+                            <span className="article_date">
+                            <span>
+                                <ClockIcon
+                                  className="icon fill-yellow-500"
+                                  aria-hidden="true"
+                                />  
+                              </span> 
+                              Jul 15, 2020
+                              </span>
+                            <span className="article_view">
+                              <span>
+                                <EyeIcon
+                                  className="icon fill-yellow-500"
+                                  aria-hidden="true"
+                                />  
+                              </span>
+                              14.9k
+                              </span>
+                            <span className="article_comment">
+                              <span>
+                                  <ChatIcon
+                                    className="fill-yellow-500"
+                                    aria-hidden="true"
+                                  />  
+                              </span>
+                            0</span>
                           </div>
                         </li>
                         <li>
@@ -264,9 +311,32 @@ export default function Profile() {
                                 </span>
                               </a>
                             </h3>
-                            <span className="article_date"> Jul 15, 2020</span>
-                            <span className="article_view">14.9k</span>
-                            <span className="article_comment">0</span>
+                            <span className="article_date">
+                            <span>
+                                <ClockIcon
+                                  className="icon fill-yellow-500"
+                                  aria-hidden="true"
+                                />  
+                              </span> 
+                              Jul 15, 2020
+                              </span>
+                            <span className="article_view">
+                              <span>
+                                <EyeIcon
+                                  className="icon fill-yellow-500"
+                                  aria-hidden="true"
+                                />  
+                              </span>
+                              14.9k
+                              </span>
+                            <span className="article_comment">
+                              <span>
+                                  <ChatIcon
+                                    className="fill-yellow-500"
+                                    aria-hidden="true"
+                                  />  
+                              </span>
+                            0</span>
                           </div>
                         </li>
                         <li>
@@ -287,9 +357,32 @@ export default function Profile() {
                                 </span>
                               </a>
                             </h3>
-                            <span className="article_date"> Jul 15, 2020</span>
-                            <span className="article_view">14.9k</span>
-                            <span className="article_comment">0</span>
+                            <span className="article_date">
+                            <span>
+                                <ClockIcon
+                                  className="icon fill-yellow-500"
+                                  aria-hidden="true"
+                                />  
+                              </span> 
+                              Jul 15, 2020
+                              </span>
+                            <span className="article_view">
+                              <span>
+                                <EyeIcon
+                                  className="icon fill-yellow-500"
+                                  aria-hidden="true"
+                                />  
+                              </span>
+                              14.9k
+                              </span>
+                            <span className="article_comment">
+                              <span>
+                                  <ChatIcon
+                                    className="fill-yellow-500"
+                                    aria-hidden="true"
+                                  />  
+                              </span>
+                            0</span>
                           </div>
                         </li>
                         <li>
@@ -310,11 +403,81 @@ export default function Profile() {
                                 </span>
                               </a>
                             </h3>
-                            <span className="article_date"> Jul 15, 2020</span>
-                            <span className="article_view">14.9k</span>
-                            <span className="article_comment">0</span>
+                            <span className="article_date">
+                            <span>
+                                <ClockIcon
+                                  className="icon fill-yellow-500"
+                                  aria-hidden="true"
+                                />  
+                              </span> 
+                              Jul 15, 2020
+                              </span>
+                            <span className="article_view">
+                              <span>
+                                <EyeIcon
+                                  className="icon fill-yellow-500"
+                                  aria-hidden="true"
+                                />  
+                              </span>
+                              14.9k
+                              </span>
+                            <span className="article_comment">
+                              <span>
+                                  <ChatIcon
+                                    className="fill-yellow-500"
+                                    aria-hidden="true"
+                                  />  
+                              </span>
+                            0</span>
                           </div>
                         </li>
+                        <li>
+                          <div className="image">
+                            {' '}
+                            <a title="Cloud">
+                              {' '}
+                              <Image src={'/read.png'} width="250px" height="250px" alt="" />
+                            </a>{' '}
+                          </div>
+                          <div className="right">
+                            <h3>
+                              {' '}
+                              <a>
+                                <span>
+                                  What Is Cloud Computing? Explore The Services And Deployment
+                                  Models
+                                </span>
+                              </a>
+                            </h3>
+                            <span className="article_date">
+                            <span>
+                                <ClockIcon
+                                  className="icon fill-yellow-500"
+                                  aria-hidden="true"
+                                />  
+                              </span> 
+                              Jul 15, 2020
+                              </span>
+                            <span className="article_view">
+                              <span>
+                                <EyeIcon
+                                  className="icon fill-yellow-500"
+                                  aria-hidden="true"
+                                />  
+                              </span>
+                              14.9k
+                              </span>
+                            <span className="article_comment">
+                              <span>
+                                  <ChatIcon
+                                    className="fill-yellow-500"
+                                    aria-hidden="true"
+                                  />  
+                              </span>
+                            0</span>
+                          </div>
+                        </li>
+
                       </ul>
                       {/* {data?.Author?.Contributions.map((item, index) => (
                         <div className="ml-2 mt-1 flex  w-56 flex-row items-center">

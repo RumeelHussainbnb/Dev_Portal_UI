@@ -6,6 +6,7 @@ import { loadPinnedTweet } from '../../lib/load-pinned-tweet';
 import { loadNewsletter } from '../../lib/load-newsletter';
 import { loadSpecialTagHot } from '../../lib/load-special-tag-hot';
 import { loadSpecialTagNew } from '../../lib/load-special-tag-new';
+import { BookOpenIcon } from '@heroicons/react/solid';
 
 const Sidebar = dynamic(() => import('../../components/sidebar'));
 const Tabs = dynamic(() => import('../../components/dashboard/tabs'));
