@@ -54,7 +54,6 @@ export default function Profile() {
               ? certificateArray
               : data?.Author?.Certification
         };
-        console.log('createData ==> ', createData);
         setState(createData);
         setcertificateArray(createData?.Certification);
       } catch (error) {}
