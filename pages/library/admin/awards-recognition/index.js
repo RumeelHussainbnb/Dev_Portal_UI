@@ -16,7 +16,7 @@ export async function getServerSideProps(context) {
 }
 
 export default function AwardsRecognition({ data, user }) {
-  // console.log('data ==> ', data);
+  //console.log('data ==> ', data);
 
   const [users, setUsers] = useState(data.users);
   const [selectedUsers, setSelectedUsers] = useState();
@@ -158,18 +158,18 @@ export default function AwardsRecognition({ data, user }) {
                       {data.Username}
                     </th>
                     <td className="px-4 py-4">
-                      {typeof data?.Author?.RecognizationsAndAwards === 'undefined'
-                        ? ''
-                        : String(data?.Author?.RecognizationsAndAwards)}
+                      {String(
+                        data?.Author?.RecognizationsAndAwards?.map(award => award.split('_')[0])
+                      )}
                     </td>
-                    <td className="px-4 py-4">{String(data?.TotalArticles)}</td>
+                    <td className="px-4 py-4">N/A</td>
                     {/* <td className="flex flex-row px-4 py-4">
                       <CheckCircleIcon className="mr-2 h-6 w-6 fill-green-500" aria-hidden="true" />
                       N/A
                     </td> */}
-                    <td className="px-4 py-4">{String(data?.TotalViews)}</td>
+                    <td className="px-4 py-4">N/A</td>
 
-                    <td className="px-4 py-4">{String(data?.TotalLikes)}</td>
+                    <td className="px-4 py-4">N/A</td>
                     <td className="px-4 py-4">
                       <a
                         href="#"

@@ -8,7 +8,7 @@ export default function Player({ content }) {
   const router = useRouter();
 
   return (
-    <div className="xs:text-xs mx-auto flex max-w-screen-3xl flex-col px-5 text-base">
+    <div className="xs:text-xs mx-auto flex max-w-screen-3xl flex-col px-5 text-base w-full">
       <div className="flex justify-between">
         {/* <Link href={`/library/${content?.PlaylistID}`} passHref> */}
         <div onClick={() => router.back()}>
@@ -25,11 +25,11 @@ export default function Player({ content }) {
         </a>
       </div>
 
-      <div className="aspect-[16/9] w-full shadow-lg">
+      <div className="w-full shadow-lg videoplayer-wrapper">
         <ReactPlayer
           height="100%"
           width="100%"
-          style={{ aspectRatio: '16/9' }}
+          style={{ aspectRatio: '20/10' }}
           url={content.Url}
           controls
           pip
@@ -37,10 +37,10 @@ export default function Player({ content }) {
         />
       </div>
 
-      <div className="self-start md:text-lg">
-        <h1 className="font-medium text-gray-800 dark:text-gray-200 sm:mt-4 xl:text-xl 3xl:text-2xl">
+      <div className="self-start">
+        <h2 className="font-medium text-gray-800 dark:text-gray-200 sm:mt-4 text-lg-4xl">
           {content?.Title}
-        </h1>
+        </h2>
         <p className="mt-2 text-gray-600 dark:text-gray-300 sm:mt-4">{content?.Description}</p>
       </div>
     </div>

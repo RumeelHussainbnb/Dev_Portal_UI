@@ -25,9 +25,11 @@ export default function BNBDevTools() {
 
   return (
     <Container metaTags={metaTags}>
+      <div className='tools-page overflow-hidden'>
+
       <Grid>
-        <div className="px-4 sm:px-6">
-          <h2 className="text-center text-4xl font-bold capitalize tracking-wide text-gray-800 dark:text-gray-300">
+        <div className="px-4 sm:px-6 tools-wrapper">
+          <h2 className="text-center text-lg-4xl font-bold capitalize tracking-wide text-gray-800 dark:text-gray-300">
             BNB Chain Developer <br /> Tooling Landscape
           </h2>
         </div>
@@ -392,6 +394,7 @@ export default function BNBDevTools() {
           handleShowModal={handleShowModal}
         />
       </div>
+    </div>
     </Container>
   );
 }

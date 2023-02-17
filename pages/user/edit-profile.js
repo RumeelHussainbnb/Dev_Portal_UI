@@ -239,10 +239,10 @@ export default function Profile() {
   }));
 
   return (
-    <Container metaTags={metaTags}>
+    <Container className="page-overlay" metaTags={metaTags}>
       <Loader loader={loader} />
-      <div className="flex w-full gap-3 md:pl-0">
-        <main className="">
+      <div className="edit-profile-page flex w-full justify-around gap-3 md:pl-0">
+        <main className="w-full">
           <div className="px-1 sm:px-6">
             <div className="relative flex flex-col divide-gray-200 rounded-md bg-white p-2 px-6 py-8 shadow dark:divide-gray-700">
               <p className="text-lg font-bold">Personal Information:</p>
@@ -456,7 +456,106 @@ export default function Profile() {
                 />
               </div>
             </div>
+            <div className="relative z-0 mt-2 flex flex-col divide-gray-200  rounded-md bg-white p-2 px-8 py-8 shadow dark:divide-gray-700">
+              <p className="mb-3 text-lg font-medium uppercase">Certification: </p>
+              {certificateArray.map((item, index, array) => (
+                <>
+                  <div key={index} className="certification-wrapper mt-2 flex flex-wrap">
+                    <InputField
+                      type="text"
+                      onChange={e =>
+                        handleChange('Name', e, {
+                          index: index
+                        })
+                      }
+                      value={certificateArray[index]?.Name}
+                      label={'Certification Title'}
+                      placeholder="Title"
+                    />
+                    <InputField
+                      type="text"
+                      onChange={e =>
+                        handleChange('Organization', e, {
+                          index: index
+                        })
+                      }
+                      value={certificateArray[index]?.Organization}
+                      label={'Organization'}
+                      placeholder="Enter Organization"
+                    />
 
+                    {index + 1 !== array.length && (
+                      <TrashIcon
+                        onClick={() => DeleteCertifcate(index)}
+                        className="h-6 w-6 fill-yellow-500"
+                        aria-hidden="true"
+                      />
+                    )}
+                  </div>
+                  {index + 1 === array.length && (
+                    <div
+                      onClick={() => Addcertificate(index)}
+                      className={`flex w-32 cursor-pointer items-center justify-center self-center rounded bg-[#FACC15] p-2 px-4 font-bold text-white`}
+                    >
+                      Add More
+                    </div>
+                  )}
+                </>
+              ))}
+
+              <div
+                className={
+                  'relative mb-3 flex w-full min-w-0 flex-col break-words bg-white text-white'
+                }
+              >
+                <div className="block w-full overflow-x-auto">
+                  {/* Projects table */}
+                  {state?.Author?.Certification.length > 0 ? (
+                    <table className="w-full border-collapse items-center bg-transparent">
+                      <thead>
+                        <tr>
+                          {['', 'Organization', 'Name'].map((item, index) => (
+                            <th
+                              key={index}
+                              className={
+                                'whitespace-nowrap border border-l-0 border-r-0 border-solid border-slate-100 bg-[#FACC15] px-6 py-3 text-left align-middle text-xs font-semibold uppercase text-slate-700'
+                              }
+                            >
+                              {item}
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+                      {state?.Author?.Certification.map(item => (
+                        <tbody key={item._id}>
+                          <tr>
+                            <td className="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-6 text-xs text-black">
+                              <Image
+                                src={'/certificate.png'}
+                                width={'30px'}
+                                height={'30px'}
+                                alt=""
+                              />
+                            </td>
+
+                            <td className="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-6 text-xs text-black">
+                              {item.Organization}
+                            </td>
+                            <td className="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-6 text-xs text-black">
+                              {item.Name}
+                            </td>
+                          </tr>
+                        </tbody>
+                      ))}
+                    </table>
+                  ) : (
+                    <div className="flex hidden h-full w-64 items-center py-4 px-8">
+                      <p className="text-sm font-bold text-black">No Record Available</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
             <div className="mt-3 flex flex-row items-center justify-center self-center">
               <div
                 onClick={() => {
@@ -479,103 +578,9 @@ export default function Profile() {
             </div>
           </div>
         </main>
-        <aside className="w-fit">
-          <div className="relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md  bg-white p-2 px-8 py-8 shadow dark:divide-gray-700">
-            <p className="mb-3 text-lg font-medium uppercase">Certification: </p>
-            {certificateArray.map((item, index, array) => (
-              <>
-                <div key={index} className="mt-2 flex flex-wrap">
-                  <InputField
-                    type="text"
-                    onChange={e =>
-                      handleChange('Name', e, {
-                        index: index
-                      })
-                    }
-                    value={certificateArray[index]?.Name}
-                    label={'Certification Title'}
-                    placeholder="Title"
-                  />
-                  <InputField
-                    type="text"
-                    onChange={e =>
-                      handleChange('Organization', e, {
-                        index: index
-                      })
-                    }
-                    value={certificateArray[index]?.Organization}
-                    label={'Organization'}
-                    placeholder="Enter Organization"
-                  />
-
-                  {index + 1 !== array.length && (
-                    <TrashIcon
-                      onClick={() => DeleteCertifcate(index)}
-                      className="h-6 w-6 fill-yellow-500"
-                      aria-hidden="true"
-                    />
-                  )}
-                </div>
-                {index + 1 === array.length && (
-                  <div
-                    onClick={() => Addcertificate(index)}
-                    className={`mt-2 ml-4 mb-3 flex w-32 cursor-pointer items-center justify-center self-center rounded bg-[#FACC15] p-2 px-4 font-bold text-white`}
-                  >
-                    Add More
-                  </div>
-                )}
-              </>
-            ))}
-
-            <div
-              className={
-                'relative mb-3 flex w-full min-w-0 flex-col break-words bg-white text-white'
-              }
-            >
-              <div className="block w-full overflow-x-auto">
-                {/* Projects table */}
-                {state?.Author?.Certification.length > 0 ? (
-                  <table className="w-full border-collapse items-center bg-transparent">
-                    <thead>
-                      <tr>
-                        {['', 'Organization', 'Name'].map((item, index) => (
-                          <th
-                            key={index}
-                            className={
-                              'whitespace-nowrap border border-l-0 border-r-0 border-solid border-slate-100 bg-[#FACC15] px-6 py-3 text-left align-middle text-xs font-semibold uppercase text-slate-700'
-                            }
-                          >
-                            {item}
-                          </th>
-                        ))}
-                      </tr>
-                    </thead>
-                    {state?.Author?.Certification.map(item => (
-                      <tbody key={item._id}>
-                        <tr>
-                          <td className="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-6 text-xs text-black">
-                            <Image src={'/certificate.png'} width={'30px'} height={'30px'} alt="" />
-                          </td>
-
-                          <td className="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-6 text-xs text-black">
-                            {item.Organization}
-                          </td>
-                          <td className="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-6 text-xs text-black">
-                            {item.Name}
-                          </td>
-                        </tr>
-                      </tbody>
-                    ))}
-                  </table>
-                ) : (
-                  <div className="flex hidden h-full w-64 items-center py-4 px-8">
-                    <p className="text-sm font-bold text-black">No Record Available</p>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </aside>
+        {/* <aside className="w-fit">
+         
+        </aside> */}
       </div>
       <Notification
         show={notification.show}

@@ -48,8 +48,9 @@ export default function Library({
 
   return (
     <Container metaTags={metaTags}>
-      <div className="md:pl-0flex flex justify-center justify-center gap-6 gap-6 px-2 px-2 md:pl-0">
-        <main className="max-w-2xl">
+      <div className="main-content-wrapper flex justify-center  gap-6  px-2  md:pl-0">
+        {/* <main className="max-w-2xl"> */}
+        <main className="">
           <Tabs newContent={newContent} trendingContent={trendingContent} />
         </main>
 

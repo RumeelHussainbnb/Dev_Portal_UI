@@ -185,7 +185,7 @@ function TopBar({ childrens }) {
               <div className="mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between">
                   {/* Logo */}
-                  <div className="hidden sm:inline-flex">
+                  <div className="hidden sm:inline-flex logo">
                     <Link href="/" passHref>
                       <a className="flex content-center">
                         {mode === 'light' && (
@@ -212,7 +212,7 @@ function TopBar({ childrens }) {
                   {/*<Search setSearch={setSearch} />*/}
 
                   {/*  Mobile Menu, only visible in small screens*/}
-                  <div className="flex items-center pl-2 lg:absolute lg:inset-y-0 lg:right-0 lg:hidden">
+                  <div className="menu-btn flex items-center pl-2 lg:absolute lg:inset-y-0 lg:right-0 lg:hidden">
                     {/* Mobile menu button */}
                     <Popover.Button className="-mx-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-500 dark:text-gray-300 dark:hover:bg-gray-600">
                       <span className="sr-only">Open menu</span>
@@ -226,9 +226,9 @@ function TopBar({ childrens }) {
 
                   <div className="flex items-center gap-6">
                     {/* Theme Settings*/}
-                    <div className="hidden md:flex">
+                    <div className="hidden md:flex mobile-view">
                       <Menu as="div" className="relative ml-5 flex-shrink-0">
-                        <div>
+                        <div className='colorMode'>
                           <Menu.Button className="flex rounded-full hover:outline-none hover:ring-2 hover:ring-gray-500 hover:ring-offset-2">
                             <span className="sr-only">Open Theme menu</span>
                             <ColorSwatchIcon className="h-7 w-7 text-gray-600 hover:opacity-80 dark:text-gray-300" />
@@ -269,7 +269,7 @@ function TopBar({ childrens }) {
 
                     {/*  Profile Button */}
 
-                    <div className="hidden lg:flex">
+                    <div className="hidden lg:flex mobile-view">
                       {appState.isConnectedToWallet === true ||
                       appState.isConnectedToWallet === 'true' ? (
                         <Menu as="div" className="relative flex-shrink-0">
@@ -379,7 +379,7 @@ function TopBar({ childrens }) {
               </div>
 
               {/* Mobile Menu*/}
-              <Popover.Panel as="nav" className="lg:hidden" aria-label="Global">
+              <Popover.Panel as="nav" className="lg:hidden mobile-nav" aria-label="Global">
                 {({ close }) => (
                   <div className="mx-auto max-w-3xl space-y-1 px-2 pt-2 pb-3 sm:px-4">
                     <NavSidebar />
