@@ -38,7 +38,7 @@ export default function Profile() {
     const fetchData = async () => {
       let userData = JSON.parse(localStorage.getItem('userData') || '{}');
       try {
-        const user = await axios.get(`/user/getUserProfile/${userData.data?._id}`);
+        const user = await axios.get(`/user/onGetUserProfileWithData/${userData.data?._id}`);
 
         setData(user?.data?.data);
       } catch (error) {}
@@ -53,7 +53,6 @@ export default function Profile() {
     url: `${process.env.NEXT_PUBLIC_API_ENDPOINT}/profile`,
     shouldIndex: true
   };
-
   return (
     <Container metaTags={metaTags}>
       <div className="profile-page flex w-full justify-center gap-3 self-center md:pl-0">
@@ -115,27 +114,27 @@ export default function Profile() {
               </div>
               <div className="awards">
                 <div className="justify-evently flex h-fit w-full flex-row flex-wrap px-4">
-                  <div className="awards-wrap">
+                  {/* <div className="awards-wrap">
                     <Image src={'/rank.png'} width="100" height="100" alt="" />
                     <div className="">
                       <p className="text-base font-medium text-black">{data?.Author?.Rank}</p>
                       <p className="font-normal text-slate-400">Rank</p>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="awards-wrap">
                     <Image src={'/read.png'} width="250px" height="250px" alt="" />
                     <div>
-                      <p className="text-base font-medium text-black">{data?.Author?.Read}</p>
+                      <p className="text-base font-medium text-black">{data?.TotalViews}</p>
                       <p className="font-normal text-slate-400">Read</p>
                     </div>
                   </div>
-                  <div className="awards-wrap">
+                  {/* <div className="awards-wrap">
                     <Image src={'/reputation.png'} width="250px" height="250px" alt="" />
                     <div>
                       <p className="text-base font-medium text-black">{data?.Author?.Reputation}</p>
                       <p className="font-normal text-slate-400">Reputation</p>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="awards-wrap">
                     <Image src={'/member.png'} width="250px" height="250px" alt="" />
                     <div>
@@ -146,7 +145,7 @@ export default function Profile() {
                   <div className="awards-wrap">
                     <Image src={'/likes.png'} width="250px" height="250px" alt="" />
                     <div>
-                      <p className="text-base font-medium text-black">{data?.Author?.Like}</p>
+                      <p className="text-base font-medium text-black">{data?.TotalLikes}</p>
                       <p className="font-normal text-slate-400">Likes</p>
                     </div>
                   </div>
@@ -198,159 +197,87 @@ export default function Profile() {
                 <div className="flex justify-between">
                   {selectedTab === 'Contributions' && (
                     <div className="justify-evently flex flex-wrap">
-                      {/* <p className=" ml-6 mt-4 text-base font-bold text-black">Contributions</p> */}
                       <ul id="ulArticles">
-                        <li>
-                          <div className="image">
-                            {' '}
-                            <a title="Cloud">
-                              {' '}
-                              <Image src={'/read.png'} width="250px" height="250px" alt="" />
-                            </a>{' '}
-                          </div>
-                          <div className="right">
-                            <h3>
-                              {' '}
-                              <a>
-                                <span>
-                                  What Is Cloud Computing? Explore The Services And Deployment
-                                  Models
-                                </span>
+                        {data?.UserAllContents?.map((content, i) => (
+                          <li key={i}>
+                            <div className="image">
+                              <a title="Cloud">
+                                <Image src={'/read.png'} width="250px" height="250px" alt="" />
                               </a>
-                            </h3>
-                            <span className="article_date"> Jul 15, 2020</span>
-                            <span className="article_view">14.9k</span>
-                            <span className="article_comment">0</span>
-                          </div>
-                        </li>
-                        <li>
-                          <div className="image">
-                            {' '}
-                            <a title="Cloud">
-                              {' '}
-                              <Image src={'/read.png'} width="250px" height="250px" alt="" />
-                            </a>{' '}
-                          </div>
-                          <div className="right">
-                            <h3>
-                              {' '}
-                              <a>
-                                <span>
-                                  What Is Cloud Computing? Explore The Services And Deployment
-                                  Models
-                                </span>
-                              </a>
-                            </h3>
-                            <span className="article_date"> Jul 15, 2020</span>
-                            <span className="article_view">14.9k</span>
-                            <span className="article_comment">0</span>
-                          </div>
-                        </li>
-                        <li>
-                          <div className="image">
-                            {' '}
-                            <a title="Cloud">
-                              {' '}
-                              <Image src={'/read.png'} width="250px" height="250px" alt="" />
-                            </a>{' '}
-                          </div>
-                          <div className="right">
-                            <h3>
-                              {' '}
-                              <a>
-                                <span>
-                                  What Is Cloud Computing? Explore The Services And Deployment
-                                  Models
-                                </span>
-                              </a>
-                            </h3>
-                            <span className="article_date"> Jul 15, 2020</span>
-                            <span className="article_view">14.9k</span>
-                            <span className="article_comment">0</span>
-                          </div>
-                        </li>
-                        <li>
-                          <div className="image">
-                            {' '}
-                            <a title="Cloud">
-                              {' '}
-                              <Image src={'/read.png'} width="250px" height="250px" alt="" />
-                            </a>{' '}
-                          </div>
-                          <div className="right">
-                            <h3>
-                              {' '}
-                              <a>
-                                <span>
-                                  What Is Cloud Computing? Explore The Services And Deployment
-                                  Models
-                                </span>
-                              </a>
-                            </h3>
-                            <span className="article_date"> Jul 15, 2020</span>
-                            <span className="article_view">14.9k</span>
-                            <span className="article_comment">0</span>
-                          </div>
-                        </li>
-                        <li>
-                          <div className="image">
-                            {' '}
-                            <a title="Cloud">
-                              {' '}
-                              <Image src={'/read.png'} width="250px" height="250px" alt="" />
-                            </a>{' '}
-                          </div>
-                          <div className="right">
-                            <h3>
-                              {' '}
-                              <a>
-                                <span>
-                                  What Is Cloud Computing? Explore The Services And Deployment
-                                  Models
-                                </span>
-                              </a>
-                            </h3>
-                            <span className="article_date"> Jul 15, 2020</span>
-                            <span className="article_view">14.9k</span>
-                            <span className="article_comment">0</span>
-                          </div>
-                        </li>
+                            </div>
+                            <div className="right">
+                              <h3>
+                                <a>
+                                  <span>{content?.Title}</span>
+                                </a>
+                              </h3>
+                              <span className="article_date">
+                                {moment(content?.CreatedAt).format('MMMM,YYYY')}
+                              </span>
+                              <span className="article_view">{content?.ViewedBy.length}</span>
+                              <span className="article_comment">{content?.LikedBy.length}</span>
+                            </div>
+                          </li>
+                        ))}
                       </ul>
-                      {/* {data?.Author?.Contributions.map((item, index) => (
-                        <div className="ml-2 mt-1 flex  w-56 flex-row items-center">
-                          <div className="h-1 w-1 rounded-full bg-stone-400" />
-                          <p className="ml-2 text-sm uppercase text-stone-400">
-                            {item} [{index}]
-                          </p>
-                        </div>
-                      ))} */}
                     </div>
                   )}
                   {selectedTab === 'Most Read' && (
-                    <div className="justify-evently flex flex-wrap">
-                      <p className=" ml-6 mt-4 text-base font-bold text-black">No Record Found</p>
-                      {/* {data?.Author?.MostPopular.map((item, index) => (
-                        <div className="ml-2 mt-1 flex  w-56 flex-row items-center">
-                          <div className="h-1 w-1 rounded-full bg-stone-400" />
-                          <p className="ml-2 text-sm uppercase text-stone-400">
-                            {item} [{index}]
-                          </p>
-                        </div>
-                      ))} */}
-                    </div>
+                    <ul id="ulArticles">
+                      {data?.MostRecentContent?.map((content, i) => (
+                        <li key={i}>
+                          <div className="image">
+                            <a title="Cloud">
+                              <Image src={'/read.png'} width="250px" height="250px" alt="" />
+                            </a>
+                          </div>
+                          <div className="right">
+                            <h3>
+                              <a>
+                                <span>{content?.Title}</span>
+                              </a>
+                            </h3>
+                            <span className="article_date">
+                              {moment(content?.CreatedAt).format('MMMM,YYYY')}
+                            </span>
+                            <span className="article_view">{content?.ViewedBy.length}</span>
+                            <span className="article_comment">{content?.LikedBy.length}</span>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
                   )}
 
                   {selectedTab === 'Most Popular' && (
                     <div className="justify-evently flex flex-wrap">
-                      <p className=" ml-6 mt-4 text-base font-bold text-black">No Record Found</p>
-                      {/* {data?.Author?.MostPopular.map((item, index) => (
-                        <div className="ml-2 mt-1 flex  w-56 flex-row items-center">
-                          <div className="h-1 w-1 rounded-full bg-stone-400" />
-                          <p className="ml-2 text-sm uppercase text-stone-400">
-                            {item} [{index}]
-                          </p>
-                        </div>
-                      ))} */}
+                      {/* <p className=" ml-6 mt-4 text-base font-bold text-black">No Record Found</p> */}
+                      <div className="justify-evently flex flex-wrap">
+                        <ul id="ulArticles">
+                          <li>
+                            <div className="image">
+                              <a title="Cloud">
+                                <Image src={'/read.png'} width="250px" height="250px" alt="" />
+                              </a>
+                            </div>
+                            <div className="right">
+                              <h3>
+                                <a>
+                                  <span>{data?.MostPopularContent?.Title}</span>
+                                </a>
+                              </h3>
+                              <span className="article_date">
+                                {moment(data?.MostPopularContent?.CreatedAt).format('MMMM,YYYY')}
+                              </span>
+                              <span className="article_view">
+                                {data?.MostPopularContent?.ViewedBy.length}
+                              </span>
+                              <span className="article_comment">
+                                {data?.MostPopularContent?.LikedBy.length}
+                              </span>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -445,9 +372,11 @@ export default function Profile() {
                         : '#'
                     }
                   >
-                    <div className="mr-2 h-8 w-8 hover:cursor-pointer">
-                      <Image src={'/facebook.png'} width="250px" height="250px" alt="" />
-                    </div>
+                    <a target="_blank" rel="noopener noreferrer">
+                      <div className="mr-2 h-8 w-8 hover:cursor-pointer">
+                        <Image src={'/facebook.png'} width="250px" height="250px" alt="" />
+                      </div>
+                    </a>
                   </Link>
                   <Link
                     href={
@@ -457,9 +386,11 @@ export default function Profile() {
                         : '#'
                     }
                   >
-                    <div className="mr-2 h-8 w-8 hover:cursor-pointer">
-                      <Image src={'/linkedin.png'} width="250px" height="250px" alt="" />
-                    </div>
+                    <a target="_blank" rel="noopener noreferrer">
+                      <div className="mr-2 h-8 w-8 hover:cursor-pointer">
+                        <Image src={'/linkedin.png'} width="250px" height="250px" alt="" />
+                      </div>
+                    </a>
                   </Link>
                   <Link
                     href={
@@ -469,9 +400,11 @@ export default function Profile() {
                         : '#'
                     }
                   >
-                    <div className="mr-2 h-8 w-8 hover:cursor-pointer">
-                      <Image src={'/twitter.png'} width="250px" height="250px" alt="" />
-                    </div>
+                    <a target="_blank" rel="noopener noreferrer">
+                      <div className="mr-2 h-8 w-8 hover:cursor-pointer">
+                        <Image src={'/twitter.png'} width="250px" height="250px" alt="" />
+                      </div>
+                    </a>
                   </Link>
                 </div>
               </div>

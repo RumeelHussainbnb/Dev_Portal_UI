@@ -37,6 +37,7 @@ export default function Profile() {
         const user = await axios.get(`/user/getUserProfile/${userData.data?._id}`);
         let { data } = user?.data;
         const createData = {
+          ...data,
           _id: data._id,
           Username: data.Username,
           Bio: data.Bio,
@@ -53,7 +54,7 @@ export default function Profile() {
               ? certificateArray
               : data?.Author?.Certification
         };
-        //console.log('createData ==> ', createData);
+        console.log('createData ==> ', createData);
         setState(createData);
         setcertificateArray(createData?.Certification);
       } catch (error) {}
@@ -152,6 +153,7 @@ export default function Profile() {
     let mergedArray = [...certificateArray];
     setloader(true);
     let payload = {
+      ...item,
       Username: item.Username,
       Bio: item.Bio,
       Country: item.Country,
@@ -160,6 +162,7 @@ export default function Profile() {
       Country: item.Country.label,
       ProfilePicture: item.ProfilePicture,
       Author: {
+        ...item?.Author,
         SocialLinks: [
           {
             Link: item.Facebook,
