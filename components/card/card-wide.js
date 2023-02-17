@@ -76,15 +76,12 @@ function CardWide({ content, mode }) {
               </a>
             </Link>
           ) : (
-            <a
-              href={content.Url}
-              rel="noreferrer"
-              target="_blank"
-              className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-400 dark:text-gray-300 dark:hover:text-gray-500"
-            >
-              <ExternalLinkIcon className="h-5 w-5" aria-hidden="true" />
-              <span className="font-medium">Open</span>
-            </a>
+            <Link href={`/library/content/${content._id}`}>
+              <div className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-400 dark:text-gray-300 dark:hover:text-gray-500">
+                <ExternalLinkIcon className="h-5 w-5" aria-hidden="true" />
+                <span className="font-medium">Open</span>
+              </div>
+            </Link>
           )}
         </>
       );

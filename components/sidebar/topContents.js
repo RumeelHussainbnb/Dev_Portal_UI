@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const TopContents = ({ topContent }) => {
   return (
@@ -21,9 +22,11 @@ const TopContents = ({ topContent }) => {
                   </div>
                 </div>
                 <div className="items-left flex w-full flex-col px-2">
-                  <a href={content.Url} className="text-sm font-medium">
+                  <Link href={`/library/content/${content._id}`}>
+                    {/* <a href={content.Url} className="text-sm font-medium"> */}
                     {content.Title}
-                  </a>
+                    {/* </a> */}
+                  </Link>
                   {/* <p className="text-sm text-gray-600">Date: Jan 20, 2023</p> */}
                 </div>
               </div>

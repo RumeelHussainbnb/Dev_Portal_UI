@@ -89,7 +89,7 @@ const NewsLetterContent = ({ imageUrl, content, mode, editContent, closeSearch }
           )}
 
           {/*  Description */}
-          <p className="text-gray-600 dark:text-gray-400">{content.Description}</p>
+          <div className="text-gray-600 dark:text-gray-400">{content.Description}</div>
         </div>
 
         {/*  Actions */}
@@ -190,7 +190,7 @@ const PlaylistContent = ({ imageUrl, content, mode, editContent, closeSearch }) 
           )}
 
           {/*  Description */}
-          <p className="text-gray-600 dark:text-gray-400">{content.Description}</p>
+          <div className="text-gray-600 dark:text-gray-400">{content.Description}</div>
         </div>
 
         {/*  Actions */}
@@ -246,7 +246,8 @@ const BaseContent = ({ imageUrl, content, mode, editContent, closeSearch }) => {
       : `/library/${content.ContentType}/filter?badge=${content.SpecialTag}`;
   return (
     <>
-      <a href={content.Url} rel="noreferrer" target="_blank">
+      {/* <a href={content.Url} rel="noreferrer" target="_blank"> */}
+      <Link href={`/library/content/${content._id}`}>
         <Image
           className="cursor-pointer rounded-t-lg object-cover hover:opacity-90"
           src={imageUrl}
@@ -258,7 +259,8 @@ const BaseContent = ({ imageUrl, content, mode, editContent, closeSearch }) => {
           blurDataURL={imageUrl}
           loader={myLoader}
         />
-      </a>
+      </Link>
+      {/* </a> */}
       <div className="px-5 pt-5">
         <div className="h-[275px] overflow-hidden">
           <div className="border-b-2 border-dashed border-gray-700 dark:border-gray-500">
@@ -317,7 +319,9 @@ const BaseContent = ({ imageUrl, content, mode, editContent, closeSearch }) => {
           )}
 
           {/*  Description */}
-          <p className="text-gray-600 dark:text-gray-400">{ReactHtmlParser(content.Description)}</p>
+          <div className="text-gray-600 dark:text-gray-400">
+            {ReactHtmlParser(content.Description)}
+          </div>
         </div>
 
         {/*  Actions */}
@@ -340,15 +344,19 @@ const BaseContent = ({ imageUrl, content, mode, editContent, closeSearch }) => {
                 <span className="font-medium">Edit Data</span>
               </button>
             ) : (
-              <a
+              <Link href={`/library/content/${content._id}`}>
+                {/* <a
                 href={content.Url}
                 rel="noreferrer"
                 target="_blank"
                 className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-400 dark:text-gray-300 dark:hover:text-gray-500"
-              >
-                <ExternalLinkIcon className="h-5 w-5" aria-hidden="true" />
-                <span className="font-medium">Open</span>
-              </a>
+              > */}
+                <div className=" inline-flex cursor-pointer items-center space-x-2 text-gray-600 hover:text-gray-400 dark:text-gray-300 dark:hover:text-gray-500">
+                  <ExternalLinkIcon className="h-5 w-5" aria-hidden="true" />
+                  <span className="font-medium">Open</span>
+                </div>
+                {/* </a> */}
+              </Link>
             )}
           </div>
 
