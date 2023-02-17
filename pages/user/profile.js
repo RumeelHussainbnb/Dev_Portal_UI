@@ -16,22 +16,21 @@ function classNames(...classes) {
 export default function Profile() {
   const router = useRouter();
   const [data, setData] = useState({
-	  Username: "osama Ishaq",
-	  Country: "Pakistan",
-	  CreatedAt: "10/10/12",
-	  Skils: ["skill1", "skill2"],
-	  Author: {
-		  Rank: 1,
-		  Read: 101,
-		  Reputation: 234,
-		  Member: 101,
-		  Like: 34223,
-		  Bio: "dsadsddasdasdasdasd",
-		  RecognizationsAndAwards: ["MOM_medal"],
-		  Certification: [],
-		  SocialLinks: []
-	  }
-	  
+    Username: '',
+    Country: '',
+    CreatedAt: '',
+    Skils: [],
+    Author: {
+      Rank: '',
+      Read: '',
+      Reputation: '',
+      Member: '',
+      Like: '',
+      Bio: '',
+      RecognizationsAndAwards: [''],
+      Certification: [],
+      SocialLinks: []
+    }
   });
   const [selectedTab, setSelectedTab] = useState('Contributions');
 
@@ -57,11 +56,11 @@ export default function Profile() {
 
   return (
     <Container metaTags={metaTags}>
-      <div className="profile-page flex w-full gap-3 self-center md:pl-0 justify-center">
+      <div className="profile-page flex w-full justify-center gap-3 self-center md:pl-0">
         <main className="profile">
           <div className="profile-wrapper px-4 sm:px-6">
             <div className="porfile-section relative z-0 flex flex-col divide-gray-200 rounded-md bg-white p-2 px-4 py-4 shadow dark:divide-gray-700">
-              <div className="flex flex-row profile-detail">
+              <div className="profile-detail flex flex-row">
                 <div className="profile-img-discription">
                   <div className="profile-img m-h-[150px] flex h-fit w-[30%] max-w-[150px] items-center justify-center overflow-hidden rounded-full">
                     <Image
@@ -115,37 +114,37 @@ export default function Profile() {
                 </button>
               </div>
               <div className="awards">
-                <div className="flex h-fit w-full flex-row flex-wrap px-4 justify-evently">
+                <div className="justify-evently flex h-fit w-full flex-row flex-wrap px-4">
                   <div className="awards-wrap">
-                      <Image src={'/rank.png'} width="100" height="100" alt="" />
+                    <Image src={'/rank.png'} width="100" height="100" alt="" />
                     <div className="">
                       <p className="text-base font-medium text-black">{data?.Author?.Rank}</p>
                       <p className="font-normal text-slate-400">Rank</p>
                     </div>
                   </div>
                   <div className="awards-wrap">
-                      <Image src={'/read.png'} width="250px" height="250px" alt="" />
+                    <Image src={'/read.png'} width="250px" height="250px" alt="" />
                     <div>
                       <p className="text-base font-medium text-black">{data?.Author?.Read}</p>
                       <p className="font-normal text-slate-400">Read</p>
                     </div>
                   </div>
                   <div className="awards-wrap">
-                      <Image src={'/reputation.png'} width="250px" height="250px" alt="" />
+                    <Image src={'/reputation.png'} width="250px" height="250px" alt="" />
                     <div>
                       <p className="text-base font-medium text-black">{data?.Author?.Reputation}</p>
                       <p className="font-normal text-slate-400">Reputation</p>
                     </div>
                   </div>
                   <div className="awards-wrap">
-                      <Image src={'/member.png'} width="250px" height="250px" alt="" />
+                    <Image src={'/member.png'} width="250px" height="250px" alt="" />
                     <div>
                       <p className="text-base font-medium text-black">{data?.Author?.Member}</p>
                       <p className="font-normal text-slate-400">Member</p>
                     </div>
                   </div>
                   <div className="awards-wrap">
-                      <Image src={'/likes.png'} width="250px" height="250px" alt="" />
+                    <Image src={'/likes.png'} width="250px" height="250px" alt="" />
                     <div>
                       <p className="text-base font-medium text-black">{data?.Author?.Like}</p>
                       <p className="font-normal text-slate-400">Likes</p>
@@ -158,7 +157,7 @@ export default function Profile() {
               <p className="text-lg font-medium uppercase">Bio: </p>
               <p className="text-[12px]">{data?.Bio}</p>
             </div>
-            <div className="horizontal-tabs bg-white px-4 sm:px-0 rounded-md">
+            <div className="horizontal-tabs rounded-md bg-white px-4 sm:px-0">
               <nav
                 className="relative z-0 mt-2 flex divide-gray-200 rounded-lg shadow dark:divide-gray-700"
                 aria-label="Tabs"
@@ -202,66 +201,121 @@ export default function Profile() {
                       {/* <p className=" ml-6 mt-4 text-base font-bold text-black">Contributions</p> */}
                       <ul id="ulArticles">
                         <li>
-                            <div className="image"> <a title="Cloud"> <Image src={'/read.png'} width="250px" height="250px" alt="" /></a> </div>
-                            <div className="right">
-                                <h3> <a>
-                                        <span>What Is Cloud Computing? Explore The Services And Deployment Models</span>
-                                      </a>
-                                </h3> 
-                                <span className="article_date"> Jul 15, 2020</span> 
-                                <span className="article_view">14.9k</span> 
-                                <span className="article_comment">0</span>
-                            </div>
+                          <div className="image">
+                            {' '}
+                            <a title="Cloud">
+                              {' '}
+                              <Image src={'/read.png'} width="250px" height="250px" alt="" />
+                            </a>{' '}
+                          </div>
+                          <div className="right">
+                            <h3>
+                              {' '}
+                              <a>
+                                <span>
+                                  What Is Cloud Computing? Explore The Services And Deployment
+                                  Models
+                                </span>
+                              </a>
+                            </h3>
+                            <span className="article_date"> Jul 15, 2020</span>
+                            <span className="article_view">14.9k</span>
+                            <span className="article_comment">0</span>
+                          </div>
                         </li>
                         <li>
-                            <div className="image"> <a title="Cloud"> <Image src={'/read.png'} width="250px" height="250px" alt="" /></a> </div>
-                            <div className="right">
-                                <h3> <a>
-                                        <span>What Is Cloud Computing? Explore The Services And Deployment Models</span>
-                                      </a>
-                                </h3> 
-                                <span className="article_date"> Jul 15, 2020</span> 
-                                <span className="article_view">14.9k</span> 
-                                <span className="article_comment">0</span>
-                            </div>
+                          <div className="image">
+                            {' '}
+                            <a title="Cloud">
+                              {' '}
+                              <Image src={'/read.png'} width="250px" height="250px" alt="" />
+                            </a>{' '}
+                          </div>
+                          <div className="right">
+                            <h3>
+                              {' '}
+                              <a>
+                                <span>
+                                  What Is Cloud Computing? Explore The Services And Deployment
+                                  Models
+                                </span>
+                              </a>
+                            </h3>
+                            <span className="article_date"> Jul 15, 2020</span>
+                            <span className="article_view">14.9k</span>
+                            <span className="article_comment">0</span>
+                          </div>
                         </li>
                         <li>
-                            <div className="image"> <a title="Cloud"> <Image src={'/read.png'} width="250px" height="250px" alt="" /></a> </div>
-                            <div className="right">
-                                <h3> <a>
-                                        <span>What Is Cloud Computing? Explore The Services And Deployment Models</span>
-                                      </a>
-                                </h3> 
-                                <span className="article_date"> Jul 15, 2020</span> 
-                                <span className="article_view">14.9k</span> 
-                                <span className="article_comment">0</span>
-                            </div>
+                          <div className="image">
+                            {' '}
+                            <a title="Cloud">
+                              {' '}
+                              <Image src={'/read.png'} width="250px" height="250px" alt="" />
+                            </a>{' '}
+                          </div>
+                          <div className="right">
+                            <h3>
+                              {' '}
+                              <a>
+                                <span>
+                                  What Is Cloud Computing? Explore The Services And Deployment
+                                  Models
+                                </span>
+                              </a>
+                            </h3>
+                            <span className="article_date"> Jul 15, 2020</span>
+                            <span className="article_view">14.9k</span>
+                            <span className="article_comment">0</span>
+                          </div>
                         </li>
                         <li>
-                            <div className="image"> <a title="Cloud"> <Image src={'/read.png'} width="250px" height="250px" alt="" /></a> </div>
-                            <div className="right">
-                                <h3> <a>
-                                        <span>What Is Cloud Computing? Explore The Services And Deployment Models</span>
-                                      </a>
-                                </h3> 
-                                <span className="article_date"> Jul 15, 2020</span> 
-                                <span className="article_view">14.9k</span> 
-                                <span className="article_comment">0</span>
-                            </div>
+                          <div className="image">
+                            {' '}
+                            <a title="Cloud">
+                              {' '}
+                              <Image src={'/read.png'} width="250px" height="250px" alt="" />
+                            </a>{' '}
+                          </div>
+                          <div className="right">
+                            <h3>
+                              {' '}
+                              <a>
+                                <span>
+                                  What Is Cloud Computing? Explore The Services And Deployment
+                                  Models
+                                </span>
+                              </a>
+                            </h3>
+                            <span className="article_date"> Jul 15, 2020</span>
+                            <span className="article_view">14.9k</span>
+                            <span className="article_comment">0</span>
+                          </div>
                         </li>
                         <li>
-                            <div className="image"> <a title="Cloud"> <Image src={'/read.png'} width="250px" height="250px" alt="" /></a> </div>
-                            <div className="right">
-                                <h3> <a>
-                                        <span>What Is Cloud Computing? Explore The Services And Deployment Models</span>
-                                      </a>
-                                </h3> 
-                                <span className="article_date"> Jul 15, 2020</span> 
-                                <span className="article_view">14.9k</span> 
-                                <span className="article_comment">0</span>
-                            </div>
+                          <div className="image">
+                            {' '}
+                            <a title="Cloud">
+                              {' '}
+                              <Image src={'/read.png'} width="250px" height="250px" alt="" />
+                            </a>{' '}
+                          </div>
+                          <div className="right">
+                            <h3>
+                              {' '}
+                              <a>
+                                <span>
+                                  What Is Cloud Computing? Explore The Services And Deployment
+                                  Models
+                                </span>
+                              </a>
+                            </h3>
+                            <span className="article_date"> Jul 15, 2020</span>
+                            <span className="article_view">14.9k</span>
+                            <span className="article_comment">0</span>
+                          </div>
                         </li>
-                    </ul>
+                      </ul>
                       {/* {data?.Author?.Contributions.map((item, index) => (
                         <div className="ml-2 mt-1 flex  w-56 flex-row items-center">
                           <div className="h-1 w-1 rounded-full bg-stone-400" />
@@ -284,7 +338,7 @@ export default function Profile() {
                         </div>
                       ))} */}
                     </div>
-                  )} 
+                  )}
 
                   {selectedTab === 'Most Popular' && (
                     <div className="justify-evently flex flex-wrap">
@@ -306,7 +360,7 @@ export default function Profile() {
         </main>
         <aside className="w-fit">
           <div className="block w-full overflow-x-auto">
-            <div className="relative z-0 mt-sm-2 flex flex-col divide-gray-200 rounded-md bg-white p-2 px-4 py-4 shadow dark:divide-gray-700">
+            <div className="mt-sm-2 relative z-0 flex flex-col divide-gray-200 rounded-md bg-white p-2 px-4 py-4 shadow dark:divide-gray-700">
               <p className="mb-3 text-lg font-medium uppercase">Awards & Recognitions: </p>
               <div className="flex flex-row items-start justify-start self-start">
                 {data?.Author?.RecognizationsAndAwards?.includes('MOM_medal') && (
@@ -319,7 +373,7 @@ export default function Profile() {
                     />
                   </div>
                 )}
-                {data?.Author?.RecognizationsAndAwards?.includes('MVP_medal') && (
+                {data?.Author?.RecognizationsAndAwards?.includes('Martian_medal') && (
                   <div className="m-h-[80px] mr-3 flex h-fit w-[30%] max-w-[80px] items-center justify-center overflow-hidden ">
                     <Image src={'/mvp-selected.png'} width="300px" height="300px" alt="" />
                   </div>
@@ -382,7 +436,7 @@ export default function Profile() {
             <div className="social-links mt-2 flex flex-row justify-between">
               <div className="links relative z-0 flex w-[49%] flex-col items-center justify-center divide-x divide-gray-200 rounded-md bg-white p-2 shadow dark:divide-gray-700">
                 <p className="text-lg font-medium">Social Links:</p>
-                <div className="flex flex-row b-0">
+                <div className="b-0 flex flex-row">
                   <Link
                     href={
                       data?.Author?.SocialLinks.length != 0 &&
@@ -423,7 +477,7 @@ export default function Profile() {
               </div>
               <div className="links relative z-0 flex w-[49%] flex-col items-center justify-center divide-x divide-gray-200 rounded-md bg-white p-2 shadow  dark:divide-gray-700">
                 <p className="text-lg font-medium">Author:</p>
-                <div className="flex flex-row b-0">
+                <div className="b-0 flex flex-row">
                   <div className="mr-2 h-8 w-8 hover:cursor-pointer">
                     <Image src={'/icons8-add-friend-58.png'} width="250px" height="250px" alt="" />
                   </div>

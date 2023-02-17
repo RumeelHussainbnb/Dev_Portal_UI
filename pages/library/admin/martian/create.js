@@ -30,30 +30,105 @@ const MvpForm = () => {
   });
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
-  const [notifySuccess, setNotifySuccess] = useState(false);
-  const [notifyError, setNotifyError] = useState(false);
+  const [notifySuccess, setNotifySuccess] = useState({ message: '', show: false });
+  const [notifyError, setNotifyError] = useState({ message: '', show: false });
   const [imageURL, setImageURl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [timer, setTimer] = useState(null);
 
+  const publicKeyChange = e => {
+    let tempState = { ...data };
+    setData({ ...tempState, publicKey: e.target.value });
+
+    clearTimeout(timer);
+
+    const newTimer = setTimeout(() => {
+      axios
+        .get(`/user/${e.target.value.toLowerCase()}`)
+        .then(response => {
+          if (response.data) {
+            console.log('response.data ==> ', response.data);
+            setData({
+              firstName: response.data?.Username,
+              lastName: response.data?.Username,
+              email: response.data?.Email,
+              publicKey: response.data?.PublicKey,
+              country: { label: response.data?.Country, name: response.data?.Country },
+              martianId: response.data?.MartianId || null,
+              city: '',
+              martian: { label: '', name: '' },
+              imageUrl: response.data?.ProfilePicture,
+              language: '',
+              expertise: response.data?.Skils,
+              bioGraphy: response.data?.Bio
+            });
+            setImageURl(response.data?.ProfilePicture);
+          }
+          // else {
+          //   setData({
+          //     ...tempState,
+          //     firstName: '',
+          //     lastName: '',
+          //     email: '',
+          //     //publicKey: '',
+          //     country: { label: '', name: '' },
+          //     martianId: '',
+          //     city: '',
+          //     martian: { label: '', name: '' },
+          //     imageUrl: '',
+          //     language: '',
+          //     expertise: '',
+          //     bioGraphy: ''
+          //   });
+          //   setImageURl('');
+          // }
+        })
+        .catch(err => {});
+    }, 500);
+
+    setTimer(newTimer);
+  };
+  console.log('data ==> ', data);
   const createMvp = async event => {
     event.preventDefault();
-    let parms = {
-      ImageUrl: data.imageUrl,
-      FirstName: data.firstName,
-      LastName: data.lastName,
-      Email: data.email,
-      publicKey: data.publicKey.toLowerCase(),
-      Expertise: data.expertise,
-      MartianType: data.martian.value,
-      Country: data.country.label,
-      City: data.city,
-      Languages: data.language,
-      BioGraphy: data.bioGraphy
-    };
-    try {
-      const response = await axios.post(`/martian`, parms);
-
-      if (response?.data?.success === true) {
+    if (data.martianId) {
+      setNotifyError({ message: 'Martian With The Public Key Already Exists', show: true });
+    } else {
+      console.log('data ==> ', data);
+      let parms = {
+        ImageUrl: data.imageUrl,
+        FirstName: data.firstName,
+        LastName: data.lastName,
+        Email: data.email,
+        publicKey: data.publicKey.toLowerCase(),
+        Expertise: data.expertise,
+        MartianType: data.martian.value,
+        Country: data.country.label,
+        City: data.city,
+        Languages: data.language,
+        BioGraphy: data.bioGraphy
+      };
+      try {
+        const response = await axios.post(`/martian`, parms);
+        if (response?.data?.success === true) {
+          //Empty editor state
+          setData({
+            firstName: '',
+            lastName: '',
+            email: '',
+            publicKey: '',
+            country: { label: '', name: '' },
+            state: { label: '', name: '' },
+            city: '',
+            martian: { label: '', name: '' },
+            language: '',
+            expertise: '',
+            bioGraphy: ''
+          });
+          setImageURl('');
+          setNotifySuccess({ message: 'Successfully posted!', show: true });
+        }
+      } catch (error) {
         //Empty editor state
         setData({
           firstName: '',
@@ -69,25 +144,8 @@ const MvpForm = () => {
           bioGraphy: ''
         });
         setImageURl('');
-        setNotifySuccess(true);
+        setNotifyError({ message: 'Posting Failed!', show: true });
       }
-    } catch (error) {
-      //Empty editor state
-      setData({
-        firstName: '',
-        lastName: '',
-        email: '',
-        publicKey: '',
-        country: { label: '', name: '' },
-        state: { label: '', name: '' },
-        city: '',
-        martian: { label: '', name: '' },
-        language: '',
-        expertise: '',
-        bioGraphy: ''
-      });
-      setImageURl('');
-      setNotifyError(true);
     }
   };
 
@@ -220,6 +278,24 @@ const MvpForm = () => {
                 className="grid grid-cols-8 gap-y-8 gap-x-20"
                 onSubmit={createMvp}
               >
+                <div className="col-span-12 sm:col-span-4 lg:col-span-10">
+                  <label
+                    htmlFor="expertise"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >
+                    Public Key
+                  </label>
+                  <div className="mt-1">
+                    <input
+                      id="publicKey"
+                      name="publicKey"
+                      required
+                      value={data.publicKey}
+                      onChange={publicKeyChange}
+                      className="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
+                    />
+                  </div>
+                </div>
                 <div className="col-span-12 sm:col-span-4 lg:col-span-5">
                   <label
                     htmlFor="first-name"
@@ -438,24 +514,7 @@ const MvpForm = () => {
                     />
                   </div>
                 </div>
-                <div className="col-span-12 sm:col-span-4 lg:col-span-10">
-                  <label
-                    htmlFor="expertise"
-                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-                  >
-                    Public Key
-                  </label>
-                  <div className="mt-1">
-                    <input
-                      id="publicKey"
-                      name="publicKey"
-                      required
-                      value={data.publicKey}
-                      onChange={e => setData({ ...data, publicKey: e.target.value })}
-                      className="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
-                    />
-                  </div>
-                </div>
+
                 <div className="col-span-12 sm:col-span-4 lg:col-span-10">
                   <label
                     htmlFor="expertise"
@@ -509,17 +568,15 @@ const MvpForm = () => {
         </div>
       </main>
       <NotificationError
-        show={notifyError}
-        setShow={setNotifyError}
-        text="Posting Failed"
-        subText="Please try again"
+        show={notifyError.show}
+        setShow={isShow => setNotifyError({ message: '', show: isShow })}
+        text={notifyError.message}
       />
 
       <NotificationSuccess
-        show={notifySuccess}
-        setShow={setNotifySuccess}
-        text="Successfully posted!"
-        subText="Thank you"
+        show={notifySuccess.show}
+        setShow={isShow => setNotifySuccess({ message: '', show: isShow })}
+        text={notifySuccess.message}
       />
     </div>
   );

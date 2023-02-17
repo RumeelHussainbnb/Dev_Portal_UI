@@ -18,7 +18,7 @@ export default function Modal({ open, setOpen, content }) {
 
   const setAwards = award => {
     let copyUserData = { ...data };
-    let copyUserAwards = [...copyUserData.Author.RecognizationsAndAwards];
+    let copyUserAwards = [...copyUserData?.Author?.RecognizationsAndAwards];
     //copyUserAwards.push(award);
     if (copyUserAwards.includes(award)) {
       copyUserAwards = copyUserAwards.filter(d => d !== award);

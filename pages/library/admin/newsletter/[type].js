@@ -15,7 +15,7 @@ const Submit = metaTags => {
   // const [convertedContent, setConvertedContent] = useState('');
   const [data, setData] = useState({
     Title: '',
-    Author: '',
+    Author: 'BNB Chain',
     //        Img: "",
     ContentMarkdown: '',
     Description: ''
@@ -112,6 +112,7 @@ const Submit = metaTags => {
                   </label>
                   <div className="mt-1">
                     <input
+                      disabled
                       type="text"
                       name="author-name"
                       id="author-name"
@@ -171,7 +172,7 @@ const Submit = metaTags => {
                     htmlFor="content_markdown"
                     className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                   >
-                    Long Description
+                    Newsletter Content
                   </label>
                   <div className="mt-1 ">
                     <EditorComponent editorState={editor} EditorChange={handleEditorChange} />
@@ -184,9 +185,6 @@ const Submit = metaTags => {
                       onChange={e => setData({ ...data, ContentMarkdown: e.target.value })}
                       className="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
                     /> */}
-                    <p className="mt-2 text-sm text-gray-500 dark:text-gray-500">
-                      Brief description about the content. ~20000 characters
-                    </p>
                   </div>
                 </div>
 

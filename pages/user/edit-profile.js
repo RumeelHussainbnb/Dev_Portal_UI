@@ -100,6 +100,7 @@ export default function Profile() {
         setState({ ...state, ProfilePicture: profilePicture });
       } else {
         //through image type error
+        setNotification({ message: 'invalid Image Type. [Supported jpg, jpeg, png]', show: true });
       }
     }
     setIsLoading(false);

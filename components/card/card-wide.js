@@ -115,7 +115,7 @@ function CardWide({ content, mode }) {
           </a>
         </Link>
       ) : (
-        <a href={content.Url} className="focus:outline-none" target="_blank" rel="noreferrer">
+        <Link href={`/library/content/${content._id}`}>
           <div>
             <Image
               className="cursor-pointer rounded-t-lg object-cover hover:opacity-90"
@@ -129,7 +129,7 @@ function CardWide({ content, mode }) {
               loader={myLoader}
             />
           </div>
-        </a>
+        </Link>
       )}
 
       <div className="px-5 pt-4 pb-5 ">
