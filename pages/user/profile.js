@@ -57,7 +57,7 @@ export default function Profile() {
 
   return (
     <Container metaTags={metaTags}>
-      <div className="profile-page flex w-full gap-3 self-center md:pl-0">
+      <div className="profile-page flex w-full gap-3 self-center md:pl-0 justify-center">
         <main className="profile">
           <div className="profile-wrapper px-4 sm:px-6">
             <div className="porfile-section relative z-0 flex flex-col divide-gray-200 rounded-md bg-white p-2 px-4 py-4 shadow dark:divide-gray-700">
@@ -115,7 +115,7 @@ export default function Profile() {
                 </button>
               </div>
               <div className="awards">
-                <div className="flex h-fit w-full flex-row flex-wrap px-4">
+                <div className="flex h-fit w-full flex-row flex-wrap px-4 justify-evently">
                   <div className="awards-wrap">
                       <Image src={'/rank.png'} width="100" height="100" alt="" />
                     <div className="">

@@ -106,7 +106,7 @@
     align-items: center;
     padding-right: 5px;
     img {
-        width: 60px !important;
+        width: 40px !important;
     }
     p {
         font-size: 12px;
@@ -265,4 +265,7 @@ aside {
 .rounded-r-lg {
     border-top-right-radius: 0.3rem;
     border-bottom-right-radius: 0.3rem;
+}
+.justify-evently {
+    justify-content: space-evenly;
 }
