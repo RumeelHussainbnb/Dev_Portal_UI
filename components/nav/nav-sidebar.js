@@ -248,7 +248,7 @@ function NavSidebar() {
 
   return (
     <nav aria-label="Sidebar" className="top-4 w-full">
-      <div className="w-[270px]">
+      <div className="w-full">
         {navigation.map(item => {
           if (item.name === 'Profile' && !appState.publicKey) {
             return;
@@ -318,7 +318,7 @@ function NavSidebar() {
       {/* Add new content*/}
       <div className="space-y-4 pt-4">
         {/* Courses */}
-        <div className="mt-3 w-[270px]">
+        <div className="mt-3 w-full">
           <p
             className="text-md rounded-md bg-[#FACC15] px-3 py-2 font-semibold uppercase tracking-wider text-black lg:text-sm"
             id="communities-headline bg-yellow-400"
@@ -348,7 +348,7 @@ function NavSidebar() {
         </div>
 
         {/* Special */}
-        <div className="mt-3 w-[270px]">
+        <div className="mt-3 w-full">
           <p
             className="text-md rounded-md bg-[#FACC15] px-3 py-2 font-semibold uppercase tracking-wider text-black lg:text-sm"
             id="communities-headline"
@@ -373,7 +373,7 @@ function NavSidebar() {
         </div>
 
         {/* Lists */}
-        <div className="mt-3 w-[270px]">
+        <div className="mt-3 w-full">
           <p
             className="text-md rounded-md bg-[#FACC15] px-3 py-2 font-semibold uppercase tracking-wider text-black lg:text-sm"
             id="communities-headline"
@@ -398,7 +398,7 @@ function NavSidebar() {
         </div>
 
         {/* Categories */}
-        <div className="mt-3 w-[270px]">
+        <div className="mt-3 w-full">
           <p
             className="text-md rounded-md bg-[#FACC15] px-3 py-2 font-semibold uppercase tracking-wider text-black lg:text-sm"
             id="communities-headline"
@@ -423,7 +423,7 @@ function NavSidebar() {
               if (item.name === 'Tools') {
                 return (
                   <Link href={item.href} passHref key={item.name}>
-                    <a href={item.href} key={item.name} target="_blank" rel="noreferrer">
+                    <a href={item.href} key={item.name} rel="noreferrer">
                       <button className="group flex min-w-full cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-base">
                         <PaperClipIcon
                           className="h-4 w-4 text-yellow-400 dark:text-yellow-500"
@@ -450,7 +450,7 @@ function NavSidebar() {
           </div>
         </div>
 
-        <div className="mt-3 w-[270px]">
+        <div className="mt-3 w-full">
           <p
             className="text-md rounded-md bg-[#FACC15] px-3 py-2 font-semibold uppercase tracking-wider text-black lg:text-sm"
             id="communities-headline"

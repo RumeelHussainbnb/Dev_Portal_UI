@@ -8,6 +8,14 @@
         }       
     }
 }
+.profile-detail {
+    justify-content: space-between;
+    align-items: flex-start;
+    .profile-img-discription {
+        display: flex;
+        align-items: flex-start;
+    }
+}
 @media (max-width: 991px) and (min-width: 768px){
     header {
         position: relative;
@@ -151,4 +159,110 @@ aside {
         position: relative;
         z-index: 6;
     }
+}
+
+@media (min-width: 1440px) {
+    .profile {
+        flex: 0 0 80%;
+    }
+}
+
+#ulArticles {
+    list-style: none;
+    margin: 0px 0 0 0;
+    padding: 0;
+    overflow: hidden;
+     border: none;
+     li {
+        padding: 7px;
+        display: block;
+        overflow: hidden;
+        border: none;
+        .image {
+            display: block;
+            float: left;
+            position: relative;
+            margin-top: 2px;
+            margin-right: 10px;
+            img {
+                float: left;
+                border: 1px solid #d7d7d7 !important;
+                width: 50px !important;
+                height: 50px !important;
+                border-radius: 50px;
+                padding: 5px !important;
+            }
+        }
+        .right {
+            overflow: hidden;
+            h3 {
+                font-size: 17px;
+                color: #333;
+                font-weight: normal;
+                margin: 0 0 4px 0;
+                padding: 0;
+                text-transform: none;
+                a {
+                    color: #333;
+                    text-decoration: none;
+                    font-family: 'Roboto', sans-serif;
+                    span {
+                        color: #0086dc !important;
+                        text-transform: none;
+                    }
+                }
+            }
+            .article_date {
+                padding-left: 0;
+                margin-right: 0;
+                display: inline-block;
+                position: relative;
+                &::before {
+                    content: '';
+                    background: url(/_next/image?url=%2Ftime.png&w=256&q=75) top center no-repeat;
+                    width: 20px !important;
+                    height: 20px !important;
+                    display: inline-block;
+                    background-size: cover;
+                    position: relative;
+                    top: 3px;
+                }
+
+            }
+            .article_view {
+                background: url(/Images/newSpriteIcons_20161122.png) 4px -3507px no-repeat;
+                padding-left: 15px;
+                margin-right: 0;
+                display: inline-block;
+                position: relative;
+                &::before {
+                    content: '';
+                    background: url(/_next/image?url=%2Faccount.png&w=256&q=75) top center no-repeat;
+                    width: 20px !important;
+                    height: 20px !important;
+                    display: inline-block;
+                    background-size: cover;
+                    position: relative;
+                    top: 3px;
+                    margin-right: 5px;
+                }
+            }
+            .article_comment {
+                background: url(/Images/newSpriteIcons_20161122.png) 2px -3535px no-repeat;
+                padding-left: 29px;
+                margin-right: 0;
+                display: inline-block; 
+            }
+        }
+     }
+}
+
+.rounded-l-lg {
+    border-top-left-radius: 0.3rem;
+    border-bottom-left-radius: 0.3rem;
+}
+
+.rounded-r-lg {
+    border-top-right-radius: 0.3rem;
+    border-bottom-right-radius: 0.3rem;
 }

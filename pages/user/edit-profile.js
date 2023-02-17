@@ -211,8 +211,8 @@ export default function Profile() {
   return (
     <Container className="page-overlay" metaTags={metaTags}>
       <Loader loader={loader} />
-      <div className="edit-profile-page flex w-full gap-3 md:pl-0">
-        <main className="">
+      <div className="edit-profile-page flex w-full gap-3 md:pl-0 justify-around">
+        <main className="w-full">
           <div className="px-1 sm:px-6">
             <div className="relative flex flex-col divide-gray-200 rounded-md bg-white p-2 px-6 py-8 shadow dark:divide-gray-700">
               <p className="text-lg font-bold">Personal Information:</p>
@@ -385,31 +385,7 @@ export default function Profile() {
                 />
               </div>
             </div>
-
-            <div className="mt-3 flex flex-row items-center justify-center self-center">
-              <div
-                onClick={() => {
-                  if (validate()) {
-                    _updateProfile(state);
-                  }
-                }}
-                className={`mt-2 ml-4 cursor-pointer rounded bg-[#FACC15] p-2 px-4 font-bold text-white`}
-              >
-                Save
-              </div>
-              <div
-                onClick={() => {
-                  router.push('/user/profile');
-                }}
-                className={`mt-2 ml-4 cursor-pointer rounded bg-[#FACC15] p-2 px-4 font-bold text-white`}
-              >
-                Cancel
-              </div>
-            </div>
-          </div>
-        </main>
-        <aside className="w-fit">
-          <div className="relative z-0 flex flex-col divide-gray-200 rounded-md  bg-white p-2 px-8 py-8 shadow dark:divide-gray-700">
+            <div className="relative z-0 flex flex-col divide-gray-200 rounded-md  bg-white p-2 px-8 py-8 shadow dark:divide-gray-700 mt-2">
             <p className="mb-3 text-lg font-medium uppercase">Certification: </p>
             {certificateArray.map((item, index) => (
               <div key={index} className="mt-2 flex flex-wrap certification-wrapper">
@@ -493,7 +469,32 @@ export default function Profile() {
               </div>
             </div>
           </div>
-        </aside>
+            <div className="mt-3 flex flex-row items-center justify-center self-center">
+              <div
+                onClick={() => {
+                  if (validate()) {
+                    _updateProfile(state);
+                  }
+                }}
+                className={`mt-2 ml-4 cursor-pointer rounded bg-[#FACC15] p-2 px-4 font-bold text-white`}
+              >
+                Save
+              </div>
+              <div
+                onClick={() => {
+                  router.push('/user/profile');
+                }}
+                className={`mt-2 ml-4 cursor-pointer rounded bg-[#FACC15] p-2 px-4 font-bold text-white`}
+              >
+                Cancel
+              </div>
+            </div>
+          </div>
+          
+        </main>
+        {/* <aside className="w-fit">
+         
+        </aside> */}
       </div>
     </Container>
   );
