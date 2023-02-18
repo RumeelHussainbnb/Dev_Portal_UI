@@ -199,7 +199,7 @@ export default function Profile() {
                   {selectedTab === 'Contributions' && (
                     <div className="justify-evently flex flex-wrap">
                       <ul id="ulArticles">
-                        {data?.UserAllContents?.length > 1 ? (
+                        {data?.UserAllContents?.length > 0 ? (
                           data?.UserAllContents?.map((content, i) => (
                             <li key={i}>
                               <div className="image">
@@ -247,7 +247,7 @@ export default function Profile() {
                   )}
                   {selectedTab === 'Most Read' && (
                     <ul id="ulArticles">
-                      {data?.MostRecentContent?.length > 1 ? (
+                      {data?.MostRecentContent?.length > 0 ? (
                         data?.MostRecentContent?.map((content, i) => (
                           <li key={i}>
                             <div className="image">
@@ -382,7 +382,7 @@ export default function Profile() {
                   {data.Author.Certification.map(item => (
                     <tbody key={item._id}>
                       <tr>
-                        <td className="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-6 text-xs text-black tr-image">
+                        <td className="tr-image whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-6 text-xs text-black">
                           <Image src={'/certificate.png'} width={'30px'} height={'30px'} alt="" />
                         </td>
 
