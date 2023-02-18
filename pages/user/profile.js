@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Container } from '../../components/layout';
 import Image from 'next/image';
-import { EyeIcon, ChatIcon, ClockIcon } from '@heroicons/react/solid';
+import { EyeIcon, ThumbUpIcon, ClockIcon } from '@heroicons/react/solid';
 import 'react-circular-progressbar/dist/styles.css';
 import axios from '../../utils/http';
 import EndPoint from '../../constant/endPoints';
@@ -230,7 +230,7 @@ export default function Profile() {
                                 </span>
                                 <span className="article_comment">
                                   <span>
-                                    <ChatIcon className="fill-yellow-500" aria-hidden="true" />
+                                    <ThumbUpIcon className="fill-yellow-500" aria-hidden="true" />
                                   </span>
                                   {content?.LikedBy.length}
                                 </span>
@@ -275,7 +275,7 @@ export default function Profile() {
                               </span>
                               <span className="article_comment">
                                 <span>
-                                  <ChatIcon className="fill-yellow-500" aria-hidden="true" />
+                                  <ThumbUpIcon className="fill-yellow-500" aria-hidden="true" />
                                 </span>
                                 {content?.LikedBy.length}
                               </span>
@@ -322,7 +322,7 @@ export default function Profile() {
                                 </span>
                                 <span className="article_comment">
                                   <span>
-                                    <ChatIcon className="fill-yellow-500" aria-hidden="true" />
+                                    <ThumbUpIcon className="fill-yellow-500" aria-hidden="true" />
                                   </span>
                                   {data?.MostPopularContent?.LikedBy.length}
                                 </span>
