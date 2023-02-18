@@ -209,9 +209,11 @@ export default function Profile() {
                               </div>
                               <div className="right">
                                 <h3>
-                                  <a>
-                                    <span>{content?.Title}</span>
-                                  </a>
+                                  <Link href={`/library/content/${content._id}`}>
+                                    <a target="_blank" rel="noopener noreferrer">
+                                      <span>{content?.Title}</span>
+                                    </a>
+                                  </Link>
                                 </h3>
                                 <span className="article_date">
                                   <span>
@@ -257,9 +259,11 @@ export default function Profile() {
                             </div>
                             <div className="right">
                               <h3>
-                                <a>
-                                  <span>{content?.Title}</span>
-                                </a>
+                                <Link href={`/library/content/${content?._id}`}>
+                                  <a target="_blank" rel="noopener noreferrer">
+                                    <span>{content?.Title}</span>
+                                  </a>
+                                </Link>
                               </h3>
                               <span className="article_date">
                                 <span>
@@ -301,9 +305,11 @@ export default function Profile() {
                               </div>
                               <div className="right">
                                 <h3>
-                                  <a>
-                                    <span>{data?.MostPopularContent?.Title}</span>
-                                  </a>
+                                  <Link href={`/library/content/${data?.MostPopularContent?._id}`}>
+                                    <a target="_blank" rel="noopener noreferrer">
+                                      <span>{data?.MostPopularContent?.Title}</span>
+                                    </a>
+                                  </Link>
                                 </h3>
                                 <span className="article_date">
                                   <span>
