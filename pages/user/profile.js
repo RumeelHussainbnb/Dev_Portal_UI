@@ -262,10 +262,23 @@ export default function Profile() {
                                 </a>
                               </h3>
                               <span className="article_date">
+                                <span>
+                                  <ClockIcon className="icon fill-yellow-500" aria-hidden="true" />
+                                </span>
                                 {moment(content?.CreatedAt).format('MMMM,YYYY')}
                               </span>
-                              <span className="article_view">{content?.ViewedBy.length}</span>
-                              <span className="article_comment">{content?.LikedBy.length}</span>
+                              <span className="article_view">
+                                <span>
+                                  <EyeIcon className="icon fill-yellow-500" aria-hidden="true" />
+                                </span>
+                                {content?.ViewedBy.length}
+                              </span>
+                              <span className="article_comment">
+                                <span>
+                                  <ChatIcon className="fill-yellow-500" aria-hidden="true" />
+                                </span>
+                                {content?.LikedBy.length}
+                              </span>
                             </div>
                           </li>
                         ))
