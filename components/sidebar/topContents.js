@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { BookOpenIcon } from '@heroicons/react/solid';
-
+import moment from 'moment';
 
 const TopContents = ({ topContent }) => {
   return (
@@ -20,10 +20,7 @@ const TopContents = ({ topContent }) => {
               <div className="flex flex-row">
                 <div className="w-1/6">
                   <div className="overflow-hidden rounded-full">
-                  <BookOpenIcon
-                        className="fill-yellow-500"
-                        aria-hidden="true"
-                      />
+                    <BookOpenIcon className="fill-yellow-500" aria-hidden="true" />
                   </div>
                 </div>
                 <div className="items-left flex w-full flex-col px-2">
@@ -32,7 +29,9 @@ const TopContents = ({ topContent }) => {
                     {content.Title}
                     {/* </a> */}
                   </Link>
-                  <p className="text-sm text-gray-600">Date: Jan 20, 2023</p>
+                  <p className="text-sm text-gray-600">
+                    Date: {moment(content?.CreatedAt).format('YYYY-MM-DD')}
+                  </p>
                 </div>
               </div>
             </li>

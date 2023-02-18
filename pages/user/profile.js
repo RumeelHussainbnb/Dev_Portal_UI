@@ -88,7 +88,7 @@ export default function Profile() {
                         <Image src={'/time.png'} height={'100px'} width={'100px'} alt="" />
                       </div>
                       <p className="ml-1 text-[12px]">
-                        Member since, {moment(data?.CreatedAt).format('MMMM,YYYY')}
+                        Member since: {moment(data?.CreatedAt).format('YYYY-MM-DD')}
                       </p>
                     </div>
                     {data?.Skils?.length > 0 ? (
@@ -220,7 +220,7 @@ export default function Profile() {
                                       aria-hidden="true"
                                     />
                                   </span>
-                                  {moment(content?.CreatedAt).format('MMMM,YYYY')}
+                                  {moment(content?.CreatedAt).format('YYYY-MM-DD')}
                                 </span>
                                 <span className="article_view">
                                   <span>
@@ -265,7 +265,7 @@ export default function Profile() {
                                 <span>
                                   <ClockIcon className="icon fill-yellow-500" aria-hidden="true" />
                                 </span>
-                                {moment(content?.CreatedAt).format('MMMM,YYYY')}
+                                {moment(content?.CreatedAt).format('YYYY-MM-DD')}
                               </span>
                               <span className="article_view">
                                 <span>
@@ -312,7 +312,7 @@ export default function Profile() {
                                       aria-hidden="true"
                                     />
                                   </span>
-                                  {moment(data?.MostPopularContent?.CreatedAt).format('MMMM,YYYY')}
+                                  {moment(data?.MostPopularContent?.CreatedAt).format('YYYY-MM-DD')}
                                 </span>
                                 <span className="article_view">
                                   <span>
