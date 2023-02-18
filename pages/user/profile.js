@@ -228,12 +228,12 @@ export default function Profile() {
                                   </span>
                                   {content?.ViewedBy.length}
                                 </span>
-                                {/* <span className="article_comment">
+                                <span className="article_comment">
                                   <span>
                                     <ChatIcon className="fill-yellow-500" aria-hidden="true" />
                                   </span>
                                   {content?.LikedBy.length}
-                                </span> */}
+                                </span>
                               </div>
                             </li>
                           ))
@@ -265,7 +265,7 @@ export default function Profile() {
                                 {moment(content?.CreatedAt).format('MMMM,YYYY')}
                               </span>
                               <span className="article_view">{content?.ViewedBy.length}</span>
-                              {/* <span className="article_comment">{content?.LikedBy.length}</span> */}
+                              <span className="article_comment">{content?.LikedBy.length}</span>
                             </div>
                           </li>
                         ))
@@ -307,12 +307,12 @@ export default function Profile() {
                                   </span>
                                   {data?.MostPopularContent?.ViewedBy.length}
                                 </span>
-                                {/* <span className="article_comment">
+                                <span className="article_comment">
                                   <span>
                                     <ChatIcon className="fill-yellow-500" aria-hidden="true" />
                                   </span>
                                   {data?.MostPopularContent?.LikedBy.length}
-                                </span> */}
+                                </span>
                               </div>
                             </li>
                           </ul>
