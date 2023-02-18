@@ -406,6 +406,7 @@ export default function Profile() {
                   title="Skills"
                   value={state?.Skils}
                   onRemove={item => {
+                    console.log('onRemove', item);
                     if (state.Skils?.filter(element => item !== element).length == 0) {
                       setErrors({ ...errors });
                     }
@@ -415,10 +416,12 @@ export default function Profile() {
                     });
                   }}
                   onAdd={item => {
+                    console.log('onAdd', item);
+                    console.log('state?.Skils', state?.Skils);
                     setErrors({ ...errors, Skils: '' });
                     setState({
                       ...state,
-                      Skils: [...state?.Skils, item]
+                      Skils: [...(state?.Skils || []), item]
                     });
                   }}
                   options={['Node.JS', 'BlockChain', 'Java', 'JavaScript', 'Python', '.NET']}
