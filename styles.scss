@@ -56,6 +56,11 @@
     .edit-profile-page {
         flex-direction: column; 
     }
+    .newsletter-innerCard {
+        > div {
+            max-width: 320px;
+        }
+    }
 }
 @media (max-width: 767px) {
     .main-content-wrapper {
@@ -310,5 +315,32 @@ aside {
         right: 20px;
         top: -5px;
         cursor: pointer;
+    }
+}
+
+@media (min-width: 1199px) {
+    .newsletter-main-card {
+        > div {
+            max-width: 600px;
+        }
+        .prose {
+            min-height: 50px;
+        }
+    }
+    .profile-wrapper {
+        min-width: 700px;
+    }
+}
+
+aside {
+    table {
+        tr {
+            position: relative;
+            .tr-image {
+                position: absolute;
+                left: -10px;
+                top: -5px;
+            }
+        }
     }
 }

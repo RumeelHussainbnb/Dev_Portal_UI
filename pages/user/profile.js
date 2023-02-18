@@ -228,12 +228,12 @@ export default function Profile() {
                                   </span>
                                   {content?.ViewedBy.length}
                                 </span>
-                                <span className="article_comment">
+                                {/* <span className="article_comment">
                                   <span>
                                     <ChatIcon className="fill-yellow-500" aria-hidden="true" />
                                   </span>
                                   {content?.LikedBy.length}
-                                </span>
+                                </span> */}
                               </div>
                             </li>
                           ))
@@ -265,7 +265,7 @@ export default function Profile() {
                                 {moment(content?.CreatedAt).format('MMMM,YYYY')}
                               </span>
                               <span className="article_view">{content?.ViewedBy.length}</span>
-                              <span className="article_comment">{content?.LikedBy.length}</span>
+                              {/* <span className="article_comment">{content?.LikedBy.length}</span> */}
                             </div>
                           </li>
                         ))
@@ -307,12 +307,12 @@ export default function Profile() {
                                   </span>
                                   {data?.MostPopularContent?.ViewedBy.length}
                                 </span>
-                                <span className="article_comment">
+                                {/* <span className="article_comment">
                                   <span>
                                     <ChatIcon className="fill-yellow-500" aria-hidden="true" />
                                   </span>
                                   {data?.MostPopularContent?.LikedBy.length}
-                                </span>
+                                </span> */}
                               </div>
                             </li>
                           </ul>
@@ -382,7 +382,7 @@ export default function Profile() {
                   {data.Author.Certification.map(item => (
                     <tbody key={item._id}>
                       <tr>
-                        <td className="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-6 text-xs text-black">
+                        <td className="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-6 text-xs text-black tr-image">
                           <Image src={'/certificate.png'} width={'30px'} height={'30px'} alt="" />
                         </td>
 
