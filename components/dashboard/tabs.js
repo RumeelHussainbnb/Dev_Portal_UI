@@ -15,7 +15,7 @@ export default function Tabs({ newContent, trendingContent }) {
   function loadMoreContent(content, contentAmount, setContentAmount) {
     if (Array.isArray(content) && content.length > 0) {
       return (
-        <div className="flex flex-col gap-5 pb-5">
+        <div className="flex flex-col gap-5 pb-5 home-banner-wrapper">
           {loadContent(content, contentAmount)}
 
           {contentAmount < content.length && (

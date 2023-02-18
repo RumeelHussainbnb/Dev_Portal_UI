@@ -88,13 +88,11 @@ const MvpForm = () => {
 
     setTimer(newTimer);
   };
-  console.log('data ==> ', data);
   const createMvp = async event => {
     event.preventDefault();
     if (data.martianId) {
       setNotifyError({ message: 'Martian With The Public Key Already Exists', show: true });
     } else {
-      console.log('data ==> ', data);
       let parms = {
         ImageUrl: data.imageUrl,
         FirstName: data.firstName,

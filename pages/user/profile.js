@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Container } from '../../components/layout';
 import Image from 'next/image';
+import { EyeIcon, ChatIcon, ClockIcon } from '@heroicons/react/solid';
 import 'react-circular-progressbar/dist/styles.css';
 import axios from '../../utils/http';
 import EndPoint from '../../constant/endPoints';
@@ -198,7 +199,56 @@ export default function Profile() {
                   {selectedTab === 'Contributions' && (
                     <div className="justify-evently flex flex-wrap">
                       <ul id="ulArticles">
-                        {data?.UserAllContents?.map((content, i) => (
+                        {data?.UserAllContents?.length > 1 ? (
+                          data?.UserAllContents?.map((content, i) => (
+                            <li key={i}>
+                              <div className="image">
+                                <a title="Cloud">
+                                  <Image src={'/read.png'} width="250px" height="250px" alt="" />
+                                </a>
+                              </div>
+                              <div className="right">
+                                <h3>
+                                  <a>
+                                    <span>{content?.Title}</span>
+                                  </a>
+                                </h3>
+                                <span className="article_date">
+                                  <span>
+                                    <ClockIcon
+                                      className="icon fill-yellow-500"
+                                      aria-hidden="true"
+                                    />
+                                  </span>
+                                  {moment(content?.CreatedAt).format('MMMM,YYYY')}
+                                </span>
+                                <span className="article_view">
+                                  <span>
+                                    <EyeIcon className="icon fill-yellow-500" aria-hidden="true" />
+                                  </span>
+                                  {content?.ViewedBy.length}
+                                </span>
+                                <span className="article_comment">
+                                  <span>
+                                    <ChatIcon className="fill-yellow-500" aria-hidden="true" />
+                                  </span>
+                                  {content?.LikedBy.length}
+                                </span>
+                              </div>
+                            </li>
+                          ))
+                        ) : (
+                          <p className=" ml-6 mt-4 text-base font-bold text-black">
+                            No Record Found
+                          </p>
+                        )}
+                      </ul>
+                    </div>
+                  )}
+                  {selectedTab === 'Most Read' && (
+                    <ul id="ulArticles">
+                      {data?.MostRecentContent?.length > 1 ? (
+                        data?.MostRecentContent?.map((content, i) => (
                           <li key={i}>
                             <div className="image">
                               <a title="Cloud">
@@ -218,66 +268,58 @@ export default function Profile() {
                               <span className="article_comment">{content?.LikedBy.length}</span>
                             </div>
                           </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  {selectedTab === 'Most Read' && (
-                    <ul id="ulArticles">
-                      {data?.MostRecentContent?.map((content, i) => (
-                        <li key={i}>
-                          <div className="image">
-                            <a title="Cloud">
-                              <Image src={'/read.png'} width="250px" height="250px" alt="" />
-                            </a>
-                          </div>
-                          <div className="right">
-                            <h3>
-                              <a>
-                                <span>{content?.Title}</span>
-                              </a>
-                            </h3>
-                            <span className="article_date">
-                              {moment(content?.CreatedAt).format('MMMM,YYYY')}
-                            </span>
-                            <span className="article_view">{content?.ViewedBy.length}</span>
-                            <span className="article_comment">{content?.LikedBy.length}</span>
-                          </div>
-                        </li>
-                      ))}
+                        ))
+                      ) : (
+                        <p className=" ml-6 mt-4 text-base font-bold text-black">No Record Found</p>
+                      )}
                     </ul>
                   )}
 
                   {selectedTab === 'Most Popular' && (
                     <div className="justify-evently flex flex-wrap">
-                      {/* <p className=" ml-6 mt-4 text-base font-bold text-black">No Record Found</p> */}
-                      <div className="justify-evently flex flex-wrap">
-                        <ul id="ulArticles">
-                          <li>
-                            <div className="image">
-                              <a title="Cloud">
-                                <Image src={'/read.png'} width="250px" height="250px" alt="" />
-                              </a>
-                            </div>
-                            <div className="right">
-                              <h3>
-                                <a>
-                                  <span>{data?.MostPopularContent?.Title}</span>
+                      {data.hasOwnProperty('MostPopularContent') ? (
+                        <div className="justify-evently flex flex-wrap">
+                          <ul id="ulArticles">
+                            <li>
+                              <div className="image">
+                                <a title="Cloud">
+                                  <Image src={'/read.png'} width="250px" height="250px" alt="" />
                                 </a>
-                              </h3>
-                              <span className="article_date">
-                                {moment(data?.MostPopularContent?.CreatedAt).format('MMMM,YYYY')}
-                              </span>
-                              <span className="article_view">
-                                {data?.MostPopularContent?.ViewedBy.length}
-                              </span>
-                              <span className="article_comment">
-                                {data?.MostPopularContent?.LikedBy.length}
-                              </span>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
+                              </div>
+                              <div className="right">
+                                <h3>
+                                  <a>
+                                    <span>{data?.MostPopularContent?.Title}</span>
+                                  </a>
+                                </h3>
+                                <span className="article_date">
+                                  <span>
+                                    <ClockIcon
+                                      className="icon fill-yellow-500"
+                                      aria-hidden="true"
+                                    />
+                                  </span>
+                                  {moment(data?.MostPopularContent?.CreatedAt).format('MMMM,YYYY')}
+                                </span>
+                                <span className="article_view">
+                                  <span>
+                                    <EyeIcon className="icon fill-yellow-500" aria-hidden="true" />
+                                  </span>
+                                  {data?.MostPopularContent?.ViewedBy.length}
+                                </span>
+                                <span className="article_comment">
+                                  <span>
+                                    <ChatIcon className="fill-yellow-500" aria-hidden="true" />
+                                  </span>
+                                  {data?.MostPopularContent?.LikedBy.length}
+                                </span>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      ) : (
+                        <p className=" ml-6 mt-4 text-base font-bold text-black">No Record Found</p>
+                      )}
                     </div>
                   )}
                 </div>

@@ -1,6 +1,8 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { BookOpenIcon } from '@heroicons/react/solid';
+
 
 const TopContents = ({ topContent }) => {
   return (
@@ -17,8 +19,11 @@ const TopContents = ({ topContent }) => {
             <li key={index} className="mt-5">
               <div className="flex flex-row">
                 <div className="w-1/6">
-                  <div className="h-9 w-9 overflow-hidden rounded-full">
-                    <Image src="/read.png" alt="Article photo" height={'36px'} width={'36px'} />
+                  <div className="overflow-hidden rounded-full">
+                  <BookOpenIcon
+                        className="fill-yellow-500"
+                        aria-hidden="true"
+                      />
                   </div>
                 </div>
                 <div className="items-left flex w-full flex-col px-2">
@@ -27,7 +32,7 @@ const TopContents = ({ topContent }) => {
                     {content.Title}
                     {/* </a> */}
                   </Link>
-                  {/* <p className="text-sm text-gray-600">Date: Jan 20, 2023</p> */}
+                  <p className="text-sm text-gray-600">Date: Jan 20, 2023</p>
                 </div>
               </div>
             </li>
