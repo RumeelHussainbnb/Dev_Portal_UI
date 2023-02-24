@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import moment from 'moment';
 import { CheckCircleIcon, XCircleIcon, InformationCircleIcon } from '@heroicons/react/solid';
 
-import axios from '../../utils/http';
+import { http } from '../../utils/http';
 import { Container } from '../../components/layout';
 import Pagination from '../../components/pagination/Pagination';
 
@@ -18,7 +18,7 @@ export default function Contents() {
     let userData = JSON.parse(localStorage.getItem('userData') || '{}');
     const fetchData = async () => {
       try {
-        const { data } = await axios.get(
+        const { data } = await http.get(
           `${process.env.NEXT_PUBLIC_API_ENDPOINT}/content/status?&page=${1}&id=${
             userData.data._id
           }`
@@ -39,7 +39,7 @@ export default function Contents() {
   const handlePageChange = async (page, tableType) => {
     try {
       if (tableType === 'Active') {
-        const { data } = await axios.get(
+        const { data } = await http.get(
           `${process.env.NEXT_PUBLIC_API_ENDPOINT}/content/status?&page=${
             page.selected + 1
           }&tableType=${tableType}`
@@ -50,7 +50,7 @@ export default function Contents() {
         }
       }
       if (tableType === 'Rejected') {
-        const { data } = await axios.get(
+        const { data } = await http.get(
           `${process.env.NEXT_PUBLIC_API_ENDPOINT}/content/status?&page=${
             page.selected + 1
           }&tableType=${tableType}`
@@ -61,7 +61,7 @@ export default function Contents() {
         }
       }
       if (tableType === 'Submitted') {
-        const { data } = await axios.get(
+        const { data } = await http.get(
           `${process.env.NEXT_PUBLIC_API_ENDPOINT}/content/status?&page=${
             page.selected + 1
           }&tableType=${tableType}`

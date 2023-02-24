@@ -17,7 +17,7 @@ import { memo } from 'react';
 import defineImage from '../../utils/content-imagen';
 import Audio from '../audio';
 import { useState } from 'react';
-import axios from '../../utils/http';
+import { http } from '../../utils/http';
 import ReactHtmlParser from 'react-html-parser';
 const Notification = dynamic(() => import('../notifications/error'));
 import { useAppDispatch, useAppState } from '../../context/AppContext';
@@ -58,7 +58,7 @@ function PostWide({ content, mode }) {
     } else {
       content.PublicKey = localStorage.getItem('PublicKey');
       try {
-        const response = await axios.post(`/content/like`, content);
+        const response = await http.post(`/content/like`, content);
         if (response?.data?.success === true) {
           // This is th eblock where icon will be turned yellow
           setContentState({
@@ -79,7 +79,7 @@ function PostWide({ content, mode }) {
       PublicKey: publicKey
     };
     try {
-      const response = await axios.post(`/content/view`, param);
+      const response = await http.post(`/content/view`, param);
       //    if (response?.data?.success === true) {
 
       // }

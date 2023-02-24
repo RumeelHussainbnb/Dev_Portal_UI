@@ -1,11 +1,11 @@
 import moment from 'moment';
 import ReactHtmlParser from 'react-html-parser';
 import { Container } from '../../../../components/layout';
-import axios from '../../../../utils/http';
+import { http } from '../../../../utils/http';
 
 export async function getServerSideProps({ query }) {
   try {
-    const content = await axios(
+    const content = await http(
       `${process.env.NEXT_PUBLIC_API_ENDPOINT}/content/byId?id=${query.slug}`
     );
 

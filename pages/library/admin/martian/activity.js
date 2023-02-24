@@ -9,7 +9,7 @@ import fetch from '../../../../utils/fetcher';
 import Select from 'react-select';
 import { Container } from '../../../../components/layout';
 
-import axios from '../../../../utils/http';
+import { http } from '../../../../utils/http';
 
 const NotificationSuccess = dynamic(() => import('../../../../components/notifications/success'));
 const NotificationError = dynamic(() => import('../../../../components/notifications/error'));
@@ -35,10 +35,9 @@ const ActivityForm = () => {
     const fetchData = async () => {
       try {
         const martian = await fetch(
-          `${process.env.NEXT_PUBLIC_API_ENDPOINT}/martian/byId?id=${userData?.data?.MartianId}`
+          `${process.env.NEXT_PUBLIC_API_ENDPOINT}/activity/?pageNumber=1&limit=100&id=${userData?.data?._id}`
         );
-        setActivity(martian?.data?.Activities);
-        // console.log('martian ==> ', martian);
+        setActivity(martian?.data?.totalActivity);
       } catch (error) {}
     };
     fetchData();
@@ -122,9 +121,8 @@ const ActivityForm = () => {
     //create Mode
     if (mode == false) {
       let newActivity = {
-        id: null,
-        martianId: userData?.data?.MartianId,
         date: formattedDate,
+        userId: userData?.data?._id,
         activity: data.activity,
         activityLink: data.activityLink,
         type: data.type.label,
@@ -133,11 +131,11 @@ const ActivityForm = () => {
       };
 
       try {
-        const addActivity = await axios.post(`martian/martianActivity`, newActivity);
+        const addActivity = await http.post(`activity`, newActivity);
         if (addActivity?.data?.success === true) {
-          // let copiedActivity = [...activity];
-          // copiedActivity.push(addActivity?.data?.data?.Activities);
-          setActivity(addActivity?.data?.data?.Activities);
+          let copiedActivity = [...activity];
+          copiedActivity.push(addActivity?.data?.data);
+          setActivity(copiedActivity);
           //Empty editor state
           setSelectedDate(new Date());
           setData({
@@ -171,6 +169,7 @@ const ActivityForm = () => {
     if (mode == true) {
       let updateActivity = {
         id: data.id,
+        userId: userData?.data?._id,
         martianId: userData?.data?.MartianId,
         date: formattedDate,
         activity: data.activity,
@@ -181,12 +180,12 @@ const ActivityForm = () => {
       };
 
       try {
-        const editActivity = await axios.put(`martian/martianActivity`, updateActivity);
+        const editActivity = await http.put(`activity`, updateActivity);
         if (editActivity?.data?.success === true) {
-          // let copiedActivity = [...activity];
-          // let index = copiedActivity.findIndex(d => d.id === updateActivity.id)
-          // copiedActivity[index] = editActivity;
-          setActivity(editActivity?.data?.data?.Activities);
+          let copiedActivity = [...activity];
+          let index = copiedActivity.findIndex(d => d._id === updateActivity.id);
+          copiedActivity[index] = editActivity?.data?.data;
+          setActivity(copiedActivity);
           setMode(false);
           //Empty editor state
           setSelectedDate(new Date());
@@ -228,11 +227,11 @@ const ActivityForm = () => {
     let userData = JSON.parse(localStorage.getItem('userData') || '{}');
 
     try {
-      const deleteActivity = await axios.delete(
-        `martian/martianActivity?id=${id}&martianId=${userData?.data?.MartianId}`
-      );
+      const deleteActivity = await http.delete(`activity?_id=${id}`);
       if (deleteActivity?.data?.success === true) {
-        setActivity(deleteActivity?.data?.data?.Activities);
+        let copyActivityState = [...activity];
+
+        setActivity(copyActivityState.filter(d => d._id !== id));
 
         setNotifySuccess(true);
       }

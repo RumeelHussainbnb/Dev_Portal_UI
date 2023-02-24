@@ -5,7 +5,7 @@ import { EditorState, convertToRaw } from 'draft-js';
 
 import { Container } from '../../../../components/layout';
 import EditorComponent from '../../../../components/Editor/Editor';
-import axios from '../../../../utils/http';
+import { http } from '../../../../utils/http';
 
 const NotificationSuccess = dynamic(() => import('../../../../components/notifications/success'));
 const NotificationError = dynamic(() => import('../../../../components/notifications/error'));
@@ -38,7 +38,7 @@ const Submit = metaTags => {
     event.preventDefault();
 
     try {
-      const response = await axios.post(`/content/bnb/newsletters`, data);
+      const response = await http.post(`/content/bnb/newsletters`, data);
       if (response?.data?.success === true) {
         //Empty editor state
         clearStatsDate();

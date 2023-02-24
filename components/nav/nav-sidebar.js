@@ -225,10 +225,10 @@ function NavSidebar() {
   const fetchData = async () => {
     let key = localStorage.getItem('PublicKey' || '');
     let userState = JSON.parse(localStorage.getItem('userData' || '{}'));
-    const admin = userState?.data?.Role === 'admin' ? true : false;
+    const admin = userState?.data?.Roles.includes('Admin');
 
     await appDispatch({ type: 'handleAdminMode', payload: admin });
-    setIsMartian(userState?.data?.MartianId ? true : false);
+    setIsMartian(userState?.data?.Roles.includes('Martian'));
   };
 
   useEffect(() => {

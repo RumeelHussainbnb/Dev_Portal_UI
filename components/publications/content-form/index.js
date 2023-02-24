@@ -8,7 +8,7 @@ import Status from './status';
 import Position from './position';
 import { useRouter } from 'next/router';
 import useUser from '../../../hooks/useUser';
-import axios from '../../../utils/http';
+import { http } from '../../../utils/http';
 import { convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 
@@ -55,7 +55,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
     //console.log('isImageUrl ==> ', isImageUrl);
     content.ImageUrl = isImageUrl ? isImageUrl : '';
 
-    const response = await axios.post(`/content`, content);
+    const response = await http.post(`/content`, content);
 
     // After submitting we need to restart the
     // component state
@@ -84,7 +84,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
     if (editorLimitError) {
       return;
     }
-    await axios.put(`/content`, {
+    await http.put(`/content`, {
       ...data,
       Img: data.ImageUrl,
       ContentMarkdown: convertContentToHTML()

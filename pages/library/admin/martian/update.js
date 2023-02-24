@@ -5,10 +5,10 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Select from 'react-select';
 import { Container } from '../../../../components/layout';
-import { Country, State, City } from 'country-state-city';
+import { Country } from 'country-state-city';
 const Spinner = dynamic(() => import('../../../../components/spinner'));
 
-import axios from '../../../../utils/http';
+import { http } from '../../../../utils/http';
 
 const NotificationSuccess = dynamic(() => import('../../../../components/notifications/success'));
 const NotificationError = dynamic(() => import('../../../../components/notifications/error'));
@@ -16,41 +16,38 @@ const NotificationError = dynamic(() => import('../../../../components/notificat
 const MvpForm = ({ router }) => {
   const inputFile = useRef(null);
   const routerData = router.query;
+  console.log('routerData ==> ', routerData);
   const [data, setData] = useState({
-    firstName: routerData.FirstName,
-    lastName: routerData.LastName,
-    country: { label: routerData.Country, name: routerData.Country },
-    state: { label: routerData.State, name: routerData.State },
-    city: routerData.City,
-    martian: { label: routerData.MartianType, name: routerData.MartianType },
-    language: routerData.Languages,
-    expertise: routerData.Expertise,
-    bioGraphy: routerData.BioGraphy
+    ...routerData,
+    firstName: routerData?.Username?.split('_')[0],
+    lastName: routerData?.Username?.split('_')[1],
+    country: { label: routerData?.Country, name: routerData?.Country },
+    state: { label: routerData?.State, name: routerData?.State },
+    city: routerData?.City,
+    martian: { label: routerData?.MartianType, name: routerData?.MartianType },
+    language: routerData?.Languages,
+    expertise: routerData?.Skills,
+    bioGraphy: routerData?.Bio
   });
-
-  const [states, setStates] = useState([]);
-  const [cities, setCities] = useState([]);
   const [notifySuccess, setNotifySuccess] = useState(false);
   const [notifyError, setNotifyError] = useState(false);
-  const [imageURL, setImageURl] = useState(routerData?.ImageUrl);
+  const [imageURL, setImageURl] = useState(routerData?.ProfilePicture);
   const [isLoading, setIsLoading] = useState(false);
 
   const updateMvp = async event => {
     event.preventDefault();
     let parms = {
-      id: routerData._id,
-      ImageUrl: data.imageUrl,
-      FirstName: data.firstName,
-      LastName: data.lastName,
-      Expertise: data.expertise,
-      MartianType: data.martian.value,
+      ...data,
+      ProfilePicture: imageURL,
+      Skills: data.expertise,
+      MartianType: data.martian.label,
       Country: data.country.label,
       City: data.city,
       Languages: data.language,
-      BioGraphy: data.bioGraphy
+      Bio: data.bioGraphy
     };
     try {
-      const response = await axios.put(`/martian`, parms);
+      const response = await http.put(`/user/updateUserProfile/${data._id}`, parms);
       if (response?.data?.success === true) {
         //Empty editor state
         setData({
@@ -111,26 +108,6 @@ const MvpForm = ({ router }) => {
     value: country.name
   }));
 
-  const updatedStates = country => {
-    let states = State.getStatesOfCountry(country.isoCode).map(state => ({
-      label: state.name,
-      value: state.id,
-      ...state
-    }));
-    setStates(states);
-  };
-
-  const updatedCities = stateObject => {
-    let latestCities = City.getCitiesOfState(data.country.isoCode, stateObject.isoCode).map(
-      city => ({
-        label: city.name,
-        value: city.id,
-        ...city
-      })
-    );
-    setCities(latestCities);
-  };
-
   const onIconClick = () => {
     inputFile.current.click();
   };
@@ -148,7 +125,7 @@ const MvpForm = ({ router }) => {
 
       //sucess
       if (allowedExtensions.includes(fileType)) {
-        const response = await axios.get(`/martian/s3Url`);
+        const response = await http.get(`/martian/s3Url`);
 
         const imageResponse = await fetch(response.data.url, {
           method: 'PUT',
@@ -185,7 +162,7 @@ const MvpForm = ({ router }) => {
                 type="file"
               />
               <div className="relative w-28">
-              <div className="col-span-12 sm:col-span-4 lg:col-span-10">
+                <div className="col-span-12 sm:col-span-4 lg:col-span-10">
                   {isLoading ? (
                     <Spinner />
                   ) : imageURL ? (
@@ -283,42 +260,11 @@ const MvpForm = ({ router }) => {
                         setData({
                           ...data,
                           country: countryObject
-                          // state: { label: '', name: '' },
-                          // city: { label: '', name: '' }
                         });
-                        updatedStates(countryObject);
                       }}
                     />
                   </div>
                 </div>
-                {/* <div className="col-span-12 sm:col-span-4 lg:col-span-5">
-                  <label
-                    htmlFor="state"
-                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-                  >
-                    State
-                  </label>
-                  <div className="mt-1">
-                    <Select
-                      placeholder="Select a state"
-                      instanceId={useId()}
-                      name="state"
-                      label="state"
-                      classNames={{
-                        control: state =>
-                          'py-1.5 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500',
-                        option: state =>
-                          'dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500'
-                      }}
-                      options={states}
-                      value={data.state.label ? data.state : ''}
-                      onChange={stateObject => {
-                        setData({ ...data, state: stateObject, city: { label: '', name: '' } });
-                        updatedCities(stateObject);
-                      }}
-                    />
-                  </div>
-                </div> */}
 
                 <div className="col-span-12 sm:col-span-4 lg:col-span-5">
                   <label
@@ -337,23 +283,6 @@ const MvpForm = ({ router }) => {
                       onChange={e => setData({ ...data, city: e.target.value })}
                       className="block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
                     />
-                    {/* <Select
-                      placeholder="Select a city"
-                      instanceId={useId()}
-                      name="city"
-                      label="city"
-                      classNames={{
-                        control: state =>
-                          'py-1.5  dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500',
-                        option: state =>
-                          'dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500'
-                      }}
-                      options={cities}
-                      value={data.city.label ? data.city : ''}
-                      onChange={cityObject => {
-                        setData({ ...data, city: cityObject });
-                      }}
-                    /> */}
                   </div>
                 </div>
 
