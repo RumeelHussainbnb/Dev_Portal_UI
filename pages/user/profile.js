@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Container } from '../../components/layout';
 import Image from 'next/image';
-import { EyeIcon, ChatIcon, ClockIcon } from '@heroicons/react/solid';
+import { EyeIcon, ThumbUpIcon, ClockIcon } from '@heroicons/react/solid';
 import 'react-circular-progressbar/dist/styles.css';
 import { http } from '../../utils/http';
 import EndPoint from '../../constant/endPoints';
@@ -87,7 +87,7 @@ export default function Profile() {
                         <Image src={'/time.png'} height={'100px'} width={'100px'} alt="" />
                       </div>
                       <p className="ml-1 text-[12px]">
-                        Member since, {moment(data?.CreatedAt).format('MMMM,YYYY')}
+                        Member since: {moment(data?.CreatedAt).format('YYYY-MM-DD')}
                       </p>
                     </div>
                     {data?.Skills?.length > 0 ? (
@@ -204,7 +204,7 @@ export default function Profile() {
                   {selectedTab === 'Contributions' && (
                     <div className="justify-evently flex flex-wrap">
                       <ul id="ulArticles">
-                        {data?.UserAllContents?.length > 1 ? (
+                        {data?.UserAllContents?.length > 0 ? (
                           data?.UserAllContents?.map((content, i) => (
                             <li key={i}>
                               <div className="image">
@@ -214,9 +214,11 @@ export default function Profile() {
                               </div>
                               <div className="right">
                                 <h3>
-                                  <a>
-                                    <span>{content?.Title}</span>
-                                  </a>
+                                  <Link href={`/library/content/${content._id}`}>
+                                    <a target="_blank" rel="noopener noreferrer">
+                                      <span>{content?.Title}</span>
+                                    </a>
+                                  </Link>
                                 </h3>
                                 <span className="article_date">
                                   <span>
@@ -225,7 +227,7 @@ export default function Profile() {
                                       aria-hidden="true"
                                     />
                                   </span>
-                                  {moment(content?.CreatedAt).format('MMMM,YYYY')}
+                                  {moment(content?.CreatedAt).format('YYYY-MM-DD')}
                                 </span>
                                 <span className="article_view">
                                   <span>
@@ -235,7 +237,7 @@ export default function Profile() {
                                 </span>
                                 <span className="article_comment">
                                   <span>
-                                    <ChatIcon className="fill-yellow-500" aria-hidden="true" />
+                                    <ThumbUpIcon className="fill-yellow-500" aria-hidden="true" />
                                   </span>
                                   {content?.LikedBy.length}
                                 </span>
@@ -252,7 +254,7 @@ export default function Profile() {
                   )}
                   {selectedTab === 'Most Read' && (
                     <ul id="ulArticles">
-                      {data?.MostRecentContent?.length > 1 ? (
+                      {data?.MostRecentContent?.length > 0 ? (
                         data?.MostRecentContent?.map((content, i) => (
                           <li key={i}>
                             <div className="image">
@@ -262,15 +264,30 @@ export default function Profile() {
                             </div>
                             <div className="right">
                               <h3>
-                                <a>
-                                  <span>{content?.Title}</span>
-                                </a>
+                                <Link href={`/library/content/${content?._id}`}>
+                                  <a target="_blank" rel="noopener noreferrer">
+                                    <span>{content?.Title}</span>
+                                  </a>
+                                </Link>
                               </h3>
                               <span className="article_date">
-                                {moment(content?.CreatedAt).format('MMMM,YYYY')}
+                                <span>
+                                  <ClockIcon className="icon fill-yellow-500" aria-hidden="true" />
+                                </span>
+                                {moment(content?.CreatedAt).format('YYYY-MM-DD')}
                               </span>
-                              <span className="article_view">{content?.ViewedBy.length}</span>
-                              <span className="article_comment">{content?.LikedBy.length}</span>
+                              <span className="article_view">
+                                <span>
+                                  <EyeIcon className="icon fill-yellow-500" aria-hidden="true" />
+                                </span>
+                                {content?.ViewedBy.length}
+                              </span>
+                              <span className="article_comment">
+                                <span>
+                                  <ThumbUpIcon className="fill-yellow-500" aria-hidden="true" />
+                                </span>
+                                {content?.LikedBy.length}
+                              </span>
                             </div>
                           </li>
                         ))
@@ -293,9 +310,11 @@ export default function Profile() {
                               </div>
                               <div className="right">
                                 <h3>
-                                  <a>
-                                    <span>{data?.MostPopularContent?.Title}</span>
-                                  </a>
+                                  <Link href={`/library/content/${data?.MostPopularContent?._id}`}>
+                                    <a target="_blank" rel="noopener noreferrer">
+                                      <span>{data?.MostPopularContent?.Title}</span>
+                                    </a>
+                                  </Link>
                                 </h3>
                                 <span className="article_date">
                                   <span>
@@ -304,7 +323,7 @@ export default function Profile() {
                                       aria-hidden="true"
                                     />
                                   </span>
-                                  {moment(data?.MostPopularContent?.CreatedAt).format('MMMM,YYYY')}
+                                  {moment(data?.MostPopularContent?.CreatedAt).format('YYYY-MM-DD')}
                                 </span>
                                 <span className="article_view">
                                   <span>
@@ -314,7 +333,7 @@ export default function Profile() {
                                 </span>
                                 <span className="article_comment">
                                   <span>
-                                    <ChatIcon className="fill-yellow-500" aria-hidden="true" />
+                                    <ThumbUpIcon className="fill-yellow-500" aria-hidden="true" />
                                   </span>
                                   {data?.MostPopularContent?.LikedBy.length}
                                 </span>
@@ -387,7 +406,7 @@ export default function Profile() {
                   {data.Author.Certification.map(item => (
                     <tbody key={item._id}>
                       <tr>
-                        <td className="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-6 text-xs text-black">
+                        <td className="tr-image whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-6 text-xs text-black">
                           <Image src={'/certificate.png'} width={'30px'} height={'30px'} alt="" />
                         </td>
 

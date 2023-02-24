@@ -71,7 +71,7 @@ function Publications({
         </div>
       )}
       {contentType === 'newsletters' && (
-        <div className="mx-auto mb-20 flex max-w-3xl">
+        <div className="mx-auto mb-20 flex max-w-5xl newsletter-main-card">
           <CardWide mode="dashboard" content={lastNewsletter} />
         </div>
       )}
@@ -80,7 +80,7 @@ function Publications({
           Previous issues
         </div>
       )}
-      <div className="mt-1 flex flex-wrap place-content-start justify-center gap-5 py-4 px-2 md:px-6 xl:gap-10">
+      <div className="mt-1 flex flex-wrap place-content-start justify-center gap-5 py-4 px-2 md:px-6 xl:gap-10 newsletter-innerCard">
         {isLoading ? (
           <Spinner />
         ) : (
