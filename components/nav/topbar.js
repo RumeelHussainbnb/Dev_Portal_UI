@@ -390,8 +390,8 @@ function TopBar({ childrens }) {
           )}
         </Popover>
 
-        <div className="min-h-full">
-          <div className="flex py-7 sm:pl-6 lg:gap-8 lg:pl-8">
+        <div className="min-h-full martian-admin">
+          <div className="flex py-7 lg:gap-8 lg:pl-8">
             <div className="top-4 hidden min-w-[190px] content-between divide-y divide-gray-300 dark:divide-gray-500 lg:block">
               <NavSidebar />
             </div>

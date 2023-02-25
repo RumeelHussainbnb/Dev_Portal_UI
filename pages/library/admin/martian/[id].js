@@ -84,42 +84,44 @@ export default function Profile({ martian, id }) {
 
   return (
     <Container metaTags={metaTags}>
-      <div className="flex gap-6 px-2 sm:px-6">
+      <div className="flex gap-6 sm:px-6 w-full">
         <main className="w-full">
           <div className="px-4 sm:px-6">
             <div className="relative z-0 flex flex-col divide-gray-200 rounded-md bg-white p-2 shadow dark:divide-gray-700 dark:bg-gray-800">
               {/* Profile Detail */}
-              <div className="flex flex-row">
-                <div className="h-44 w-44 overflow-hidden rounded-full">
+              <div className="flex flex-row user-detail">
+                <div className="rounded-image">
                   {martian.ImageUrl ? (
                     <Image alt="" src={martian.ImageUrl} width={'250px'} height={'250px'} />
                   ) : (
                     <Image alt="" src={'/martianImage.png'} width={'250px'} height={'250px'} />
                   )}
                 </div>
-                <div className="ml-3 mt-6 w-[70%]">
-                  <p className="mb-2 text-lg font-medium uppercase text-gray-500 dark:text-gray-500">
-                    {martian.FirstName + ' ' + martian.LastName}
-                  </p>
+                <div className="ml-3 user-discription">
+                  <div className="mt-1 flex flex-row">
+                    <p className="mb-2 text-lg font-medium uppercase text-gray-500 dark:text-gray-500">
+                      {martian.FirstName + ' ' + martian.LastName}
+                    </p>
+                  </div>
                   <div className="flex flex-row">
-                    {/* <div className="h-3 w-3">
+                    <div className="h-4 w-4 mr-2 mb-2">
                       <Image src={'/place.png'} width="250px" height="250px" />
-                    </div> */}
+                    </div>
                     <p className="text-sm text-gray-500 dark:text-gray-500">{martian.Country}</p>
                   </div>
                   <div className="flex flex-row">
-                    {/* <div className="mr-1 h-3 w-3">
+                    <div className="h-4 w-4 mr-2 mb-2">
                       <Image src={'/time.png'} width="250px" height="250px" />
-                    </div> */}
+                    </div>
                     <p className="text-sm text-gray-500 dark:text-gray-500">
                       Members since ,{moment(martian?.CreatedAt).format('MMMM,YYYY')}
                     </p>
                   </div>
 
                   <div className="flex flex-row">
-                    {/* <div className="mr-1 h-3 w-3">
+                    <div className="h-4 w-4 mr-2 mb-2">
                       <Image src={'/account.png'} width="250px" height="250px" />
-                    </div> */}
+                    </div>
                     <p className="text-sm text-gray-500 dark:text-gray-500">
                       {martian.MartianType}
                     </p>
@@ -183,11 +185,11 @@ export default function Profile({ martian, id }) {
                   </div>
                 </div>
               </div>
-              <div className="relative z-0 flex w-[49%] flex-col items-center justify-center divide-x divide-gray-200 rounded-md bg-white p-2 shadow dark:divide-gray-700 dark:bg-gray-800">
+              <div className="relative z-0 flex w-[49%] flex-col items-center justify-center rounded-md bg-white p-2 shadow dark:divide-gray-700 dark:bg-gray-800">
                 <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Languages:</p>
                 <div className="flex flex-row">
-                  <div className="mr-1 h-6 w-6 text-sm text-gray-500 hover:cursor-pointer dark:text-gray-500">
-                    {martian.Languages}
+                  <div className="text-sm text-gray-500 hover:cursor-pointer dark:text-gray-500">
+                    Arabic, English
                   </div>
                 </div>
               </div>
@@ -199,8 +201,8 @@ export default function Profile({ martian, id }) {
             <div className="relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md bg-white p-6 p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
               <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Activities:</p>
               {activities?.length > 0 ? (
-                <div className="mb-1 w-full py-8">
-                  <div className="relative  p-10 shadow-md  sm:rounded-lg">
+                <div className="mb-1 w-full py-8 table-wrapper">
+                  <div className="relative shadow-md  sm:rounded-lg ">
                     <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
                       <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
                         <tr>

@@ -61,7 +61,7 @@ const EditorComponent = ({ editorState, EditorChange }) => {
       toolbarClassName="dark:bg-gray-800 "
       toolbarStyle={{ border: '1px solid #4b5563' }}
       wrapperClassName="demo-wrapper"
-      editorClassName=" block w-full !h-80 rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 overflow-visible overflow-y-auto"
+      editorClassName="video-container block w-full !h-80 rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 overflow-visible overflow-y-auto"
       onEditorStateChange={EditorChange}
     />
   );
