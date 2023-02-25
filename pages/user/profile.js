@@ -250,6 +250,15 @@ export default function Profile() {
                           </p>
                         )}
                       </ul>
+                      {data?.UserAllContents?.length < data.TotalArticles + 10 && (
+                        <div className="right">
+                          <Link href={`/user/dashboard`}>
+                            <a rel="noopener noreferrer">
+                              <span>See all</span>
+                            </a>
+                          </Link>
+                        </div>
+                      )}
                     </div>
                   )}
                   {selectedTab === 'Most Read' && (
