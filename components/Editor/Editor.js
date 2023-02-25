@@ -2,7 +2,7 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
-import axios from '../../utils/http';
+import { http } from '../../utils/http';
 
 const Editor = dynamic(() => import('react-draft-wysiwyg').then(mod => mod.Editor), { ssr: false });
 
@@ -10,7 +10,6 @@ const EditorComponent = ({ editorState, EditorChange }) => {
   const uploadCallbackk = (file, callback) => {
     return new Promise((resolve, reject) => {
       const reader = new window.FileReader();
-      console.log(reader);
       reader.onloadend = async () => {
         //file Validation Extentions
         let allowedExtensions = ['jpg', 'jpeg', 'png'];
@@ -18,7 +17,7 @@ const EditorComponent = ({ editorState, EditorChange }) => {
         let parts = filename.split('.');
         const fileType = parts[parts.length - 1];
         if (allowedExtensions.includes(fileType)) {
-          const response = await axios.get(`/martian/s3Url`);
+          const response = await http.get(`/martian/s3Url`);
           const imageResponse = await fetch(response.data.url, {
             method: 'PUT',
             headers: {

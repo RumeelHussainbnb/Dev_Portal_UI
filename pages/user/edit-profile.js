@@ -6,7 +6,7 @@ import { Container } from '../../components/layout';
 import Image from 'next/image';
 import { TrashIcon } from '@heroicons/react/solid';
 import 'react-circular-progressbar/dist/styles.css';
-import axios from '../../utils/http';
+import { http } from '../../utils/http';
 import EndPoint from '../../constant/endPoints';
 import InputField from '../../components/InputField';
 import MultiSelection from '../../components/MultiSelection';
@@ -34,12 +34,14 @@ export default function Profile() {
     const fetchData = async () => {
       try {
         let userData = JSON.parse(localStorage.getItem('userData') || '{}');
-        const user = await axios.get(`/user/getUserProfile/${userData.data?._id}`);
+        const user = await http.get(`/user/getUserProfile/${userData.data?._id}`);
         let { data } = user?.data;
         const createData = {
           ...data,
           _id: data._id,
           Username: data.Username,
+          FirstName: data.FirstName,
+          LastName: data.LastName,
           Bio: data.Bio,
           Country: { label: data.Country, name: data.Country },
           Email: data?.Email,
@@ -48,7 +50,7 @@ export default function Profile() {
           Linkedin: data?.Author?.SocialLinks[1]?.Link,
           Twitter: data?.Author?.SocialLinks[2]?.Link,
           Telegram: data?.Author?.SocialLinks[3]?.Link,
-          Skils: data?.Skils,
+          Skills: data?.Skills,
           Certification:
             data?.Author?.Certification.length === 0
               ? certificateArray
@@ -67,7 +69,7 @@ export default function Profile() {
     Email: '',
     Bio: '',
     Country: '',
-    Skils: '',
+    Skills: '',
     ProfilePicture: ''
   });
   const onIconClick = () => {
@@ -87,7 +89,7 @@ export default function Profile() {
 
       //sucess
       if (allowedExtensions.includes(fileType)) {
-        const response = await axios.get(`${EndPoint.BASE_URL}/martian/s3Url`);
+        const response = await http.get(`${EndPoint.BASE_URL}/martian/s3Url`);
         const imageResponse = await fetch(response.data.url, {
           method: 'PUT',
           headers: {
@@ -138,7 +140,7 @@ export default function Profile() {
       Email: validation(state.Email, { type: 'email', required: true }),
       Bio: validation(state.Bio, { required: false }),
       Country: validation(state.Country, { required: true }),
-      Skils: validation(state.Skils, { required: false })
+      Skills: validation(state.Skills, { required: false })
     };
     setErrors({ ...errors, ...errorsChecked });
     let foundErrors =
@@ -155,8 +157,10 @@ export default function Profile() {
       ...item,
       Username: item.Username,
       Bio: item.Bio,
+      FirstName: item.FirstName,
+      LastName: item.LastName,
       Country: item.Country,
-      Skils: item.Skils.map(skills => skills),
+      Skills: item.Skills.map(skills => skills),
       Email: item.Email,
       Country: item.Country.label,
       ProfilePicture: item.ProfilePicture,
@@ -184,16 +188,15 @@ export default function Profile() {
       }
     };
     var formDataa = new FormData();
-    axios
+    http
       .put(`/user/updateUserProfile/${state._id}`, payload)
       .then(response => {
         setloader(false);
-        console.log(response);
+
         router.push('/user/profile');
       })
       .catch(error => {
         setloader(false);
-        console.log(error);
       });
   };
   //create location
@@ -209,9 +212,9 @@ export default function Profile() {
     const tempArr = [...certificateArray];
     if (tempArr[index].Name != '' && tempArr[index].Organization != '') {
       let lastElement = tempArr.slice(-1);
-      console.log('Last Object--------->', lastElement[0]._id);
+
       let index = lastElement[0]._id + 1;
-      console.log('Index--------->', index);
+
       tempArr.push({
         _id: index.toString(),
         Name: '',
@@ -219,7 +222,6 @@ export default function Profile() {
       });
       // // update state
       setcertificateArray(tempArr);
-      console.log('Add certificate--------->', tempArr);
     } else {
       setNotification({ message: 'Please fill out certification fields', show: true });
       setTimeout(() => {
@@ -292,6 +294,34 @@ export default function Profile() {
               <p className="mt-6 flex self-center text-lg font-bold text-black">
                 Welcome, {state?.Username}
               </p>
+              <div className="mt-2 flex flex-wrap">
+                <InputField
+                  type="text"
+                  onChange={e =>
+                    handleChange('FirstName', e, {
+                      type: 'required',
+                      required: true
+                    })
+                  }
+                  value={state?.FirstName}
+                  label={'First Name'}
+                  placeholder="First Name"
+                  error={errors.FirstName}
+                />
+                <InputField
+                  type="text"
+                  onChange={e =>
+                    handleChange('LastName', e, {
+                      type: 'required',
+                      required: true
+                    })
+                  }
+                  value={state?.LastName}
+                  label={'Last Name'}
+                  placeholder="Last Name"
+                  error={errors.LastName}
+                />
+              </div>
               <div className="mt-2 flex flex-wrap">
                 <InputField
                   type="text"
@@ -403,28 +433,25 @@ export default function Profile() {
               <div className="w-ful">
                 <MultiSelection
                   title="Skills"
-                  value={state?.Skils}
+                  value={state?.Skills}
                   onRemove={item => {
-                    console.log('onRemove', item);
-                    if (state.Skils?.filter(element => item !== element).length == 0) {
+                    if (state.Skills?.filter(element => item !== element).length == 0) {
                       setErrors({ ...errors });
                     }
                     setState({
                       ...state,
-                      Skils: state.Skils?.filter(element => item !== element)
+                      Skills: state.Skills?.filter(element => item !== element)
                     });
                   }}
                   onAdd={item => {
-                    console.log('onAdd', item);
-                    console.log('state?.Skils', state?.Skils);
-                    setErrors({ ...errors, Skils: '' });
+                    setErrors({ ...errors, Skills: '' });
                     setState({
                       ...state,
-                      Skils: [...(state?.Skils || []), item]
+                      Skills: [...state?.Skills, item]
                     });
                   }}
                   options={['Node.JS', 'BlockChain', 'Java', 'JavaScript', 'Python', '.NET']}
-                  error={errors.Skils}
+                  error={errors.Skills}
                 />
               </div>
             </div>

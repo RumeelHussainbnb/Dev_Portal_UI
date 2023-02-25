@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import dynamic from 'next/dynamic';
 
 import { RecognizationsAndAwards } from '../../../../constant/enums';
-import axios from '../../../../utils/http';
+import { http } from '../../../../utils/http';
 
 const NotificationSuccess = dynamic(() => import('../../../../components/notifications/success'));
 const NotificationError = dynamic(() => import('../../../../components/notifications/error'));
@@ -35,7 +35,7 @@ export default function Modal({ open, setOpen, content }) {
     e.preventDefault();
     //console.log('updateUserRewards data ==> ', data);
 
-    const response = await axios.put(`/user/updateUserProfile/${data._id}`, data);
+    const response = await http.put(`/user/updateUserProfile/${data._id}`, data);
     if (response.data.success) {
       setNotifySuccess(true);
     } else {

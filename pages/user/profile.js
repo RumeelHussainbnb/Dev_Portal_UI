@@ -3,7 +3,7 @@ import { Container } from '../../components/layout';
 import Image from 'next/image';
 import { EyeIcon, ThumbUpIcon, ClockIcon } from '@heroicons/react/solid';
 import 'react-circular-progressbar/dist/styles.css';
-import axios from '../../utils/http';
+import { http } from '../../utils/http';
 import EndPoint from '../../constant/endPoints';
 import Link from 'next/link';
 import moment from 'moment';
@@ -20,7 +20,7 @@ export default function Profile() {
     Username: '',
     Country: '',
     CreatedAt: '',
-    Skils: [],
+    Skills: [],
     Author: {
       Rank: '',
       Read: '',
@@ -39,8 +39,7 @@ export default function Profile() {
     const fetchData = async () => {
       let userData = JSON.parse(localStorage.getItem('userData') || '{}');
       try {
-        const user = await axios.get(`/user/onGetUserProfileWithData/${userData.data?._id}`);
-
+        const user = await http.get(`/user/onGetUserProfileWithData/${userData.data?._id}`);
         setData(user?.data?.data);
       } catch (error) {}
     };
@@ -91,18 +90,24 @@ export default function Profile() {
                         Member since: {moment(data?.CreatedAt).format('YYYY-MM-DD')}
                       </p>
                     </div>
-                    {data?.Skils?.length > 0 ? (
+                    {data?.Skills?.length > 0 ? (
                       <div className="mt-1 flex flex-row">
                         <div className="h-4 w-4">
                           <Image src={'/account.png'} height={'100px'} width={'100px'} alt="" />
                         </div>
-                        {data?.Skils?.map((item, index) => (
+                        {data?.Skills?.map((item, index) => (
                           <p key={index} className="ml-1 text-[12px]">
                             {item}
                           </p>
                         ))}
                       </div>
                     ) : null}
+                    <div className="mt-1 flex flex-row">
+                      {/* <div className="h-4 w-4">
+                        <Image src={'/time.png'} height={'100px'} width={'100px'} alt="" />
+                      </div> */}
+                      <p className="ml-1 text-[12px]">Roles {data?.Roles?.join(',')}</p>
+                    </div>
                   </div>
                 </div>
                 <button
@@ -245,6 +250,15 @@ export default function Profile() {
                           </p>
                         )}
                       </ul>
+                      {data?.UserAllContents?.length < data.TotalArticles + 10 && (
+                        <div className="right">
+                          <Link href={`/user/dashboard`}>
+                            <a rel="noopener noreferrer">
+                              <span>See all</span>
+                            </a>
+                          </Link>
+                        </div>
+                      )}
                     </div>
                   )}
                   {selectedTab === 'Most Read' && (

@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
 import fetch from '../../utils/fetcher';
-import axios from '../../utils/http';
+import { http } from '../../utils/http';
 import { Container } from '../../components/layout';
 import { loadPinnedTweet } from '../../lib/load-pinned-tweet';
 import { loadNewsletter } from '../../lib/load-newsletter';
@@ -18,7 +18,7 @@ export async function getStaticProps() {
 
   const latestNewsletter = await loadNewsletter();
 
-  const response = await axios.get(`/content/topContent`);
+  const response = await http.get(`/content/topContent`);
 
   return {
     props: {

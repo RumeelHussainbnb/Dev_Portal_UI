@@ -16,7 +16,7 @@ import { useAppDispatch, useAppState } from '../../context/AppContext';
 import useTheme from '../../hooks/useTheme';
 import { useRouter } from 'next/router';
 import { ethers } from 'ethers';
-import axios from '../../utils/http';
+import { http } from '../../utils/http';
 
 import Cookies from 'js-cookie';
 
@@ -41,10 +41,18 @@ function TopBar({ childrens }) {
   const appState = useAppState();
   const router = useRouter();
 
+  const accountChecker = async () => {
+    const accounts = await ethereum.request({ method: 'eth_accounts' });
+    if (accounts.length === 0) {
+      removeConnection();
+    }
+  };
   useEffect(() => {
     //event
     const { ethereum } = window;
+
     if (ethereum) {
+      accountChecker();
       if (ethereum.isMetaMask) {
         window.ethereum.on('accountsChanged', function (accounts) {
           //console.log('accounts ==> ', accounts);
@@ -79,11 +87,11 @@ function TopBar({ childrens }) {
           let payload = {
             PublicKey: accounts[0]
           };
-          axios
+          http
             .post(`/auth/register`, payload)
             .then(async res => {
               if (res?.data?.success == true) {
-                let isAdmin = res?.data?.data?.Role === 'admin' ? true : false;
+                let isAdmin = res?.data?.data?.Roles.includes('Admin');
                 // update context
                 await appDispatch({ type: 'handleWalletConnection', payload: true });
                 await appDispatch({ type: 'savePublicKey', payload: accounts[0] });
@@ -185,7 +193,7 @@ function TopBar({ childrens }) {
               <div className="mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between">
                   {/* Logo */}
-                  <div className="hidden sm:inline-flex logo">
+                  <div className="logo hidden sm:inline-flex">
                     <Link href="/" passHref>
                       <a className="flex content-center">
                         {mode === 'light' && (
@@ -226,9 +234,9 @@ function TopBar({ childrens }) {
 
                   <div className="flex items-center gap-6">
                     {/* Theme Settings*/}
-                    <div className="hidden md:flex mobile-view">
+                    <div className="mobile-view hidden md:flex">
                       <Menu as="div" className="relative ml-5 flex-shrink-0">
-                        <div className='colorMode'>
+                        <div className="colorMode">
                           <Menu.Button className="flex rounded-full hover:outline-none hover:ring-2 hover:ring-gray-500 hover:ring-offset-2">
                             <span className="sr-only">Open Theme menu</span>
                             <ColorSwatchIcon className="h-7 w-7 text-gray-600 hover:opacity-80 dark:text-gray-300" />
@@ -269,7 +277,7 @@ function TopBar({ childrens }) {
 
                     {/*  Profile Button */}
 
-                    <div className="hidden lg:flex mobile-view">
+                    <div className="mobile-view hidden lg:flex">
                       {appState.isConnectedToWallet === true ||
                       appState.isConnectedToWallet === 'true' ? (
                         <Menu as="div" className="relative flex-shrink-0">
@@ -379,7 +387,7 @@ function TopBar({ childrens }) {
               </div>
 
               {/* Mobile Menu*/}
-              <Popover.Panel as="nav" className="lg:hidden mobile-nav" aria-label="Global">
+              <Popover.Panel as="nav" className="mobile-nav lg:hidden" aria-label="Global">
                 {({ close }) => (
                   <div className="mx-auto max-w-3xl space-y-1 px-2 pt-2 pb-3 sm:px-4">
                     <NavSidebar />

@@ -5,11 +5,11 @@ import dynamic from 'next/dynamic';
 
 import Pagination from '../../../../components/pagination/Pagination';
 import { Container } from '../../../../components/layout';
-import axios from '../../../../utils/http';
+import { http } from '../../../../utils/http';
 const AwardEditModal = dynamic(() => import('./editModal'));
 
 export async function getServerSideProps(context) {
-  const { data } = await axios.get(
+  const { data } = await http.get(
     `${process.env.NEXT_PUBLIC_API_ENDPOINT}/user/getAllUsers?&page=${1}`
   );
   return { props: data };
@@ -31,7 +31,7 @@ export default function AwardsRecognition({ data, user }) {
 
   const makeApiCall = async () => {
     try {
-      const { data } = await axios.get(
+      const { data } = await http.get(
         `${process.env.NEXT_PUBLIC_API_ENDPOINT}/user/getAllUsers?&page=${page}&name=${search}`
       );
       if (data?.success === true) {

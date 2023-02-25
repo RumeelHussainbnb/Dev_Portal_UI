@@ -7,7 +7,7 @@ import { Country } from 'country-state-city';
 import { useRouter } from 'next/router';
 import Pagination from '../../../../components/pagination/Pagination';
 import { Container } from '../../../../components/layout';
-import axios from '../../../../utils/http';
+import { http } from '../../../../utils/http';
 import { useAppState } from '../../../../context/AppContext';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -141,7 +141,7 @@ const Index = ({ userData }) => {
                     htmlFor="first-name"
                     className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                   >
-                    Keyword
+                    Name
                   </label>
                   <div className="mt-1">
                     <input
@@ -193,11 +193,11 @@ const Index = ({ userData }) => {
                     htmlFor="awardCategory"
                     className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                   >
-                    Award Category
+                    Martian Category
                   </label>
                   <div className="mt-1">
                     <Select
-                      placeholder="Select a Award Category"
+                      placeholder="Select a Martian Category"
                       instanceId={useId()}
                       name="awardCategory"
                       label="awardCategory"
@@ -247,10 +247,10 @@ const Index = ({ userData }) => {
                   <Link href={`/library/admin/martian/${eachMartian._id}`} passHref key={index}>
                     <a>
                       <div className=" h-70 flex w-48 max-w-xs flex-col rounded-xl p-2 shadow-md dark:bg-gray-900 dark:text-gray-100 sm:px-3">
-                        {eachMartian?.ImageUrl ? (
+                        {eachMartian?.ProfilePicture ? (
                           <div className=" mx-auto h-24 w-24 overflow-hidden rounded-full">
                             <Image
-                              src={eachMartian?.ImageUrl}
+                              src={eachMartian?.ProfilePicture}
                               alt=""
                               height={'96px'}
                               width={'96px'}
@@ -265,7 +265,7 @@ const Index = ({ userData }) => {
                         <div className=" space-y-2 divide-y divide-gray-600 text-center">
                           <div className="my-2 space-y-1">
                             <h3 className="sm:text-1xl truncate text-lg font-semibold hover:text-clip">
-                              {eachMartian.FirstName}
+                              {eachMartian.Username}
                             </h3>
                           </div>
                           <div className=" space-x-4 pt-2">
@@ -330,8 +330,8 @@ Martians.getInitialProps = async ({ query }) => {
   const country = query.country || '';
   const martian = query.martian || '';
 
-  const response = await axios.get(
-    `/martian?pageNumber=${page}&limit=${perPage}&keyword=${keyword}&country=${country}&martian=${martian}`
+  const response = await http.get(
+    `/user/getMartians?pageNumber=${page}&limit=${perPage}&keyword=${keyword}&country=${country}&martian=${martian}`
   );
 
   return {

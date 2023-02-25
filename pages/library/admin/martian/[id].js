@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { Container } from '../../../../components/layout';
 import { loadMartians } from '../../../../lib/load-martians-list';
@@ -7,57 +7,41 @@ import moment from 'moment';
 import Image from 'next/image';
 import fetch from '../../../../utils/fetcher';
 import Pagination from '../../../../components/pagination/Pagination';
-import axios from '../../../../utils/http';
+import { http } from '../../../../utils/http';
+import { useRouter } from 'next/router';
 
-export const getStaticPaths = async () => {
-  const response = await loadMartians();
-  const paths = response.data.data.map(content => {
-    return {
-      params: {
-        slug: content.id
-      }
-    };
-  });
-
-  // All missing paths are going to be server-side rendered and cached
-  return { paths, fallback: 'blocking' };
-};
-
-export async function getStaticProps({ params }) {
-  try {
-    const martian = await fetch(
-      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/martian/byId?id=${params.id}`
-    );
-
-    return {
-      props: {
-        martian: { ...martian.data, ActivitiesSize: martian.martianActivitySize.ActivitiesSize },
-        id: params.id
-      },
-      revalidate: 60
-    };
-  } catch (error) {
-    return {
-      props: {
-        martian: {}
-      },
-      revalidate: 60
-    };
-  }
-}
-export default function Profile({ martian, id }) {
+export default function Profile() {
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
-  const [activities, setActivities] = useState(martian.Activities);
+  const [activities, setActivities] = useState([]);
+  const [totalActivities, setTotalActivities] = useState(0);
+  const [user, setUser] = useState();
+  const router = useRouter();
+
+  const getUserData = async () => {
+    const user = await http.get(`/user/onGetUserProfileWithData/${router.query?.id}`);
+    const martianActivity = await http.get(
+      `/activity/?pageNumber=1&limit=10&id=${router.query?.id}`
+    );
+    setUser(user.data?.data);
+    setActivities(martianActivity?.data?.data?.totalActivity);
+    setTotalActivities(martianActivity?.data?.data?.totalActivityCount);
+  };
+  useEffect(() => {
+    if (router.isReady) {
+      getUserData();
+    }
+  }, [router.isReady]);
 
   const handlePageChange = async newPage => {
     setPage(newPage.selected + 1);
     try {
-      const response = await axios.get(
-        `/martian/martianActivity?pageNumber=${newPage.selected + 1}&limit=${perPage}&id=${id}`
+      const martianActivity = await http.get(
+        `/activity/?pageNumber=${newPage.selected + 1}&limit=${perPage}&id=${router.query?.id}`
       );
-      if (response?.data?.success === true) {
-        setActivities(response?.data.data?.Activities);
+
+      if (martianActivity?.data?.success === true) {
+        setActivities(martianActivity?.data?.data?.totalActivity);
       }
     } catch (error) {}
   };
@@ -65,11 +49,11 @@ export default function Profile({ martian, id }) {
   const handlePageSizeChange = async newSize => {
     setPerPage(newSize);
     try {
-      const response = await axios.get(
-        `/martian/martianActivity?pageNumber=${page}&limit=${newSize}&id=${id}`
+      const martianActivity = await http.get(
+        `/activity/?pageNumber=${page}&limit=${newSize}&id=${router.query?.id}`
       );
-      if (response?.data?.success === true) {
-        setActivities(response?.data?.data?.Activities);
+      if (martianActivity?.data?.success === true) {
+        setActivities(martianActivity?.data?.data?.totalActivity);
       }
     } catch (error) {}
   };
@@ -91,8 +75,8 @@ export default function Profile({ martian, id }) {
               {/* Profile Detail */}
               <div className="flex flex-row user-detail">
                 <div className="rounded-image">
-                  {martian.ImageUrl ? (
-                    <Image alt="" src={martian.ImageUrl} width={'250px'} height={'250px'} />
+                {user?.ProfilePicture ? (
+                    <Image alt="" src={user.ProfilePicture} width={'250px'} height={'250px'} />
                   ) : (
                     <Image alt="" src={'/martianImage.png'} width={'250px'} height={'250px'} />
                   )}
@@ -100,21 +84,21 @@ export default function Profile({ martian, id }) {
                 <div className="ml-3 user-discription">
                   <div className="mt-1 flex flex-row">
                     <p className="mb-2 text-lg font-medium uppercase text-gray-500 dark:text-gray-500">
-                      {martian.FirstName + ' ' + martian.LastName}
+                    {user?.Username}
                     </p>
                   </div>
                   <div className="flex flex-row">
                     <div className="h-4 w-4 mr-2 mb-2">
                       <Image src={'/place.png'} width="250px" height="250px" />
                     </div>
-                    <p className="text-sm text-gray-500 dark:text-gray-500">{martian.Country}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-500">{user?.Country}</p>
                   </div>
                   <div className="flex flex-row">
                     <div className="h-4 w-4 mr-2 mb-2">
                       <Image src={'/time.png'} width="250px" height="250px" />
                     </div>
                     <p className="text-sm text-gray-500 dark:text-gray-500">
-                      Members since ,{moment(martian?.CreatedAt).format('MMMM,YYYY')}
+                      Members since ,{moment(user?.CreatedAt).format('MMMM,YYYY')}
                     </p>
                   </div>
 
@@ -123,53 +107,16 @@ export default function Profile({ martian, id }) {
                       <Image src={'/account.png'} width="250px" height="250px" />
                     </div>
                     <p className="text-sm text-gray-500 dark:text-gray-500">
-                      {martian.MartianType}
+                    {user?.MartianType}
                     </p>
                   </div>
                   <p className="mt-2 mb-2 text-xs text-gray-500 dark:text-gray-500">
-                    {martian.Expertise}
+                    {user?.Skills}
                   </p>
-                  {/* <a
-                    className="text-sm text-gray-500 dark:text-gray-500"
-                    href="https://www.c-sharpcorner.com/members/Williambeniamin"
-                  >
-                    Personal Blog: https://www.c-sharpcorner.com/members/Williambeniamin
-                  </a> */}
                 </div>
               </div>
-              {/* Achievement */}
-              {/* <div className="mt-2 flex flex-row justify-around">
-                <div className="flex h-16 w-36 flex-row">
-                  <div className="h-10 w-10">
-                    <TagIcon className="h-6 w-6" aria-hidden="true" />
-                   
-                  </div>
-                  <div className="ml-1">
-                    <p className="text-base font-medium text-black">AI</p>
-                    <p className="text-[12px] font-normal">Award Category</p>
-                  </div>
-                </div>
-                <div className="flex h-16 w-36 flex-row">
-                  <div className="h-10 w-10">
-                    <Image src={'/martianImage.png'} width="250px" height="250px" />
-                  </div>
-                  <div className="ml-1">
-                    <p className="text-base font-medium text-black">2019</p>
-                    <p className="text-[12px] font-normal">First Year Awarded</p>
-                  </div>
-                </div>
-                <div className="flex h-16 w-36 flex-row">
-                  <div className="h-10 w-10">
-                    <TrendingUpIcon className="h-6 w-6" aria-hidden="true" />
-                  </div>
-                  <div className="ml-1">
-                    <p className="text-base font-medium text-black">13k</p>
-                    <p className="text-[12px] font-normal">Number of MVP Awards</p>
-                  </div>
-                </div>             
-              </div> */}
             </div>
-            {/* Share & Authar Part */}
+
             <div className="mt-2 flex flex-row justify-between ">
               <div className="relative z-0 flex w-[49%] flex-col items-center justify-center divide-x divide-gray-200 rounded-md bg-white p-2 shadow dark:divide-gray-700 dark:bg-gray-800">
                 <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Social:</p>
@@ -188,15 +135,15 @@ export default function Profile({ martian, id }) {
               <div className="relative z-0 flex w-[49%] flex-col items-center justify-center rounded-md bg-white p-2 shadow dark:divide-gray-700 dark:bg-gray-800">
                 <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Languages:</p>
                 <div className="flex flex-row">
-                  <div className="text-sm text-gray-500 hover:cursor-pointer dark:text-gray-500">
-                    Arabic, English
+                  <div className="mr-1 h-6 w-6 text-sm text-gray-500 hover:cursor-pointer dark:text-gray-500">
+                    {user?.Languages}
                   </div>
                 </div>
               </div>
             </div>
             <div className="relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md bg-white p-4 p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
               <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Biography:</p>
-              {martian.BioGraphy}
+              {user?.Bio}
             </div>
             <div className="relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md bg-white p-6 p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
               <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Activities:</p>
@@ -221,9 +168,6 @@ export default function Profile({ martian, id }) {
                           <th scope="col" className="px-4 py-3">
                             Additional Contribution Areas
                           </th>
-                          {/* <th scope="col" className="px-4 py-3">
-                            Action
-                          </th> */}
                         </tr>
                       </thead>
                       <tbody>
@@ -252,24 +196,6 @@ export default function Profile({ martian, id }) {
                             <td className="px-4 py-4">{data.primaryContributionArea}</td>
 
                             <td className="px-4 py-4">{data.additionalContributionArea}</td>
-
-                            {/* <td className="px-4 py-4 text-right">
-                              <a
-                                href="#"
-                                onClick={event => handleEditActivity(data, event)}
-                                className="font-medium text-yellow-600 hover:underline dark:text-yellow-500"
-                              >
-                                Edit
-                              </a>
-                              /
-                              <a
-                                href="#"
-                                onClick={() => handleDeleteActivity(data._id)}
-                                className="font-medium text-red-600 hover:underline dark:text-red-500"
-                              >
-                                Delete
-                              </a>
-                            </td> */}
                           </tr>
                         ))}
                       </tbody>
@@ -278,7 +204,7 @@ export default function Profile({ martian, id }) {
                 </div>
               ) : null}
               <Pagination
-                pageCount={Math.ceil(martian.ActivitiesSize / perPage)}
+                pageCount={Math.ceil(totalActivities / perPage)}
                 pageSize={perPage}
                 onPageChange={handlePageChange}
                 onPageSizeChange={handlePageSizeChange}

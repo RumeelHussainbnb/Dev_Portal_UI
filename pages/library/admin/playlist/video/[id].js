@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { Container } from '../../../../../components/layout';
-import axios from '../../../../../utils/http';
+import { http } from '../../../../../utils/http';
 
 const NotificationSuccess = dynamic(() =>
   import('../../../../../components/notifications/success')
@@ -26,7 +26,7 @@ const PlaylistForm = () => {
   const createPlaylist = async event => {
     event.preventDefault();
     try {
-      const response = await axios.post(`/content`, {
+      const response = await http.post(`/content`, {
         Title: data.Title,
         Author: data.Author,
         Description: data.Description,

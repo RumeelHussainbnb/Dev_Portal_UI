@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { Container } from '../../../../components/layout';
-import axios from '../../../../utils/http';
+import { http } from '../../../../utils/http';
 
 const NotificationSuccess = dynamic(() => import('../../../../components/notifications/success'));
 const NotificationError = dynamic(() => import('../../../../components/notifications/error'));
@@ -18,7 +18,7 @@ const Submit = metaTags => {
   const createTweet = async event => {
     event.preventDefault();
     try {
-      const response = await axios.post(`/tweets/post`, data);
+      const response = await http.post(`/tweets/post`, data);
       if (response?.data?.success === true) {
         //Empty editor state
         setData({

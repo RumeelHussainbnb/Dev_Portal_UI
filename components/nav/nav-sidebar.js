@@ -30,13 +30,6 @@ const navigation = [
     icon: LibraryIcon,
     disabled: false
   },
-  // {
-  //   name: 'Community',
-  //   href: '/community',
-  //   icon: ChatAlt2Icon,
-  //   disabled: false
-  // },
-
   {
     name: 'Newsletters',
     href: '/newsletters',
@@ -62,11 +55,6 @@ const navigation = [
 ];
 
 const special = [
-  /*{
-        name: 'BNB Chain Cookbook',
-        href: 'https://docs.bnbchain.org',
-        disabled: false
-      },*/
   {
     name: 'BNB Chain Docs',
     href: 'https://docs.bnbchain.org/',
@@ -103,6 +91,41 @@ const specialLists = [
   }
 ];
 
+const adminFeatures = [
+  {
+    name: 'Inactive Content',
+    href: '/library/admin/inactive'
+  },
+  {
+    name: 'Submitted Content',
+    href: '/library/admin/submitted'
+  },
+  {
+    name: 'Add Martian',
+    href: '/library/admin/martian/create'
+  },
+  {
+    name: 'Add Martian Activities',
+    href: '/library/admin/martian/activity'
+  },
+  {
+    name: 'Add Playlist',
+    href: '/library/admin/playlist/post'
+  },
+  {
+    name: 'Post NewsLetter',
+    href: '/library/admin/newsletter/post'
+  },
+  {
+    name: 'Post tweet',
+    href: '/library/admin/tweet/post'
+  },
+  {
+    name: 'Awards & Recognition',
+    href: '/library/admin/awards-recognition'
+  }
+];
+
 const categories = [
   {
     name: 'Tutorials',
@@ -124,10 +147,6 @@ const categories = [
     name: 'Dapp Development',
     href: '/library/projects'
   },
-  /*{
-        name: 'SDKs & Frameworks',
-        href: '/library/sdk'
-      },*/
   {
     name: 'Scaffolds',
     href: '/library/scaffolds'
@@ -138,18 +157,10 @@ const categories = [
     rel: 'noreferrer',
     target: '_blank'
   },
-  // {
-  //   name: 'Implementations',
-  //   href: '/library/implementations'
-  // },
   {
     name: 'Security',
     href: '/library/security'
   },
-  /*{
-        name: 'Program Library',
-        href: '/library/spl'
-      },*/
   {
     name: 'Twitter Threads',
     href: '/library/threads'
@@ -157,30 +168,6 @@ const categories = [
   {
     name: 'Video Playlists',
     href: '/library/playlists'
-  },
-  {
-    name: 'Submitted',
-    href: '/library/admin/submitted'
-  },
-  {
-    name: 'Inactive',
-    href: '/library/admin/inactive'
-  },
-  {
-    name: 'Post NewsLetter',
-    href: '/library/admin/newsletter/post'
-  },
-  {
-    name: 'Post tweet',
-    href: '/library/admin/tweet/post'
-  },
-  {
-    name: 'Add Playlist',
-    href: '/library/admin/playlist/post'
-  },
-  {
-    name: 'Awards & Recognition',
-    href: '/library/admin/awards-recognition'
   }
 ];
 
@@ -200,10 +187,6 @@ const martian = [
 ];
 
 const courses = [
-  /* {
-        name: 'Intro to BNBChain',
-        href: '/course'
-      },*/
   {
     name: 'BNBChain 101',
     href: '/course'
@@ -225,10 +208,10 @@ function NavSidebar() {
   const fetchData = async () => {
     let key = localStorage.getItem('PublicKey' || '');
     let userState = JSON.parse(localStorage.getItem('userData' || '{}'));
-    const admin = userState?.data?.Role === 'admin' ? true : false;
+    const admin = userState?.data?.Roles.includes('Admin');
 
     await appDispatch({ type: 'handleAdminMode', payload: admin });
-    setIsMartian(userState?.data?.MartianId ? true : false);
+    setIsMartian(userState?.data?.Roles.includes('Martian'));
   };
 
   useEffect(() => {
@@ -480,6 +463,35 @@ function NavSidebar() {
             })}
           </div>
         </div>
+
+        {/* Admin */}
+        {appState.isAdminMode === true && appState.editMode === 'true' ? (
+          <div className="mt-3 w-full">
+            <p
+              className="text-md rounded-md bg-[#FACC15] px-3 py-2 font-semibold uppercase tracking-wider text-black lg:text-sm"
+              id="admin-area"
+            >
+              Admin
+            </p>
+            <div className="mt-2 space-y-1" aria-labelledby="admin-area">
+              {adminFeatures.map(item => {
+                return (
+                  <Link href={item.href} passHref key={item.name}>
+                    <button className="group flex min-w-full cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-base">
+                      <PaperClipIcon
+                        className="h-4 w-4 text-yellow-400 dark:text-yellow-500"
+                        aria-hidden="true"
+                      />
+                      <span className="truncate leading-6">{item.name}</span>
+                    </button>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        ) : (
+          ''
+        )}
       </div>
       <Notification
         show={notification.show}
