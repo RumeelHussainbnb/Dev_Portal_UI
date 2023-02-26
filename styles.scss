@@ -419,3 +419,49 @@ aside {
         border-radius: 100%;
     }
 }
+
+.d-none {display: none;}
+
+.cardHolder {
+    justify-content: space-between;
+    .card {
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: row-reverse;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        min-width: 22%;
+        margin-right: 10px;
+        padding: 10px 20px;
+        margin-bottom: 10px;
+        // background-color: #fff;
+        img {
+            width: 30px !important;
+        }
+        h4 {
+            font-size: 14px;
+            line-height: 20px;
+            font-weight: 500;
+            margin-bottom: 0;
+            text-transform: capitalize;
+            color: rgb(107 114 128);
+        }
+        p {
+            font-size: 12px;
+            margin-bottom: 0;
+            color: rgb(17 24 39);
+        }
+    }
+}
+
+.dark {
+    .cardHolder {
+        .card {
+            h4,
+            p {
+                color: rgba(255, 255, 255, 0.7);
+            }
+        }
+    }
+}
