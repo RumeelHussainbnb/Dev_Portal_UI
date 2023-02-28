@@ -40,6 +40,7 @@
     "next": "^12.2.2",
     "next-sitemap": "^v3.1.11",
     "next-transpile-modules": "^9.0.0",
+    "nextjs-progressbar": "^0.0.16",
     "postcss": "^8.4.14",
     "prettier": "^2.7.1",
     "prettier-plugin-tailwindcss": "^0.1.12",

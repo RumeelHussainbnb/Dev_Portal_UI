@@ -1,7 +1,12 @@
+import Router from 'next/router';
+import { useState, useEffect } from 'react';
+import NextNProgress from 'nextjs-progressbar';
+
 import '../style.css';
 import '../styles.scss';
 import Script from 'next/script';
 import { AppWrapper } from '../context/AppContext';
+import Loader from '../components/Loader/Loader';
 
 import { Web3ReactProvider } from '@web3-react/core';
 import { Web3Provider } from '@ethersproject/providers';
@@ -12,6 +17,20 @@ function getLibrary(provider) {
 }
 
 export default function App({ Component, pageProps }) {
+  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    Router.events.on('routeChangeStart', url => {
+      setIsLoading(true);
+    });
+
+    Router.events.on('routeChangeComplete', url => {
+      setIsLoading(false);
+    });
+
+    Router.events.on('routeChangeError', url => {
+      setIsLoading(false);
+    });
+  }, [Router]);
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
       <Script id="google-taag-manager" strategy="afterInteractive">
@@ -25,6 +44,8 @@ export default function App({ Component, pageProps }) {
       </Script>
       <Web3ReactProvider getLibrary={getLibrary}>
         <AppWrapper>
+          {isLoading && <Loader />}
+          {/* <NextNProgress /> */}
           <Component {...pageProps} />
         </AppWrapper>
       </Web3ReactProvider>
