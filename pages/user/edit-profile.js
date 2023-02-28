@@ -52,7 +52,7 @@ export default function Profile() {
           Telegram: data?.Author?.SocialLinks[3]?.Link,
           Skills: data?.Skills,
           Certification:
-            data?.Author?.Certification.length === 0
+            data?.Author?.Certification?.length === 0
               ? certificateArray
               : data?.Author?.Certification
         };
@@ -63,7 +63,6 @@ export default function Profile() {
 
     fetchData();
   }, []);
-
   const [errors, setErrors] = useState({
     Username: '',
     Email: '',
@@ -242,6 +241,15 @@ export default function Profile() {
     label: country.name,
     value: country.name
   }));
+
+  const handleAddSkills = skills => {
+    setErrors({ ...errors, Skills: '' });
+    if (!state?.Skills?.includes(skills))
+      setState({
+        ...state,
+        Skills: [...(state?.Skills || []), skills]
+      });
+  };
 
   return (
     <Container className="page-overlay" metaTags={metaTags}>
@@ -443,13 +451,7 @@ export default function Profile() {
                       Skills: state.Skills?.filter(element => item !== element)
                     });
                   }}
-                  onAdd={item => {
-                    setErrors({ ...errors, Skills: '' });
-                    setState({
-                      ...state,
-                      Skills: [...state?.Skills, item]
-                    });
-                  }}
+                  onAdd={handleAddSkills}
                   options={['Node.JS', 'BlockChain', 'Java', 'JavaScript', 'Python', '.NET']}
                   error={errors.Skills}
                 />

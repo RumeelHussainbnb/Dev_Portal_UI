@@ -26,7 +26,7 @@ const MultiSelection = ({
           {title}
         </label>
         <div className="flex w-full flex-wrap space-x-1">
-          {value.length ? (
+          {value?.length ? (
             value.map((item, index) => (
               <div
                 className="mb-1 flex w-fit items-center rounded bg-[#FACC15] p-1 text-white"
@@ -69,7 +69,7 @@ const MultiSelection = ({
             {options ? (
               options
                 // rendering only options which are not selected
-                
+
                 .map((item, index) => (
                   <div key={index}>
                     {index !== 0 && <hr />}

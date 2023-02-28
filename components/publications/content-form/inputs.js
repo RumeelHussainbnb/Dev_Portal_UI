@@ -181,14 +181,9 @@ function Inputs({
             className="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
           />
 
-          {/* <p
-            className={classNames(
-              'mt-2 text-sm text-gray-500 dark:text-gray-500',
-              editorLimitError && 'text-red-500 dark:text-red-500'
-            )}
-          >
+          <p className={classNames('mt-2 text-sm text-gray-500 dark:text-gray-500')}>
             Brief description about the content. ~250 characters
-          </p> */}
+          </p>
         </div>
       </div>
       <div className="col-span-10">

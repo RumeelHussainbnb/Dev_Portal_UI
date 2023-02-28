@@ -1,7 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Container } from '../../components/layout';
 import Image from 'next/image';
-import { EyeIcon, ThumbUpIcon, ClockIcon } from '@heroicons/react/solid';
+import {
+  EyeIcon,
+  ThumbUpIcon,
+  ClockIcon,
+  UserCircleIcon,
+  LocationMarkerIcon,
+  AcademicCapIcon
+} from '@heroicons/react/solid';
 import 'react-circular-progressbar/dist/styles.css';
 import { http } from '../../utils/http';
 import EndPoint from '../../constant/endPoints';
@@ -76,15 +83,15 @@ export default function Profile() {
                     ) : null}
                     {data?.Country != '' ? (
                       <div className="mt-1 flex flex-row">
-                        <div className="h-4 w-4">
-                          <Image src={'/place.png'} height={'100px'} width={'100px'} alt="" />
+                        <div className="h-5 w-5">
+                          <LocationMarkerIcon className="fill-yellow-500" aria-hidden="true" />
                         </div>
                         <p className="ml-1 text-[12px]">{data?.Country}</p>
                       </div>
                     ) : null}
                     <div className="mt-1 flex flex-row">
-                      <div className="h-4 w-4">
-                        <Image src={'/time.png'} height={'100px'} width={'100px'} alt="" />
+                      <div className="h-5 w-5">
+                        <ClockIcon className="fill-yellow-500" aria-hidden="true" />
                       </div>
                       <p className="ml-1 text-[12px]">
                         Member since: {moment(data?.CreatedAt).format('YYYY-MM-DD')}
@@ -92,8 +99,8 @@ export default function Profile() {
                     </div>
                     {data?.Skills?.length > 0 ? (
                       <div className="mt-1 flex flex-row">
-                        <div className="h-4 w-4">
-                          <Image src={'/account.png'} height={'100px'} width={'100px'} alt="" />
+                        <div className="h-5 w-5">
+                          <AcademicCapIcon className="fill-yellow-500" aria-hidden="true" />
                         </div>
                         {data?.Skills?.map((item, index) => (
                           <p key={index} className="ml-1 text-[12px]">
@@ -106,6 +113,9 @@ export default function Profile() {
                       {/* <div className="h-4 w-4">
                         <Image src={'/time.png'} height={'100px'} width={'100px'} alt="" />
                       </div> */}
+                      <div className="h-5 w-5">
+                        <UserCircleIcon className="fill-yellow-500" aria-hidden="true" />
+                      </div>
                       <p className="ml-1 text-[12px]">Roles {data?.Roles?.join(',')}</p>
                     </div>
                   </div>
