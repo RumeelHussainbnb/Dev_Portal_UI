@@ -66,16 +66,16 @@ function ContentTags({ data, setData, type }) {
       </div>
 
       {/* Level Tags */}
-      <fieldset className="col-span-2">
+      <fieldset className="submit-content-type col-span-10">
         <div>
           <legend className="text-base font-medium text-gray-900 dark:text-gray-300">
             Level
           </legend>
         </div>
-        <div className="mt-4 space-y-4">
+        <div className="content-element mt-1">
           {tagList.level.map((tag) => {
             return (
-              <div key={tag} className="flex items-center">
+              <div key={tag} className="content-checkboxes">
                 <input
                   id={tag}
                   name="levelTags"
@@ -99,16 +99,16 @@ function ContentTags({ data, setData, type }) {
       </fieldset>
 
       {/* Tech Tags */}
-      <fieldset className="col-span-2">
+      <fieldset className="submit-content-type col-span-10">
         <div>
           <legend className="text-base font-medium text-gray-900 dark:text-gray-300">
             Industry
           </legend>
         </div>
-        <div className="mt-4 space-y-4">
+        <div className="content-element mt-1">
           {tagList.industry.map((tag) => {
             return (
-              <div key={tag} className="flex items-center">
+              <div key={tag} className="content-checkboxes">
                 <input
                   id={tag}
                   name="techTags"
@@ -130,16 +130,16 @@ function ContentTags({ data, setData, type }) {
       </fieldset>
 
       {/* Protocol Tags */}
-      <fieldset className="my-3 col-span-2">
+      <fieldset className="submit-content-type col-span-10">
         <div>
           <legend className="text-base font-medium text-gray-900 dark:text-gray-300">
             Protocol
           </legend>
         </div>
-        <div className="mt-4 space-y-4">
+        <div className="content-element mt-1">
           {tagList.protocols.map((tag) => {
             return (
-              <div key={tag} className="flex items-center">
+              <div key={tag} className="content-checkboxes">
                 <input
                   id={tag}
                   name="languageTags"
@@ -161,16 +161,16 @@ function ContentTags({ data, setData, type }) {
       </fieldset>
 
       {/* Framework Tags */}
-      <fieldset className="my-3 col-span-2">
+      <fieldset className="submit-content-type col-span-10">
         <div>
           <legend className="text-base font-medium text-gray-900 dark:text-gray-300">
             Framework
           </legend>
         </div>
-        <div className="mt-4 space-y-4">
+        <div className="content-element mt-1">
           {tagList.framework.map((tag) => {
             return (
-              <div key={tag} className="flex items-center">
+              <div key={tag} className="content-checkboxes">
                 <input
                   id={tag}
                   name="languageTags"
@@ -192,16 +192,16 @@ function ContentTags({ data, setData, type }) {
       </fieldset>
 
       {/* Language Tags */}
-      <fieldset className="my-3 col-span-2">
+      <fieldset className="submit-content-type col-span-10">
         <div>
           <legend className="text-base font-medium text-gray-900 dark:text-gray-300">
             Language
           </legend>
         </div>
-        <div className="mt-4 space-y-4">
+        <div className="content-element mt-1">
           {tagList.language.map((tag) => {
             return (
-              <div key={tag} className="flex items-center">
+              <div key={tag} className="content-checkboxes">
                 <input
                   id={tag}
                   name="languageTags"

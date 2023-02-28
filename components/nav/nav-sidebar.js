@@ -175,14 +175,6 @@ const martian = [
   {
     name: 'Martian Tracker',
     href: '/library/admin/martian'
-  },
-  {
-    name: 'Add Martian',
-    href: '/library/admin/martian/create'
-  },
-  {
-    name: 'Add Martian Activities',
-    href: '/library/admin/martian/activity'
   }
 ];
 
@@ -465,7 +457,7 @@ function NavSidebar() {
         </div>
 
         {/* Admin */}
-        {appState.isAdminMode === true && appState.editMode === 'true' ? (
+        {appState.isAdminMode === true && appState.editMode === 'true' && (
           <div className="mt-3 w-full">
             <p
               className="text-md rounded-md bg-[#FACC15] px-3 py-2 font-semibold uppercase tracking-wider text-black lg:text-sm"
@@ -489,8 +481,6 @@ function NavSidebar() {
               })}
             </div>
           </div>
-        ) : (
-          ''
         )}
       </div>
       <Notification

@@ -100,7 +100,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
 
   return (
     <div className="relative h-full overflow-hidden bg-white py-16 px-4 dark:bg-gray-800 sm:px-6 lg:px-8 lg:py-14">
-      <div className=" mx-auto max-w-3xl">
+      <div className=" mx-auto max-w-5xl">
         <div className="absolute top-0 right-1">
           {type === 'edit' && <Position data={data} setData={setData} list={positions} />}
         </div>
@@ -146,7 +146,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
               </>
             ) : null}
             {/* Buttons */}
-            <div className="mx-auto flex max-w-3xl justify-end">
+            <div className="mx-auto flex max-w-5xl col-span-10">
               {type === 'edit' && (
                 <button
                   type="button"

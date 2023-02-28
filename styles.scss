@@ -113,6 +113,39 @@
             width: 90%;
         }
     }
+    .user-detail {
+        flex-direction: column;
+        align-items: center;
+        .user-discription {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin: 10px;
+        }
+    }
+    .table-wrapper {
+        overflow: hidden;
+        > div {
+            max-width: 800px;
+            overflow-x: scroll;
+            padding: 0;
+        }
+    }
+    .submit-content-type {  
+        .content-element {
+            .content-checkboxes {
+                min-width: 90px;
+            }
+        }
+    }
+    .submit-wrapper {
+        .col-span-2 {
+            grid-column: span 5 / span 5;
+            max-height: 180px;
+            overflow: hidden;
+            overflow-y: auto;
+        }
+    }
 }
 .awards-wrap {
     display: flex;
@@ -340,6 +373,94 @@ aside {
                 position: absolute;
                 left: -10px;
                 top: -5px;
+            }
+        }
+    }
+}
+
+.dark {
+    .martian-admin {
+        .dark\:text-gray-500,
+        td {
+            color: #d7d7d7;
+        }
+    }
+}
+
+.submit-content-type {
+    margin-bottom: -10px;
+    display: block;
+    .content-element {
+        display: block;
+        width: 100%;
+        .content-checkboxes {
+            display: inline-block;
+            margin: 0 10px;
+            input {
+                float: left;
+                margin-top: 1px;
+            }
+            label {
+                overflow: hidden;
+                padding-left: 5px;
+                padding-right: 10px;
+            }
+        }
+    }
+}
+
+.dark .dark\:bg-gray-400 {
+    background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+.rounded-image {
+    max-width: 150px;
+    max-height: 140px;
+    img {
+        border-radius: 100%;
+    }
+}
+
+.d-none {display: none;}
+
+.cardHolder {
+    justify-content: space-between;
+    .card {
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: row-reverse;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        min-width: 22%;
+        margin-right: 10px;
+        padding: 10px 20px;
+        margin-bottom: 10px;
+        // background-color: #fff;
+        img {
+            width: 30px !important;
+        }
+        h4 {
+            font-size: 14px;
+            line-height: 20px;
+            font-weight: 500;
+            margin-bottom: 0;
+            text-transform: capitalize;
+            color: rgb(107 114 128);
+        }
+        p {
+            font-size: 12px;
+            margin-bottom: 0;
+            color: rgb(17 24 39);
+        }
+    }
+}
+
+.dark {
+    .cardHolder {
+        .card {
+            h4,
+            p {
+                color: rgba(255, 255, 255, 0.7);
             }
         }
     }

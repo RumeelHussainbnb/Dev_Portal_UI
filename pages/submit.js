@@ -32,8 +32,8 @@ export default function Submit() {
 
   return (
     <Container metaTags={metaTags}>
-      <div className="px-6">
-        <main className="mx-auto mb-5 max-w-6xl shadow">
+      <div className="w-full">
+        <main className="mx-auto mb-5 max-w-6xl shadow submit-wrapper">
           <ContentForm
             type="submit"
             data={data}
