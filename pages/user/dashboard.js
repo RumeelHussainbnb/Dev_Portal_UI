@@ -87,8 +87,8 @@ export default function Contents() {
 
   return (
     <Container metaTags={metaTags}>
-      <div className="dashboard-page">
-        <h2>Summary</h2>
+      <div className="relative z-0 mt-2 w-11/12 divide-gray-200 rounded-md bg-white p-6 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
+        <h2 className="mb-5">Summary</h2>
         <div className="cardHolder">
           <div className="card shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
             <div className="card-image">
@@ -185,7 +185,7 @@ export default function Contents() {
         </div>
         {/* Active Table */}
         <div className="block">
-          <h2>Active content</h2>
+          <h2 className="mb-5 mt-5">Active content</h2>
           <div className=" h-100 relative z-0  mt-2  flex w-11/12 flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
             <div className="scrollbar-hide max-h-100 relative  mb-2 overflow-y-auto shadow-md  sm:rounded-lg">
               {activeContent?.length > 0 ? (
@@ -267,7 +267,7 @@ export default function Contents() {
 
           {/* Inactive Table 2 */}
 
-          <h2>In-active content:</h2>
+          <h2 className="mb-5 mt-5">In-active content</h2>
           <div className="h-100 relative z-0  mt-8  flex w-11/12 flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
             <div className="scrollbar-hide max-h-100 relative  mb-2 overflow-y-auto shadow-md  sm:rounded-lg">
               {inactiveContent?.length > 0 ? (
@@ -345,9 +345,7 @@ export default function Contents() {
 
           {/* Submitted Table 2 */}
 
-          <p className="p-4 text-lg font-medium text-gray-500 dark:text-gray-500">
-            Submitted Content:
-          </p>
+          <h2 className="mb-5 mt-5">Submitted Content</h2>
           <div className="h-100 relative z-0  mt-8  flex w-11/12 flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
             <div className="scrollbar-hide max-h-100 relative  mb-2 overflow-y-auto shadow-md  sm:rounded-lg">
               {submittedContent?.length > 0 ? (
