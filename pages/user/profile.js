@@ -260,7 +260,7 @@ export default function Profile() {
                           </p>
                         )}
                       </ul>
-                      {data?.UserAllContents?.length < data.TotalArticles + 10 && (
+                      {data?.UserAllContents?.length < data.TotalArticles && (
                         <div className="right">
                           <Link href={`/user/dashboard`}>
                             <a rel="noopener noreferrer">
