@@ -7,8 +7,6 @@ import TopContents from './topContents';
 const LatestNewsletter = dynamic(() => import('./latestNewsletter'));
 
 function Sidebar({ tweets, latestNewsletter, topContent }) {
-  const [loadMore, setLoadMore] = useState(false);
-
   return (
     <div className="flex flex-col gap-6">
       {/* Top content */}

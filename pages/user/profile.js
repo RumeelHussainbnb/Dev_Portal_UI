@@ -46,7 +46,7 @@ export default function Profile() {
     const fetchData = async () => {
       let userData = JSON.parse(localStorage.getItem('userData') || '{}');
       try {
-        const user = await http.get(`/user/onGetUserProfileWithData/${userData.data?._id}`);
+        const user = await http.get(`/user/getUserProfileWithData/${userData.data?._id}`);
         setData(user?.data?.data);
       } catch (error) {}
     };
