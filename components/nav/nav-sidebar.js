@@ -162,10 +162,6 @@ const categories = [
     href: '/library/security'
   },
   {
-    name: 'Twitter Threads',
-    href: '/library/threads'
-  },
-  {
     name: 'Video Playlists',
     href: '/library/playlists'
   }
