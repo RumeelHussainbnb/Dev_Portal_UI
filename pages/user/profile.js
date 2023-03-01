@@ -449,48 +449,54 @@ export default function Profile() {
               <div className="links relative z-0 flex w-[49%] flex-col items-center justify-center divide-x divide-gray-200 rounded-md bg-white p-2 shadow dark:divide-gray-700">
                 <p className="text-lg font-medium">Social Links:</p>
                 <div className="b-0 flex flex-row">
-                  <Link
-                    href={
-                      data?.Author?.SocialLinks.length != 0 &&
-                      data?.Author?.SocialLinks[0]?.Link != undefined
-                        ? data?.Author?.SocialLinks[0]?.Link
-                        : '#'
-                    }
-                  >
-                    <a target="_blank" rel="noopener noreferrer">
-                      <div className="mr-2 h-8 w-8 hover:cursor-pointer">
-                        <Image src={'/facebook.png'} width="250px" height="250px" alt="" />
-                      </div>
-                    </a>
-                  </Link>
-                  <Link
-                    href={
-                      data?.Author?.SocialLinks.length != 0 &&
-                      data?.Author?.SocialLinks[1]?.Link != undefined
-                        ? data?.Author?.SocialLinks[1]?.Link
-                        : '#'
-                    }
-                  >
-                    <a target="_blank" rel="noopener noreferrer">
-                      <div className="mr-2 h-8 w-8 hover:cursor-pointer">
-                        <Image src={'/linkedin.png'} width="250px" height="250px" alt="" />
-                      </div>
-                    </a>
-                  </Link>
-                  <Link
-                    href={
-                      data?.Author?.SocialLinks.length != 0 &&
-                      data?.Author?.SocialLinks[2]?.Link != undefined
-                        ? data?.Author?.SocialLinks[2]?.Link
-                        : '#'
-                    }
-                  >
-                    <a target="_blank" rel="noopener noreferrer">
-                      <div className="mr-2 h-8 w-8 hover:cursor-pointer">
-                        <Image src={'/twitter.png'} width="250px" height="250px" alt="" />
-                      </div>
-                    </a>
-                  </Link>
+                  {data?.Author?.SocialLinks[0]?.Link != undefined && (
+                    <Link
+                      href={
+                        data?.Author?.SocialLinks.length != 0 &&
+                        data?.Author?.SocialLinks[0]?.Link != undefined
+                          ? data?.Author?.SocialLinks[0]?.Link
+                          : '#'
+                      }
+                    >
+                      <a target="_blank" rel="noopener noreferrer">
+                        <div className="mr-2 h-8 w-8 hover:cursor-pointer">
+                          <Image src={'/facebook.png'} width="250px" height="250px" alt="" />
+                        </div>
+                      </a>
+                    </Link>
+                  )}
+                  {data?.Author?.SocialLinks[1]?.Link != undefined && (
+                    <Link
+                      href={
+                        data?.Author?.SocialLinks.length != 0 &&
+                        data?.Author?.SocialLinks[1]?.Link != undefined
+                          ? data?.Author?.SocialLinks[1]?.Link
+                          : '#'
+                      }
+                    >
+                      <a target="_blank" rel="noopener noreferrer">
+                        <div className="mr-2 h-8 w-8 hover:cursor-pointer">
+                          <Image src={'/linkedin.png'} width="250px" height="250px" alt="" />
+                        </div>
+                      </a>
+                    </Link>
+                  )}
+                  {data?.Author?.SocialLinks[2]?.Link != undefined && (
+                    <Link
+                      href={
+                        data?.Author?.SocialLinks.length != 0 &&
+                        data?.Author?.SocialLinks[2]?.Link != undefined
+                          ? data?.Author?.SocialLinks[2]?.Link
+                          : '#'
+                      }
+                    >
+                      <a target="_blank" rel="noopener noreferrer">
+                        <div className="mr-2 h-8 w-8 hover:cursor-pointer">
+                          <Image src={'/twitter.png'} width="250px" height="250px" alt="" />
+                        </div>
+                      </a>
+                    </Link>
+                  )}
                 </div>
               </div>
               <div className="links relative z-0 flex w-[49%] flex-col items-center justify-center divide-x divide-gray-200 rounded-md bg-white p-2 shadow  dark:divide-gray-700">
