@@ -274,11 +274,9 @@ export default function Profile() {
                           )}
                         </ul>
                         {data?.UserAllContents?.length < data.TotalArticles && (
-                          <div className="right">
+                          <div className="block w-full text-center link">
                             <Link href={`/user/dashboard`}>
-                              <a rel="noopener noreferrer">
-                                <span>See all</span>
-                              </a>
+                              <a rel="noopener noreferrer">See all</a>
                             </Link>
                           </div>
                         )}

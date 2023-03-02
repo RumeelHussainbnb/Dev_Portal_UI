@@ -278,6 +278,10 @@ export default function Profile() {
 
   //* styling of multiSelect
   const colourStyles = {
+    control: (baseStyles, state) => ({
+      ...baseStyles,
+      borderColor: state.isFocused ? 'grey' : 'red',
+    }),
     multiValue: (styles, { data }) => {
       return {
         ...styles,
@@ -482,7 +486,7 @@ export default function Profile() {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-wrap">
+              <div className="flex flex-wrap skills-wrapper">
                 <div className="lg:w-12/12 w-full px-4">
                   <div className="relative mb-3 w-full">
                     <label
@@ -497,7 +501,7 @@ export default function Profile() {
                         singleValue: state =>
                           state.isDisabled ? 'dark:text-gray-800 text-gray-800' : '',
                         control: state =>
-                          'py-1.5 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500',
+                          'skills-select-list py-1 rounded border-slate-300 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500',
                         option: state =>
                           state.isSelected
                             ? ' dark:bg-gray-400 bg-white dark:text-gray-800 '

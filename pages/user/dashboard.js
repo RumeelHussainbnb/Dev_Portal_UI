@@ -189,7 +189,7 @@ export default function Contents() {
           <div className=" h-100 relative z-0  mt-2  flex w-100 flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
             <div className="scrollbar-hide max-h-100 relative  mb-2 overflow-y-auto shadow-md  sm:rounded-lg">
               {activeContent?.length > 0 ? (
-                <div className='custom-table'>
+                <div className='table-responsive'>
                 <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
                   <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -273,6 +273,7 @@ export default function Contents() {
           <div className="h-100 relative z-0 flex w-100 flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
             <div className="scrollbar-hide max-h-100 relative  mb-2 overflow-y-auto shadow-md  sm:rounded-lg">
               {inactiveContent?.length > 0 ? (
+                <div className='table-responsive'>
                 <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
                   <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -328,6 +329,7 @@ export default function Contents() {
                     ))}
                   </tbody>
                 </table>
+                </div>
               ) : (
                 <div className="w-full text-left text-center text-sm text-gray-500 dark:text-gray-400">
                   No data available
@@ -351,6 +353,7 @@ export default function Contents() {
           <div className="h-100 relative z-0 flex w-100 flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
             <div className="scrollbar-hide max-h-100 relative  mb-2 overflow-y-auto shadow-md  sm:rounded-lg">
               {submittedContent?.length > 0 ? (
+                <div className='table-responsive'>
                 <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
                   <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -409,6 +412,7 @@ export default function Contents() {
                     ))}
                   </tbody>
                 </table>
+                </div>
               ) : (
                 <div className="w-full text-left text-center text-sm text-gray-500 dark:text-gray-400">
                   No data available
