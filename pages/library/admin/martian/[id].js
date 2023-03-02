@@ -19,7 +19,7 @@ export default function Profile() {
   const router = useRouter();
 
   const getUserData = async () => {
-    const user = await http.get(`/user/onGetUserProfileWithData/${router.query?.id}`);
+    const user = await http.get(`/user/getUserProfileWithData/${router.query?.id}`);
     const martianActivity = await http.get(
       `/activity/?pageNumber=1&limit=10&id=${router.query?.id}`
     );
@@ -68,33 +68,33 @@ export default function Profile() {
 
   return (
     <Container metaTags={metaTags}>
-      <div className="flex gap-6 sm:px-6 w-full">
+      <div className="flex w-full gap-6 sm:px-6">
         <main className="w-full">
           <div className="px-4 sm:px-6">
             <div className="relative z-0 flex flex-col divide-gray-200 rounded-md bg-white p-2 shadow dark:divide-gray-700 dark:bg-gray-800">
               {/* Profile Detail */}
-              <div className="flex flex-row user-detail">
+              <div className="user-detail flex flex-row">
                 <div className="rounded-image">
-                {user?.ProfilePicture ? (
+                  {user?.ProfilePicture ? (
                     <Image alt="" src={user.ProfilePicture} width={'250px'} height={'250px'} />
                   ) : (
                     <Image alt="" src={'/martianImage.png'} width={'250px'} height={'250px'} />
                   )}
                 </div>
-                <div className="ml-3 user-discription">
+                <div className="user-discription ml-3">
                   <div className="mt-1 flex flex-row">
                     <p className="mb-2 text-lg font-medium uppercase text-gray-500 dark:text-gray-500">
-                    {user?.Username}
+                      {user?.Username}
                     </p>
                   </div>
                   <div className="flex flex-row">
-                    <div className="h-4 w-4 mr-2 mb-2">
+                    <div className="mr-2 mb-2 h-4 w-4">
                       <Image src={'/place.png'} width="250px" height="250px" />
                     </div>
                     <p className="text-sm text-gray-500 dark:text-gray-500">{user?.Country}</p>
                   </div>
                   <div className="flex flex-row">
-                    <div className="h-4 w-4 mr-2 mb-2">
+                    <div className="mr-2 mb-2 h-4 w-4">
                       <Image src={'/time.png'} width="250px" height="250px" />
                     </div>
                     <p className="text-sm text-gray-500 dark:text-gray-500">
@@ -103,12 +103,10 @@ export default function Profile() {
                   </div>
 
                   <div className="flex flex-row">
-                    <div className="h-4 w-4 mr-2 mb-2">
+                    <div className="mr-2 mb-2 h-4 w-4">
                       <Image src={'/account.png'} width="250px" height="250px" />
                     </div>
-                    <p className="text-sm text-gray-500 dark:text-gray-500">
-                    {user?.MartianType}
-                    </p>
+                    <p className="text-sm text-gray-500 dark:text-gray-500">{user?.MartianType}</p>
                   </div>
                   <p className="mt-2 mb-2 text-xs text-gray-500 dark:text-gray-500">
                     {user?.Skills}
@@ -148,7 +146,7 @@ export default function Profile() {
             <div className="relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md bg-white p-6 p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
               <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Activities:</p>
               {activities?.length > 0 ? (
-                <div className="mb-1 w-full py-8 table-wrapper">
+                <div className="table-wrapper mb-1 w-full py-8">
                   <div className="relative shadow-md  sm:rounded-lg ">
                     <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
                       <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">

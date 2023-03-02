@@ -105,10 +105,6 @@ const adminFeatures = [
     href: '/library/admin/martian/create'
   },
   {
-    name: 'Add Martian Activities',
-    href: '/library/admin/martian/activity'
-  },
-  {
     name: 'Add Playlist',
     href: '/library/admin/playlist/post'
   },
@@ -162,10 +158,6 @@ const categories = [
     href: '/library/security'
   },
   {
-    name: 'Twitter Threads',
-    href: '/library/threads'
-  },
-  {
     name: 'Video Playlists',
     href: '/library/playlists'
   }
@@ -175,6 +167,10 @@ const martian = [
   {
     name: 'Martian Tracker',
     href: '/library/admin/martian'
+  },
+  {
+    name: 'Add Martian Activities',
+    href: '/library/admin/martian/activity'
   }
 ];
 
@@ -382,19 +378,6 @@ function NavSidebar() {
           </p>
           <div className="mt-2 space-y-1" aria-labelledby="communities-headline">
             {categories.map(item => {
-              if (
-                (item.name === 'Submitted' ||
-                  item.name === 'Inactive' ||
-                  item.name === 'Post NewsLetter' ||
-                  item.name === 'Post tweet' ||
-                  item.name === 'Add Playlist' ||
-                  item.name === 'Awards & Recognition' ||
-                  item.name === 'Add Add martian') &&
-                (appState.isAdminMode == false || appState.editMode == 'false')
-              ) {
-                return;
-              }
-
               if (item.name === 'Tools') {
                 return (
                   <Link href={item.href} passHref key={item.name}>

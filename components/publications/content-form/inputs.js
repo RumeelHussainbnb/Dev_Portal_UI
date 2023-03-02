@@ -167,7 +167,7 @@ function Inputs({
           htmlFor="description"
           className="block text-sm font-medium text-gray-700 dark:text-gray-300"
         >
-          Description
+          Brief description
         </label>
         <div className="mt-1">
           <textarea

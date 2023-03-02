@@ -87,8 +87,8 @@ export default function Contents() {
 
   return (
     <Container metaTags={metaTags}>
-      <div className="dashboard-page">
-        <h2>Summary</h2>
+      <div className="relative z-0 mt-2 w-11/12 divide-gray-200 rounded-md bg-white p-6 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
+        <h2 className="mb-5">Summary</h2>
         <div className="cardHolder">
           <div className="card shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
             <div className="card-image">
