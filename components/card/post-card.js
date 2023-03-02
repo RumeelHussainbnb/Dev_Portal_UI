@@ -261,7 +261,7 @@ function PostWide({ content, mode }) {
               >
                 <button className="lowercase decoration-yellow-500 hover:underline">
                   #{tag}
-                  {index < contentState.Tags.length - 1 && <span>,&nbsp;</span>}
+                  {index < contentState.Tags.length - 1}
                 </button>
               </Link>
             ))}
