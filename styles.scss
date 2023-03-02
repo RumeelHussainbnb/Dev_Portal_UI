@@ -61,6 +61,14 @@
             max-width: 320px;
         }
     }
+    .dashboard-page {
+        padding: 0 20px;
+        .cardHolder {
+            .card {
+                min-width: 48%;
+            }
+        }
+    }
 }
 @media (max-width: 767px) {
     .main-content-wrapper {
@@ -145,6 +153,9 @@
             overflow: hidden;
             overflow-y: auto;
         }
+    }
+    .dashboard-page .cardHolder .card {
+        min-width: 98%;
     }
 }
 .awards-wrap {
@@ -458,10 +469,30 @@ aside {
 .dark {
     .cardHolder {
         .card {
-            h4,
-            p {
-                color: rgba(255, 255, 255, 0.7);
+        }
+    }
+    h2,
+    h4,
+    p {
+        color: rgba(255, 255, 255, 0.7) !important;
+    }
+}
+.dashboard-page {
+    width: 100%;
+    table {
+        tr {
+            th {
+                white-space: nowrap;
             }
         }
+    }
+
+    h2 {
+        font-size: 20px;
+        line-height: 24px;
+        font-weight: 600;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        text-transform: capitalize;
     }
 }

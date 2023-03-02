@@ -186,9 +186,10 @@ export default function Contents() {
         {/* Active Table */}
         <div className="block">
           <h2>Active content</h2>
-          <div className=" h-100 relative z-0  mt-2  flex w-11/12 flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
+          <div className=" h-100 relative z-0  mt-2  flex w-100 flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
             <div className="scrollbar-hide max-h-100 relative  mb-2 overflow-y-auto shadow-md  sm:rounded-lg">
               {activeContent?.length > 0 ? (
+                <div className='custom-table'>
                 <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
                   <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -247,6 +248,7 @@ export default function Contents() {
                     ))}
                   </tbody>
                 </table>
+                  </div>
               ) : (
                 <div className="w-full text-left text-center text-sm text-gray-500 dark:text-gray-400">
                   No data available
@@ -268,7 +270,7 @@ export default function Contents() {
           {/* Inactive Table 2 */}
 
           <h2>In-active content:</h2>
-          <div className="h-100 relative z-0  mt-8  flex w-11/12 flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
+          <div className="h-100 relative z-0 flex w-100 flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
             <div className="scrollbar-hide max-h-100 relative  mb-2 overflow-y-auto shadow-md  sm:rounded-lg">
               {inactiveContent?.length > 0 ? (
                 <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
@@ -345,10 +347,8 @@ export default function Contents() {
 
           {/* Submitted Table 2 */}
 
-          <p className="p-4 text-lg font-medium text-gray-500 dark:text-gray-500">
-            Submitted Content:
-          </p>
-          <div className="h-100 relative z-0  mt-8  flex w-11/12 flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
+          <h2>Submitted Content:</h2>
+          <div className="h-100 relative z-0 flex w-100 flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
             <div className="scrollbar-hide max-h-100 relative  mb-2 overflow-y-auto shadow-md  sm:rounded-lg">
               {submittedContent?.length > 0 ? (
                 <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
