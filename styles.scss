@@ -442,7 +442,7 @@ aside {
         flex-direction: row-reverse;
         border: 1px solid #ccc;
         border-radius: 6px;
-        min-width: 22%;
+        min-width: 24%;
         margin-right: 10px;
         padding: 10px 20px;
         margin-bottom: 10px;
@@ -469,12 +469,10 @@ aside {
 .dark {
     .cardHolder {
         .card {
+            h2,h4,p {
+                color: rgba(255, 255, 255, 0.7) !important;
+            }
         }
-    }
-    h2,
-    h4,
-    p {
-        color: rgba(255, 255, 255, 0.7) !important;
     }
 }
 .dashboard-page {
