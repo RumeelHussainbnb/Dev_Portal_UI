@@ -25,7 +25,7 @@ const MvpForm = () => {
     martian: { label: '', name: '' },
     imageUrl: '',
     language: '',
-    expertise: '',
+    skills: [],
     bioGraphy: ''
   });
   const [notifySuccess, setNotifySuccess] = useState({ message: '', show: false });
@@ -34,8 +34,8 @@ const MvpForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isPublicKeyError, setIsPublicKeyError] = useState(false);
   const [isNewUser, setIsNewUser] = useState(false);
-  const [disableFields, setDisableFields] = useState(false);
-  const [isMartian, setIsMartian] = useState(false);
+  const [disableFields, setDisableFields] = useState(true);
+  const [isMartian, setIsMartian] = useState(true);
 
   const getDataByPublicKey = event => {
     event.preventDefault();
@@ -59,7 +59,9 @@ const MvpForm = () => {
               martian: { label: response.data?.MartianType, name: response.data?.MartianType },
               imageUrl: response.data?.ProfilePicture,
               language: response.data?.Languages,
-              expertise: response.data?.Skills,
+              skills: response.data?.Skills?.map(d => {
+                return { label: d, value: d };
+              }),
               bioGraphy: response.data?.Bio,
               roles: response.data?.Roles
             });
@@ -94,7 +96,7 @@ const MvpForm = () => {
               martian: { label: '', name: '' },
               imageUrl: '',
               language: '',
-              expertise: '',
+              skills: [],
               bioGraphy: ''
             });
             setNotifyError({ message: 'No data found against public key', show: true });
@@ -117,6 +119,7 @@ const MvpForm = () => {
   };
   const createMartian = async event => {
     event.preventDefault();
+    debugger;
     let parms = {};
     if (data?.roles?.indexOf('Martian') === -1) {
       data?.roles?.push('Martian');
@@ -131,8 +134,8 @@ const MvpForm = () => {
           FirstName: data.firstName.trim(),
           LastName: data.lastName.trim(),
           Email: data.email,
-          publicKey: data.publicKey.toLowerCase(),
-          Expertise: data.expertise,
+          PublicKey: data.publicKey.toLowerCase(),
+          Expertise: data.skills?.map(skills => skills?.label),
           MartianType: data.martian.label,
           Country: data.country.label,
           City: data.city,
@@ -153,7 +156,7 @@ const MvpForm = () => {
             city: '',
             martian: { label: '', name: '' },
             language: '',
-            expertise: '',
+            skills: [],
             bioGraphy: ''
           });
           setImageURl('');
@@ -170,8 +173,8 @@ const MvpForm = () => {
           FirstName: data.firstName,
           LastName: data.lastName,
           Email: data.email,
-          publicKey: data.publicKey.toLowerCase(),
-          Skills: data.expertise,
+          PublicKey: data.publicKey.toLowerCase(),
+          Skills: data.skills?.map(skills => skills?.label),
           MartianType: data.martian.label,
           Country: data.country.label,
           City: data.city,
@@ -192,7 +195,7 @@ const MvpForm = () => {
             city: '',
             martian: { label: '', name: '' },
             language: '',
-            expertise: '',
+            skills: [],
             bioGraphy: ''
           });
           setImageURl('');
@@ -212,7 +215,7 @@ const MvpForm = () => {
         city: '',
         martian: { label: '', name: '' },
         language: '',
-        expertise: '',
+        skills: [],
         bioGraphy: ''
       });
       setImageURl('');
@@ -235,6 +238,33 @@ const MvpForm = () => {
     {
       label: 'Student Ambassador',
       value: 'Student Ambassador'
+    }
+  ];
+
+  const SkillsOptions = [
+    {
+      label: 'Node.JS',
+      value: 'Node.JS'
+    },
+    {
+      label: 'BlockChain',
+      value: 'BlockChain'
+    },
+    {
+      label: 'Java',
+      value: 'Java'
+    },
+    {
+      label: 'JavaScript',
+      value: 'JavaScript'
+    },
+    {
+      label: 'Python',
+      value: 'Python'
+    },
+    {
+      label: '.NET',
+      value: '.NET'
     }
   ];
 
@@ -279,6 +309,25 @@ const MvpForm = () => {
       }
     }
     setIsLoading(false);
+  };
+
+  //* styling of multiSelect
+  const colourStyles = {
+    multiValue: (styles, { data }) => {
+      return {
+        ...styles,
+        backgroundColor: '#FACC15'
+      };
+    },
+
+    multiValueRemove: (styles, { data }) => ({
+      ...styles,
+      color: '#FF0000',
+      ':hover': {
+        backgroundColor: '#FF0000',
+        color: 'white'
+      }
+    })
   };
 
   return (
@@ -334,7 +383,7 @@ const MvpForm = () => {
                 <div className="col-span-12 sm:col-span-4 lg:col-span-10">
                   {isPublicKeyError && <span className="text-red-700">Please Add public key</span>}
                   <label
-                    htmlFor="expertise"
+                    htmlFor="Public Key"
                     className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                   >
                     Public Key
@@ -537,7 +586,7 @@ const MvpForm = () => {
                 </div>
                 <div className="col-span-12 sm:col-span-4 lg:col-span-10">
                   <label
-                    htmlFor="expertise"
+                    htmlFor="Email"
                     className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                   >
                     Email
@@ -558,13 +607,38 @@ const MvpForm = () => {
 
                 <div className="col-span-12 sm:col-span-4 lg:col-span-10">
                   <label
-                    htmlFor="expertise"
+                    htmlFor="Skills"
                     className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                   >
-                    Expertise
+                    Skills
                   </label>
                   <div className="mt-1">
-                    <textarea
+                    <Select
+                      closeMenuOnSelect={false}
+                      classNames={{
+                        singleValue: state =>
+                          state.isDisabled ? 'dark:text-gray-800 text-gray-800' : '',
+                        control: state =>
+                          'py-1.5 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500',
+                        option: state =>
+                          state.isSelected
+                            ? ' dark:bg-gray-400 bg-white dark:text-gray-800 '
+                            : 'bg-white'
+                      }}
+                      isMulti
+                      value={data.skills}
+                      options={SkillsOptions}
+                      isDisabled={disableFields}
+                      placeholder="Select skills"
+                      onChange={skillArray => {
+                        setData({
+                          ...data,
+                          skills: skillArray
+                        });
+                      }}
+                      styles={colourStyles}
+                    />
+                    {/* <textarea
                       disabled={disableFields}
                       id="expertise"
                       name="expertise"
@@ -573,7 +647,7 @@ const MvpForm = () => {
                       value={data.expertise}
                       onChange={e => setData({ ...data, expertise: e.target.value })}
                       className="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
-                    />
+                    /> */}
                   </div>
                 </div>
 

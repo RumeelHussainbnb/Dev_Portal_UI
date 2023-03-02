@@ -11,10 +11,10 @@ import EndPoint from '../../constant/endPoints';
 import InputField from '../../components/InputField';
 import MultiSelection from '../../components/MultiSelection';
 import validation from '../../utils/validation';
-import Loader from '../../components/Loader';
 import { useRouter } from 'next/router';
 const Notification = dynamic(() => import('../../components/notifications/error'));
 const Spinner = dynamic(() => import('../../components/spinner'));
+import Loader from '../../components/Loader/Loader';
 
 export default function Profile() {
   const inputFile = useRef(null);
@@ -23,6 +23,34 @@ export default function Profile() {
   const [notification, setNotification] = useState({ message: '', show: false });
   const [state, setState] = useState({});
   const [loader, setloader] = useState(false);
+
+  const SkillsOptions = [
+    {
+      label: 'Node.JS',
+      value: 'Node.JS'
+    },
+    {
+      label: 'BlockChain',
+      value: 'BlockChain'
+    },
+    {
+      label: 'Java',
+      value: 'Java'
+    },
+    {
+      label: 'JavaScript',
+      value: 'JavaScript'
+    },
+    {
+      label: 'Python',
+      value: 'Python'
+    },
+    {
+      label: '.NET',
+      value: '.NET'
+    }
+  ];
+
   const metaTags = {
     title: 'BNBChainDev - Update Profile',
     description:
@@ -33,6 +61,7 @@ export default function Profile() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setloader(true);
         let userData = JSON.parse(localStorage.getItem('userData') || '{}');
         const user = await http.get(`/user/getUserProfile/${userData.data?._id}`);
         let { data } = user?.data;
@@ -50,7 +79,9 @@ export default function Profile() {
           Linkedin: data?.Author?.SocialLinks[1]?.Link,
           Twitter: data?.Author?.SocialLinks[2]?.Link,
           Telegram: data?.Author?.SocialLinks[3]?.Link,
-          Skills: data?.Skills,
+          Skills: data?.Skills?.map(d => {
+            return { label: d, value: d };
+          }),
           Certification:
             data?.Author?.Certification?.length === 0
               ? certificateArray
@@ -58,7 +89,10 @@ export default function Profile() {
         };
         setState(createData);
         setcertificateArray(createData?.Certification);
-      } catch (error) {}
+        setloader(true);
+      } catch (error) {
+        setIsLoading(false);
+      }
     };
 
     fetchData();
@@ -159,7 +193,7 @@ export default function Profile() {
       FirstName: item.FirstName,
       LastName: item.LastName,
       Country: item.Country,
-      Skills: item.Skills.map(skills => skills),
+      Skills: item.Skills?.map(skills => skills?.label),
       Email: item.Email,
       Country: item.Country.label,
       ProfilePicture: item.ProfilePicture,
@@ -242,18 +276,28 @@ export default function Profile() {
     value: country.name
   }));
 
-  const handleAddSkills = skills => {
-    setErrors({ ...errors, Skills: '' });
-    if (!state?.Skills?.includes(skills))
-      setState({
-        ...state,
-        Skills: [...(state?.Skills || []), skills]
-      });
+  //* styling of multiSelect
+  const colourStyles = {
+    multiValue: (styles, { data }) => {
+      return {
+        ...styles,
+        backgroundColor: '#FACC15'
+      };
+    },
+
+    multiValueRemove: (styles, { data }) => ({
+      ...styles,
+      color: '#FF0000',
+      ':hover': {
+        backgroundColor: '#FF0000',
+        color: 'white'
+      }
+    })
   };
 
   return (
     <Container className="page-overlay" metaTags={metaTags}>
-      <Loader loader={loader} />
+      {isLoading && <Loader />}
       <div className="edit-profile-page flex w-full justify-around gap-3 md:pl-0">
         <main className="w-full">
           <div className="px-1 sm:px-6">
@@ -438,8 +482,40 @@ export default function Profile() {
                   </div>
                 </div>
               </div>
-              <div className="w-ful">
-                <MultiSelection
+              <div className="flex flex-wrap">
+                <div className="lg:w-12/12 w-full px-4">
+                  <div className="relative mb-3 w-full">
+                    <label
+                      className="mb-2 block text-xs font-bold uppercase text-slate-600"
+                      htmlFor="grid-password"
+                    >
+                      Skills
+                    </label>
+                    <Select
+                      closeMenuOnSelect={false}
+                      classNames={{
+                        singleValue: state =>
+                          state.isDisabled ? 'dark:text-gray-800 text-gray-800' : '',
+                        control: state =>
+                          'py-1.5 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500',
+                        option: state =>
+                          state.isSelected
+                            ? ' dark:bg-gray-400 bg-white dark:text-gray-800 '
+                            : 'bg-white'
+                      }}
+                      isMulti
+                      value={state.Skills}
+                      options={SkillsOptions}
+                      placeholder="Select skills"
+                      onChange={skillArray => {
+                        setState({
+                          ...state,
+                          Skills: skillArray
+                        });
+                      }}
+                      styles={colourStyles}
+                    />
+                    {/* <MultiSelection
                   title="Skills"
                   value={state?.Skills}
                   onRemove={item => {
@@ -454,7 +530,9 @@ export default function Profile() {
                   onAdd={handleAddSkills}
                   options={['Node.JS', 'BlockChain', 'Java', 'JavaScript', 'Python', '.NET']}
                   error={errors.Skills}
-                />
+                /> */}
+                  </div>
+                </div>
               </div>
             </div>
 
