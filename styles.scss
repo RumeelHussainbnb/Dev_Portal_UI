@@ -217,7 +217,12 @@
     font-weight: 500 !important;
   }
 
-
+  .add-martian-wrapper {
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+  }
 }
 
 .awards-wrap {
@@ -696,3 +701,27 @@ aside {
     font-weight: bold;
   }
 }
+
+.public-key {
+  position: relative;
+  input {
+    padding-right: 60px !important;
+  }
+  button {
+    position: absolute;
+    right: 0px;
+    top: 0;
+    bottom: 0;
+    padding: 0 15px;
+  }
+}
+
+.martian-admin {
+  background-color: #fff;
+}
+.dark {
+  .martian-admin {
+    --tw-bg-opacity: 1;
+    background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+  }
+} 

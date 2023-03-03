@@ -331,12 +331,12 @@ const MvpForm = () => {
   };
 
   return (
-    <div className="px-6">
-      <main className="mx-auto mb-5 max-w-6xl shadow">
-        <div className="relative overflow-hidden bg-white py-16 px-4 dark:bg-gray-800 sm:px-6 lg:px-8 lg:py-14">
-          <div className=" mx-auto max-w-3xl">
+    <div className="add-martian-wrapper">
+      <main className="mx-auto mb-5 shadow">
+        <div className="relative overflow-hidden bg-white py-8 px-2 dark:bg-gray-800 sm:px-2 lg:px-6 lg:py-10">
+          <div className=" mx-auto">
             <div className="prose prose mx-auto max-w-max text-center prose-h1:mb-2 prose-p:text-lg dark:prose-invert">
-              <h1>ADD MARTIAN</h1>
+              <h2>ADD MARTIAN</h2>
             </div>
 
             <div className="mx-auto mt-10 h-24 w-28 text-center" onClick={onIconClick}>
@@ -388,7 +388,7 @@ const MvpForm = () => {
                   >
                     Public Key
                   </label>
-                  <div className="mt-1">
+                  <div className="mt-1 public-key">
                     <input
                       id="publicKey"
                       name="publicKey"
@@ -401,10 +401,9 @@ const MvpForm = () => {
                       }}
                       className="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
                     />
-                  </div>
                   <button
                     onClick={getDataByPublicKey}
-                    className="ml-2 rounded-lg border border-yellow-700 bg-yellow-700 p-2.5 text-sm font-medium text-white hover:bg-yellow-800 focus:outline-none focus:ring-4 focus:ring-yellow-300 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800"
+                    className="absolute rounded-lg border border-yellow-700 bg-yellow-700 text-sm font-medium text-white hover:bg-yellow-800 focus:outline-none focus:ring-4 focus:ring-yellow-300 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800"
                   >
                     <svg
                       className="h-5 w-5"
@@ -422,6 +421,7 @@ const MvpForm = () => {
                     </svg>
                     <span className="sr-only">Search</span>
                   </button>
+                  </div>
                 </div>
                 <div className="col-span-12 sm:col-span-4 lg:col-span-5">
                   <label

@@ -87,7 +87,7 @@ export default function Contents() {
 
   return (
     <Container metaTags={metaTags}>
-      <div className="dashboard-page relative z-0 mt-2 w-11/12 divide-gray-200 rounded-md bg-white p-6 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
+      <div className="dashboard-page relative z-0 mt-2 w-11/12 divide-gray-200 rounded-md bg-white p-6 dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
         <h2 className="mb-5">Summary</h2>
         <div className="cardHolder">
           <div className="card shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
@@ -186,7 +186,7 @@ export default function Contents() {
         {/* Active Table */}
         <div className="block">
           <h2>Active content</h2>
-          <div className=" h-100 relative z-0  mt-2  flex w-100 flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
+          <div className=" h-100 relative z-0  mt-2  flex w-100 flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
             <div className="scrollbar-hide max-h-100 relative  mb-2 overflow-y-auto shadow-md  sm:rounded-lg">
               {activeContent?.length > 0 ? (
                 <div className='table-responsive'>
@@ -214,7 +214,7 @@ export default function Contents() {
                     {activeContent.map((data, index) => (
                       <tr
                         key={index}
-                        className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
+                        className="bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
                       >
                         <th
                           scope="row"
@@ -270,7 +270,7 @@ export default function Contents() {
           {/* Inactive Table 2 */}
 
           <h2>In-active content:</h2>
-          <div className="h-100 relative z-0 flex w-100 flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
+          <div className="h-100 relative z-0 flex w-100 flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
             <div className="scrollbar-hide max-h-100 relative  mb-2 overflow-y-auto shadow-md  sm:rounded-lg">
               {inactiveContent?.length > 0 ? (
                 <div className='table-responsive'>
@@ -298,7 +298,7 @@ export default function Contents() {
                     {inactiveContent.map((data, index) => (
                       <tr
                         key={index}
-                        className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
+                        className="bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
                       >
                         <th
                           scope="row"
@@ -350,7 +350,7 @@ export default function Contents() {
           {/* Submitted Table 2 */}
 
           <h2>Submitted Content:</h2>
-          <div className="h-100 relative z-0 flex w-100 flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
+          <div className="h-100 relative z-0 flex w-100 flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
             <div className="scrollbar-hide max-h-100 relative  mb-2 overflow-y-auto shadow-md  sm:rounded-lg">
               {submittedContent?.length > 0 ? (
                 <div className='table-responsive'>
@@ -378,7 +378,7 @@ export default function Contents() {
                     {submittedContent.map((data, index) => (
                       <tr
                         key={index}
-                        className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
+                        className="bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
                       >
                         <th
                           scope="row"
