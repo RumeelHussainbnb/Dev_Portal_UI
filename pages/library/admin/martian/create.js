@@ -381,13 +381,6 @@ const MvpForm = () => {
                 onSubmit={createMartian}
               >
                 <div className="col-span-12 sm:col-span-4 lg:col-span-10">
-                  {isPublicKeyError && <span className="text-red-700">Please Add public key</span>}
-                  <label
-                    htmlFor="Public Key"
-                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-                  >
-                    Public Key
-                  </label>
                   <div className="mt-1 public-key">
                     <input
                       id="publicKey"
@@ -403,7 +396,7 @@ const MvpForm = () => {
                     />
                   <button
                     onClick={getDataByPublicKey}
-                    className="absolute rounded-lg border border-yellow-700 bg-yellow-700 text-sm font-medium text-white hover:bg-yellow-800 focus:outline-none focus:ring-4 focus:ring-yellow-300 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800"
+                    className="rounded-lg border border-yellow-700 bg-yellow-700 text-sm font-medium text-white hover:bg-yellow-800 focus:outline-none focus:ring-4 focus:ring-yellow-300 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800"
                   >
                     <svg
                       className="h-5 w-5"
@@ -421,6 +414,7 @@ const MvpForm = () => {
                     </svg>
                     <span className="sr-only">Search</span>
                   </button>
+                  {isPublicKeyError && <span className="text-red-700 absolute">Please Add public key</span>}
                   </div>
                 </div>
                 <div className="col-span-12 sm:col-span-4 lg:col-span-5">

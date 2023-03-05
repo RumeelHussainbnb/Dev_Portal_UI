@@ -5,13 +5,19 @@
     }
 
     .items-left {
-
       a,
       p {
         color: #fff;
       }
     }
   }
+  h1,h2,h3,h4,h5 {
+    color: #fff;
+  }
+}
+
+h1,h2,h3,h4,h5 {
+  text-transform: capitalize;
 }
 
 .profile-detail {
@@ -549,27 +555,53 @@ aside {
     border-radius: 6px;
     min-width: 24%;
     margin-right: 10px;
-    padding: 10px 20px;
+    padding: 25px 15px;
     margin-bottom: 10px;
 
     // background-color: #fff;
-    img {
-      width: 30px !important;
+    svg {
+      width: 40px !important;
+      height: 40px !important;
     }
 
     h4 {
-      font-size: 14px;
-      line-height: 20px;
-      font-weight: 500;
+      font-size: 18px;
+      line-height: 22px;
+      font-weight: 600;
       margin-bottom: 0;
       text-transform: capitalize;
-      color: rgb(107 114 128);
+      color: #000;
     }
 
     p {
-      font-size: 12px;
+      font-size: 14px;
+      font-weight: 600;
       margin-bottom: 0;
-      color: rgb(17 24 39);
+      color: rgba(0, 0, 0, 0.8);
+    }
+    &.purple-card {
+      border-left: 5px solid #4C1D95;
+      svg, h4, p {
+        color: #4C1D95;
+      }
+    }
+    &.blue-card {
+      border-left: 5px solid #1E3A8A;
+      svg, h4, p {
+        color: #1E3A8A;
+      }
+    }
+    &.green-card {
+      border-left: 5px solid #064E3B;
+      svg, h4, p {
+        color: #064E3B;
+      }
+    }
+    &.red-card {
+      border-left: 5px solid #7F1D1D;
+      svg, h4, p {
+        color: #7F1D1D;
+      }
     }
   }
 }
@@ -582,6 +614,9 @@ aside {
       h4,
       p {
         color: rgba(255, 255, 255, 0.7) !important;
+      }
+      svg {
+        color: #ddd !important;
       }
     }
   }
@@ -704,24 +739,27 @@ aside {
 
 .public-key {
   position: relative;
+  display: flex;
+  justify-content: space-between;
   input {
-    padding-right: 60px !important;
+    margin-right: 20px;
+    // padding-right: 60px !important;
   }
   button {
-    position: absolute;
-    right: 0px;
-    top: 0;
-    bottom: 0;
-    padding: 0 15px;
+    // position: absolute;
+    // right: 0px;
+    // top: 0;
+    // bottom: 0;
+    padding: 15px;
   }
 }
 
-.martian-admin {
-  background-color: #fff;
-}
-.dark {
-  .martian-admin {
-    --tw-bg-opacity: 1;
-    background-color: rgb(17 24 39 / var(--tw-bg-opacity));
-  }
-} 
+// .martian-admin {
+//   background-color: #fff;
+// }
+// .dark {
+//   .martian-admin {
+//     --tw-bg-opacity: 1;
+//     background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+//   }
+// } 

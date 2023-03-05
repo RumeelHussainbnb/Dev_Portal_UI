@@ -90,15 +90,16 @@ export default function Contents() {
       <div className="dashboard-page relative z-0 mt-2 w-11/12 divide-gray-200 rounded-md bg-white p-6 dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
         <h2 className="mb-5">Summary</h2>
         <div className="cardHolder">
-          <div className="card shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
+          <div className="card shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500 purple-card">
             <div className="card-image">
               <svg
-                xmlns="http://www.w3.org/2000/svg"
+                xmlns="http://www.w3.org/2000/svg" 
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
                 className="h-6 w-6"
+                color='#4C1D95'
               >
                 <path
                   strokeLinecap="round"
@@ -109,11 +110,11 @@ export default function Contents() {
               {/* <Image src={'/Username.png'} height={'100px'} width={'100px'} alt="" /> */}
             </div>
             <div>
-              <h4>Overall total content</h4>
+              <h4>total content</h4>
               <p>{activeContentCount + submittedContentCount + inactiveContentCount}</p>
             </div>
           </div>
-          <div className="card shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
+          <div className="card shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500 blue-card">
             <div className="card-image">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -122,6 +123,7 @@ export default function Contents() {
                 strokeWidth={1.5}
                 stroke="currentColor"
                 className="h-6 w-6"
+                color='#1E3A8A'
               >
                 <path
                   strokeLinecap="round"
@@ -136,7 +138,7 @@ export default function Contents() {
               <p>{activeContentCount}</p>
             </div>
           </div>
-          <div className="card shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
+          <div className="card shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500 green-card">
             <div className="card-image">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -145,6 +147,7 @@ export default function Contents() {
                 strokeWidth={1.5}
                 stroke="currentColor"
                 className="h-6 w-6"
+                color='#064E3B'
               >
                 <path
                   strokeLinecap="round"
@@ -159,7 +162,7 @@ export default function Contents() {
               <p>{submittedContentCount}</p>
             </div>
           </div>
-          <div className="card shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
+          <div className="card shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500 red-card">
             <div className="card-image">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -168,6 +171,7 @@ export default function Contents() {
                 strokeWidth={1.5}
                 stroke="currentColor"
                 className="h-6 w-6"
+                color='#7F1D1D'
               >
                 <path
                   strokeLinecap="round"
@@ -218,7 +222,7 @@ export default function Contents() {
                       >
                         <th
                           scope="row"
-                          className="whitespace-nowrap px-1 py-4 font-medium text-gray-900 dark:text-white"
+                          className="whitespace-nowrap p-4 font-medium text-gray-900 dark:text-white"
                         >
                           {moment(data.CreatedAt).format('YYYY-MM-DD')}
                         </th>
@@ -302,7 +306,7 @@ export default function Contents() {
                       >
                         <th
                           scope="row"
-                          className="whitespace-nowrap px-1 py-4 font-medium text-gray-900 dark:text-white"
+                          className="whitespace-nowrap p-4 font-medium text-gray-900 dark:text-white"
                         >
                           {moment(data.CreatedAt).format('YYYY-MM-DD')}
                         </th>
@@ -382,7 +386,7 @@ export default function Contents() {
                       >
                         <th
                           scope="row"
-                          className="whitespace-nowrap px-1 py-4 font-medium text-gray-900 dark:text-white"
+                          className="whitespace-nowrap p-4 font-medium text-gray-900 dark:text-white"
                         >
                           {moment(data.CreatedAt).format('YYYY-MM-DD')}
                         </th>
