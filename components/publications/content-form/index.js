@@ -11,7 +11,6 @@ import useUser from '../../../hooks/useUser';
 import { http } from '../../../utils/http';
 import { convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
-import { now } from 'mongoose';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -85,7 +84,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
     if (editorLimitError) {
       return;
     }
-    data['PublishedAt'] = new Date();
+    //data['PublishedAt'] = new Date();
     await http.put(`/content`, {
       ...data,
       Img: data.ImageUrl,
