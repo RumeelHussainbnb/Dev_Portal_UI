@@ -11,6 +11,7 @@ import useUser from '../../../hooks/useUser';
 import { http } from '../../../utils/http';
 import { convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
+import { now } from 'mongoose';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -84,6 +85,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
     if (editorLimitError) {
       return;
     }
+    data['PublishedAt'] = new Date();
     await http.put(`/content`, {
       ...data,
       Img: data.ImageUrl,
@@ -146,7 +148,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
               </>
             ) : null}
             {/* Buttons */}
-            <div className="mx-auto flex max-w-5xl col-span-10">
+            <div className="col-span-10 mx-auto flex max-w-5xl">
               {type === 'edit' && (
                 <button
                   type="button"
