@@ -1,11 +1,12 @@
 import dynamic from 'next/dynamic';
-import { useState, useId, useRef } from 'react';
+import { useState, useId, useRef, useEffect } from 'react';
 
 import Image from 'next/image';
 import Select from 'react-select';
 import { Container } from '../../../../components/layout';
 import { Country } from 'country-state-city';
 const Spinner = dynamic(() => import('../../../../components/spinner'));
+import Loader from '../../../../components/Loader/Loader';
 
 import { http } from '../../../../utils/http';
 
@@ -30,12 +31,26 @@ const MvpForm = () => {
   });
   const [notifySuccess, setNotifySuccess] = useState({ message: '', show: false });
   const [notifyError, setNotifyError] = useState({ message: '', show: false });
-  const [imageURL, setImageURl] = useState('');
+  const [imageURL, setImageURl] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [isPublicKeyError, setIsPublicKeyError] = useState(false);
   const [isNewUser, setIsNewUser] = useState(false);
   const [disableFields, setDisableFields] = useState(true);
   const [isMartian, setIsMartian] = useState(true);
+  const [selectedFile, setSelectedFile] = useState();
+
+  // create a preview as a side effect, whenever selected file is changed
+  useEffect(() => {
+    if (!selectedFile) {
+      setImageURl(undefined);
+      return;
+    }
+    const objectUrl = URL.createObjectURL(selectedFile[0]);
+    setImageURl(objectUrl);
+
+    // free memory when ever this component is unmounted
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [selectedFile]);
 
   const getDataByPublicKey = event => {
     event.preventDefault();
@@ -99,6 +114,7 @@ const MvpForm = () => {
               skills: [],
               bioGraphy: ''
             });
+            setImageURl();
             setNotifyError({ message: 'No data found against public key', show: true });
             setTimeout(() => {
               setNotifyError({ message: '', show: false });
@@ -119,7 +135,9 @@ const MvpForm = () => {
   };
   const createMartian = async event => {
     event.preventDefault();
-    debugger;
+    setIsLoading(true);
+    const imageUrl = await handleFileUpload();
+
     let parms = {};
     if (data?.roles?.indexOf('Martian') === -1) {
       data?.roles?.push('Martian');
@@ -130,7 +148,7 @@ const MvpForm = () => {
       if (isNewUser) {
         console.log('data ==> ', data);
         parms = {
-          ImageUrl: data.imageUrl,
+          ImageUrl: imageUrl,
           FirstName: data.firstName.trim(),
           LastName: data.lastName.trim(),
           Email: data.email,
@@ -159,14 +177,13 @@ const MvpForm = () => {
             skills: [],
             bioGraphy: ''
           });
-          setImageURl('');
+          setImageURl();
           setNotifySuccess({ message: 'Successfully posted!', show: true });
           setDisableFields(false);
         }
       }
       //update Case
       else {
-        debugger;
         parms = {
           ...data,
           ProfilePicture: data.imageUrl,
@@ -222,6 +239,7 @@ const MvpForm = () => {
       setNotifyError({ message: 'Posting Failed!', show: true });
       setDisableFields(false);
     }
+    setIsLoading(false);
   };
 
   const martianOptions = [
@@ -279,36 +297,43 @@ const MvpForm = () => {
     inputFile.current.click();
   };
   const handleFileUpload = async e => {
-    setIsLoading(true);
     //file Validation Extentions
-    let allowedExtensions = ['jpg', 'jpeg', 'png'];
-    const { files } = e.target;
 
-    if (files && files.length) {
-      const filename = files[0].name;
-      const firstFile = files[0];
+    if (selectedFile && selectedFile.length) {
+      const filename = selectedFile[0].name;
+      const firstFile = selectedFile[0];
       let parts = filename.split('.');
       const fileType = parts[parts.length - 1];
 
-      //sucess
-      if (allowedExtensions.includes(fileType)) {
-        const response = await http.get(`/martian/s3Url`);
-        const imageResponse = await fetch(response.data.url, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          },
-          body: firstFile
-        });
+      const response = await http.get(`/martian/s3Url`);
+      const imageResponse = await fetch(response.data.url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        body: firstFile
+      });
 
-        const imageUrl = response.data.url.split('?')[0];
-        setImageURl(imageUrl);
-        setData({ ...data, imageUrl: imageUrl });
-      } else {
-        //through image type error
-      }
+      return response.data.url.split('?')[0];
+      //setImageURl(imageUrl);
+      //setData({ ...data, imageUrl: imageUrl });
     }
-    setIsLoading(false);
+  };
+  const onSelectFile = e => {
+    if (!e.target.files || e.target.files.length === 0) {
+      setSelectedFile(undefined);
+      return;
+    }
+    let allowedExtensions = ['jpg', 'jpeg', 'png'];
+    const filename = e.target.files[0].name;
+
+    let parts = filename.split('.');
+    const fileType = parts[parts.length - 1];
+    //sucess
+    if (allowedExtensions.includes(fileType)) {
+      // I've kept this example simple by using the first image instead of multiple
+      setSelectedFile(e.target.files);
+    }
   };
 
   //* styling of multiSelect
@@ -333,6 +358,7 @@ const MvpForm = () => {
   return (
     <div className="add-martian-wrapper">
       <main className="mx-auto mb-5 shadow">
+        {isLoading && <Loader />}
         <div className="relative overflow-hidden bg-white py-8 px-2 dark:bg-gray-800 sm:px-2 lg:px-6 lg:py-10">
           <div className=" mx-auto">
             <div className="prose prose mx-auto max-w-max text-center prose-h1:mb-2 prose-p:text-lg dark:prose-invert">
@@ -345,14 +371,12 @@ const MvpForm = () => {
                 style={{ display: 'none' }}
                 // accept=".zip,.rar"
                 ref={inputFile}
-                onChange={handleFileUpload}
+                onChange={onSelectFile}
                 type="file"
               />
               <div className="relative w-28">
                 <div className="col-span-12 sm:col-span-4 lg:col-span-10">
-                  {isLoading ? (
-                    <Spinner />
-                  ) : imageURL ? (
+                  {imageURL ? (
                     <div className="absolute h-28 w-28 rounded-full">
                       <Image src={imageURL} alt="" height={'112px '} width={'112px '} />
                     </div>
@@ -362,13 +386,11 @@ const MvpForm = () => {
                     </div>
                   )}
 
-                  {!isLoading && (
-                    <div className="group absolute flex h-28 w-28 cursor-pointer items-center justify-center rounded-full opacity-60 transition duration-500 hover:bg-gray-200">
-                      <div className="hidden w-5 group-hover:block">
-                        <Image src="/upload.svg" alt="" height={'112px '} width={'112px '} />
-                      </div>
+                  <div className="group absolute flex h-28 w-28 cursor-pointer items-center justify-center rounded-full opacity-60 transition duration-500 hover:bg-gray-200">
+                    <div className="hidden w-5 group-hover:block">
+                      <Image src="/upload.svg" alt="" height={'112px '} width={'112px '} />
                     </div>
-                  )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -381,7 +403,7 @@ const MvpForm = () => {
                 onSubmit={createMartian}
               >
                 <div className="col-span-12 sm:col-span-4 lg:col-span-10">
-                  <div className="mt-1 public-key">
+                  <div className="public-key mt-1">
                     <input
                       id="publicKey"
                       name="publicKey"
@@ -394,27 +416,29 @@ const MvpForm = () => {
                       }}
                       className="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
                     />
-                  <button
-                    onClick={getDataByPublicKey}
-                    className="rounded-lg border border-yellow-700 bg-yellow-700 text-sm font-medium text-white hover:bg-yellow-800 focus:outline-none focus:ring-4 focus:ring-yellow-300 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800"
-                  >
-                    <svg
-                      className="h-5 w-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
+                    <button
+                      onClick={getDataByPublicKey}
+                      className="rounded-lg border border-yellow-700 bg-yellow-700 text-sm font-medium text-white hover:bg-yellow-800 focus:outline-none focus:ring-4 focus:ring-yellow-300 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                      ></path>
-                    </svg>
-                    <span className="sr-only">Search</span>
-                  </button>
-                  {isPublicKeyError && <span className="text-red-700 absolute">Please Add public key</span>}
+                      <svg
+                        className="h-5 w-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                        ></path>
+                      </svg>
+                      <span className="sr-only">Search</span>
+                    </button>
+                    {isPublicKeyError && (
+                      <span className="absolute text-red-700">Please Add public key</span>
+                    )}
                   </div>
                 </div>
                 <div className="col-span-12 sm:col-span-4 lg:col-span-5">
