@@ -338,14 +338,14 @@ function TopBar({ childrens }) {
                                   )}
                                 </Menu.Item>
                               )}
-                              {/* <Menu.Item>
+                              <Menu.Item>
                                 <button
                                   className="text-md block flex w-full bg-gray-100 px-4 py-2 text-gray-700 hover:opacity-80 dark:bg-gray-700 dark:text-gray-300"
                                   onClick={() => router.push('/user/dashboard')}
                                 >
                                   <span>Dashboard</span>
                                 </button>
-                              </Menu.Item> */}
+                              </Menu.Item>
                               <Menu.Item>
                                 <button
                                   className="text-md block flex w-full bg-gray-100 px-4 py-2 text-gray-700 hover:opacity-80 dark:bg-gray-700 dark:text-gray-300"

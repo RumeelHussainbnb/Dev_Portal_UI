@@ -1,13 +1,16 @@
 import { Fragment, useEffect, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import PropTypes from 'prop-types';
-
+import tagList from '../../../utils/tags';
 import ContentForm from './index';
 
 export default function Modal({ open, setOpen, content, positions }) {
   const [data, setData] = useState({});
 
   useEffect(() => {
+    let difference = content.Tags?.filter(x => tagList.levelsInTags.includes(x));
+    difference = difference ? difference : '';
+    console.log('difference ==> ', difference);
     setData({
       PK: content.PK,
       SK: content.SK,
@@ -19,7 +22,9 @@ export default function Modal({ open, setOpen, content, positions }) {
       ImageUrl: content.Img,
       Vertical: content.Vertical,
       Tags: content.Tags,
-      ContentType: content.ContentType,
+      ContentType: { label: content.ContentType, value: content.ContentType },
+      currentLevel: difference[0],
+      Level: { label: difference[0], value: difference[0] },
       ContentStatus: content.ContentStatus,
       SpecialTag: content.SpecialTag,
       Position: content.Position,

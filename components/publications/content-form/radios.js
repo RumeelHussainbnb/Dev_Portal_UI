@@ -8,7 +8,7 @@ function Radios({ data, setData, type }) {
   return (
     <>
       {/* Content Type */}
-      <fieldset className="submit-content-type col-span-10">
+      {/* <fieldset className="submit-content-type col-span-10">
           <legend className="text-base font-medium text-gray-900 dark:text-gray-300">
             Content Type
           </legend>
@@ -36,7 +36,7 @@ function Radios({ data, setData, type }) {
             );
           })}
         </div>
-      </fieldset>
+      </fieldset> */}
 
       {/* Badge */}
       {type === 'edit' && (

@@ -1,16 +1,21 @@
+import { memo, useState, useId } from 'react';
+import { useRouter } from 'next/router';
 import fetch from 'isomorphic-unfetch';
 import PropTypes from 'prop-types';
-import ContentTags from './tags';
-import { memo, useState } from 'react';
+import { convertToRaw } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
+import Select from 'react-select';
+
 import Radios from './radios';
 import Inputs from './inputs';
 import Status from './status';
+import ContentTags from './tags';
 import Position from './position';
-import { useRouter } from 'next/router';
-import useUser from '../../../hooks/useUser';
+import tagList from '../../../utils/tags';
 import { http } from '../../../utils/http';
-import { convertToRaw } from 'draft-js';
-import draftToHtml from 'draftjs-to-html';
+import useUser from '../../../hooks/useUser';
+
+import contentType from '../../../utils/content-types';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -34,7 +39,9 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
       return;
     }
     let userData = JSON.parse(localStorage.getItem('userData') || '{}');
-
+    let copyState = { ...data };
+    copyState.Tags.push(data?.Level?.value);
+    setData(copyState);
     // If the user is an admin, content will be active by default
     const content = data;
     if (isAdmin) {
@@ -54,6 +61,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
     let isImageUrl = elem.querySelector('img')?.src;
     //console.log('isImageUrl ==> ', isImageUrl);
     content.ImageUrl = isImageUrl ? isImageUrl : '';
+    content.ContentType = data.ContentType.value;
 
     const response = await http.post(`/content`, content);
 
@@ -64,6 +72,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
       Author: '',
       Description: '',
       Url: '',
+      Level: {},
       ImageUrl: '',
       Vertical: 'bnb',
       Tags: [],
@@ -85,9 +94,14 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
       return;
     }
     //data['PublishedAt'] = new Date();
+    let copyState = { ...data };
+    let updatedTags = copyState?.Tags?.filter(e => e !== copyState.currentLevel);
+    updatedTags.push(copyState?.Level?.value);
+    copyState.Tags = updatedTags;
     await http.put(`/content`, {
-      ...data,
+      ...copyState,
       Img: data.ImageUrl,
+      ContentType: data.ContentType.value,
       ContentMarkdown: convertContentToHTML()
     });
 
@@ -127,6 +141,70 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
             className="grid grid-cols-8 gap-y-6 gap-x-8"
             onSubmit={type === 'edit' ? updateContent : createContent}
           >
+            <div className="col-span-12 sm:col-span-4 lg:col-span-10">
+              <label
+                htmlFor="country"
+                className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                Content Type
+              </label>
+              <Select
+                placeholder="Select content type"
+                instanceId={useId()}
+                required
+                name="contentType"
+                label="contentType"
+                classNames={{
+                  singleValue: state =>
+                    state.isDisabled ? 'dark:text-gray-800 text-gray-800' : '',
+                  control: state =>
+                    'py-1.5 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500',
+
+                  option: state =>
+                    state.isSelected ? ' dark:bg-gray-400 bg-white dark:text-gray-800 ' : 'bg-white'
+                }}
+                options={contentType}
+                value={data.ContentType.label ? data.ContentType : ''}
+                onChange={contentTypeObject => {
+                  setData({
+                    ...data,
+                    ContentType: contentTypeObject
+                  });
+                }}
+              />
+            </div>
+            <div className="col-span-12 sm:col-span-4 lg:col-span-10">
+              <label
+                htmlFor="country"
+                className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                Level
+              </label>
+              <Select
+                placeholder="Select Level"
+                instanceId={useId()}
+                required
+                name="Level"
+                label="Level"
+                classNames={{
+                  singleValue: state =>
+                    state.isDisabled ? 'dark:text-gray-800 text-gray-800' : '',
+                  control: state =>
+                    'py-1.5 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500',
+
+                  option: state =>
+                    state.isSelected ? ' dark:bg-gray-400 bg-white dark:text-gray-800 ' : 'bg-white'
+                }}
+                options={tagList.level}
+                value={data.Level.label ? data.Level : ''}
+                onChange={levelObject => {
+                  setData({
+                    ...data,
+                    Level: levelObject
+                  });
+                }}
+              />
+            </div>
             {/*Inputs*/}
             <Inputs
               data={data}

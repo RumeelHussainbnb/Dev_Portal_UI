@@ -13,6 +13,7 @@ export default function Submit() {
     Description: '',
     ContentMarkdown: EditorState.createEmpty(),
     Url: '',
+    Level: {},
     ImageUrl: '',
     Vertical: 'BNBChain',
     Tags: [],
@@ -33,7 +34,7 @@ export default function Submit() {
   return (
     <Container metaTags={metaTags}>
       <div className="w-full">
-        <main className="mx-auto mb-5 max-w-6xl shadow submit-wrapper">
+        <main className="submit-wrapper mx-auto mb-5 max-w-6xl shadow">
           <ContentForm
             type="submit"
             data={data}

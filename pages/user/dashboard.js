@@ -6,8 +6,10 @@ import { http } from '../../utils/http';
 import { Container } from '../../components/layout';
 import Pagination from '../../components/pagination/Pagination';
 import Image from 'next/image';
+import Loader from '../../components/Loader/Loader';
 
 export default function Contents() {
+  const [isLoading, setIsLoading] = useState(false);
   const [activeContent, setActiveContent] = useState([]);
   const [inactiveContent, setInactiveContent] = useState([]);
   const [submittedContent, setSubmittedContent] = useState([]);
@@ -18,6 +20,7 @@ export default function Contents() {
   useEffect(() => {
     let userData = JSON.parse(localStorage.getItem('userData') || '{}');
     const fetchData = async () => {
+      setIsLoading(true);
       try {
         const { data } = await http.get(
           `${process.env.NEXT_PUBLIC_API_ENDPOINT}/content/status?&page=${1}&id=${
@@ -33,11 +36,14 @@ export default function Contents() {
         setSubmittedContentCount(data?.data?.statusSubmittedContentCount);
         // console.log('martian ==> ', martian);
       } catch (error) {}
+      setIsLoading(false);
     };
+
     fetchData();
   }, []);
 
   const handlePageChange = async (page, tableType) => {
+    setIsLoading(true);
     try {
       if (tableType === 'Active') {
         const { data } = await http.get(
@@ -73,6 +79,7 @@ export default function Contents() {
         }
       }
     } catch (error) {}
+    setIsLoading(false);
   };
 
   //No need to for this function because we removd page size
@@ -87,19 +94,20 @@ export default function Contents() {
 
   return (
     <Container metaTags={metaTags}>
+      {isLoading && <Loader />}
       <div className="dashboard-page relative z-0 mt-2 w-11/12 divide-gray-200 rounded-md bg-white p-6 dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
         <h2 className="mb-5">Summary</h2>
         <div className="cardHolder">
-          <div className="card shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500 purple-card">
+          <div className="card purple-card shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
             <div className="card-image">
               <svg
-                xmlns="http://www.w3.org/2000/svg" 
+                xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
                 className="h-6 w-6"
-                color='#4C1D95'
+                color="#4C1D95"
               >
                 <path
                   strokeLinecap="round"
@@ -114,7 +122,7 @@ export default function Contents() {
               <p>{activeContentCount + submittedContentCount + inactiveContentCount}</p>
             </div>
           </div>
-          <div className="card shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500 blue-card">
+          <div className="card blue-card shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
             <div className="card-image">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -123,7 +131,7 @@ export default function Contents() {
                 strokeWidth={1.5}
                 stroke="currentColor"
                 className="h-6 w-6"
-                color='#1E3A8A'
+                color="#1E3A8A"
               >
                 <path
                   strokeLinecap="round"
@@ -138,7 +146,7 @@ export default function Contents() {
               <p>{activeContentCount}</p>
             </div>
           </div>
-          <div className="card shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500 green-card">
+          <div className="card green-card shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
             <div className="card-image">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -147,7 +155,7 @@ export default function Contents() {
                 strokeWidth={1.5}
                 stroke="currentColor"
                 className="h-6 w-6"
-                color='#064E3B'
+                color="#064E3B"
               >
                 <path
                   strokeLinecap="round"
@@ -162,7 +170,7 @@ export default function Contents() {
               <p>{submittedContentCount}</p>
             </div>
           </div>
-          <div className="card shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500 red-card">
+          <div className="card red-card shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
             <div className="card-image">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -171,7 +179,7 @@ export default function Contents() {
                 strokeWidth={1.5}
                 stroke="currentColor"
                 className="h-6 w-6"
-                color='#7F1D1D'
+                color="#7F1D1D"
               >
                 <path
                   strokeLinecap="round"
@@ -190,69 +198,69 @@ export default function Contents() {
         {/* Active Table */}
         <div className="block">
           <h2>Active content</h2>
-          <div className=" h-100 relative z-0  mt-2  flex w-100 flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
+          <div className=" h-100 w-100 relative  z-0  mt-2 flex flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
             <div className="scrollbar-hide max-h-100 relative  mb-2 overflow-y-auto shadow-md  sm:rounded-lg">
               {activeContent?.length > 0 ? (
-                <div className='table-responsive'>
-                <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
-                  <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                      <th scope="col" className="px-4 py-3">
-                        Created Date
-                      </th>
-                      <th scope="col" className="px-4 py-3">
-                        Title
-                      </th>
-                      <th scope="col" className="px-4 py-3">
-                        Content Status
-                      </th>
-                      <th scope="col" className="px-4 py-3">
-                        Author
-                      </th>
-                      <th scope="col" className="px-4 py-3">
-                        Published On
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {activeContent.map((data, index) => (
-                      <tr
-                        key={index}
-                        className="bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
-                      >
-                        <th
-                          scope="row"
-                          className="whitespace-nowrap p-4 font-medium text-gray-900 dark:text-white"
-                        >
-                          {moment(data.CreatedAt).format('YYYY-MM-DD')}
+                <div className="table-responsive">
+                  <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
+                    <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+                      <tr>
+                        <th scope="col" className="px-4 py-3">
+                          Created Date
                         </th>
-                        <td className="px-4 py-4">
-                          <a
-                            href={data.Url}
-                            rel="noreferrer"
-                            target="_blank"
-                            className=" hover:underline "
-                          >
-                            {data.Title}
-                          </a>
-                        </td>
-                        <td className="flex flex-row px-4 py-4">
-                          <CheckCircleIcon
-                            className="mr-2 h-6 w-6 fill-green-500"
-                            aria-hidden="true"
-                          />
-                          {data.ContentStatus}
-                        </td>
-                        <td className="px-4 py-4">{data.Author}</td>
-
-                        <td className="px-4 py-4">
-                          {moment(data.PublishedAt).format('YYYY-MM-DD')}
-                        </td>
+                        <th scope="col" className="px-4 py-3">
+                          Title
+                        </th>
+                        <th scope="col" className="px-4 py-3">
+                          Content Status
+                        </th>
+                        <th scope="col" className="px-4 py-3">
+                          Author
+                        </th>
+                        <th scope="col" className="px-4 py-3">
+                          Published On
+                        </th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-                  </div>
+                    </thead>
+                    <tbody>
+                      {activeContent.map((data, index) => (
+                        <tr
+                          key={index}
+                          className="bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
+                        >
+                          <th
+                            scope="row"
+                            className="whitespace-nowrap p-4 font-medium text-gray-900 dark:text-white"
+                          >
+                            {moment(data.CreatedAt).format('YYYY-MM-DD')}
+                          </th>
+                          <td className="px-4 py-4">
+                            <a
+                              href={data.Url}
+                              rel="noreferrer"
+                              target="_blank"
+                              className=" hover:underline "
+                            >
+                              {data.Title}
+                            </a>
+                          </td>
+                          <td className="flex flex-row px-4 py-4">
+                            <CheckCircleIcon
+                              className="mr-2 h-6 w-6 fill-green-500"
+                              aria-hidden="true"
+                            />
+                            {data.ContentStatus}
+                          </td>
+                          <td className="px-4 py-4">{data.Author}</td>
+
+                          <td className="px-4 py-4">
+                            {moment(data.PublishedAt).format('YYYY-MM-DD')}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               ) : (
                 <div className="w-full text-left text-center text-sm text-gray-500 dark:text-gray-400">
                   No data available
@@ -274,65 +282,65 @@ export default function Contents() {
           {/* Inactive Table 2 */}
 
           <h2>In-active content:</h2>
-          <div className="h-100 relative z-0 flex w-100 flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
+          <div className="h-100 w-100 relative z-0 flex flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
             <div className="scrollbar-hide max-h-100 relative  mb-2 overflow-y-auto shadow-md  sm:rounded-lg">
               {inactiveContent?.length > 0 ? (
-                <div className='table-responsive'>
-                <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
-                  <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                      <th scope="col" className="px-4 py-3">
-                        Created Date
-                      </th>
-                      <th scope="col" className="px-4 py-3">
-                        Title
-                      </th>
-                      <th scope="col" className="px-4 py-3">
-                        Content Status
-                      </th>
-                      <th scope="col" className="px-4 py-3">
-                        Author
-                      </th>
-                      <th scope="col" className="px-4 py-3">
-                        Published On
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {inactiveContent.map((data, index) => (
-                      <tr
-                        key={index}
-                        className="bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
-                      >
-                        <th
-                          scope="row"
-                          className="whitespace-nowrap p-4 font-medium text-gray-900 dark:text-white"
-                        >
-                          {moment(data.CreatedAt).format('YYYY-MM-DD')}
+                <div className="table-responsive">
+                  <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
+                    <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+                      <tr>
+                        <th scope="col" className="px-4 py-3">
+                          Created Date
                         </th>
-                        <td className="px-4 py-4">
-                          <a
-                            href={data.Url}
-                            rel="noreferrer"
-                            target="_blank"
-                            className=" hover:underline "
-                          >
-                            {data.Title}
-                          </a>
-                        </td>
-                        <td className="flex flex-row px-4 py-6">
-                          <XCircleIcon className="mr-2 h-6 w-6 fill-red-500" aria-hidden="true" />
-                          {data.ContentStatus}
-                        </td>
-                        <td className="px-4 py-4">{data.Author}</td>
-
-                        <td className="px-4 py-4">
-                          {moment(data.PublishedAt).format('YYYY-MM-DD')}
-                        </td>
+                        <th scope="col" className="px-4 py-3">
+                          Title
+                        </th>
+                        <th scope="col" className="px-4 py-3">
+                          Content Status
+                        </th>
+                        <th scope="col" className="px-4 py-3">
+                          Author
+                        </th>
+                        <th scope="col" className="px-4 py-3">
+                          Published On
+                        </th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {inactiveContent.map((data, index) => (
+                        <tr
+                          key={index}
+                          className="bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
+                        >
+                          <th
+                            scope="row"
+                            className="whitespace-nowrap p-4 font-medium text-gray-900 dark:text-white"
+                          >
+                            {moment(data.CreatedAt).format('YYYY-MM-DD')}
+                          </th>
+                          <td className="px-4 py-4">
+                            <a
+                              href={data.Url}
+                              rel="noreferrer"
+                              target="_blank"
+                              className=" hover:underline "
+                            >
+                              {data.Title}
+                            </a>
+                          </td>
+                          <td className="flex flex-row px-4 py-6">
+                            <XCircleIcon className="mr-2 h-6 w-6 fill-red-500" aria-hidden="true" />
+                            {data.ContentStatus}
+                          </td>
+                          <td className="px-4 py-4">{data.Author}</td>
+
+                          <td className="px-4 py-4">
+                            {moment(data.PublishedAt).format('YYYY-MM-DD')}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               ) : (
                 <div className="w-full text-left text-center text-sm text-gray-500 dark:text-gray-400">
@@ -354,68 +362,68 @@ export default function Contents() {
           {/* Submitted Table 2 */}
 
           <h2>Submitted Content:</h2>
-          <div className="h-100 relative z-0 flex w-100 flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
+          <div className="h-100 w-100 relative z-0 flex flex-col divide-gray-200 rounded-md bg-white p-2 text-sm text-gray-500 dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
             <div className="scrollbar-hide max-h-100 relative  mb-2 overflow-y-auto shadow-md  sm:rounded-lg">
               {submittedContent?.length > 0 ? (
-                <div className='table-responsive'>
-                <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
-                  <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                      <th scope="col" className="px-4 py-3">
-                        Created Date
-                      </th>
-                      <th scope="col" className="px-4 py-3">
-                        Title
-                      </th>
-                      <th scope="col" className="px-4 py-3">
-                        Content Status
-                      </th>
-                      <th scope="col" className="px-4 py-3">
-                        Author
-                      </th>
-                      <th scope="col" className="px-4 py-3">
-                        Published On
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {submittedContent.map((data, index) => (
-                      <tr
-                        key={index}
-                        className="bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
-                      >
-                        <th
-                          scope="row"
-                          className="whitespace-nowrap p-4 font-medium text-gray-900 dark:text-white"
-                        >
-                          {moment(data.CreatedAt).format('YYYY-MM-DD')}
+                <div className="table-responsive">
+                  <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
+                    <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+                      <tr>
+                        <th scope="col" className="px-4 py-3">
+                          Created Date
                         </th>
-                        <td className="px-4 py-4">
-                          <a
-                            href={data.Url}
-                            rel="noreferrer"
-                            target="_blank"
-                            className=" hover:underline "
-                          >
-                            {data.Title}
-                          </a>
-                        </td>
-                        <td className="flex flex-row px-4 py-6">
-                          <InformationCircleIcon
-                            className="mr-2 h-6 w-6 fill-yellow-500"
-                            aria-hidden="true"
-                          />
-                          {data.ContentStatus}
-                        </td>
-                        <td className="px-4 py-4">{data.Author}</td>
-
-                        <td className="px-4 py-4">
-                          {moment(data.PublishedAt).format('YYYY-MM-DD')}
-                        </td>
+                        <th scope="col" className="px-4 py-3">
+                          Title
+                        </th>
+                        <th scope="col" className="px-4 py-3">
+                          Content Status
+                        </th>
+                        <th scope="col" className="px-4 py-3">
+                          Author
+                        </th>
+                        <th scope="col" className="px-4 py-3">
+                          Published On
+                        </th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {submittedContent.map((data, index) => (
+                        <tr
+                          key={index}
+                          className="bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
+                        >
+                          <th
+                            scope="row"
+                            className="whitespace-nowrap p-4 font-medium text-gray-900 dark:text-white"
+                          >
+                            {moment(data.CreatedAt).format('YYYY-MM-DD')}
+                          </th>
+                          <td className="px-4 py-4">
+                            <a
+                              href={data.Url}
+                              rel="noreferrer"
+                              target="_blank"
+                              className=" hover:underline "
+                            >
+                              {data.Title}
+                            </a>
+                          </td>
+                          <td className="flex flex-row px-4 py-6">
+                            <InformationCircleIcon
+                              className="mr-2 h-6 w-6 fill-yellow-500"
+                              aria-hidden="true"
+                            />
+                            {data.ContentStatus}
+                          </td>
+                          <td className="px-4 py-4">{data.Author}</td>
+
+                          <td className="px-4 py-4">
+                            {moment(data.PublishedAt).format('YYYY-MM-DD')}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               ) : (
                 <div className="w-full text-left text-center text-sm text-gray-500 dark:text-gray-400">
