@@ -36,5 +36,6 @@ export default {
     'React.js',
     'Vue.js'
   ],
-  levelsInTags: ['Beginner', 'Intermediate', 'Expert']
+  levelsInTags: ['Beginner', 'Intermediate', 'Expert'],
+  externalContentTypes: ['Ama', 'Sdk', 'Podcasts', 'Scaffolds', 'Implementations']
 };

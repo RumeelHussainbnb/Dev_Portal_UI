@@ -6,7 +6,7 @@ import { http } from '../../utils/http';
 
 const Editor = dynamic(() => import('react-draft-wysiwyg').then(mod => mod.Editor), { ssr: false });
 
-const EditorComponent = ({ editorState, EditorChange }) => {
+const EditorComponent = ({ editorState, EditorChange, readOnly = false }) => {
   const uploadCallbackk = (file, callback) => {
     return new Promise((resolve, reject) => {
       const reader = new window.FileReader();
@@ -41,6 +41,7 @@ const EditorComponent = ({ editorState, EditorChange }) => {
   };
   return (
     <Editor
+      readOnly={readOnly}
       toolbar={{
         blockType: {
           inDropdown: true,

@@ -1,12 +1,12 @@
 export default [
-  //   {
-  //     label: 'Tutorials',
-  //     value: 'Tutorials'
-  //   },
-  //   {
-  //     label: 'Articles',
-  //     value: 'Articles'
-  //   },
+  {
+    label: 'Tutorials',
+    value: 'Tutorials'
+  },
+  {
+    label: 'Articles',
+    value: 'Articles'
+  },
   {
     label: 'Podcasts',
     value: 'Podcasts'
@@ -19,22 +19,22 @@ export default [
     label: 'Scaffolds',
     value: 'Scaffolds'
   },
-  //   {
-  //     label: 'Tools',
-  //     value: 'Tools'
-  //   },
+  {
+    label: 'Tools',
+    value: 'Tools'
+  },
   {
     label: 'Implementations',
     value: 'Implementations'
   },
-  //   {
-  //     label: 'Security',
-  //     value: 'Security'
-  //   },
-  //   {
-  //     label: 'Threads',
-  //     value: 'Threads'
-  //   },
+  {
+    label: 'Security',
+    value: 'Security'
+  },
+  {
+    label: 'Threads',
+    value: 'Threads'
+  },
   {
     label: 'Ama',
     value: 'Ama'

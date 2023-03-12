@@ -2,7 +2,7 @@ import { memo, useState, useId } from 'react';
 import { useRouter } from 'next/router';
 import fetch from 'isomorphic-unfetch';
 import PropTypes from 'prop-types';
-import { convertToRaw } from 'draft-js';
+import { EditorState,convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import Select from 'react-select';
 
@@ -168,7 +168,8 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
                 onChange={contentTypeObject => {
                   setData({
                     ...data,
-                    ContentType: contentTypeObject
+                    ContentType: contentTypeObject,
+                    ContentMarkdown: EditorState.createEmpty()
                   });
                 }}
               />

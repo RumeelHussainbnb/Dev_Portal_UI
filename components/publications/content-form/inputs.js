@@ -10,6 +10,7 @@ import {
   createWithContent
 } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
+import tagList from '../../../utils/tags';
 
 const MAX_LENGTH = 250;
 
@@ -26,6 +27,10 @@ function Inputs({
   editorLimitError,
   setEditorLimitError
 }) {
+  let isEditorDisblaed = false;
+  if (data.ContentType.label)
+    isEditorDisblaed = tagList.externalContentTypes.includes(data.ContentType.label);
+
   //handle editor state change
   const handleEditorChange = state => {
     //isContentLimitExceed(state);
@@ -110,33 +115,40 @@ function Inputs({
             </div> */}
 
       {/* Content Link */}
-      {/* <div className="col-span-10">
-        <label htmlFor="url" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-          Content URL
-        </label>
-        <div className="mt-1">
-          <input
-            type="url"
-            name="url"
-            id="url"
-            value={data.Url}
-            placeholder="https://www.example.com"
-            onChange={async e => {
-              setData({ ...data, Url: e.target.value });
-              await checkForDuplicateContent(e.target.value);
-            }}
-            className={classNames(
-              'block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800',
-              contentExist && 'border-red-300 text-red-900 focus:border-red-600 focus:ring-red-600'
-            )}
-          />
+      {isEditorDisblaed && (
+        <div className="col-span-10">
+          <label
+            htmlFor="url"
+            className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+          >
+            Content URL
+          </label>
+          <div className="mt-1">
+            <input
+              required
+              type="url"
+              name="url"
+              id="url"
+              value={data.Url}
+              placeholder="https://www.example.com"
+              onChange={async e => {
+                setData({ ...data, Url: e.target.value });
+                await checkForDuplicateContent(e.target.value);
+              }}
+              className={classNames(
+                'block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800',
+                contentExist &&
+                  'border-red-300 text-red-900 focus:border-red-600 focus:ring-red-600'
+              )}
+            />
+          </div>
+          {contentExist && (
+            <p className="mt-2 text-sm text-red-600" id="url">
+              Content already included in the Library.
+            </p>
+          )}
         </div>
-        {contentExist && (
-          <p className="mt-2 text-sm text-red-600" id="url">
-            Content already included in the Library.
-          </p>
-        )}
-      </div> */}
+      )}
 
       {/* Preview Image Url */}
       {/* <div className="col-span-10">
@@ -205,7 +217,13 @@ function Inputs({
             className="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
           /> */}
 
-          <EditorComponent editorState={data.ContentMarkdown} EditorChange={handleEditorChange} />
+          {!isEditorDisblaed && (
+            <EditorComponent
+              readOnly={isEditorDisblaed}
+              editorState={data.ContentMarkdown}
+              EditorChange={handleEditorChange}
+            />
+          )}
           {/* <p
             className={classNames(
               'mt-2 text-sm text-gray-500 dark:text-gray-500',

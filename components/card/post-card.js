@@ -21,6 +21,7 @@ import { http } from '../../utils/http';
 import ReactHtmlParser from 'react-html-parser';
 const Notification = dynamic(() => import('../notifications/error'));
 import { useAppDispatch, useAppState } from '../../context/AppContext';
+import tagList from '../../utils/tags';
 
 const Badge = dynamic(() => import('../badges/badge.js'));
 const CopyLink = dynamic(() => import('./copy-link.js'));
@@ -33,6 +34,7 @@ const myLoader = ({ src, width, quality }) => {
 };
 
 function PostWide({ content, mode }) {
+  let isExternalLink = tagList.externalContentTypes.includes(content.ContentType);
   const [isS3Audio, setIsS3Audio] = useState(false);
   const [contentState, setContentState] = useState(content);
   const [notification, setNotification] = useState({ message: '', show: false });
@@ -178,21 +180,22 @@ function PostWide({ content, mode }) {
           </a>
         </Link>
       ) : (
-        <Link href={`/library/content/${contentState._id}`}>
-          {/* <a href={contentState.Url} className="focus:outline-none" target="_blank" rel="noreferrer"> */}
-          <div>
-            <Image
-              className="cursor-pointer rounded-t-lg object-cover hover:opacity-90"
-              src={imageUrl}
-              alt=""
-              height="350"
-              width="700"
-              quality="100"
-              placeholder="blur"
-              blurDataURL={imageUrl}
-              loader={myLoader}
-            />
-          </div>
+        <Link href={isExternalLink ? contentState.Url : `/library/content/${contentState._id}`}>
+          <a className="focus:outline-none" target="_blank" rel="noreferrer">
+            <div>
+              <Image
+                className="cursor-pointer rounded-t-lg object-cover hover:opacity-90"
+                src={imageUrl}
+                alt=""
+                height="350"
+                width="700"
+                quality="100"
+                placeholder="blur"
+                blurDataURL={imageUrl}
+                loader={myLoader}
+              />
+            </div>
+          </a>
         </Link>
       )}
 
