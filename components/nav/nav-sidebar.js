@@ -112,10 +112,10 @@ const adminFeatures = [
     name: 'Post NewsLetter',
     href: '/library/admin/newsletter/post'
   },
-  {
-    name: 'Post tweet',
-    href: '/library/admin/tweet/post'
-  },
+  // {
+  //   name: 'Post tweet',
+  //   href: '/library/admin/tweet/post'
+  // },
   {
     name: 'Awards & Recognition',
     href: '/library/admin/awards-recognition'

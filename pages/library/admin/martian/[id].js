@@ -9,6 +9,7 @@ import fetch from '../../../../utils/fetcher';
 import Pagination from '../../../../components/pagination/Pagination';
 import { http } from '../../../../utils/http';
 import { useRouter } from 'next/router';
+import Loader from '../../../../components/Loader/Loader';
 
 export default function Profile() {
   const [page, setPage] = useState(1);
@@ -16,13 +17,16 @@ export default function Profile() {
   const [activities, setActivities] = useState([]);
   const [totalActivities, setTotalActivities] = useState(0);
   const [user, setUser] = useState();
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const getUserData = async () => {
+    setIsLoading(true);
     const user = await http.get(`/user/getUserProfileWithData/${router.query?.id}`);
     const martianActivity = await http.get(
       `/activity/?pageNumber=1&limit=10&id=${router.query?.id}`
     );
+    setIsLoading(false);
     setUser(user.data?.data);
     setActivities(martianActivity?.data?.data?.totalActivity);
     setTotalActivities(martianActivity?.data?.data?.totalActivityCount);
@@ -70,6 +74,7 @@ export default function Profile() {
     <Container metaTags={metaTags}>
       <div className="flex w-full gap-6 sm:px-6">
         <main className="w-full">
+          {isLoading && <Loader />}
           <div className="px-4 sm:px-6">
             <div className="relative z-0 flex flex-col divide-gray-200 rounded-md bg-white p-2 shadow dark:divide-gray-700 dark:bg-gray-800">
               {/* Profile Detail */}

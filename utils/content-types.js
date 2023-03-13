@@ -31,10 +31,10 @@ export default [
     label: 'Security',
     value: 'Security'
   },
-  {
-    label: 'Threads',
-    value: 'Threads'
-  },
+  // {
+  //   label: 'Threads',
+  //   value: 'Threads'
+  // },
   {
     label: 'Ama',
     value: 'Ama'

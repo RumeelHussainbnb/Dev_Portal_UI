@@ -19,8 +19,8 @@ const MvpForm = ({ router }) => {
   console.log('routerData ==> ', routerData);
   const [data, setData] = useState({
     ...routerData,
-    firstName: routerData?.Username?.split('_')[0],
-    lastName: routerData?.Username?.split('_')[1],
+    firstName: routerData?.FirstName,
+    lastName: routerData?.LastName,
     country: { label: routerData?.Country, name: routerData?.Country },
     state: { label: routerData?.State, name: routerData?.State },
     city: routerData?.City,
@@ -38,6 +38,8 @@ const MvpForm = ({ router }) => {
     event.preventDefault();
     let parms = {
       ...data,
+      FirstName: data.firstName,
+      LastName: data.lastName,
       ProfilePicture: imageURL,
       Skills: data.expertise,
       MartianType: data.martian.label,

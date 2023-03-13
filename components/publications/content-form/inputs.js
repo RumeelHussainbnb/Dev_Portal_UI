@@ -198,42 +198,23 @@ function Inputs({
           </p>
         </div>
       </div>
-      <div className="col-span-10">
-        <label
-          htmlFor="description"
-          className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-        >
-          Content
-        </label>
-        <div className="mt-1 ">
-          {/* <textarea
-            id="description"
-            required={type === 'submit'}
-            name="description"
-            rows={4}
-            maxLength={100}
-            value={data.Description}
-            onChange={e => setData({ ...data, Description: e.target.value })}
-            className="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
-          /> */}
-
-          {!isEditorDisblaed && (
+      {!isEditorDisblaed && (
+        <div className="col-span-10">
+          <label
+            htmlFor="description"
+            className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+          >
+            Content
+          </label>
+          <div className="mt-1 ">
             <EditorComponent
               readOnly={isEditorDisblaed}
               editorState={data.ContentMarkdown}
               EditorChange={handleEditorChange}
             />
-          )}
-          {/* <p
-            className={classNames(
-              'mt-2 text-sm text-gray-500 dark:text-gray-500',
-              editorLimitError && 'text-red-500 dark:text-red-500'
-            )}
-          >
-            Brief description about the content. ~250 characters
-          </p> */}
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

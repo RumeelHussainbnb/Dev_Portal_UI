@@ -274,7 +274,7 @@ export default function Profile() {
                           )}
                         </ul>
                         {data?.UserAllContents?.length < data.TotalArticles && (
-                          <div className="block w-full text-center link">
+                          <div className="link block w-full text-center">
                             <Link href={`/user/dashboard`}>
                               <a rel="noopener noreferrer">See all</a>
                             </Link>
@@ -472,7 +472,7 @@ export default function Profile() {
               </div>
               <div className="social-links mt-2 flex flex-row justify-between">
                 <div className="links relative z-0 flex w-[49%] flex-col items-center justify-center divide-x divide-gray-200 rounded-md bg-white p-2 shadow dark:divide-gray-700">
-                  <p className="text-lg font-medium">Social Links:</p>
+                  <p className="text-lg font-medium">Social Links</p>
                   <div className="b-0 flex flex-row">
                     {data?.Author?.SocialLinks[0]?.Link != undefined && (
                       <Link
@@ -525,7 +525,7 @@ export default function Profile() {
                   </div>
                 </div>
                 <div className="links relative z-0 flex w-[49%] flex-col items-center justify-center divide-x divide-gray-200 rounded-md bg-white p-2 shadow  dark:divide-gray-700">
-                  <p className="text-lg font-medium">Author:</p>
+                  <p className="text-lg font-medium">Author</p>
                   <div className="b-0 flex flex-row">
                     <div className="mr-2 h-8 w-8 hover:cursor-pointer">
                       <Image
