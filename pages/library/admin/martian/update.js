@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Select from 'react-select';
 import { Container } from '../../../../components/layout';
 import { Country } from 'country-state-city';
-const Spinner = dynamic(() => import('../../../../components/spinner'));
+import Loader from '../../../../components/Loader/Loader';
 
 import { http } from '../../../../utils/http';
 
@@ -166,7 +166,7 @@ const MvpForm = ({ router }) => {
               <div className="relative w-28">
                 <div className="col-span-12 sm:col-span-4 lg:col-span-10">
                   {isLoading ? (
-                    <Spinner />
+                    <Loader />
                   ) : imageURL ? (
                     <div className="absolute h-28 w-28 rounded-full">
                       <Image src={imageURL} alt="" height={'112px '} width={'112px '} />

@@ -104,7 +104,7 @@ export default function Profile() {
                           <ClockIcon className="fill-yellow-500" aria-hidden="true" />
                         </div>
                         <p className="ml-1 text-[12px]">
-                          Member since: {moment(data?.CreatedAt).format('YYYY-MM-DD')}
+                          Member since {moment(data?.CreatedAt).format('YYYY-MM-DD')}
                         </p>
                       </div>
                       {data?.Skills?.length > 0 ? (
@@ -179,7 +179,7 @@ export default function Profile() {
                 </div>
               </div>
               <div className="porfile-section relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md bg-white p-2 px-8 py-8 shadow  dark:divide-gray-700">
-                <p className="text-lg font-medium uppercase">Bio: </p>
+                <p className="text-lg font-medium uppercase">Bio </p>
                 <p className="text-[12px]">{data?.Bio}</p>
               </div>
               <div className="horizontal-tabs rounded-md bg-white px-4 sm:px-0">
@@ -398,7 +398,7 @@ export default function Profile() {
           <aside className="w-fit">
             <div className="block w-full overflow-x-auto">
               <div className="mt-sm-2 relative z-0 flex flex-col divide-gray-200 rounded-md bg-white p-2 px-4 py-4 shadow dark:divide-gray-700">
-                <p className="mb-3 text-lg font-medium uppercase">Awards & Recognitions: </p>
+                <p className="mb-3 text-lg font-medium uppercase">Awards & Recognitions </p>
                 <div className="flex flex-row items-start justify-start self-start">
                   {data?.Author?.RecognizationsAndAwards?.includes('MOM_medal') && (
                     <div className="m-h-[80px] mr-3 flex h-fit w-[30%] max-w-[80px] items-center justify-center overflow-hidden">
@@ -428,7 +428,7 @@ export default function Profile() {
                 </div>
               </div>
               <div className="relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md bg-white px-4 py-4 shadow dark:divide-gray-700">
-                <p className="mb-1 text-lg font-medium uppercase">Certification: </p>
+                <p className="mb-1 text-lg font-medium uppercase">Certification </p>
 
                 {/* Projects table */}
                 {data?.Author?.Certification.length > 0 ? (

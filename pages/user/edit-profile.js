@@ -13,7 +13,7 @@ import MultiSelection from '../../components/MultiSelection';
 import validation from '../../utils/validation';
 import { useRouter } from 'next/router';
 const Notification = dynamic(() => import('../../components/notifications/error'));
-const Spinner = dynamic(() => import('../../components/spinner'));
+
 import Loader from '../../components/Loader/Loader';
 
 export default function Profile() {
@@ -280,7 +280,7 @@ export default function Profile() {
   const colourStyles = {
     control: (baseStyles, state) => ({
       ...baseStyles,
-      borderColor: state.isFocused ? 'grey' : 'red',
+      borderColor: state.isFocused ? 'grey' : 'red'
     }),
     multiValue: (styles, { data }) => {
       return {
@@ -317,7 +317,7 @@ export default function Profile() {
                 <div className="relative w-28">
                   <div className="col-span-12 sm:col-span-4 lg:col-span-10">
                     {isLoading ? (
-                      <Spinner />
+                      <Loader />
                     ) : state?.ProfilePicture ? (
                       <div className="absolute h-28 w-28 rounded-full">
                         <Image
@@ -486,7 +486,7 @@ export default function Profile() {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-wrap skills-wrapper">
+              <div className="skills-wrapper flex flex-wrap">
                 <div className="lg:w-12/12 w-full px-4">
                   <div className="relative mb-3 w-full">
                     <label

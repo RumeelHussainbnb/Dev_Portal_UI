@@ -2,13 +2,13 @@ import { memo, useEffect, useState } from 'react';
 import { useAppState } from '../../context/AppContext';
 import PropTypes from 'prop-types';
 import dynamic from 'next/dynamic';
+import Loader from '../../components/Loader/Loader';
 
 const CardWide = dynamic(() => import('../card/post-card'));
 const CardVideo = dynamic(() => import('../card/card-video'));
 const CardRegular = dynamic(() => import('../card/card-regular'));
 const CardBase = dynamic(() => import('../card/card-base'));
 const TagsSelector = dynamic(() => import('../badges/tags-selector'));
-const Spinner = dynamic(() => import('../spinner'));
 const ContentFormModal = dynamic(() => import('./content-form/modal'));
 import htmlToDraft from 'html-to-draftjs';
 import {
@@ -71,7 +71,7 @@ function Publications({
         </div>
       )}
       {contentType === 'newsletters' && (
-        <div className="mx-auto mb-20 flex max-w-5xl newsletter-main-card">
+        <div className="newsletter-main-card mx-auto mb-20 flex max-w-5xl">
           <CardWide mode="dashboard" content={lastNewsletter} />
         </div>
       )}
@@ -80,9 +80,9 @@ function Publications({
           Previous issues
         </div>
       )}
-      <div className="mt-1 flex flex-wrap place-content-start justify-center gap-5 py-4 px-2 md:px-6 xl:gap-10 newsletter-innerCard">
+      <div className="newsletter-innerCard mt-1 flex flex-wrap place-content-start justify-center gap-5 py-4 px-2 md:px-6 xl:gap-10">
         {isLoading ? (
-          <Spinner />
+          <Loader />
         ) : (
           data.map(content => {
             //  Initial Tags for content type "Playlists" is null
