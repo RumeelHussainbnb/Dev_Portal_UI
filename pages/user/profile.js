@@ -126,7 +126,7 @@ export default function Profile() {
                         <div className="h-5 w-5">
                           <UserCircleIcon className="fill-yellow-500" aria-hidden="true" />
                         </div>
-                        <p className="ml-1 text-[12px]">Roles {data?.Roles?.join(',')}</p>
+                        <p className="ml-1 text-[12px]"> {data?.Roles?.join(',')}</p>
                       </div>
                     </div>
                   </div>
