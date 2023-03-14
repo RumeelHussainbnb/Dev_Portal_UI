@@ -2,7 +2,7 @@ import { memo, useState, useId } from 'react';
 import { useRouter } from 'next/router';
 import fetch from 'isomorphic-unfetch';
 import PropTypes from 'prop-types';
-import { EditorState,convertToRaw } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import Select from 'react-select';
 
@@ -249,6 +249,17 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
               >
                 {type === 'submit' ? 'Submit' : 'Save'}
               </button>
+              {type !== 'edit' && (
+                <button
+                  className={classNames(
+                    'ml-3 inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-3 px-16 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200'
+                  )}
+                  type="button"
+                  onClick={() => router.back()}
+                >
+                  Cancel
+                </button>
+              )}
             </div>
           </form>
         </div>

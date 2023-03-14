@@ -43,7 +43,10 @@ function TopBar({ childrens }) {
 
   const accountChecker = async () => {
     const accounts = await ethereum.request({ method: 'eth_accounts' });
-    if (accounts.length === 0) {
+    if (
+      accounts.length === 0 &&
+      (appState.isConnectedToWallet === true || appState.isConnectedToWallet === 'true')
+    ) {
       removeConnection();
     }
   };
@@ -153,7 +156,6 @@ function TopBar({ childrens }) {
     localStorage.removeItem('PublicKey');
     localStorage.removeItem('editMode');
     localStorage.removeItem('userData');
-    //console.log('router ==> ', router.pathname);
 
     router.push('/');
   };
@@ -398,7 +400,7 @@ function TopBar({ childrens }) {
           )}
         </Popover>
 
-        <div className="min-h-full martian-admin">
+        <div className="martian-admin min-h-full">
           <div className="flex py-7 lg:gap-8 lg:pl-8">
             <div className="top-4 hidden min-w-[190px] content-between divide-y divide-gray-300 dark:divide-gray-500 lg:block">
               <NavSidebar />

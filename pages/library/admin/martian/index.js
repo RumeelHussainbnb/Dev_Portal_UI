@@ -1,5 +1,4 @@
 import { DocumentTextIcon } from '@heroicons/react/solid';
-import React from 'react';
 import { Grid, Spacer } from '@nextui-org/react';
 import { useState, useId } from 'react';
 import Select from 'react-select';
@@ -265,7 +264,8 @@ const Index = ({ userData }) => {
                         <div className=" space-y-2 divide-y divide-gray-600 text-center">
                           <div className="my-2 space-y-1">
                             <h3 className="sm:text-1xl truncate text-lg font-semibold hover:text-clip">
-                              {eachMartian.Username}
+                              {eachMartian?.FirstName ? eachMartian?.FirstName : ''}{' '}
+                              {eachMartian?.LastName ? eachMartian?.LastName : ''}
                             </h3>
                           </div>
                           <div className=" space-x-4 pt-2">
