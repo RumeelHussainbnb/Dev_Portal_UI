@@ -229,6 +229,24 @@ h1,h2,h3,h4,h5 {
       flex-direction: column;
     }
   }
+  .search-martian-card {
+    width: 100%;
+    .martian-card {
+      width: 100%;
+    }
+  }
+  .button-wrapper {
+    display: block;
+    width: 100%;
+    button {
+      width: 100%;
+      margin-right: 0;
+      margin-bottom: 5px;
+    }
+  }
+  fieldset.submit-content-type.col-span-3 {
+    grid-column: span 6;
+  }
 }
 
 .awards-wrap {
@@ -474,6 +492,12 @@ aside {
   .profile-wrapper {
     min-width: 700px;
   }
+  nav {
+    .tracking-wider,
+    button {
+      min-width: 210px !important;
+    }
+  }
 }
 
 aside {
@@ -501,17 +525,17 @@ aside {
 }
 
 .submit-content-type {
-  margin-bottom: -10px;
-  display: block;
+  // margin-bottom: -10px;
+  // display: block;
 
   .content-element {
-    display: block;
-    width: 100%;
+    // display: block;
+    // width: 100%;
 
     .content-checkboxes {
-      display: inline-block;
-      margin: 0 10px;
-
+      // display: inline-block;
+      // margin: 0 10px;
+      margin: 15px 0 0;
       input {
         float: left;
         margin-top: 1px;
@@ -521,6 +545,7 @@ aside {
         overflow: hidden;
         padding-left: 5px;
         padding-right: 10px;
+        margin-bottom: 10px;
       }
     }
   }
@@ -763,3 +788,21 @@ aside {
 //     background-color: rgb(17 24 39 / var(--tw-bg-opacity));
 //   }
 // } 
+
+
+
+.martian-card {
+  min-height: 285px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.button-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  button {
+    margin-right: 15px;
+  }
+}
