@@ -165,7 +165,7 @@ export default function Profile() {
               {user?.Bio}
             </div>
             <div className="relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md bg-white p-6 p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
-              <div class="flex justify-between ">
+              <div className="flex justify-between ">
                 <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Activities</p>
                 <button
                   type="button"

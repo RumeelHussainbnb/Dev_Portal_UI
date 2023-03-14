@@ -1,5 +1,4 @@
 import { DocumentTextIcon } from '@heroicons/react/solid';
-import React from 'react';
 import { Grid, Spacer } from '@nextui-org/react';
 import { useState, useId } from 'react';
 import Select from 'react-select';
