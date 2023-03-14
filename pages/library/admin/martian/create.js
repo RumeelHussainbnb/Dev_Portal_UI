@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 import { useState, useId, useRef, useEffect } from 'react';
 
 import Image from 'next/image';
@@ -14,6 +15,7 @@ const NotificationSuccess = dynamic(() => import('../../../../components/notific
 const NotificationError = dynamic(() => import('../../../../components/notifications/error'));
 
 const MvpForm = () => {
+  const router = useRouter();
   const inputFile = useRef(null);
   const [data, setData] = useState({
     firstName: '',
@@ -338,6 +340,13 @@ const MvpForm = () => {
 
   //* styling of multiSelect
   const colourStyles = {
+    control: (css, state) => ({
+      ...css,
+      ...(state.isDisabled && {
+        pointerEvents: 'auto',
+        cursor: 'not-allowed'
+      })
+    }),
     multiValue: (styles, { data }) => {
       return {
         ...styles,
@@ -355,6 +364,16 @@ const MvpForm = () => {
     })
   };
 
+  const styles = {
+    control: (css, state) => ({
+      ...css,
+      ...(state.isDisabled && {
+        pointerEvents: 'auto',
+        cursor: 'not-allowed'
+      })
+    })
+  };
+
   return (
     <div className="add-martian-wrapper">
       <main className="mx-auto mb-5 shadow">
@@ -367,6 +386,7 @@ const MvpForm = () => {
 
             <div className="mx-auto mt-10 h-24 w-28 text-center" onClick={onIconClick}>
               <input
+                className={`${disableFields ? 'cursor-not-allowed' : ''}`}
                 disabled={disableFields}
                 style={{ display: 'none' }}
                 // accept=".zip,.rar"
@@ -458,7 +478,9 @@ const MvpForm = () => {
                       value={data.firstName}
                       autoComplete="given-name"
                       onChange={e => setData({ ...data, firstName: e.target.value })}
-                      className="block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
+                      className={`block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 ${
+                        disableFields ? 'cursor-not-allowed' : ''
+                      }`}
                     />
                   </div>
                 </div>
@@ -480,7 +502,9 @@ const MvpForm = () => {
                       value={data.lastName}
                       autoComplete="given-name"
                       onChange={e => setData({ ...data, lastName: e.target.value })}
-                      className="block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
+                      className={`block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 ${
+                        disableFields ? 'cursor-not-allowed' : ''
+                      }`}
                     />
                   </div>
                 </div>
@@ -500,6 +524,7 @@ const MvpForm = () => {
                       required
                       name="country"
                       label="country"
+                      styles={styles}
                       classNames={{
                         singleValue: state =>
                           state.isDisabled ? 'dark:text-gray-800 text-gray-800' : '',
@@ -539,7 +564,9 @@ const MvpForm = () => {
                       value={data.city}
                       autoComplete="given-name"
                       onChange={e => setData({ ...data, city: e.target.value })}
-                      className="block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
+                      className={`block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 ${
+                        disableFields ? 'cursor-not-allowed' : ''
+                      }`}
                     />
                   </div>
                 </div>
@@ -559,6 +586,7 @@ const MvpForm = () => {
                       instanceId={useId()}
                       name="martian"
                       label="martian"
+                      styles={styles}
                       classNames={{
                         singleValue: state =>
                           state.isDisabled ? 'dark:text-gray-800 text-gray-800' : '',
@@ -598,7 +626,9 @@ const MvpForm = () => {
                       value={data.language}
                       autoComplete="given-name"
                       onChange={e => setData({ ...data, language: e.target.value })}
-                      className="block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
+                      className={`block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 ${
+                        disableFields ? 'cursor-not-allowed' : ''
+                      }`}
                     />
                   </div>
                 </div>
@@ -618,7 +648,9 @@ const MvpForm = () => {
                       type="email"
                       value={data.email}
                       onChange={e => setData({ ...data, email: e.target.value })}
-                      className="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
+                      className={`block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 ${
+                        disableFields ? 'cursor-not-allowed' : ''
+                      }`}
                     />
                   </div>
                 </div>
@@ -684,7 +716,9 @@ const MvpForm = () => {
                       rows={2}
                       value={data.bioGraphy}
                       onChange={e => setData({ ...data, bioGraphy: e.target.value })}
-                      className="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
+                      className={`block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 ${
+                        disableFields ? 'cursor-not-allowed' : ''
+                      }`}
                     />
                   </div>
                 </div>
@@ -696,6 +730,15 @@ const MvpForm = () => {
                     className="inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-3 px-16 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200"
                   >
                     Save
+                  </button>
+                </div>
+                <div className="mx-auto flex max-w-3xl justify-end">
+                  <button
+                    type="button"
+                    onClick={() => router.back()}
+                    className="inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-3 px-16 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200"
+                  >
+                    Cancel
                   </button>
                 </div>
               </form>

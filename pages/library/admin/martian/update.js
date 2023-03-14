@@ -147,10 +147,10 @@ const MvpForm = ({ router }) => {
   };
 
   return (
-    <div className="px-6">
-      <main className="mx-auto mb-5 max-w-6xl shadow">
-        <div className="relative overflow-hidden bg-white py-16 px-4 dark:bg-gray-800 sm:px-6 lg:px-8 lg:py-14">
-          <div className=" mx-auto max-w-3xl">
+    <div className="add-martian-wrapper">
+      <main className="mx-auto mb-5  shadow">
+        <div className="relative overflow-hidden bg-white py-8 px-2 dark:bg-gray-800 sm:px-2 lg:px-6 lg:py-10">
+          <div className=" mx-auto">
             <div className="prose prose mx-auto max-w-max text-center prose-h1:mb-2 prose-p:text-lg dark:prose-invert">
               <h1>UPDATE MARTIAN</h1>
             </div>
@@ -386,8 +386,16 @@ const MvpForm = ({ router }) => {
                     type="submit"
                     className="inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-3 px-16 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200"
                   >
-                    {' '}
                     Save
+                  </button>
+                </div>
+                <div className="mx-auto flex max-w-3xl justify-end">
+                  <button
+                    type="button"
+                    onClick={() => router.back()}
+                    className="inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-3 px-16 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200"
+                  >
+                    Cancel
                   </button>
                 </div>
               </form>

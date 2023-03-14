@@ -2,7 +2,14 @@ import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { Container } from '../../../../components/layout';
 import { loadMartians } from '../../../../lib/load-martians-list';
-import { TagIcon, TrendingUpIcon } from '@heroicons/react/solid';
+import {
+  EyeIcon,
+  ThumbUpIcon,
+  ClockIcon,
+  UserCircleIcon,
+  LocationMarkerIcon,
+  AcademicCapIcon
+} from '@heroicons/react/solid';
 import moment from 'moment';
 import Image from 'next/image';
 import fetch from '../../../../utils/fetcher';
@@ -88,41 +95,50 @@ export default function Profile() {
                 </div>
                 <div className="user-discription ml-3">
                   <div className="mt-1 flex flex-row">
-                    <p className="mb-2 text-lg font-medium uppercase text-gray-500 dark:text-gray-500">
+                    <p className="ml-2 mb-2 text-lg font-medium uppercase text-gray-500 dark:text-gray-500">
                       {user?.Username}
                     </p>
                   </div>
-                  <div className="flex flex-row">
-                    <div className="mr-2 mb-2 h-4 w-4">
-                      <Image src={'/place.png'} width="250px" height="250px" />
+                  <div className="mt-1 flex flex-row">
+                    <div className="h-5 w-5">
+                      <LocationMarkerIcon className="fill-yellow-500" aria-hidden="true" />
                     </div>
-                    <p className="text-sm text-gray-500 dark:text-gray-500">{user?.Country}</p>
+                    <p className="ml-2 text-sm text-gray-500 dark:text-gray-500">{user?.Country}</p>
                   </div>
-                  <div className="flex flex-row">
-                    <div className="mr-2 mb-2 h-4 w-4">
-                      <Image src={'/time.png'} width="250px" height="250px" />
+                  <div className="mt-1 flex flex-row">
+                    <div className="h-5 w-5">
+                      <ClockIcon className="fill-yellow-500" aria-hidden="true" />
                     </div>
-                    <p className="text-sm text-gray-500 dark:text-gray-500">
-                      Members since ,{moment(user?.CreatedAt).format('MMMM,YYYY')}
+                    <p className="ml-2 text-sm text-gray-500 dark:text-gray-500">
+                      Member since: {moment(user?.CreatedAt).format('YYYY-MM-DD')}
                     </p>
                   </div>
+                  {user?.Skills?.length > 0 ? (
+                    <div className="mt-1 flex flex-row">
+                      <div className="h-5 w-5">
+                        <AcademicCapIcon className="fill-yellow-500" aria-hidden="true" />
+                      </div>
 
-                  <div className="flex flex-row">
-                    <div className="mr-2 mb-2 h-4 w-4">
-                      <Image src={'/account.png'} width="250px" height="250px" />
+                      <p className="ml-2 text-sm text-gray-500 dark:text-gray-500">
+                        {user?.Skills?.join(', ')}
+                      </p>
                     </div>
-                    <p className="text-sm text-gray-500 dark:text-gray-500">{user?.MartianType}</p>
+                  ) : null}
+                  <div className="mt-1 flex flex-row">
+                    <div className="h-5 w-5">
+                      <UserCircleIcon className="fill-yellow-500" aria-hidden="true" />
+                    </div>
+                    <p className="ml-2 text-sm text-gray-500 dark:text-gray-500">
+                      Roles {user?.Roles?.join(', ')}
+                    </p>
                   </div>
-                  <p className="mt-2 mb-2 text-xs text-gray-500 dark:text-gray-500">
-                    {user?.Skills}
-                  </p>
                 </div>
               </div>
             </div>
 
             <div className="mt-2 flex flex-row justify-between ">
               <div className="relative z-0 flex w-[49%] flex-col items-center justify-center divide-x divide-gray-200 rounded-md bg-white p-2 shadow dark:divide-gray-700 dark:bg-gray-800">
-                <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Social:</p>
+                <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Social</p>
                 <div className="flex flex-row">
                   <div className="mr-1 h-6 w-6 hover:cursor-pointer">
                     <Image alt="" src={'/facebook.png'} width="250px" height="250px" />
@@ -136,7 +152,7 @@ export default function Profile() {
                 </div>
               </div>
               <div className="relative z-0 flex w-[49%] flex-col items-center justify-center rounded-md bg-white p-2 shadow dark:divide-gray-700 dark:bg-gray-800">
-                <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Languages:</p>
+                <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Languages</p>
                 <div className="flex flex-row">
                   <div className="mr-1 h-6 w-6 text-sm text-gray-500 hover:cursor-pointer dark:text-gray-500">
                     {user?.Languages}
@@ -145,11 +161,21 @@ export default function Profile() {
               </div>
             </div>
             <div className="relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md bg-white p-4 p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
-              <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Biography:</p>
+              <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Biography</p>
               {user?.Bio}
             </div>
             <div className="relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md bg-white p-6 p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
-              <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Activities:</p>
+              <div class="flex justify-between ">
+                <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Activities</p>
+                <button
+                  type="button"
+                  onClick={() => router.push('/library/admin/martian/activity')}
+                  className="inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-2 px-4 text-sm text-lg font-medium font-medium text-white text-gray-500 shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200 dark:text-gray-500"
+                >
+                  Add Activities
+                </button>
+              </div>
+
               {activities?.length > 0 ? (
                 <div className="table-wrapper mb-1 w-full py-8">
                   <div className="relative shadow-md  sm:rounded-lg ">
