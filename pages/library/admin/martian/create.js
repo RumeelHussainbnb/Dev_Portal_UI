@@ -6,7 +6,6 @@ import Image from 'next/image';
 import Select from 'react-select';
 import { Container } from '../../../../components/layout';
 import { Country } from 'country-state-city';
-const Spinner = dynamic(() => import('../../../../components/spinner'));
 import Loader from '../../../../components/Loader/Loader';
 
 import { http } from '../../../../utils/http';
