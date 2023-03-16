@@ -4,7 +4,7 @@ import { Country, State, City } from 'country-state-city';
 import Select from 'react-select';
 import { Container } from '../../components/layout';
 import Image from 'next/image';
-import { TrashIcon } from '@heroicons/react/solid';
+import { TrashIcon, XIcon } from '@heroicons/react/solid';
 import 'react-circular-progressbar/dist/styles.css';
 import { http } from '../../utils/http';
 import EndPoint from '../../constant/endPoints';
@@ -23,6 +23,13 @@ export default function Profile() {
   const [notification, setNotification] = useState({ message: '', show: false });
   const [state, setState] = useState({});
   const [loader, setloader] = useState(false);
+  const [certificateArray, setcertificateArray] = useState([
+    {
+      _id: '1',
+      Name: '',
+      Organization: ''
+    }
+  ]);
 
   const SkillsOptions = [
     {
@@ -61,7 +68,7 @@ export default function Profile() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setloader(true);
+        setIsLoading(true);
         let userData = JSON.parse(localStorage.getItem('userData') || '{}');
         const user = await http.get(`/user/getUserProfile/${userData.data?._id}`);
         let { data } = user?.data;
@@ -89,7 +96,7 @@ export default function Profile() {
         };
         setState(createData);
         setcertificateArray(createData?.Certification);
-        setloader(true);
+        setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
       }
@@ -233,13 +240,6 @@ export default function Profile() {
       });
   };
   //create location
-  const [certificateArray, setcertificateArray] = useState([
-    {
-      _id: '1',
-      Name: '',
-      Organization: ''
-    }
-  ]);
   //add certificate
   const Addcertificate = index => {
     const tempArr = [...certificateArray];
@@ -266,6 +266,14 @@ export default function Profile() {
   const DeleteCertifcate = index => {
     const tempArr = [...certificateArray];
     tempArr.splice(index, 1);
+    setcertificateArray(tempArr);
+  };
+
+  const ClearCertifcate = index => {
+    console.log(index);
+    const tempArr = [...certificateArray];
+    tempArr[index].Name = '';
+    tempArr[index].Organization = '';
     setcertificateArray(tempArr);
   };
 
@@ -305,7 +313,7 @@ export default function Profile() {
       <div className="edit-profile-page flex w-full justify-around gap-3 md:pl-0">
         <main className="w-full">
           <div className="px-1 sm:px-6">
-            <div className="relative flex flex-col divide-gray-200 rounded-md bg-white p-2 px-6 py-8 shadow dark:divide-gray-700">
+            <div className="relative flex flex-col divide-gray-200 rounded-md bg-white  p-2 px-6 py-8 shadow dark:divide-gray-700">
               <p className="text-lg font-bold">Personal Information:</p>
               <div className="mx-auto mt-10 h-24 w-28 text-center" onClick={onIconClick}>
                 <input
@@ -585,6 +593,7 @@ export default function Profile() {
                           index: index
                         })
                       }
+                      maxlength="15"
                       value={certificateArray[index]?.Name}
                       label={'Certification Title'}
                       placeholder="Title"
@@ -599,9 +608,19 @@ export default function Profile() {
                       value={certificateArray[index]?.Organization}
                       label={'Organization'}
                       placeholder="Enter Organization"
+                      maxlength="15"
                     />
-
-                    {index + 1 !== array.length && (
+                    {index === 0 &&
+                      array.length === 1 &&
+                      (certificateArray[0]?.Name !== '' ||
+                        certificateArray[0]?.Organization !== '') && (
+                        <XIcon
+                          onClick={() => ClearCertifcate(index)}
+                          className="h-6 w-6 fill-yellow-500"
+                          aria-hidden="true"
+                        />
+                      )}
+                    {array.length !== 1 && (
                       <TrashIcon
                         onClick={() => DeleteCertifcate(index)}
                         className="h-6 w-6 fill-yellow-500"
@@ -619,59 +638,6 @@ export default function Profile() {
                   )}
                 </>
               ))}
-
-              <div
-                className={
-                  'relative mb-3 flex w-full min-w-0 flex-col break-words bg-white text-white'
-                }
-              >
-                <div className="block w-full overflow-x-auto">
-                  {/* Projects table */}
-                  {state?.Author?.Certification.length > 0 ? (
-                    <table className="w-full border-collapse items-center bg-transparent">
-                      <thead>
-                        <tr>
-                          {['', 'Organization', 'Name'].map((item, index) => (
-                            <th
-                              key={index}
-                              className={
-                                'whitespace-nowrap border border-l-0 border-r-0 border-solid border-slate-100 bg-[#FACC15] px-6 py-3 text-left align-middle text-xs font-semibold uppercase text-slate-700'
-                              }
-                            >
-                              {item}
-                            </th>
-                          ))}
-                        </tr>
-                      </thead>
-                      {state?.Author?.Certification.map(item => (
-                        <tbody key={item._id}>
-                          <tr>
-                            <td className="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-6 text-xs text-black">
-                              <Image
-                                src={'/certificate.png'}
-                                width={'30px'}
-                                height={'30px'}
-                                alt=""
-                              />
-                            </td>
-
-                            <td className="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-6 text-xs text-black">
-                              {item.Organization}
-                            </td>
-                            <td className="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-6 text-xs text-black">
-                              {item.Name}
-                            </td>
-                          </tr>
-                        </tbody>
-                      ))}
-                    </table>
-                  ) : (
-                    <div className="flex hidden h-full w-64 items-center py-4 px-8">
-                      <p className="text-sm font-bold text-black">No Record Available</p>
-                    </div>
-                  )}
-                </div>
-              </div>
             </div>
             <div className="mt-3 flex flex-row items-center justify-center self-center">
               <div

@@ -77,7 +77,7 @@ function Publications({
       )}
       {contentType === 'newsletters' && (
         <div className="prose mx-auto flex w-full justify-center text-xl dark:prose-invert">
-          Previous issues
+          Previous Issues
         </div>
       )}
       <div className="newsletter-innerCard mt-1 flex flex-wrap place-content-start justify-center gap-5 py-4 px-2 md:px-6 xl:gap-10">

@@ -119,6 +119,14 @@ const Index = ({ userData }) => {
       awardCategory: { label: '', name: '' }
     });
   };
+
+  const showUserName = martian => {
+    if (martian?.FirstName || martian?.LastName) {
+      return martian?.FirstName + ' ' + martian?.LastName;
+    } else {
+      return martian?.Username;
+    }
+  };
   return (
     <div className="px-4">
       <main className="max-w-7 xl mx-auto mb-5 shadow">
@@ -264,8 +272,7 @@ const Index = ({ userData }) => {
                         <div className=" space-y-2 divide-y divide-gray-600 text-center">
                           <div className="my-2 space-y-1">
                             <h3 className="sm:text-1xl truncate text-lg font-semibold hover:text-clip">
-                              {eachMartian?.FirstName ? eachMartian?.FirstName : ''}{' '}
-                              {eachMartian?.LastName ? eachMartian?.LastName : ''}
+                              {showUserName(eachMartian)}
                             </h3>
                           </div>
                           <div className=" space-x-4 pt-2">

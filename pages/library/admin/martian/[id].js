@@ -25,9 +25,12 @@ export default function Profile() {
   const [totalActivities, setTotalActivities] = useState(0);
   const [user, setUser] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [isMartian, setIsMartian] = useState(false);
   const router = useRouter();
 
   const getUserData = async () => {
+    let userState = JSON.parse(localStorage.getItem('userData' || '{}'));
+    setIsMartian(userState?.data?.Roles.includes('Martian'));
     setIsLoading(true);
     const user = await http.get(`/user/getUserProfileWithData/${router.query?.id}`);
     const martianActivity = await http.get(
@@ -129,7 +132,7 @@ export default function Profile() {
                       <UserCircleIcon className="fill-yellow-500" aria-hidden="true" />
                     </div>
                     <p className="ml-2 text-sm text-gray-500 dark:text-gray-500">
-                     {user?.Roles?.join(', ')}
+                      {user?.Roles?.join(', ')}
                     </p>
                   </div>
                 </div>
@@ -165,16 +168,18 @@ export default function Profile() {
               {user?.Bio}
             </div>
             <div className="relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md bg-white p-6 p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
-              <div className="flex justify-between ">
-                <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Activities</p>
-                <button
-                  type="button"
-                  onClick={() => router.push('/library/admin/martian/activity')}
-                  className="inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-2 px-4 text-sm text-lg font-medium font-medium text-white text-gray-500 shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200 dark:text-gray-500"
-                >
-                  Add Activities
-                </button>
-              </div>
+              {isMartian && (
+                <div className="flex justify-between ">
+                  <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Activities</p>
+                  <button
+                    type="button"
+                    onClick={() => router.push('/library/admin/martian/activity')}
+                    className="inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-2 px-4 text-sm text-lg font-medium font-medium text-white text-gray-500 shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200 dark:text-gray-500"
+                  >
+                    Add Activities
+                  </button>
+                </div>
+              )}
 
               {activities?.length > 0 ? (
                 <div className="table-wrapper mb-1 w-full py-8">

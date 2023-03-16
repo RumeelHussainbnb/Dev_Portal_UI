@@ -64,7 +64,9 @@ function Pagination({
           onChange={handlePageSizeChange}
           options={options}
           placeholder="No option selected"
-          menuPlacement="top"
+          menuPlacement="bottom"
+          menuPortalTarget={document.body}
+          styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
         />
       )}
     </div>

@@ -14,6 +14,7 @@ import Position from './position';
 import tagList from '../../../utils/tags';
 import { http } from '../../../utils/http';
 import useUser from '../../../hooks/useUser';
+import Loader from '../../Loader/Loader';
 
 import contentType from '../../../utils/content-types';
 
@@ -24,6 +25,7 @@ function classNames(...classes) {
 function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions }) {
   const [contentExist, setContentExist] = useState(false);
   const [editorLimitError, setEditorLimitError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { isAdmin = false } = useUser();
   const router = useRouter();
 
@@ -34,6 +36,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
 
   const createContent = async event => {
     event.preventDefault();
+    setIsLoading(true);
 
     if (editorLimitError) {
       return;
@@ -85,11 +88,12 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
 
     // Send success notification
     setNotifySuccess(true);
+    setIsLoading(false);
   };
 
   const updateContent = async event => {
     event.preventDefault();
-
+    setIsLoading(true);
     if (editorLimitError) {
       return;
     }
@@ -110,12 +114,14 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
 
     // Edit happens inside a modal, we need to close it after
     setOpen(false);
+    setIsLoading(false);
     router.reload();
   };
 
   return (
     <div className="relative h-full overflow-hidden bg-white py-16 px-4 dark:bg-gray-800 sm:px-6 lg:px-8 lg:py-14">
       <div className=" mx-auto max-w-5xl">
+        {isLoading && <Loader />}
         <div className="absolute top-0 right-1">
           {type === 'edit' && <Position data={data} setData={setData} list={positions} />}
         </div>
@@ -229,6 +235,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
             <div className="col-span-10 mx-auto flex max-w-5xl">
               {type === 'edit' && (
                 <button
+                  disabled={isLoading}
                   type="button"
                   className="rounded-md border border-gray-300 bg-white py-3 px-6 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
                   onClick={() => {
@@ -241,7 +248,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
 
               <button
                 type="submit"
-                disabled={contentExist}
+                disabled={contentExist || isLoading}
                 className={classNames(
                   'ml-3 inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-3 px-16 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200',
                   contentExist && 'disabled:opacity-50'

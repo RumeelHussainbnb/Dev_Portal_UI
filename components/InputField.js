@@ -7,7 +7,8 @@ const InputField = ({
   required,
   error,
   disabled,
-  widthFull = false
+  widthFull = false,
+  maxlength = '100'
 }) => {
   return (
     <div className={`w-full ${widthFull ? '' : 'lg:w-6/12'} px-4`}>
@@ -31,6 +32,7 @@ const InputField = ({
             error?.length > 0 ? 'border-[1px] border-red-500' : ''
           } w-full rounded border-[1px] border-slate-300 bg-white px-3 py-3 text-sm text-slate-600 placeholder-slate-300 transition-all duration-150 ease-linear focus:outline-none focus:ring`}
           placeholder={placeholder}
+          maxlength={maxlength}
         />
         {error?.length > 0 && <div className="mt-1 text-red-500">{error}</div>}
       </div>

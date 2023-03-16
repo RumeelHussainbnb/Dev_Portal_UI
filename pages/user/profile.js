@@ -527,7 +527,7 @@ export default function Profile() {
                 <div className="links relative z-0 flex w-[49%] flex-col items-center justify-center divide-x divide-gray-200 rounded-md bg-white p-2 shadow  dark:divide-gray-700">
                   <p className="text-lg font-medium">Author</p>
                   <div className="b-0 flex flex-row">
-                    <div className="mr-2 h-8 w-8 hover:cursor-pointer">
+                    <div className="mr-2 h-8 w-8 ">
                       <Image
                         src={'/icons8-add-friend-58.png'}
                         width="250px"
@@ -535,7 +535,8 @@ export default function Profile() {
                         alt=""
                       />
                     </div>
-                    <div className="mr-2 h-8 w-8 hover:cursor-pointer">
+                    {/* hover:cursor-pointer */}
+                    <div className="mr-2 h-8 w-8 ">
                       <Image
                         src={'/icons8-certification-64.png'}
                         width="250px"
@@ -543,7 +544,7 @@ export default function Profile() {
                         alt=""
                       />
                     </div>
-                    <div className="mr-2 h-8 w-8 hover:cursor-pointer">
+                    <div className="mr-2 h-8 w-8 ">
                       <Image src={'/icons8-graph-64.png'} width="250px" height="250px" alt="" />
                     </div>
                   </div>

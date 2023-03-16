@@ -212,7 +212,7 @@ const ActivityForm = () => {
           primaryContributionArea: { label: '', name: '' },
           additionalContributionArea: { label: '', name: '' }
         });
-
+        setMode(false);
         setNotifyError(true);
       }
     }
@@ -263,11 +263,25 @@ const ActivityForm = () => {
     setMode(true);
   };
 
+  const handleCancel = e => {
+    e.preventDefault();
+
+    setMode(false);
+    setData({
+      id: null,
+      date: selectedDate,
+      activityLink: '',
+      activity: '',
+      type: { label: '', name: '' },
+      primaryContributionArea: { label: '', name: '' },
+      additionalContributionArea: { label: '', name: '' }
+    });
+  };
   return (
-    <div className="px-6">
-      <main className="mx-auto  mb-5 max-w-6xl shadow">
+    <div className="add-martian-wrapper">
+      <main className="mx-auto  mb-5  shadow">
         <div className="relative overflow-hidden bg-white py-16 px-2 dark:bg-gray-800 sm:px-6 lg:px-8 lg:py-14">
-          <div className=" mx-auto h-fit max-w-3xl">
+          <div className=" mx-auto ">
             <div className="prose prose mx-auto max-w-max text-center prose-h1:mb-2 prose-p:text-lg dark:prose-invert">
               <h1>MARTIAN ACTIVITY</h1>
             </div>
@@ -444,6 +458,17 @@ const ActivityForm = () => {
                     {mode == false ? 'Add' : 'Edit'}
                   </button>
                 </div>
+                {mode != false && (
+                  <div className="mx-auto flex max-w-3xl justify-center">
+                    <button
+                      type="button"
+                      onClick={e => handleCancel(e)}
+                      className="inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-3 px-16 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                )}
               </form>
             </div>
 
