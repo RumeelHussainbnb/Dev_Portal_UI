@@ -179,17 +179,12 @@ const ActivityForm = () => {
         additionalContributionArea: data.additionalContributionArea.label
       };
 
-      console.log('Data returned -----------------> ', updateActivity);
       try {
         const editActivity = await http.put('activity', updateActivity);
-        console.log('Data returned -----------------> ', editActivity);
         if (editActivity?.data?.success === true) {
           let copiedActivity = [...activity];
           let index = copiedActivity.findIndex(d => d._id === updateActivity.id);
-          console.log('index -------------> ', index);
-          console.log('Before copiedActivity -------------> ', copiedActivity);
           copiedActivity[index] = editActivity?.data?.data;
-          console.log('After copiedActivity -------------> ', copiedActivity);
           setActivity(copiedActivity);
           setMode(false);
           //Empty editor state
@@ -207,7 +202,6 @@ const ActivityForm = () => {
         }
       } catch (error) {
         //Empty editor state
-        console.log('Error ------------------> ', error);
         setSelectedDate(new Date());
         setData({
           index: null,
