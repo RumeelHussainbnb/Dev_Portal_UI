@@ -180,7 +180,7 @@ const ActivityForm = () => {
       };
 
       try {
-        const editActivity = await http.put(`activity`, updateActivity);
+        const editActivity = await http.put('activity', updateActivity);
         if (editActivity?.data?.success === true) {
           let copiedActivity = [...activity];
           let index = copiedActivity.findIndex(d => d._id === updateActivity.id);
