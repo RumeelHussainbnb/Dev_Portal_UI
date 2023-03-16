@@ -166,7 +166,7 @@ const ActivityForm = () => {
       }
     }
     //edit Mode
-    if (mode == true) {
+    else {
       let updateActivity = {
         id: data.id,
         userId: userData?.data?._id,
@@ -179,8 +179,10 @@ const ActivityForm = () => {
         additionalContributionArea: data.additionalContributionArea.label
       };
 
+      console.log('Data returned -----------------> ', updateActivity);
       try {
         const editActivity = await http.put('activity', updateActivity);
+        console.log('Data returned -----------------> ', editActivity);
         if (editActivity?.data?.success === true) {
           let copiedActivity = [...activity];
           let index = copiedActivity.findIndex(d => d._id === updateActivity.id);
@@ -202,6 +204,7 @@ const ActivityForm = () => {
         }
       } catch (error) {
         //Empty editor state
+        console.log('Error ------------------> ', error);
         setSelectedDate(new Date());
         setData({
           index: null,
