@@ -722,7 +722,7 @@ const MvpForm = () => {
                   </div>
                 </div>
 
-                <div className="mx-auto flex max-w-3xl justify-end">
+                <div className="button-wrapper">
                   <button
                     disabled={disableFields && isMartian}
                     type="submit"
@@ -730,8 +730,6 @@ const MvpForm = () => {
                   >
                     Save
                   </button>
-                </div>
-                <div className="mx-auto flex max-w-3xl justify-end">
                   <button
                     type="button"
                     onClick={() => router.back()}

@@ -128,7 +128,7 @@ const Index = ({ userData }) => {
     }
   };
   return (
-    <div className="px-4">
+    <div className="px-4 search-martian-wrapper">
       <main className="max-w-7 xl mx-auto mb-5 shadow">
         <div className="relative overflow-hidden bg-white py-16 px-4 dark:bg-gray-800 sm:px-6 lg:px-8 lg:py-14">
           <div className="">
@@ -247,13 +247,13 @@ const Index = ({ userData }) => {
             <Grid.Container gap={2} justify="center">
               {userData?.data?.map((eachMartian, index) => (
                 <Grid
-                  className="pl-100 "
+                  className="pl-100 search-martian-card"
                   key={index}
                   css={{ justifyItems: 'center', maxwidth: '500' }}
                 >
                   <Link href={`/library/admin/martian/${eachMartian._id}`} passHref key={index}>
                     <a>
-                      <div className=" h-70 flex w-48 max-w-xs flex-col rounded-xl p-2 shadow-md dark:bg-gray-900 dark:text-gray-100 sm:px-3">
+                      <div className="martian-card h-70 flex w-48 max-w-xs flex-col rounded-xl p-2 shadow-md dark:bg-gray-900 dark:text-gray-100 sm:px-3">
                         {eachMartian?.ProfilePicture ? (
                           <div className=" mx-auto h-24 w-24 overflow-hidden rounded-full">
                             <Image

@@ -53,7 +53,7 @@ function ContentTags({ data, setData, type }) {
 
   return (
     <>
-      <div className="col-span-10 divide-y divide-gray-200 sm:space-y-2">
+      <div className="col-span-12 divide-y divide-gray-200 sm:space-y-2">
         <div>
           <h3 className="text-xl font-medium leading-6 text-gray-900 dark:text-gray-200">Tags</h3>
           <p className="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-300">
@@ -93,130 +93,129 @@ function ContentTags({ data, setData, type }) {
           })}
         </div>
       </fieldset> */}
+        {/* Tech Tags */}
+        <fieldset className="submit-content-type col-span-3">
+          <div>
+            <legend className="text-base font-medium text-gray-900 dark:text-gray-300">
+              Industry
+            </legend>
+          </div>
+          <div className="content-element mt-1">
+            {tagList.industry.map(tag => {
+              return (
+                <div key={tag} className="content-checkboxes">
+                  <input
+                    id={tag}
+                    name="techTags"
+                    type="checkbox"
+                    checked={data.Tags.includes(tag)}
+                    className="h-4 w-4 rounded border-gray-300 text-yellow-600 focus:ring-yellow-500"
+                    onChange={() => checkboxOnClick(tag)}
+                  />
+                  <label
+                    htmlFor={tag}
+                    className="ml-3 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >
+                    {tag}
+                  </label>
+                </div>
+              );
+            })}
+          </div>
+        </fieldset>
 
-      {/* Tech Tags */}
-      <fieldset className="submit-content-type col-span-10">
-        <div>
-          <legend className="text-base font-medium text-gray-900 dark:text-gray-300">
-            Industry
-          </legend>
-        </div>
-        <div className="content-element mt-1">
-          {tagList.industry.map(tag => {
-            return (
-              <div key={tag} className="content-checkboxes">
-                <input
-                  id={tag}
-                  name="techTags"
-                  type="checkbox"
-                  checked={data.Tags.includes(tag)}
-                  className="h-4 w-4 rounded border-gray-300 text-yellow-600 focus:ring-yellow-500"
-                  onChange={() => checkboxOnClick(tag)}
-                />
-                <label
-                  htmlFor={tag}
-                  className="ml-3 block text-sm font-medium text-gray-700 dark:text-gray-300"
-                >
-                  {tag}
-                </label>
-              </div>
-            );
-          })}
-        </div>
-      </fieldset>
+        {/* Protocol Tags */}
+        <fieldset className="submit-content-type col-span-3">
+          <div>
+            <legend className="text-base font-medium text-gray-900 dark:text-gray-300">
+              Protocol
+            </legend>
+          </div>
+          <div className="content-element mt-1">
+            {tagList.protocols.map(tag => {
+              return (
+                <div key={tag} className="content-checkboxes">
+                  <input
+                    id={tag}
+                    name="languageTags"
+                    type="checkbox"
+                    checked={data.Tags.includes(tag)}
+                    className="h-4 w-4 rounded border-gray-300 text-yellow-600 focus:ring-yellow-500"
+                    onChange={() => checkboxOnClick(tag)}
+                  />
+                  <label
+                    htmlFor={tag}
+                    className="ml-3 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >
+                    {tag}
+                  </label>
+                </div>
+              );
+            })}
+          </div>
+        </fieldset>
 
-      {/* Protocol Tags */}
-      <fieldset className="submit-content-type col-span-10">
-        <div>
-          <legend className="text-base font-medium text-gray-900 dark:text-gray-300">
-            Protocol
-          </legend>
-        </div>
-        <div className="content-element mt-1">
-          {tagList.protocols.map(tag => {
-            return (
-              <div key={tag} className="content-checkboxes">
-                <input
-                  id={tag}
-                  name="languageTags"
-                  type="checkbox"
-                  checked={data.Tags.includes(tag)}
-                  className="h-4 w-4 rounded border-gray-300 text-yellow-600 focus:ring-yellow-500"
-                  onChange={() => checkboxOnClick(tag)}
-                />
-                <label
-                  htmlFor={tag}
-                  className="ml-3 block text-sm font-medium text-gray-700 dark:text-gray-300"
-                >
-                  {tag}
-                </label>
-              </div>
-            );
-          })}
-        </div>
-      </fieldset>
+        {/* Framework Tags */}
+        <fieldset className="submit-content-type col-span-3">
+          <div>
+            <legend className="text-base font-medium text-gray-900 dark:text-gray-300">
+              Framework
+            </legend>
+          </div>
+          <div className="content-element mt-1">
+            {tagList.framework.map(tag => {
+              return (
+                <div key={tag} className="content-checkboxes">
+                  <input
+                    id={tag}
+                    name="languageTags"
+                    type="checkbox"
+                    checked={data.Tags.includes(tag)}
+                    className="h-4 w-4 rounded border-gray-300 text-yellow-600 focus:ring-yellow-500"
+                    onChange={() => checkboxOnClick(tag)}
+                  />
+                  <label
+                    htmlFor={tag}
+                    className="ml-3 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >
+                    {tag}
+                  </label>
+                </div>
+              );
+            })}
+          </div>
+        </fieldset>
 
-      {/* Framework Tags */}
-      <fieldset className="submit-content-type col-span-10">
-        <div>
-          <legend className="text-base font-medium text-gray-900 dark:text-gray-300">
-            Framework
-          </legend>
-        </div>
-        <div className="content-element mt-1">
-          {tagList.framework.map(tag => {
-            return (
-              <div key={tag} className="content-checkboxes">
-                <input
-                  id={tag}
-                  name="languageTags"
-                  type="checkbox"
-                  checked={data.Tags.includes(tag)}
-                  className="h-4 w-4 rounded border-gray-300 text-yellow-600 focus:ring-yellow-500"
-                  onChange={() => checkboxOnClick(tag)}
-                />
-                <label
-                  htmlFor={tag}
-                  className="ml-3 block text-sm font-medium text-gray-700 dark:text-gray-300"
-                >
-                  {tag}
-                </label>
-              </div>
-            );
-          })}
-        </div>
-      </fieldset>
-
-      {/* Language Tags */}
-      <fieldset className="submit-content-type col-span-10">
-        <div>
-          <legend className="text-base font-medium text-gray-900 dark:text-gray-300">
-            Language
-          </legend>
-        </div>
-        <div className="content-element mt-1">
-          {tagList.language.map(tag => {
-            return (
-              <div key={tag} className="content-checkboxes">
-                <input
-                  id={tag}
-                  name="languageTags"
-                  type="checkbox"
-                  checked={data.Tags.includes(tag)}
-                  className="h-4 w-4 rounded border-gray-300 text-yellow-600 focus:ring-yellow-500"
-                  onChange={() => checkboxOnClick(tag)}
-                />
-                <label
-                  htmlFor={tag}
-                  className="ml-3 block text-sm font-medium text-gray-700 dark:text-gray-300"
-                >
-                  {tag}
-                </label>
-              </div>
-            );
-          })}
-        </div>
-      </fieldset>
+        {/* Language Tags */}
+        <fieldset className="submit-content-type col-span-3">
+          <div>
+            <legend className="text-base font-medium text-gray-900 dark:text-gray-300">
+              Language
+            </legend>
+          </div>
+          <div className="content-element mt-1">
+            {tagList.language.map(tag => {
+              return (
+                <div key={tag} className="content-checkboxes">
+                  <input
+                    id={tag}
+                    name="languageTags"
+                    type="checkbox"
+                    checked={data.Tags.includes(tag)}
+                    className="h-4 w-4 rounded border-gray-300 text-yellow-600 focus:ring-yellow-500"
+                    onChange={() => checkboxOnClick(tag)}
+                  />
+                  <label
+                    htmlFor={tag}
+                    className="ml-3 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >
+                    {tag}
+                  </label>
+                </div>
+              );
+            })}
+          </div>
+        </fieldset>
     </>
   );
 }
