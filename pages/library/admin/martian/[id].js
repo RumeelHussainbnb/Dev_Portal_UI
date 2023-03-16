@@ -1,10 +1,6 @@
 import { useState, useEffect } from 'react';
-import dynamic from 'next/dynamic';
 import { Container } from '../../../../components/layout';
-import { loadMartians } from '../../../../lib/load-martians-list';
 import {
-  EyeIcon,
-  ThumbUpIcon,
   ClockIcon,
   UserCircleIcon,
   LocationMarkerIcon,
@@ -12,7 +8,6 @@ import {
 } from '@heroicons/react/solid';
 import moment from 'moment';
 import Image from 'next/image';
-import fetch from '../../../../utils/fetcher';
 import Pagination from '../../../../components/pagination/Pagination';
 import { http } from '../../../../utils/http';
 import { useRouter } from 'next/router';

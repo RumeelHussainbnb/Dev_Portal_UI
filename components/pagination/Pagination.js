@@ -16,6 +16,7 @@ function Pagination({
   const NEXT_LABEL = 'Next';
   const MARGIN_PAGES_DISPLAYED = 2;
   const PAGE_RANGE_DISPLAYED = 2;
+  let doc = '';
 
   const [selectedOption, setSelectedOption] = useState({
     value: pageSize,
@@ -30,7 +31,9 @@ function Pagination({
     setSelectedOption(opt);
     onPageSizeChange(opt.value);
   };
-
+  if (typeof document !== 'undefined') {
+    doc = document;
+  }
   return (
     <div className="flex items-center justify-center">
       <ReactPaginate
@@ -65,7 +68,7 @@ function Pagination({
           options={options}
           placeholder="No option selected"
           menuPlacement="bottom"
-          menuPortalTarget={document.body}
+          menuPortalTarget={doc?.body}
           styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
         />
       )}
