@@ -119,7 +119,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
   };
 
   return (
-    <div className="relative h-full overflow-hidden bg-white py-16 px-4 dark:bg-gray-800 sm:px-6 lg:px-8 lg:py-14">
+    <div className="content-page-wrapper relative h-full overflow-hidden bg-white py-16 px-4 dark:bg-gray-800 sm:px-6 lg:px-8 lg:py-14">
       <div className=" mx-auto max-w-5xl">
         {isLoading && <Loader />}
         <div className="absolute top-0 right-1">
@@ -144,10 +144,10 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
           <form
             action="#"
             method="POST"
-            className="grid grid-cols-8 gap-y-6 gap-x-8"
+            className="grid grid-cols-10 gap-y-6 "
             onSubmit={type === 'edit' ? updateContent : createContent}
           >
-            <div className="col-span-12 sm:col-span-4 lg:col-span-10">
+            <div className="col-span-12 sm:col-span-4 md:col-span-5 md:mr-2">
               <label
                 htmlFor="country"
                 className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
@@ -180,7 +180,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
                 }}
               />
             </div>
-            <div className="col-span-12 sm:col-span-4 lg:col-span-10">
+            <div className="col-span-12 sm:col-span-4 md:col-span-5 md:ml-2">
               <label
                 htmlFor="country"
                 className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
@@ -232,7 +232,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
               </>
             ) : null}
             {/* Buttons */}
-            <div className="col-span-10 mx-auto flex max-w-5xl">
+            <div className="col-span-10 mx-auto flex max-w-5xl button-wrapper">
               {type === 'edit' && (
                 <button
                   disabled={isLoading}
