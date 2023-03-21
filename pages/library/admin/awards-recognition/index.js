@@ -24,9 +24,12 @@ export default function AwardsRecognition({ data, user }) {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
 
-  const handlePageChange = page => {
-    setPage(page.selected + 1);
+  useEffect(() => {
     makeApiCall();
+  }, [page]);
+
+  const handlePageChange = page => {
+    setPage(page + 1);
   };
 
   const makeApiCall = async () => {

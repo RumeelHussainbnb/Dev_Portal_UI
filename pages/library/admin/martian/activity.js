@@ -8,7 +8,7 @@ import fetch from '../../../../utils/fetcher';
 // import Image from 'next/image';
 import Select from 'react-select';
 import { Container } from '../../../../components/layout';
-
+import DeleteModal from '../../../../components/deleteModal/index';
 import { http } from '../../../../utils/http';
 
 const NotificationSuccess = dynamic(() => import('../../../../components/notifications/success'));
@@ -27,8 +27,10 @@ const ActivityForm = () => {
   });
   const [activity, setActivity] = useState(null);
   const [mode, setMode] = useState(false);
-  const [notifySuccess, setNotifySuccess] = useState(false);
-  const [notifyError, setNotifyError] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
+  const [model, setModel] = useState(false);
+  const [notifySuccess, setNotifySuccess] = useState({ message: '', show: false });
+  const [notifyError, setNotifyError] = useState({ message: '', show: false });
 
   useEffect(() => {
     let userData = JSON.parse(localStorage.getItem('userData') || '{}');
@@ -120,6 +122,15 @@ const ActivityForm = () => {
 
     //create Mode
     if (mode == false) {
+      //Same Name Validation
+      let sameNameActivity = activity.find(f => f.activity === data.activity);
+      if (sameNameActivity) {
+        setNotifyError({ message: 'Activity with dupliate name found!', show: true });
+        setTimeout(() => {
+          setNotifyError({ message: '', show: false });
+        }, 1500);
+        return;
+      }
       let newActivity = {
         date: formattedDate,
         userId: userData?.data?._id,
@@ -147,7 +158,10 @@ const ActivityForm = () => {
             primaryContributionArea: { label: '', name: '' },
             additionalContributionArea: { label: '', name: '' }
           });
-          setNotifySuccess(true);
+          setNotifySuccess({ message: 'Successfully posted!', show: true });
+          setTimeout(() => {
+            setNotifySuccess({ message: '', show: false });
+          }, 1500);
         }
       } catch (error) {
         //Empty editor state
@@ -162,7 +176,10 @@ const ActivityForm = () => {
           additionalContributionArea: { label: '', name: '' }
         });
 
-        setNotifyError(true);
+        setNotifyError({ message: 'Something went wrong!', show: true });
+        setTimeout(() => {
+          setNotifyError({ message: '', show: false });
+        }, 1500);
       }
     }
     //edit Mode
@@ -198,7 +215,10 @@ const ActivityForm = () => {
             primaryContributionArea: { label: '', name: '' },
             additionalContributionArea: { label: '', name: '' }
           });
-          setNotifySuccess(true);
+          setNotifySuccess({ message: 'Successfully updated!', show: true });
+          setTimeout(() => {
+            setNotifySuccess({ message: '', show: false });
+          }, 1500);
         }
       } catch (error) {
         //Empty editor state
@@ -213,7 +233,10 @@ const ActivityForm = () => {
           additionalContributionArea: { label: '', name: '' }
         });
         setMode(false);
-        setNotifyError(true);
+        setNotifyError({ message: 'Something went wrong!', show: true });
+        setTimeout(() => {
+          setNotifyError({ message: '', show: false });
+        }, 1500);
       }
     }
   };
@@ -222,23 +245,34 @@ const ActivityForm = () => {
     setSelectedDate(date);
   };
 
-  const handleDeleteActivity = async id => {
+  const hadnleDeleteConfirmationModal = id => {
+    setDeleteId(id);
+    setModel(true);
+  };
+
+  const handleDeleteActivity = async () => {
     event.preventDefault();
     let userData = JSON.parse(localStorage.getItem('userData') || '{}');
 
     try {
-      const deleteActivity = await http.delete(`activity?_id=${id}`);
+      const deleteActivity = await http.delete(`activity?_id=${deleteId}`);
       if (deleteActivity?.data?.success === true) {
         let copyActivityState = [...activity];
 
-        setActivity(copyActivityState.filter(d => d._id !== id));
+        setActivity(copyActivityState.filter(d => d._id !== deleteId));
 
-        setNotifySuccess(true);
+        setNotifySuccess({ message: 'Successfully deleted!', show: true });
+        setTimeout(() => {
+          setNotifySuccess({ message: '', show: false });
+        }, 1500);
       }
     } catch (error) {
       //Empty editor state
 
-      setNotifyError(true);
+      setNotifyError({ message: 'Something went wrong!', show: true });
+      setTimeout(() => {
+        setNotifyError({ message: '', show: false });
+      }, 1500);
     }
   };
 
@@ -280,6 +314,14 @@ const ActivityForm = () => {
   return (
     <div className="add-martian-wrapper">
       <main className="mx-auto  mb-5  shadow">
+        {model && (
+          <DeleteModal
+            handleConfirmation={handleDeleteActivity}
+            setShowModal={setModel}
+            showModel={model}
+            nameOfTheDeleted="Activity"
+          />
+        )}
         <div className="relative overflow-hidden bg-white py-16 px-2 dark:bg-gray-800 sm:px-6 lg:px-8 lg:py-14">
           <div className=" mx-auto ">
             <div className="prose prose mx-auto max-w-max text-center prose-h1:mb-2 prose-p:text-lg dark:prose-invert">
@@ -321,6 +363,7 @@ const ActivityForm = () => {
                   </label>
                   <div className="mt-1">
                     <input
+                      disabled={mode}
                       type="text"
                       name="activity"
                       id="actvivity"
@@ -537,8 +580,10 @@ const ActivityForm = () => {
                             </a>
                             /
                             <a
+                              data-modal-target="popup-modal"
+                              data-modal-toggle="popup-modal"
                               href="#"
-                              onClick={() => handleDeleteActivity(data._id)}
+                              onClick={() => hadnleDeleteConfirmationModal(data._id)}
                               className="font-medium text-red-600 hover:underline dark:text-red-500"
                             >
                               Delete
@@ -555,17 +600,15 @@ const ActivityForm = () => {
         </div>
       </main>
       <NotificationError
-        show={notifyError}
-        setShow={setNotifyError}
-        text="Posting Failed"
-        subText="Please try again"
+        show={notifyError.show}
+        setShow={isShow => setNotifyError({ message: '', show: isShow })}
+        text={notifyError.message}
       />
 
       <NotificationSuccess
-        show={notifySuccess}
-        setShow={setNotifySuccess}
-        text="Successfully posted!"
-        subText="Thank you"
+        show={notifySuccess.show}
+        setShow={isShow => setNotifySuccess({ message: '', show: isShow })}
+        text={notifySuccess.message}
       />
     </div>
   );
