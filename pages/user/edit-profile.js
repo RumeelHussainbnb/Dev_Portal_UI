@@ -313,7 +313,7 @@ export default function Profile() {
       <div className="edit-profile-page flex w-full justify-around gap-3 md:pl-0">
         <main className="w-full">
           <div className="px-1 sm:px-6">
-            <div className="relative flex flex-col divide-gray-200 rounded-md bg-white  p-2 px-6 py-8 shadow dark:divide-gray-700">
+            <div className="relative flex flex-col divide-gray-200 rounded-md bg-white  p-2 lg:px-6 sm:px-2 py-8 shadow dark:divide-gray-700">
               <p className="text-lg font-bold">Personal Information:</p>
               <div className="mx-auto mt-10 h-24 w-28 text-center" onClick={onIconClick}>
                 <input
@@ -548,7 +548,7 @@ export default function Profile() {
               </div>
             </div>
 
-            <div className="relative mt-2 flex flex-col divide-gray-200  rounded-md bg-white p-2 px-8 py-8 shadow dark:divide-gray-700">
+            <div className="relative mt-2 flex flex-col divide-gray-200  rounded-md bg-white p-2 lg:px-6 sm:px-2 py-8 shadow dark:divide-gray-700">
               <p className="text-lg font-bold">Social Information:</p>
               <div className="mt-2 flex flex-wrap">
                 <InputField
@@ -581,7 +581,7 @@ export default function Profile() {
                 />
               </div>
             </div>
-            <div className="relative z-0 mt-2 flex flex-col divide-gray-200  rounded-md bg-white p-2 px-8 py-8 shadow dark:divide-gray-700">
+            <div className="relative z-0 mt-2 flex flex-col divide-gray-200  rounded-md bg-white p-2 lg:px-6 sm:px-2 py-8 shadow dark:divide-gray-700">
               <p className="mb-3 text-lg font-medium uppercase">Certification: </p>
               {certificateArray.map((item, index, array) => (
                 <>
