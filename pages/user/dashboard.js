@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import moment from 'moment';
 import { CheckCircleIcon, XCircleIcon, InformationCircleIcon } from '@heroicons/react/solid';
 
+import tagList from '../../utils/tags';
 import { http } from '../../utils/http';
 import { Container } from '../../components/layout';
 import Pagination from '../../components/pagination/Pagination';
@@ -90,6 +91,12 @@ export default function Contents() {
       'Stay up-to-date with the BNBChain ecosystem. BNBChain Projects and Developers in one place.',
     url: `${process.env.NEXT_PUBLIC_API_ENDPOINT}/mvp/content`,
     shouldIndex: true
+  };
+
+  const generateUrl = data => {
+    return tagList.externalContentTypes.includes(data.ContentType)
+      ? data.Url
+      : `/library/content/${data._id}`;
   };
 
   return (
@@ -236,7 +243,7 @@ export default function Contents() {
                           </th>
                           <td className="px-4 py-4">
                             <a
-                              href={data.Url}
+                              href={generateUrl(data)}
                               rel="noreferrer"
                               target="_blank"
                               className=" hover:underline "
@@ -320,7 +327,7 @@ export default function Contents() {
                           </th>
                           <td className="px-4 py-4">
                             <a
-                              href={data.Url}
+                              href={generateUrl(data)}
                               rel="noreferrer"
                               target="_blank"
                               className=" hover:underline "
@@ -400,7 +407,7 @@ export default function Contents() {
                           </th>
                           <td className="px-4 py-4">
                             <a
-                              href={data.Url}
+                              href={generateUrl(data)}
                               rel="noreferrer"
                               target="_blank"
                               className=" hover:underline "

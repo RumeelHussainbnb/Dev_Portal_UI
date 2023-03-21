@@ -57,6 +57,7 @@ function Pagination({
       />
       {showPerPage && (
         <Select
+          instanceId="pagination_Id"
           classNames={{
             control: state =>
               'w-42 h-4 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500',

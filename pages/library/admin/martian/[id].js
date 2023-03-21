@@ -22,10 +22,13 @@ export default function Profile() {
   const [isLoading, setIsLoading] = useState(false);
   const [isMartian, setIsMartian] = useState(false);
   const router = useRouter();
+  let userState = {};
+  let currentUserId = '';
 
   const getUserData = async () => {
-    let userState = JSON.parse(localStorage.getItem('userData' || '{}'));
-    setIsMartian(userState?.data?.Roles.includes('Martian'));
+    userState = JSON.parse(localStorage.getItem('userData' || '{}'));
+    currentUserId = userState?.data?._id;
+
     setIsLoading(true);
     const user = await http.get(`/user/getUserProfileWithData/${router.query?.id}`);
     const martianActivity = await http.get(
@@ -33,6 +36,11 @@ export default function Profile() {
     );
     setIsLoading(false);
     setUser(user.data?.data);
+    let isMartian =
+      user?.data?.data?.Roles?.includes('Martian') && currentUserId === user?.data?.data?._id;
+
+    setIsMartian(isMartian);
+
     setActivities(martianActivity?.data?.data?.totalActivity);
     setTotalActivities(martianActivity?.data?.data?.totalActivityCount);
   };
