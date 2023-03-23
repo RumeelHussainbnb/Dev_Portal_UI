@@ -14,7 +14,7 @@ const InputField = ({
     <div className={`w-full ${widthFull ? '' : 'lg:w-6/12'} px-4`}>
       <div className="relative mb-3 w-full">
         <label
-          className="mb-2 flex text-xs font-bold uppercase text-slate-600 "
+          className="mb-2 flex text-xs font-bold uppercase text-slate-600 text-slate-600 dark:text-gray-300"
           htmlFor="grid-password"
         >
           {label}

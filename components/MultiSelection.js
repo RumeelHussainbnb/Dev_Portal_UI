@@ -20,7 +20,7 @@ const MultiSelection = ({
     <div className="w-full px-4 lg:w-6/12">
       <div className="relative mb-3 w-full">
         <label
-          className="mb-2 block text-xs font-bold uppercase text-slate-600"
+          className="mb-2 block text-xs font-bold uppercase text-slate-600  dark:text-gray-300"
           htmlFor="grid-password"
         >
           {title}

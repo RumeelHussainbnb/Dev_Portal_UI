@@ -57,7 +57,7 @@ function Publications({
   };
 
   return (
-    <div className="mx-auto flex flex-col">
+    <div className="newsletter-page mx-auto flex flex-col">
       <div className="mb-8 flex justify-center">
         <h1 className="mb-10 w-max text-2xl font-bold capitalize tracking-tight text-gray-900 dark:text-gray-200 md:text-3xl 2xl:text-4xl">
           {title}
