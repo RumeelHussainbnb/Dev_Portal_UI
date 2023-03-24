@@ -28,9 +28,9 @@ export default function Course() {
           </p>
         </div>
 
-        <Banner />
+        {/*<Banner />*/}
 
-        {/* <Table /> */}
+        <Table />
       </div>
     </Container>
   );
