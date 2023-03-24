@@ -314,7 +314,7 @@ export default function Profile() {
         <main className="w-full">
           <div className="px-1 sm:px-6">
             <div className="relative flex flex-col divide-gray-200 rounded-md bg-white  dark:bg-gray-800 p-2 lg:px-6 sm:px-2 py-8 shadow dark:divide-gray-700">
-              <p className="text-lg font-bold">Personal Information:</p>
+              {/* <p className="text-lg font-bold">Personal Information:</p> */}
               <div className="mx-auto mt-10 h-24 w-28 text-center" onClick={onIconClick}>
                 <input
                   style={{ display: 'none' }}

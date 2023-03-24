@@ -144,6 +144,11 @@ h1,h2,h3,h4,h5 {
   .awards-wrap {
     width: 33%;
     margin-top: 10px;
+    p {
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
   }
 
   .horizontal-tabs {
@@ -573,6 +578,11 @@ aside {
     p {
       color: #d7d7d7;
     }
+    nav {
+      p {
+        color: #000;
+      }
+    }
   }
 }
 
@@ -868,3 +878,28 @@ aside {
   z-index: 9999999 !important;
 }
 
+
+
+.notify-popup {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  .left {
+    width: 100%;
+    display: flex;
+    white-space: nowrap;
+    align-items: center;
+    p {
+      margin-left: 5px;
+      margin-bottom: 0;
+    }
+  }
+  .right {
+    span {
+      position: absolute;
+      right: 15px;
+      top: 15px;
+    }
+  }
+}

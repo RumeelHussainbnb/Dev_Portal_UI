@@ -176,7 +176,7 @@ const martian = [
 
 const courses = [
   {
-    name: 'BNBChain 101',
+    name: 'BNB Chain 101',
     href: '/course'
   }
 ];
@@ -316,12 +316,12 @@ function NavSidebar() {
                   }}
                   className={classNames(
                     'text-gray-800 dark:text-gray-300',
-                    'group flex min-w-full max-w-[190px] items-center rounded-md px-3 py-2 text-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-700 lg:text-base'
+                    'group flex min-w-full max-w-[190px] items-center rounded-md text-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-700 lg:text-base'
                   )}
                 >
                   <div className="group flex cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-base">
                     <AcademicCapIcon
-                      className="h-4 w-4 text-yellow-400 dark:text-yellow-500"
+                      className="h-6 w-6 text-yellow-400 dark:text-yellow-500"
                       aria-hidden="true"
                     />
                     <span className="truncate leading-6">{item.name}</span>
