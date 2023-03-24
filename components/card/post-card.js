@@ -179,8 +179,8 @@ function PostWide({ content, mode }) {
             </div>
           </a>
         </Link>
-      ) : (
-        <Link href={isExternalLink ? contentState.Url : `/library/content/${contentState._id}`}>
+      ) : isExternalLink ? (
+        <Link className="focus:outline-none" href={contentState.Url}>
           <a className="focus:outline-none" target="_blank" rel="noreferrer">
             <div>
               <Image
@@ -197,6 +197,22 @@ function PostWide({ content, mode }) {
             </div>
           </a>
         </Link>
+      ) : (
+        <Link className="focus:outline-none" href={`/library/content/${contentState._id}`}>
+          <div>
+            <Image
+              className="cursor-pointer rounded-t-lg object-cover hover:opacity-90"
+              src={imageUrl}
+              alt=""
+              height="350"
+              width="700"
+              quality="100"
+              placeholder="blur"
+              blurDataURL={imageUrl}
+              loader={myLoader}
+            />
+          </div>
+        </Link>
       )}
 
       <div className="px-5 pt-4 pb-5 ">
@@ -211,7 +227,12 @@ function PostWide({ content, mode }) {
                   </div>
                   {/* <img className="" src="/martianImage.png" alt="" /> */}
                 </div>
-                <a href={contentState.Url} className="" rel="noreferrer" target="_blank">
+                <a
+                  href={isExternalLink ? contentState.Url : `/library/content/${contentState._id}`}
+                  className=""
+                  rel="noreferrer"
+                  target="_blank"
+                >
                   <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-500">
                     by {contentState.Author}
                   </p>

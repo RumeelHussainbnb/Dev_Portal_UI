@@ -19,10 +19,10 @@ export default [
     label: 'Scaffolds',
     value: 'Scaffolds'
   },
-  {
-    label: 'Tools',
-    value: 'Tools'
-  },
+  // {
+  //   label: 'Tools',
+  //   value: 'Tools'
+  // },
   {
     label: 'Implementations',
     value: 'Implementations'

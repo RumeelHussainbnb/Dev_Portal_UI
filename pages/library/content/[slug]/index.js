@@ -1,5 +1,8 @@
 import moment from 'moment';
+import { useRouter } from 'next/router';
 import ReactHtmlParser from 'react-html-parser';
+import { ArrowCircleLeftIcon } from '@heroicons/react/solid';
+
 import { Container } from '../../../../components/layout';
 import { http } from '../../../../utils/http';
 
@@ -29,6 +32,7 @@ export async function getServerSideProps({ query }) {
 }
 
 export default function Content({ content }) {
+  console.log(content);
   const metaTags = {
     title: content.Title,
     description: content.Description,
@@ -36,11 +40,19 @@ export default function Content({ content }) {
     shouldIndex: true,
     img: content.Img
   };
+  const router = useRouter();
 
   return (
     <Container metaTags={metaTags}>
       <div className="lg:mr-5">
         <div className="prose mx-auto max-w-6xl rounded-lg px-10 py-20 dark:border-none dark:prose-invert lg:border lg:bg-white dark:lg:bg-gray-800 xl:px-32">
+          <div onClick={() => router.back()}>
+            <ArrowCircleLeftIcon
+              className="mb-4 h-8 w-8 cursor-pointer fill-gray-500"
+              aria-hidden="true"
+            />
+          </div>
+
           <div className="align-center flex flex-col content-center items-center pb-10">
             <h1 className="mb-4">{content.Title}</h1>
             <h3 className="mt-0 tracking-wide text-gray-500 dark:text-gray-400">
@@ -54,6 +66,11 @@ export default function Content({ content }) {
               </a>
               {' · '}
               <span>{moment(content.PublishedAt).format('MMMM, DD, YYYY')}</span>
+            </h3>
+            <h3 className="mt-0 tracking-wide text-gray-500 dark:text-gray-400">
+              <span>Total Likes: {content?.LikedBy?.length}</span>
+              {' , '}
+              <span>Total Views: {content?.ViewedBy?.length}</span>
             </h3>
           </div>
           <div>{ReactHtmlParser(content.ContentMarkdown)}</div>
