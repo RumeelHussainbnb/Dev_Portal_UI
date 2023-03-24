@@ -201,10 +201,11 @@ const ActivityForm = () => {
         if (editActivity?.data?.success === true) {
           let copiedActivity = [...activity];
           let index = copiedActivity.findIndex(d => d._id === updateActivity.id);
-          console.log('index -----------> ', index);
-          console.log('Before copiedActivity -----------> ', copiedActivity);
+          // Ugly hack, otherwise not working
+          console.log('0');
+          console.log('0');
           copiedActivity[index] = editActivity?.data?.data;
-          console.log('After copiedActivity -----------> ', copiedActivity);
+          console.log('0');
           setActivity(copiedActivity);
           setMode(false);
           //Empty editor state
@@ -225,7 +226,7 @@ const ActivityForm = () => {
         }
       } catch (error) {
         //Empty editor state
-        console.log('Error -----------> ', error);
+        console.log('Error');
         setSelectedDate(new Date());
         setData({
           index: null,

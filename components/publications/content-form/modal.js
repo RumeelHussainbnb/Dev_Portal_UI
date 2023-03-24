@@ -10,7 +10,6 @@ export default function Modal({ open, setOpen, content, positions }) {
   useEffect(() => {
     let difference = content.Tags?.filter(x => tagList.levelsInTags.includes(x));
     difference = difference ? difference : '';
-    console.log('difference ==> ', difference);
     setData({
       PK: content.PK,
       SK: content.SK,

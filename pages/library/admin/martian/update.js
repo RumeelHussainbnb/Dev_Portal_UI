@@ -16,7 +16,6 @@ const NotificationError = dynamic(() => import('../../../../components/notificat
 const MvpForm = ({ router }) => {
   const inputFile = useRef(null);
   const routerData = router.query;
-  console.log('routerData ==> ', routerData);
   const [data, setData] = useState({
     ...routerData,
     firstName: routerData?.FirstName,
@@ -147,7 +146,7 @@ const MvpForm = ({ router }) => {
   };
 
   return (
-    <div className="add-martian-wrapper rounded w-full">
+    <div className="add-martian-wrapper w-full rounded">
       <main className="mx-auto mb-5  shadow">
         <div className="relative overflow-hidden bg-white py-8 px-2 dark:bg-gray-800 sm:px-2 lg:px-6 lg:py-10">
           <div className=" mx-auto">
@@ -380,7 +379,7 @@ const MvpForm = ({ router }) => {
                     />
                   </div>
                 </div>
-                <div className='button-wrapper'>
+                <div className="button-wrapper">
                   <button
                     type="submit"
                     className="inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-3 px-16 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200"
