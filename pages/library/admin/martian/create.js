@@ -147,7 +147,6 @@ const MvpForm = () => {
     try {
       //create case
       if (isNewUser) {
-        console.log('data ==> ', data);
         parms = {
           ImageUrl: imageUrl,
           FirstName: data.firstName.trim(),
