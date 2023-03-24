@@ -176,7 +176,7 @@ const martian = [
 
 const courses = [
   {
-    name: 'BNBChain 101',
+    name: 'BNB Chain 101',
     href: '/course'
   }
 ];
@@ -296,7 +296,7 @@ function NavSidebar() {
           >
             Courses
           </p>
-          <div className="mt-2 space-y-1" aria-labelledby="communities-headline">
+          <div className="mt-2 " aria-labelledby="communities-headline">
             {courses.map(item => {
               return (
                 // <Link href={appState.publicKey ? item.href : ''} passHref key={item.name}>
