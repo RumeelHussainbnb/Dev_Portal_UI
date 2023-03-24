@@ -127,7 +127,7 @@ export default function Profile() {
                         <div className="h-5 w-5">
                           <UserCircleIcon className="fill-yellow-500" aria-hidden="true" />
                         </div>
-                        <p className="ml-1 text-[12px]"> {data?.Roles?.join(',')}</p>
+                        <p className="ml-1 text-[12px]"> {data?.Roles?.join(', ')}</p>
                       </div>
                     </div>
                   </div>
@@ -236,9 +236,12 @@ export default function Profile() {
                           {data?.UserAllContents?.length > 0 ? (
                             data?.UserAllContents?.map((content, i) => (
                               <li key={i}>
-                                <div className="image">
+                                <div className="image rounded-full border-2 fill-gray-700 p-2">
                                   <a title="Cloud">
-                                    <Image src={'/read.png'} width="250px" height="250px" alt="" />
+                                    <BookOpenIcon
+                                      className="w-10  fill-blue-500"
+                                      aria-hidden="true"
+                                    />
                                   </a>
                                 </div>
                                 <div className="right">
@@ -297,9 +300,12 @@ export default function Profile() {
                         {data?.MostRecentContent?.length > 0 ? (
                           data?.MostRecentContent?.map((content, i) => (
                             <li key={i}>
-                              <div className="image">
+                              <div className="image rounded-full border-2 fill-gray-700 p-2">
                                 <a title="Cloud">
-                                  <Image src={'/read.png'} width="250px" height="250px" alt="" />
+                                  <BookOpenIcon
+                                    className="w-10  fill-blue-500"
+                                    aria-hidden="true"
+                                  />
                                 </a>
                               </div>
                               <div className="right">
@@ -348,9 +354,12 @@ export default function Profile() {
                           <div className="justify-evently flex flex-wrap">
                             <ul id="ulArticles">
                               <li>
-                                <div className="image">
+                                <div className="image rounded-full border-2 fill-gray-700 p-2">
                                   <a title="Cloud">
-                                    <Image src={'/read.png'} width="250px" height="250px" alt="" />
+                                    <BookOpenIcon
+                                      className="w-10  fill-blue-500"
+                                      aria-hidden="true"
+                                    />
                                   </a>
                                 </div>
                                 <div className="right">
