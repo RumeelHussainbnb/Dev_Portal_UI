@@ -220,7 +220,7 @@ export default function Profile() {
                   ))}
                 </nav>
                 <div className="py-5">
-                  <div className="flex justify-between">
+                  <div className="flex justify-center">
                     {selectedTab === 'Contributions' && (
                       <div className="justify-evently flex flex-wrap">
                         <ul id="ulArticles">
@@ -268,7 +268,7 @@ export default function Profile() {
                               </li>
                             ))
                           ) : (
-                            <p className=" ml-6 mt-4 text-base font-bold text-black">
+                            <p className=" ml-6 mt-4 text-xl font-bold text-black">
                               No Record Found
                             </p>
                           )}
@@ -417,12 +417,12 @@ export default function Profile() {
                   )}
                   {data?.Author?.RecognizationsAndAwards?.includes('VIP_medal') && (
                     <div className="m-h-[80px] mr-3 flex h-fit w-[30%] max-w-[80px] items-center justify-center overflow-hidden">
-                      <Image src={'/vip.png'} width="300px" height="300px" alt="" />
+                      <Image src={'/vip-selected.png'} width="300px" height="300px" alt="" />
                     </div>
                   )}
                   {data?.Author?.RecognizationsAndAwards?.includes('Speaker_medal') && (
                     <div className="m-h-[80px] mr-3 flex h-fit w-[30%] max-w-[80px] items-center justify-center overflow-hidden">
-                      <Image src={'/speaker.png'} width="300px" height="300px" alt="" />
+                      <Image src={'/speaker-selected.png'} width="300px" height="300px" alt="" />
                     </div>
                   )}
                 </div>
@@ -439,7 +439,7 @@ export default function Profile() {
                           <th
                             key={index}
                             className={
-                              'whitespace-nowrap border border-l-0 border-r-0 border-solid border-slate-100 bg-[#FACC15] px-6 py-3 text-left align-middle text-xs font-semibold uppercase text-slate-700'
+                              'whitespace-nowrap border-solid border-slate-100 bg-[#FACC15] px-6 py-3 text-left align-middle text-xs font-semibold uppercase text-slate-700'
                             }
                           >
                             {item}
@@ -465,13 +465,13 @@ export default function Profile() {
                     ))}
                   </table>
                 ) : (
-                  <div className="flex h-full w-64 items-center py-4 px-8">
+                  <div className="flex h-full w-full items-center justify-center py-4 px-6">
                     <p className="text-sm font-bold text-black">No Record Available</p>
                   </div>
                 )}
               </div>
-              <div className="social-links mt-2 flex flex-row justify-between">
-                <div className="links relative z-0 flex w-[49%] flex-col items-center justify-center divide-x divide-gray-200 rounded-md bg-white dark:bg-gray-800 p-2 shadow dark:divide-gray-700">
+              <div className="social-links mt-2 flex flex-row justify-between w-full">
+                <div className="links relative z-0 flex w-[100%] flex-col items-center justify-center divide-x divide-gray-200 rounded-md bg-white dark:bg-gray-800 p-2 shadow dark:divide-gray-700">
                   <p className="text-lg font-medium">Social Links</p>
                   <div className="b-0 flex flex-row">
                     {data?.Author?.SocialLinks[0]?.Link != undefined && (
@@ -524,7 +524,7 @@ export default function Profile() {
                     )}
                   </div>
                 </div>
-                <div className="links relative z-0 flex w-[49%] flex-col items-center justify-center divide-x divide-gray-200 rounded-md bg-white dark:bg-gray-800 p-2 shadow  dark:divide-gray-700">
+                {/* <div className="links relative z-0 flex w-[49%] flex-col items-center justify-center divide-x divide-gray-200 rounded-md bg-white dark:bg-gray-800 p-2 shadow  dark:divide-gray-700">
                   <p className="text-lg font-medium">Author</p>
                   <div className="b-0 flex flex-row">
                     <div className="mr-2 h-8 w-8 ">
@@ -535,7 +535,6 @@ export default function Profile() {
                         alt=""
                       />
                     </div>
-                    {/* hover:cursor-pointer */}
                     <div className="mr-2 h-8 w-8 ">
                       <Image
                         src={'/icons8-certification-64.png'}
@@ -548,7 +547,7 @@ export default function Profile() {
                       <Image src={'/icons8-graph-64.png'} width="250px" height="250px" alt="" />
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </aside>
