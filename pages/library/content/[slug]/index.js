@@ -45,38 +45,30 @@ export default function Content({ content }) {
   return (
     <Container metaTags={metaTags}>
       <div className="lg:mr-5">
-        <div className="prose mx-auto max-w-6xl rounded-lg px-10 py-20 dark:border-none dark:prose-invert lg:border lg:bg-white dark:lg:bg-gray-800 xl:px-32">
-          <div onClick={() => router.back()}>
+        <div className="prose mx-auto max-w-6xl rounded-lg py-8 px-10 dark:border-none dark:prose-invert lg:border lg:bg-white dark:lg:bg-gray-800 xl:px-32">
+          <div onClick={() => router.push(`/library/${content?.ContentType}`)}>
             <span className="text-md cursor-pointer pb-4 text-yellow-600 hover:text-yellow-700 hover:underline lg:text-lg">
-              <>&larr; Back to "Clicked Category"</>
+              <>&larr; Back to {content?.ContentType}</>
             </span>
           </div>
 
-          <div className="align-center flex flex-col content-center items-center ">
+          <div className="align-center mt-2 flex flex-col content-center items-center ">
             <h1 className="mb-4">{content.Title}</h1>
             <h3 className="mt-0 tracking-wide text-gray-500 dark:text-gray-400">
-              <a
-                className="tracking-wide text-gray-500 no-underline hover:text-blue-400 dark:text-gray-400 dark:hover:text-blue-500"
-                href="https://twitter.com/Cryptar2"
-                target="_blank"
-                rel="noreferrer"
-              >
-                by {content.Author}
-              </a>
+              by {content.Author}
               {' · '}
-              <span>{moment(content.PublishedAt).format('MMMM, DD, YYYY')}</span>
+              <span>{moment(content.PublishedAt).format('YYYY-MM-DD')}</span>
             </h3>
             <h3 className="mt-0 tracking-wide text-gray-500 dark:text-gray-400">
-              <span className="inline-flex items-baseline">
+              <span className="mr-8 inline-flex items-center ">
                 <span>
-                  <ThumbUpIcon className="mr-2 h-5 w-5 fill-yellow-500" aria-hidden="true" />
+                  <ThumbUpIcon className="mr-2  w-6 fill-blue-500" aria-hidden="true" />
                 </span>
                 {content?.LikedBy?.length}
               </span>
-              {' , '}
-              <span className="inline-flex items-baseline">
+              <span className="inline-flex items-center ">
                 <span>
-                  <EyeIcon className="mr-2 h-5 w-5 fill-yellow-500" aria-hidden="true" />
+                  <EyeIcon className="mr-2  w-6 fill-yellow-500" aria-hidden="true" />
                 </span>
                 {content?.ViewedBy?.length}
               </span>
