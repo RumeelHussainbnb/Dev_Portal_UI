@@ -72,10 +72,10 @@ export default function Profile() {
     <>
       {isLoading && <Loader />}
       <Container metaTags={metaTags}>
-        <div className="profile-page flex w-full justify-center gap-3 self-center md:pl-0">
+        <div className="profile-page flex w-full justify-center self-center md:pl-0 overflow-hidden">
           <main className="profile">
             <div className="profile-wrapper px-4 sm:px-6">
-              <div className="porfile-section relative z-0 flex flex-col divide-gray-200 rounded-md bg-white p-2 px-4 py-4 shadow dark:divide-gray-700">
+              <div className="porfile-section relative z-0 flex flex-col divide-gray-200 rounded-md bg-white p-2 px-4 py-4 shadow dark:divide-gray-700 dark:bg-gray-800">
                 <div className="profile-detail flex flex-row">
                   <div className="profile-img-discription">
                     <div className="profile-img m-h-[150px] flex h-fit w-[30%] max-w-[150px] items-center justify-center overflow-hidden rounded-full">
@@ -178,11 +178,11 @@ export default function Profile() {
                   </div>
                 </div>
               </div>
-              <div className="porfile-section relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md bg-white p-2 px-8 py-8 shadow  dark:divide-gray-700">
+              <div className="porfile-section relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md bg-white p-2 px-8 py-8 shadow  dark:divide-gray-700 dark:bg-gray-800">
                 <p className="text-lg font-medium uppercase">Bio </p>
                 <p className="text-[12px]">{data?.Bio}</p>
               </div>
-              <div className="horizontal-tabs rounded-md bg-white px-4 sm:px-0">
+              <div className="horizontal-tabs rounded-md bg-white px-4 sm:px-0 dark:bg-gray-800">
                 <nav
                   className="relative z-0 mt-2 flex divide-gray-200 rounded-lg shadow dark:divide-gray-700"
                   aria-label="Tabs"
@@ -395,9 +395,9 @@ export default function Profile() {
               </div>
             </div>
           </main>
-          <aside className="w-fit">
+          <aside className="w-fit profile-aside">
             <div className="block w-full overflow-x-auto">
-              <div className="mt-sm-2 relative z-0 flex flex-col divide-gray-200 rounded-md bg-white p-2 px-4 py-4 shadow dark:divide-gray-700">
+              <div className="mt-sm-2 relative z-0 flex flex-col divide-gray-200 rounded-md bg-white dark:bg-gray-800 p-2 px-4 py-4 shadow dark:divide-gray-700">
                 <p className="mb-3 text-lg font-medium uppercase">Awards & Recognitions </p>
                 <div className="flex flex-row items-start justify-start self-start">
                   {data?.Author?.RecognizationsAndAwards?.includes('MOM_medal') && (
@@ -427,12 +427,12 @@ export default function Profile() {
                   )}
                 </div>
               </div>
-              <div className="relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md bg-white px-4 py-4 shadow dark:divide-gray-700">
+              <div className="relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md bg-white dark:bg-gray-800 px-4 py-4 shadow dark:divide-gray-700">
                 <p className="mb-1 text-lg font-medium uppercase">Certification </p>
 
                 {/* Projects table */}
                 {data?.Author?.Certification.length > 0 ? (
-                  <table className="w-full border-collapse items-center bg-transparent">
+                  <table className="table-responsive w-full border-collapse items-center bg-transparent">
                     <thead>
                       <tr>
                         {['', 'Organization', 'Name'].map((item, index) => (
@@ -471,7 +471,7 @@ export default function Profile() {
                 )}
               </div>
               <div className="social-links mt-2 flex flex-row justify-between">
-                <div className="links relative z-0 flex w-[49%] flex-col items-center justify-center divide-x divide-gray-200 rounded-md bg-white p-2 shadow dark:divide-gray-700">
+                <div className="links relative z-0 flex w-[49%] flex-col items-center justify-center divide-x divide-gray-200 rounded-md bg-white dark:bg-gray-800 p-2 shadow dark:divide-gray-700">
                   <p className="text-lg font-medium">Social Links</p>
                   <div className="b-0 flex flex-row">
                     {data?.Author?.SocialLinks[0]?.Link != undefined && (
@@ -524,7 +524,7 @@ export default function Profile() {
                     )}
                   </div>
                 </div>
-                <div className="links relative z-0 flex w-[49%] flex-col items-center justify-center divide-x divide-gray-200 rounded-md bg-white p-2 shadow  dark:divide-gray-700">
+                <div className="links relative z-0 flex w-[49%] flex-col items-center justify-center divide-x divide-gray-200 rounded-md bg-white dark:bg-gray-800 p-2 shadow  dark:divide-gray-700">
                   <p className="text-lg font-medium">Author</p>
                   <div className="b-0 flex flex-row">
                     <div className="mr-2 h-8 w-8 ">

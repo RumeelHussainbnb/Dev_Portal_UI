@@ -23,7 +23,7 @@ function TableRow({ item, index, ready }) {
         </div>
       </Link>
 
-      <CheckMark item={item.link} />
+      {/*<CheckMark item={item.link} />*/}
     </div>
   );
 }

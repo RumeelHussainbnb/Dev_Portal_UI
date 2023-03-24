@@ -407,7 +407,7 @@ function TopBar({ childrens }) {
             </div>
 
             <div className="min-h-screen w-full overflow-x-hidden overflow-y-visible">
-              <div className="flex justify-center gap-6 px-2 md:pl-0 divide-gray-200 rounded-md text-sm text-gray-500 dark:divide-gray-700 dark:text-gray-500 p-2">{childrens}</div>
+              <div className="flex justify-center gap-6 px-2 md:pl-0 divide-gray-200 rounded text-sm text-gray-500 dark:divide-gray-700 dark:text-gray-500 p-2">{childrens}</div>
             </div>
           </div>
         </div>

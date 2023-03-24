@@ -147,7 +147,7 @@ const MvpForm = ({ router }) => {
   };
 
   return (
-    <div className="add-martian-wrapper">
+    <div className="add-martian-wrapper rounded w-full">
       <main className="mx-auto mb-5  shadow">
         <div className="relative overflow-hidden bg-white py-8 px-2 dark:bg-gray-800 sm:px-2 lg:px-6 lg:py-10">
           <div className=" mx-auto">
