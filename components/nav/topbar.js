@@ -6,8 +6,12 @@ import {
   MenuIcon,
   MoonIcon,
   SunIcon,
-  XIcon
+  XIcon,
+  ChartBarIcon,
+  UserCircleIcon,
+  ExclamationIcon
 } from '@heroicons/react/outline';
+
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -341,20 +345,38 @@ function TopBar({ childrens }) {
                                 </Menu.Item>
                               )}
                               <Menu.Item>
-                                <button
-                                  className="text-md block flex w-full bg-gray-100 px-4 py-2 text-gray-700 hover:opacity-80 dark:bg-gray-700 dark:text-gray-300"
-                                  onClick={() => router.push('/user/dashboard')}
-                                >
-                                  <span>Dashboard</span>
-                                </button>
+                                {({ active }) => (
+                                  <button
+                                    className={classNames(
+                                      active && 'bg-gray-100 hover:opacity-80 dark:bg-gray-700',
+                                      'text-md block flex w-full px-4 py-2 text-gray-700 dark:text-gray-300'
+                                    )}
+                                    onClick={() => router.push('/user/dashboard')}
+                                  >
+                                    <ChartBarIcon
+                                      className="block h-7 w-7 text-gray-700 dark:text-gray-300"
+                                      aria-hidden="true"
+                                    />
+                                    <span className="pl-2">Dashboard</span>
+                                  </button>
+                                )}
                               </Menu.Item>
                               <Menu.Item>
-                                <button
-                                  className="text-md block flex w-full bg-gray-100 px-4 py-2 text-gray-700 hover:opacity-80 dark:bg-gray-700 dark:text-gray-300"
-                                  onClick={() => router.push('/user/profile')}
-                                >
-                                  <span>My Profile</span>
-                                </button>
+                                {({ active }) => (
+                                  <button
+                                    className={classNames(
+                                      active && 'bg-gray-100 hover:opacity-80 dark:bg-gray-700',
+                                      'text-md block flex w-full px-4 py-2 text-gray-700 dark:text-gray-300'
+                                    )}
+                                    onClick={() => router.push('/user/profile')}
+                                  >
+                                    <UserCircleIcon
+                                      className="block h-7 w-7 text-gray-700 dark:text-gray-300"
+                                      aria-hidden="true"
+                                    />
+                                    <span className="pl-2">My Profile</span>
+                                  </button>
+                                )}
                               </Menu.Item>
                               <Menu.Item>
                                 {({ active }) => (
@@ -365,7 +387,11 @@ function TopBar({ childrens }) {
                                     )}
                                     onClick={removeConnection}
                                   >
-                                    <span>Disconnect Wallet</span>
+                                    <ExclamationIcon
+                                      className="block h-7 w-7 text-gray-700 dark:text-gray-300"
+                                      aria-hidden="true"
+                                    />
+                                    <span className="pl-2">Disconnect Wallet</span>
                                   </button>
                                 )}
                               </Menu.Item>
@@ -407,7 +433,9 @@ function TopBar({ childrens }) {
             </div>
 
             <div className="min-h-screen w-full overflow-x-hidden overflow-y-visible">
-              <div className="flex justify-center gap-6 px-2 md:pl-0 divide-gray-200 rounded text-sm text-gray-500 dark:divide-gray-700 dark:text-gray-500 p-2">{childrens}</div>
+              <div className="flex justify-center gap-6 divide-gray-200 rounded p-2 px-2 text-sm text-gray-500 dark:divide-gray-700 dark:text-gray-500 md:pl-0">
+                {childrens}
+              </div>
             </div>
           </div>
         </div>
