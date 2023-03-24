@@ -2,6 +2,7 @@ import moment from 'moment';
 import { useRouter } from 'next/router';
 import ReactHtmlParser from 'react-html-parser';
 import { ArrowCircleLeftIcon } from '@heroicons/react/solid';
+import { EyeIcon, ThumbUpIcon } from '@heroicons/react/solid';
 
 import { Container } from '../../../../components/layout';
 import { http } from '../../../../utils/http';
@@ -45,7 +46,7 @@ export default function Content({ content }) {
   return (
     <Container metaTags={metaTags}>
       <div className="lg:mr-5">
-        <div className="prose mx-auto max-w-6xl rounded-lg px-10 py-20 dark:border-none dark:prose-invert lg:border lg:bg-white dark:lg:bg-gray-800 xl:px-32">
+        <div className="prose mx-auto max-w-6xl rounded-lg py-8 px-10 dark:prose-invert dark:border-none lg:border lg:bg-white dark:lg:bg-gray-800 xl:px-32">
           <div onClick={() => router.back()}>
             <ArrowCircleLeftIcon
               className="mb-4 h-8 w-8 cursor-pointer fill-gray-500"
@@ -53,25 +54,21 @@ export default function Content({ content }) {
             />
           </div>
 
-          <div className="align-center flex flex-col content-center items-center pb-10">
+          <div className="align-center flex flex-col content-center items-center">
             <h1 className="mb-4">{content.Title}</h1>
             <h3 className="mt-0 tracking-wide text-gray-500 dark:text-gray-400">
-              <a
-                className="tracking-wide text-gray-500 no-underline hover:text-blue-400 dark:text-gray-400 dark:hover:text-blue-500"
-                href="https://twitter.com/Cryptar2"
-                target="_blank"
-                rel="noreferrer"
-              >
-                by {content.Author}
-              </a>
+              by {content.Author}
               {' · '}
-              <span>{moment(content.PublishedAt).format('MMMM, DD, YYYY')}</span>
+              <span>{moment(content.PublishedAt).format('YYYY-MM-DD')}</span>
             </h3>
-            <h3 className="mt-0 tracking-wide text-gray-500 dark:text-gray-400">
-              <span>Total Likes: {content?.LikedBy?.length}</span>
-              {' , '}
-              <span>Total Views: {content?.ViewedBy?.length}</span>
-            </h3>
+          </div>
+          <div className="align-center flex flex-col content-center items-center">
+            <h5 className="mt-0 text-gray-500 dark:text-gray-400">
+              <ThumbUpIcon className="h-7 w-7 fill-yellow-500" aria-hidden="true" />
+              {content?.LikedBy?.length}
+              <EyeIcon className="h-7 w-7 fill-yellow-500" aria-hidden="true" />
+              {content?.ViewedBy?.length}
+            </h5>
           </div>
           <div>{ReactHtmlParser(content.ContentMarkdown)}</div>
         </div>
