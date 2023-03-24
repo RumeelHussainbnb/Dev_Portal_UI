@@ -148,7 +148,7 @@ export const modules = [
     },
     {
       title: 'Deploying Smart Contracts',
-      link: '/course/truffle-ide'
+      link: '/course/truffle-deploy'
     },
   ],
   

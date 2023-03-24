@@ -13,7 +13,7 @@ In the previous modules, we outlined how to write, compile, deploy, and unit tes
 [Truffle](https://trufflesuite.com/) is one of the most popular development environment, testing framework and asset pipeline for blockchains using the Ethereum Virtual Machine (EVM).
 
 ## Demo 
-This demo illustrates how to interact with a smart contract that is deployed on the BNB Smart Chain using the Truffle IDE. This is a hands-on guide and readers are encourged to perform these tasks along for a better understanding. Before starting off with the practical demo, it is necessary to make sure you have the following software requisites installed. Also, make sure you have completed Module [2A](first-smart-contract.md) and [2B](truffle-ide).
+This demo illustrates how to interact with a smart contract that is deployed on the BNB Smart Chain using the Truffle IDE. This is a hands-on guide and readers are encourged to perform these tasks along for a better understanding. Before starting off with the practical demo, it is necessary to make sure you have the following software requisites installed. Also, make sure you have completed Module [6.2](first-smart-contract) and [6.3](truffle-ide).
 
 ## Prerequisites
 - Node v16.13.0

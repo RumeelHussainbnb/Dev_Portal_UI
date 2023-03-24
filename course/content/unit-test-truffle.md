@@ -23,7 +23,7 @@ In this hands-on guide, readers are encourged to perform these tasks along for a
 ### Setup 
 We will test out our Solidity smart contracts behaviour with unit testing with Truffle which uses Chai and Mocha frameworks. In web development lifecycle, unit testing is needed to do to ensure the code is working the way as it is expected.
 
-In order to be able to complete this demo, make sure you have followed the tutorial [Write Your First Smart Contract](first-smart-contract.md) for writing the `HelloWorld` smart contract using the Truffle IDE and the lesson on [Using Truffle to compile and deploy smart contracts](truffle-ide) for successfully compiled the `HelloWorld` smart contract.
+In order to be able to complete this demo, make sure you have followed the tutorial [Hello World Smart Contract](first-smart-contract) for writing the `HelloWorld` smart contract using the Truffle IDE and the lesson on [Compiling Smart Contracts](truffle-ide) for successfully compiled the `HelloWorld` smart contract.
 
 ### Test Script 
 The firt step is to create a file in the `test` folder that will contain the test script. In the `test` folder create a new file `hello_world.js` 
