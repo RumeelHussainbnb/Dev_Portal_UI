@@ -162,12 +162,14 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
                 label="contentType"
                 classNames={{
                   singleValue: state =>
-                    state.isDisabled ? 'dark:text-gray-800 text-gray-800' : '',
+                    state.isDisabled ? 'dark:text-gray-800 text-gray-800' : 'capitalize',
                   control: state =>
                     'py-1.5 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500',
 
                   option: state =>
-                    state.isSelected ? ' dark:bg-gray-400 bg-white dark:text-gray-800 ' : 'bg-white'
+                    state.isSelected
+                      ? 'capitalize dark:bg-gray-400 bg-white dark:text-gray-800 '
+                      : 'bg-white'
                 }}
                 options={contentType}
                 value={data.ContentType.label ? data.ContentType : ''}
@@ -232,7 +234,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
               </>
             ) : null}
             {/* Buttons */}
-            <div className="col-span-10 mx-auto flex max-w-5xl button-wrapper">
+            <div className="button-wrapper col-span-10 mx-auto flex max-w-5xl">
               {type === 'edit' && (
                 <button
                   disabled={isLoading}
