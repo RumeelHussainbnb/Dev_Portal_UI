@@ -25,10 +25,6 @@ const myLoader = ({ src, width, quality }) => {
   return `${src}`;
 };
 
-const myLoader = ({ src, width, quality }) => {
-  return `${src}`;
-};
-
 function CardWide({ content, mode }) {
   const [isS3Audio, setIsS3Audio] = useState(false);
   const imageUrl = defineImage(content);
