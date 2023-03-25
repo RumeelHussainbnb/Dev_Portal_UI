@@ -19,7 +19,7 @@ import Link from 'next/link';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 
-const tabs = ['Contributions', 'Most Popular', 'Most Read'];
+const tabs = ['Contributions', 'Most Popular', 'Most Recent'];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -228,8 +228,8 @@ export default function Profile() {
                     </button>
                   ))}
                 </nav>
-                <div className="py-5">
-                  <div className="flex justify-center">
+                <div className="ml-5 py-5">
+                  <div className="flex">
                     {selectedTab === 'Contributions' && (
                       <div className="justify-evently flex flex-wrap">
                         <ul id="ulArticles">
@@ -280,7 +280,7 @@ export default function Profile() {
                               </li>
                             ))
                           ) : (
-                            <p className=" ml-6 mt-4 text-xl font-bold text-black">
+                            <p className="ml-6 mt-4 text-xl font-bold text-black">
                               No Record Found
                             </p>
                           )}
@@ -295,17 +295,14 @@ export default function Profile() {
                           )}
                       </div>
                     )}
-                    {selectedTab === 'Most Read' && (
+                    {selectedTab === 'Most Recent' && (
                       <ul id="ulArticles">
                         {data?.MostRecentContent?.length > 0 ? (
                           data?.MostRecentContent?.map((content, i) => (
                             <li key={i}>
                               <div className="image rounded-full border-2 fill-gray-700 p-2">
                                 <a title="Cloud">
-                                  <BookOpenIcon
-                                    className="w-10  fill-blue-500"
-                                    aria-hidden="true"
-                                  />
+                                  <BookOpenIcon className="w-10 fill-blue-500" aria-hidden="true" />
                                 </a>
                               </div>
                               <div className="right">
@@ -341,9 +338,7 @@ export default function Profile() {
                             </li>
                           ))
                         ) : (
-                          <p className=" ml-6 mt-4 text-base font-bold text-black">
-                            No Record Found
-                          </p>
+                          <p className="ml-6 mt-4 text-xl font-bold text-black">No Record Found</p>
                         )}
                       </ul>
                     )}
@@ -403,9 +398,7 @@ export default function Profile() {
                             </ul>
                           </div>
                         ) : (
-                          <p className=" ml-6 mt-4 text-base font-bold text-black">
-                            No Record Found
-                          </p>
+                          <p className="ml-6 mt-4 text-xl font-bold text-black">No Record Found</p>
                         )}
                       </div>
                     )}
@@ -489,8 +482,8 @@ export default function Profile() {
                   </div>
                 )}
               </div>
-              <div className="social-links mt-2 flex flex-row justify-between w-full">
-                <div className="links relative z-0 flex w-[100%] flex-col items-center justify-center divide-x divide-gray-200 rounded-md bg-white dark:bg-gray-800 p-2 shadow dark:divide-gray-700">
+              <div className="social-links mt-2 flex w-full flex-row justify-between">
+                <div className="links relative z-0 flex w-[100%] flex-col items-center justify-center divide-x divide-gray-200 rounded-md bg-white p-2 shadow dark:divide-gray-700 dark:bg-gray-800">
                   <p className="text-lg font-medium">Social Links</p>
                   <div className="b-0 flex flex-row">
                     {data?.Author?.SocialLinks[0]?.Link != undefined && (
