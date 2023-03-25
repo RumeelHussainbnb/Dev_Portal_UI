@@ -150,9 +150,7 @@ const categories = [
   },
   {
     name: 'Tools',
-    href: 'https://nodereal.io/bnb-dev-tools',
-    rel: 'noreferrer',
-    target: '_blank'
+    href: '/tools'
   },
   {
     name: 'Security',
