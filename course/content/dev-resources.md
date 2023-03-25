@@ -1,0 +1,12 @@
+# Developer Resources for BNB Chain 
+
+A comprehensive list of developer resources for BNB Chain is a collection of various guides, tutorials, tools, programs, and support for developers who want to learn and improve their BNB Chain development. Some of the developer resources for BNB Chain are:
+
+* **Developer Portal:** This is a comprehensive portal for developers to access various resources and information for BNB Chain development, such as documentation, GitHub repositories, forums, roadmap, support channels, developer tools, developer events, and more. You can find it [here](https://www.bnbchain.org/en/developers).
+* **Developer Programs:** These are various programs that offer support and incentives for developers who build on BNB Chain, such as builder grants, growth incentives, kickstart tools, advisory support, game jam, and more. For e.g., [ZeroToHeroProgram](https://www.bnbchain.org/en/zero2hero-builder-series) and [MVB Program](https://www.bnbchain.org/en/bsc-mvb-program).
+* **GitHub:** This is a platform where developers can explore, collaborate and contribute to various tech repositories and projects related to BNB Chain development. You can find it [here](https://github.com/bnb-chain/).
+* **Wallet Services:** These are various services that allow developers and users to store and manage their BNB Chain assets, such as [Trust Wallet](https://trustwallet.com/) and [MetaMask](https://metamask.io).
+* **Explorer Services:** These are various services that allow developers and users to view and analyze data from the BNB Chain network, such as [BscScan Mainnet](https://bscscan.com) and [BscScan Testnet]((https://testnet.bscscan.com)).
+* **Faucet Services:** These are various services that allow developers and users to get free test tokens for testing their applications on the BNB Chain testnet, such as [BSC Testnet Faucet](https://testnet.bnbchain.org/faucet-smart).
+* **IDE Services:** These are various services that allow developers to write, compile, deploy and test their smart contracts on the BNB Chain network, such as Remix, ChainIDE and BNB Chain Studio.
+* **BNB Smart Chain EVM Tooling:** This is a collection of open-source tools that make it easier to develop, test, and deploy smart contracts on BNB Smart Chain. It includes tools for deploying contracts, generating test data, and more. You can find it [here](https://github.com/binance-chain/bsc-evm-tooling).

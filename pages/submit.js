@@ -1,16 +1,19 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
+import { EditorState, convertToRaw } from 'draft-js';
+
 import ContentForm from '../components/publications/content-form';
 import { Container } from '../components/layout';
 
 const NotificationSuccess = dynamic(() => import('../components/notifications/success'));
-
 export default function Submit() {
   const [data, setData] = useState({
     Title: '',
     Author: '',
     Description: '',
+    ContentMarkdown: EditorState.createEmpty(),
     Url: '',
+    Level: {},
     ImageUrl: '',
     Vertical: 'BNBChain',
     Tags: [],
@@ -30,8 +33,8 @@ export default function Submit() {
 
   return (
     <Container metaTags={metaTags}>
-      <div className="px-6">
-        <main className="mx-auto mb-5 max-w-6xl shadow">
+      <div className="w-full">
+        <main className="submit-wrapper mx-auto mb-5 max-w-6xl shadow">
           <ContentForm
             type="submit"
             data={data}

@@ -21,6 +21,9 @@ const CopyLink = dynamic(() => import('./copy-link.js'));
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
+const myLoader = ({ src, width, quality }) => {
+  return `${src}`;
+};
 
 const myLoader = ({ src, width, quality }) => {
   return `${src}`;
@@ -77,15 +80,12 @@ function CardWide({ content, mode }) {
               </a>
             </Link>
           ) : (
-            <a
-              href={content.Url}
-              rel="noreferrer"
-              target="_blank"
-              className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-400 dark:text-gray-300 dark:hover:text-gray-500"
-            >
-              <ExternalLinkIcon className="h-5 w-5" aria-hidden="true" />
-              <span className="font-medium">Open</span>
-            </a>
+            <Link href={`/library/content/${content._id}`}>
+              <div className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-400 dark:text-gray-300 dark:hover:text-gray-500">
+                <ExternalLinkIcon className="h-5 w-5" aria-hidden="true" />
+                <span className="font-medium">Open</span>
+              </div>
+            </Link>
           )}
         </>
       );
@@ -97,7 +97,7 @@ function CardWide({ content, mode }) {
       className={classNames(
         'flex min-h-full flex-col rounded-lg bg-white dark:bg-gray-800',
         mode === 'dashboard' &&
-          'border border-gray-300 shadow-lg hover:opacity-95 hover:shadow-yellow-500/30 dark:border-gray-700/60 dark:hover:shadow-yellow-400/20'
+          'border border-gray-300 shadow-lg hover:opacity-95 hover:shadow-yellow-500/30 dark:border-gray-700/60'
       )}
     >
       {imageUrl && content.ContentType === 'newsletters' ? (
@@ -119,7 +119,7 @@ function CardWide({ content, mode }) {
           </a>
         </Link>
       ) : (
-        <a href={content.Url} className="focus:outline-none" target="_blank" rel="noreferrer">
+        <Link href={`/library/content/${content._id}`}>
           <div>
             <Image
               className="cursor-pointer rounded-t-lg object-cover hover:opacity-90"
@@ -133,7 +133,7 @@ function CardWide({ content, mode }) {
               loader={myLoader}
             />
           </div>
-        </a>
+        </Link>
       )}
 
       <div className="px-5 pt-4 pb-5 ">
@@ -200,7 +200,7 @@ function CardWide({ content, mode }) {
         {/*  Description */}
         <div
           className={classNames(
-            'prose flex-none overflow-hidden text-ellipsis',
+            'flex-none overflow-hidden text-ellipsis',
             audioPlayer ? 'min-h-[85px]' : 'min-h-[125px]'
           )}
         >

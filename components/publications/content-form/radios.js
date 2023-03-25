@@ -8,16 +8,14 @@ function Radios({ data, setData, type }) {
   return (
     <>
       {/* Content Type */}
-      <fieldset className="col-span-4 my-3">
-        <div>
+      {/* <fieldset className="submit-content-type col-span-10">
           <legend className="text-base font-medium text-gray-900 dark:text-gray-300">
             Content Type
           </legend>
-        </div>
-        <div className="mt-4 space-y-4">
+        <div className="content-element mt-1">
           {contentType.map(type => {
             return (
-              <div key={type} className="flex items-center">
+              <div key={type} className="content-checkboxes">
                 <input
                   id={type}
                   name="content-type"
@@ -30,7 +28,7 @@ function Radios({ data, setData, type }) {
                 />
                 <label
                   htmlFor={type}
-                  className="ml-3 block text-sm font-medium capitalize text-gray-700 dark:text-gray-300"
+                  className="block text-sm font-medium capitalize text-gray-700 dark:text-gray-300"
                 >
                   {type}
                 </label>
@@ -38,7 +36,7 @@ function Radios({ data, setData, type }) {
             );
           })}
         </div>
-      </fieldset>
+      </fieldset> */}
 
       {/* Badge */}
       {type === 'edit' && (

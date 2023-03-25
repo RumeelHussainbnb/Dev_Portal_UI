@@ -2,13 +2,22 @@ import { memo, useEffect, useState } from 'react';
 import { useAppState } from '../../context/AppContext';
 import PropTypes from 'prop-types';
 import dynamic from 'next/dynamic';
+import Loader from '../../components/Loader/Loader';
 
-const CardWide = dynamic(() => import('../card/card-wide'));
+const CardWide = dynamic(() => import('../card/post-card'));
 const CardVideo = dynamic(() => import('../card/card-video'));
 const CardRegular = dynamic(() => import('../card/card-regular'));
+const CardBase = dynamic(() => import('../card/card-base'));
 const TagsSelector = dynamic(() => import('../badges/tags-selector'));
-const Spinner = dynamic(() => import('../spinner'));
 const ContentFormModal = dynamic(() => import('./content-form/modal'));
+import htmlToDraft from 'html-to-draftjs';
+import {
+  EditorState,
+  convertToRaw,
+  convertFromHTML,
+  ContentState,
+  createWithContent
+} from 'draft-js';
 
 function Publications({
   data,
@@ -41,12 +50,14 @@ function Publications({
   }, [data]);
 
   const editContent = data => {
-    setContent(data);
+    const contentBlock = htmlToDraft(data.ContentMarkdown);
+    const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+    setContent({ ...data, ContentMarkdown: EditorState.createWithContent(contentState) });
     setOpen(true);
   };
 
   return (
-    <div className="mx-auto flex flex-col">
+    <div className="newsletter-page mx-auto flex flex-col">
       <div className="mb-8 flex justify-center">
         <h1 className="mb-10 w-max text-2xl font-bold capitalize tracking-tight text-gray-900 dark:text-gray-200 md:text-3xl 2xl:text-4xl">
           {title}
@@ -60,18 +71,18 @@ function Publications({
         </div>
       )}
       {contentType === 'newsletters' && (
-        <div className="mx-auto mb-20 flex max-w-3xl">
+        <div className="newsletter-main-card mx-auto mb-20 flex max-w-5xl">
           <CardWide mode="dashboard" content={lastNewsletter} />
         </div>
       )}
       {contentType === 'newsletters' && (
         <div className="prose mx-auto flex w-full justify-center text-xl dark:prose-invert">
-          Previous issues
+          Previous Issues
         </div>
       )}
-      <div className="mt-1 flex flex-wrap place-content-start justify-center gap-5 py-4 px-2 md:px-6 xl:gap-10">
+      <div className="newsletter-innerCard mt-1 flex flex-wrap place-content-start justify-center gap-5 py-4 px-2 md:px-6 xl:gap-10">
         {isLoading ? (
-          <Spinner />
+          <Loader />
         ) : (
           data.map(content => {
             //  Initial Tags for content type "Playlists" is null
@@ -79,7 +90,7 @@ function Publications({
 
             if (content.ContentType !== 'Playlist') {
               return (
-                <CardRegular
+                <CardBase
                   key={content.SK}
                   content={content}
                   mode={appState.editMode == 'true' && cardMode !== 'search' ? 'edit' : cardMode}

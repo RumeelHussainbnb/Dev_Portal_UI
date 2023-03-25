@@ -8,29 +8,29 @@ import {
   PaperClipIcon,
   SparklesIcon,
   AcademicCapIcon,
-  NewspaperIcon
+  NewspaperIcon,
+  UserCircleIcon
 } from '@heroicons/react/outline';
 import Link from 'next/link';
-import PropTypes from 'prop-types';
+import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import { memo, useEffect, useState } from 'react';
-import useUser from '../../hooks/useUser';
-import fetch from '../../utils/fetcher';
 import { useAppDispatch, useAppState } from '../../context/AppContext';
+const Notification = dynamic(() => import('../notifications/error'));
 
 const navigation = [
   {
-    name: 'Library',
+    name: 'Home',
     href: '/library',
     icon: LibraryIcon,
     disabled: false
   },
   {
-    name: 'Community',
-    href: '/community',
-    icon: ChatAlt2Icon,
+    name: 'Profile',
+    href: '/user/profile',
+    icon: UserCircleIcon,
     disabled: false
   },
-
   {
     name: 'Newsletters',
     href: '/newsletters',
@@ -56,11 +56,6 @@ const navigation = [
 ];
 
 const special = [
-  /*{
-    name: 'BNB Chain Cookbook',
-    href: 'https://docs.bnbchain.org',
-    disabled: false
-  },*/
   {
     name: 'BNB Chain Docs',
     href: 'https://docs.bnbchain.org/',
@@ -97,6 +92,37 @@ const specialLists = [
   }
 ];
 
+const adminFeatures = [
+  {
+    name: 'Inactive Content',
+    href: '/library/admin/inactive'
+  },
+  {
+    name: 'Submitted Content',
+    href: '/library/admin/submitted'
+  },
+  {
+    name: 'Add Martian',
+    href: '/library/admin/martian/create'
+  },
+  {
+    name: 'Add Playlist',
+    href: '/library/admin/playlist/post'
+  },
+  {
+    name: 'Post NewsLetter',
+    href: '/library/admin/newsletter/post'
+  },
+  // {
+  //   name: 'Post tweet',
+  //   href: '/library/admin/tweet/post'
+  // },
+  {
+    name: 'Awards & Recognition',
+    href: '/library/admin/awards-recognition'
+  }
+];
+
 const categories = [
   {
     name: 'Tutorials',
@@ -118,10 +144,6 @@ const categories = [
     name: 'Dapp Development',
     href: '/library/projects'
   },
-  /*{
-    name: 'SDKs & Frameworks',
-    href: '/library/sdk'
-  },*/
   {
     name: 'Scaffolds',
     href: '/library/scaffolds'
@@ -130,57 +152,32 @@ const categories = [
     name: 'Tools',
     href: 'https://nodereal.io/bnb-dev-tools',
     rel: 'noreferrer',
-    target: '_blank'  
+    target: '_blank'
   },
-  // {
-  //   name: 'Implementations',
-  //   href: '/library/implementations'
-  // },
   {
     name: 'Security',
     href: '/library/security'
   },
-  /*{
-    name: 'Program Library',
-    href: '/library/spl'
-  },*/
-  {
-    name: 'Twitter Threads',
-    href: '/library/threads'
-  },
   {
     name: 'Video Playlists',
     href: '/library/playlists'
+  }
+];
+
+const martian = [
+  {
+    name: 'Martian Tracker',
+    href: '/library/admin/martian'
   },
   {
-    name: 'Submitted',
-    href: '/library/admin/submitted'
-  },
-  {
-    name: 'Inactive',
-    href: '/library/admin/inactive'
-  },
-  {
-    name: 'Post NewsLetter',
-    href: '/library/admin/newsletter/post'
-  },
-  {
-    name: 'Post tweet',
-    href: '/library/admin/tweet/post'
-  },
-  {
-    name: 'Add Playlist',
-    href: '/library/admin/playlist/post'
+    name: 'Add Martian Activities',
+    href: '/library/admin/martian/activity'
   }
 ];
 
 const courses = [
-  /* {
-    name: 'Intro to BNBChain',
-    href: '/course'
-  },*/
   {
-    name: 'BNBChain 101',
+    name: 'BNB Chain 101',
     href: '/course'
   }
 ];
@@ -189,56 +186,58 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
+function NavSidebar() {
+  const [notification, setNotification] = useState({ message: '', show: false });
   const [current, setCurrent] = useState('');
-  const [isAdmin, setisAdmin] = useState(false);
-  const [buttonsVisible, setButtonsVisible] = useState(showButton);
-  const { user, isAdmin_ = true, connected, error } = useUser();
+  const [isMartian, setIsMartian] = useState(false);
   const appState = useAppState();
   const appDispatch = useAppDispatch();
+  const router = useRouter();
+
+  const fetchData = async () => {
+    let key = localStorage.getItem('PublicKey' || '');
+    let userState = JSON.parse(localStorage.getItem('userData' || '{}'));
+    const admin = userState?.data?.Roles.includes('Admin');
+
+    await appDispatch({ type: 'handleAdminMode', payload: admin });
+    setIsMartian(userState?.data?.Roles.includes('Martian'));
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      // const data = await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/user/${window.sessionStorage.getItem('PublicKey')}`);
-      let key = localStorage.getItem('PublicKey');
-      const data = await fetch(
-        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/user/${
-          appState.publicKey ? appState.publicKey : key
-        }`
-      );
-      const admin = data?.Role === 'admin' ? true : false;
-      await appDispatch({ type: 'handleAdminMode', payload: admin });
-      localStorage.setItem('handleAdminMode', admin);
-      setisAdmin(admin);
-    };
-
-    fetchData().catch('Catch error ', console.error);
-    if (window && window.sessionStorage.getItem('main-navigation')) {
-      setCurrent(window.sessionStorage.getItem('main-navigation'));
-    } else {
-      setCurrent('Library');
+    //* if wallet connected fetch data
+    if (appState.publicKey) {
+      fetchData();
     }
-    setButtonsVisible(showButton);
-  }, [showButton]);
+    //* else clear state
+    else {
+      setIsMartian(false);
+    }
+
+    router.pathname === '/library'
+      ? setCurrent('Home')
+      : setCurrent(localStorage.getItem('main-navigation' || ''));
+  }, [appState.publicKey]);
 
   return (
-    <nav aria-label="Sidebar" className="top-4 divide-y divide-gray-300 dark:divide-gray-500">
-      <div className="pb-4">
+    <nav aria-label="Sidebar" className="top-4 w-full">
+      <div className="w-full">
         {navigation.map(item => {
+          if (item.name === 'Profile' && !appState.publicKey) {
+            return;
+          }
           return (
             <Link href={item.href} passHref key={item.name} target={item.target}>
               <a target={item.target} rel={item.rel}>
                 <button
                   className={classNames(
                     item.name === current
-                      ? 'bg-gray-200 text-gray-900 dark:bg-gray-800 dark:text-gray-200'
+                      ? 'bg-yellow-400 text-gray-900 dark:bg-gray-800 dark:text-gray-200'
                       : 'text-gray-800 dark:text-gray-300',
-                    'group flex min-w-full max-w-[190px] items-center rounded-md px-3 py-2 text-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-700 lg:text-sm'
+                    'group flex min-w-full max-w-[190px] items-center rounded-md px-3 py-2 text-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-700 lg:text-base'
                   )}
                   onClick={() => {
                     setCurrent(item.name);
-                    window.sessionStorage.setItem('main-navigation', item.name);
-                    closeMobileMenu();
+                    window.localStorage.setItem('main-navigation', item.name);
                   }}
                   aria-current={item.current ? 'page' : undefined}
                   disabled={item.disabled}
@@ -251,80 +250,119 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
                     )}
                     aria-hidden="true"
                   />
-                  <span className="truncate" title={item.name}>{item.name}</span>
+                  <span className="truncate" title={item.name}>
+                    {item.name}
+                  </span>
                 </button>
               </a>
             </Link>
           );
         })}
+
+        <button
+          onClick={() => {
+            if (!appState.publicKey) {
+              setNotification({ message: 'Please Connect Wallet', show: true });
+              setTimeout(() => {
+                setNotification({ message: 'Please Connect Wallet', show: false });
+              }, 1500);
+            } else {
+              setCurrent('Submit Content');
+              window.localStorage.setItem('main-navigation', 'Submit Content');
+              router.push('/submit');
+            }
+          }}
+          className={classNames(
+            'Submit Content' === current
+              ? 'bg-yellow-400 text-gray-900 dark:bg-gray-800 dark:text-gray-200'
+              : 'text-gray-800 dark:text-gray-300',
+            'group flex min-w-full max-w-[190px] items-center rounded-md px-3 py-2 text-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-700 lg:text-base'
+          )}
+        >
+          <FolderAddIcon
+            className={classNames(
+              'Submit Content' === current ? 'text-gray-500' : 'text-yellow-400 ',
+              '-ml-1 mr-3 h-6 w-6 flex-shrink-0'
+            )}
+            aria-hidden="true"
+          />
+          <span className="truncate">Submit Content</span>
+        </button>
       </div>
-
+      {/* Add new content*/}
       <div className="space-y-4 pt-4">
-        {/* Add new content*/}
-        <Link href="/submit" passHref>
-          <div className="group flex cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-sm">
-            <FolderAddIcon className="h-5 w-5 text-yellow-500" aria-hidden="true" />
-            <span className="truncate leading-6" title="Submit Content"> Submit content</span>
-          </div>
-        </Link>
-
         {/* Courses */}
-        <div>
+        <div className="mt-3 w-full">
           <p
-            className="text-md px-3 font-semibold uppercase tracking-wider text-gray-500 lg:text-xs"
-            id="communities-headline" title="Courses"
+            className="text-md rounded-md bg-[#FACC15] px-3 py-2 font-semibold uppercase tracking-wider text-black lg:text-sm"
+            id="communities-headline bg-yellow-400"
           >
             Courses
           </p>
-          <div className="mt-2 space-y-1" aria-labelledby="communities-headline">
+          <div className="mt-2 " aria-labelledby="communities-headline">
             {courses.map(item => {
               return (
-                <Link href={item.href} passHref key={item.name}>
-                  <div
-                    onClick={() => closeMobileMenu()}
-                    className="group flex cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-sm"
-                  >
+                // <Link href={appState.publicKey ? item.href : ''} passHref key={item.name}>
+                <button
+                  key={item.name}
+                  onClick={() => {
+                    if (!appState.publicKey) {
+                      setNotification({ message: 'Please Connect Wallet', show: true });
+                      setTimeout(() => {
+                        setNotification({ message: 'Please Connect Wallet', show: false });
+                      }, 1500);
+                    } else {
+                      //setCurrent('Submit Content');
+                      //window.localStorage.setItem('main-navigation', 'Submit Content');
+                      router.push(`/${item.href}`);
+                    }
+                  }}
+                  className={classNames(
+                    'text-gray-800 dark:text-gray-300',
+                    'group flex min-w-full max-w-[190px] items-center rounded-md text-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-700 lg:text-base'
+                  )}
+                >
+                  <div className="group flex cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-base">
                     <AcademicCapIcon
-                      className="h-4 w-4 text-yellow-400 dark:text-yellow-500"
+                      className="h-6 w-6 text-yellow-400 dark:text-yellow-500"
                       aria-hidden="true"
                     />
-                    <span className="truncate leading-6" title={item.name}>{item.name}</span>
+                    <span className="truncate leading-6" title={item.name}>
+                      {item.name}
+                    </span>
                     {item.name === '"The" Course' && (
                       <span className="ml-1 inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800 dark:bg-red-500 dark:text-red-50">
                         New
                       </span>
                     )}
                   </div>
-                </Link>
+                </button>
+                // </Link>
               );
             })}
           </div>
         </div>
 
         {/* Special */}
-        <div>
+        <div className="mt-3 w-full">
           <p
-            className="text-md px-3 font-semibold uppercase tracking-wider text-gray-500 lg:text-xs"
-            id="communities-headline" title="References"
+            className="text-md rounded-md bg-[#FACC15] px-3 py-2 font-semibold uppercase tracking-wider text-black lg:text-sm"
+            id="communities-headline"
           >
             Reference
           </p>
           <div className="mt-2 space-y-1" aria-labelledby="communities-headline">
             {special.map(item => {
               return (
-                <a
-                  href={item.href}
-                  key={item.name}
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={() => closeMobileMenu()}
-                >
-                  <div className="group flex cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-sm">
+                <a href={item.href} key={item.name} target="_blank" rel="noreferrer">
+                  <div className="group flex cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-base">
                     <ExternalLinkIcon
                       className="h-4 w-4 text-yellow-400 dark:text-yellow-500"
                       aria-hidden="true"
                     />
-                    <span className="truncate leading-6" title={item.name}>{item.name}</span>
+                    <span className="truncate leading-6" title={item.name}>
+                      {item.name}
+                    </span>
                   </div>
                 </a>
               );
@@ -333,10 +371,10 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
         </div>
 
         {/* Lists */}
-        <div>
+        <div className="mt-3 w-full">
           <p
-            className="text-md px-3 font-semibold uppercase tracking-wider text-gray-500 lg:text-xs"
-            id="communities-headline" title="Lists"
+            className="text-md rounded-md bg-[#FACC15] px-3 py-2 font-semibold uppercase tracking-wider text-black lg:text-sm"
+            id="communities-headline"
           >
             Lists
           </p>
@@ -344,15 +382,14 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
             {specialLists.map(item => {
               return (
                 <Link href={item.href} passHref key={item.name}>
-                  <button
-                    onClick={() => closeMobileMenu()}
-                    className="group flex min-w-full cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-sm"
-                  >
+                  <button className="group flex min-w-full cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-base">
                     <SparklesIcon
                       className="h-4 w-4 text-yellow-400 dark:text-yellow-500"
                       aria-hidden="true"
                     />
-                    <span className="truncate leading-6" title={item.name}>{item.name}</span>
+                    <span className="truncate leading-6" title={item.name}>
+                      {item.name}
+                    </span>
                   </button>
                 </Link>
               );
@@ -361,45 +398,27 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
         </div>
 
         {/* Categories */}
-        <div>
+        <div className="mt-3 w-full">
           <p
-            className="text-md px-3 font-semibold uppercase tracking-wider text-gray-500 lg:text-xs"
-            id="communities-headline" title="Categories"
+            className="text-md rounded-md bg-[#FACC15] px-3 py-2 font-semibold uppercase tracking-wider text-black lg:text-sm"
+            id="communities-headline"
           >
             Categories
           </p>
           <div className="mt-2 space-y-1" aria-labelledby="communities-headline">
             {categories.map(item => {
-              if (
-                (item.name === 'Submitted' ||
-                  item.name === 'Inactive' ||
-                  item.name === 'Post NewsLetter' ||
-                  item.name === 'Post tweet' ||
-                  item.name === 'Add Playlist') &&
-                appState.isAdminMode == false
-              ) {
-                return;
-              }
-
               if (item.name === 'Tools') {
                 return (
                   <Link href={item.href} passHref key={item.name}>
-                    <a
-                      href={item.href}
-                      key={item.name}
-                      target="_blank"
-                      rel="noreferrer"
-                      onClick={() => closeMobileMenu()}
-                    >
-                      <button
-                        onClick={() => closeMobileMenu()}
-                        className="group flex min-w-full cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-sm"
-                      >
+                    <a href={item.href} key={item.name} rel="noreferrer">
+                      <button className="group flex min-w-full cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-base">
                         <PaperClipIcon
                           className="h-4 w-4 text-yellow-400 dark:text-yellow-500"
                           aria-hidden="true"
                         />
-                        <span className="truncate leading-6" title={item.name}>{item.name}</span>
+                        <span className="truncate leading-6" title={item.name}>
+                          {item.name}
+                        </span>
                       </button>
                     </a>
                   </Link>
@@ -407,32 +426,86 @@ function NavSidebar({ closeMobileMenu, showButton = 0, publicKey }) {
               }
               return (
                 <Link href={item.href} passHref key={item.name}>
-                  <button
-                    onClick={() => closeMobileMenu()}
-                    className="group flex min-w-full cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-sm"
-                  >
+                  <button className="group flex min-w-full cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-base">
                     <PaperClipIcon
                       className="h-4 w-4 text-yellow-400 dark:text-yellow-500"
                       aria-hidden="true"
                     />
-                    <span className="truncate leading-6" title={item.name}>{item.name}</span>
+                    <span className="truncate leading-6" title={item.name}>
+                      {item.name}
+                    </span>
                   </button>
                 </Link>
               );
             })}
           </div>
         </div>
+
+        <div className="mt-3 w-full">
+          <p
+            className="text-md rounded-md bg-[#FACC15] px-3 py-2 font-semibold uppercase tracking-wider text-black lg:text-sm"
+            id="communities-headline"
+          >
+            Martians
+          </p>
+          <div className="mt-2 space-y-1" aria-labelledby="communities-headline">
+            {martian.map(item => {
+              if (item.name === 'Add Martian' && appState.editMode == 'false') {
+                return;
+              }
+              if (item.name === 'Add Martian Activities' && !isMartian) {
+                return;
+              }
+
+              return (
+                <Link href={item.href} passHref key={item.name}>
+                  <button className="group flex min-w-full cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-base">
+                    <PaperClipIcon
+                      className="h-4 w-4 text-yellow-400 dark:text-yellow-500"
+                      aria-hidden="true"
+                    />
+                    <span className="truncate leading-6">{item.name}</span>
+                  </button>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Admin */}
+        {appState.isAdminMode === true && appState.editMode === 'true' && (
+          <div className="mt-3 w-full">
+            <p
+              className="text-md rounded-md bg-[#FACC15] px-3 py-2 font-semibold uppercase tracking-wider text-black lg:text-sm"
+              id="admin-area"
+            >
+              Admin
+            </p>
+            <div className="mt-2 space-y-1" aria-labelledby="admin-area">
+              {adminFeatures.map(item => {
+                return (
+                  <Link href={item.href} passHref key={item.name}>
+                    <button className="group flex min-w-full cursor-pointer items-center gap-1 rounded-md px-3 py-2 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300 lg:text-base">
+                      <PaperClipIcon
+                        className="h-4 w-4 text-yellow-400 dark:text-yellow-500"
+                        aria-hidden="true"
+                      />
+                      <span className="truncate leading-6">{item.name}</span>
+                    </button>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
+      <Notification
+        show={notification.show}
+        setShow={isShow => setNotification({ message: '', show: isShow })}
+        text={notification.message}
+      />
     </nav>
   );
 }
-
-NavSidebar.defaultProps = {
-  closeMobileMenu: () => {}
-};
-
-NavSidebar.prototype = {
-  closeMobileMenu: PropTypes.func
-};
 
 export default memo(NavSidebar);

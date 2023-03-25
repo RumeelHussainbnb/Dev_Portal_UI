@@ -1,7 +1,8 @@
 import { Head, Html, Main, NextScript } from 'next/document';
+import Script from 'next/script';
 
 export default function Document() {
-  function richSnippet(){
+  function richSnippet() {
     return {
       __html: `{
         "@context": "https://schema.org/",
@@ -14,11 +15,11 @@ export default function Document() {
             "query-input": "required name=search_term_string"
           }
       }`
-  }
+    };
   }
 
-  function breadcrumbs(){
-    return{
+  function breadcrumbs() {
+    return {
       __html: `{
         "@context": "https://schema.org/", 
           "@type": "BreadcrumbList", 
@@ -64,9 +65,8 @@ export default function Document() {
             "item": "https://bnbdev.community/library/projects"  
           }]
       }`
-    }
+    };
   }
-
 
   return (
     <Html>
@@ -81,23 +81,26 @@ export default function Document() {
           href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-tomorrow.min.css"
           rel="stylesheet"
         />
-
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={richSnippet()}
-          key="product-jsonld"
-        />
-
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={breadcrumbs()}
-          key="product-jsonld"
-        />
-        
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','GTM-5PHXRNS');
+          `}
+        </Script>
       </Head>
+
       <body>
         <Main />
         <NextScript />
+        <noscript
+          dangerouslySetInnerHTML={{
+            __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5PHXRNS"
+      height="0" width="0" style="display:none;visibility:hidden"></iframe>`
+          }}
+        />
       </body>
     </Html>
   );

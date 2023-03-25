@@ -25,29 +25,32 @@ export default function Error({ show, setShow, text }) {
             leaveTo="opacity-0"
           >
             <div className="max-w-sm w-full bg-white shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden">
-              <div className="p-4">
-                <div className="flex items-start">
-                  <div className="flex-shrink-0">
+              <div className="notify-popup p-4 flex w-full">
+                {/* <div className="flex items-center w-full"> */}
+                  <div className="left">
                     <ExternalLinkIcon
                       className="h-6 w-6 text-red-400"
                       aria-hidden="true"
                     />
-                  </div>
-                  <div className="ml-3 w-0 flex-1 pt-0.5">
                     <p className="text-sm font-medium text-gray-900">{text}</p>
                   </div>
-                  <div className="ml-4 flex-shrink-0 flex">
-                    <button
-                      className="bg-white rounded-md inline-flex text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  <div className="right">
+                  <button
+                      className="bg-white w-5"
                       onClick={() => {
                         setShow(false);
                       }}
                     >
-                      <span className="sr-only">Close</span>
-                      <XIcon className="h-5 w-5" aria-hidden="true" />
+                      <span className="inline-block">
+                      <XIcon className="w-5" aria-hidden="true" />
+                      </span>
                     </button>
                   </div>
-                </div>
+                  {/* <div className="ml-3 w-0 flex-1 pt-0.5">
+                  </div> */}
+                  {/* <div className="ml-4 flex-shrink-0 flex">
+                  </div> */}
+                {/* </div> */}
               </div>
             </div>
           </Transition>

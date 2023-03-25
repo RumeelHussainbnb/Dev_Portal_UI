@@ -5,6 +5,7 @@ import { EditorState, convertToRaw } from 'draft-js';
 
 import { Container } from '../../../../components/layout';
 import EditorComponent from '../../../../components/Editor/Editor';
+import { http } from '../../../../utils/http';
 
 const NotificationSuccess = dynamic(() => import('../../../../components/notifications/success'));
 const NotificationError = dynamic(() => import('../../../../components/notifications/error'));
@@ -21,51 +22,30 @@ const PlaylistForm = () => {
 
   const createPlaylist = async event => {
     event.preventDefault();
-    const key = localStorage.getItem('PublicKey');
-    const formData = new FormData();
-    formData.append('Title', data.Title);
-    formData.append('Author', data.Author);
-    formData.append('Description', data.Description);
-    formData.append('Provider', data.Provider);
 
-    await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/playlists/bnb`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: key
-      },
-      body: JSON.stringify({
-        Title: data.Title,
-        Author: data.Author,
-        Description: data.Description,
-        Provider: data.Provider
-      })
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success === true) {
-          //Empty editor state
-
-          setData({
-            Title: '',
-            Author: '',
-            Description: '',
-            Provider: ''
-          });
-          setNotifySuccess(true);
-        } else {
-          //Empty editor state
-
-          setData({
-            Title: '',
-            Author: '',
-            Description: '',
-            Provider: ''
-          });
-
-          setNotifyError(true);
-        }
+    try {
+      const response = await http.post(`/playlists/bnb`, data);
+      if (response?.data?.success === true) {
+        //Empty editor state
+        setData({
+          Title: '',
+          Author: '',
+          Description: '',
+          Provider: ''
+        });
+        setNotifySuccess(true);
+      }
+    } catch (error) {
+      //Empty editor state
+      setData({
+        Title: '',
+        Author: '',
+        Description: '',
+        Provider: ''
       });
+
+      setNotifyError(true);
+    }
   };
 
   return (

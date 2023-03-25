@@ -5,6 +5,7 @@ import { EditorState, convertToRaw } from 'draft-js';
 
 import { Container } from '../../../../components/layout';
 import EditorComponent from '../../../../components/Editor/Editor';
+import { http } from '../../../../utils/http';
 
 const NotificationSuccess = dynamic(() => import('../../../../components/notifications/success'));
 const NotificationError = dynamic(() => import('../../../../components/notifications/error'));
@@ -14,7 +15,7 @@ const Submit = metaTags => {
   // const [convertedContent, setConvertedContent] = useState('');
   const [data, setData] = useState({
     Title: '',
-    Author: '',
+    Author: 'BNB Chain',
     //        Img: "",
     ContentMarkdown: '',
     Description: ''
@@ -22,57 +23,33 @@ const Submit = metaTags => {
   const [notifySuccess, setNotifySuccess] = useState(false);
   const [notifyError, setNotifyError] = useState(false);
 
+  //Clear States
+  const clearStatsDate = () => {
+    setEditor(() => EditorState.createEmpty());
+    setData({
+      Title: '',
+      Author: '',
+      //                        Img: "",
+      ContentMarkdown: '',
+      Description: ''
+    });
+  };
   const createNewsletter = async event => {
     event.preventDefault();
-    const key = localStorage.getItem('PublicKey');
-    const formData = new FormData();
-    formData.append('Title', data.Title);
-    formData.append('Author', data.Author);
-    //        formData.append("Img", data.Img);
-    formData.append('ContentMarkdown', data.ContentMarkdown);
-    formData.append('Description', data.Description);
 
-    await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/content/bnb/newsletters`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: key
-      },
-      body: JSON.stringify({
-        Title: data.Title,
-        Author: data.Author,
-        //                "Img": "https://binance.ghost.io/content/images/2022/10/wide-2--7-.jpg",
-        ContentMarkdown: data.ContentMarkdown,
-        Description: data.Description
-      })
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success === true) {
-          //Empty editor state
-          setEditor(() => EditorState.createEmpty());
-          setData({
-            Title: '',
-            Author: '',
-            //                        Img: "",
-            ContentMarkdown: '',
-            Description: ''
-          });
-          setNotifySuccess(true);
-        } else {
-          //Empty editor state
-          setEditor(() => EditorState.createEmpty());
-          setData({
-            Title: '',
-            Author: '',
-            //                        Img: "",
-            ContentMarkdown: '',
-            Description: ''
-          });
+    try {
+      const response = await http.post(`/content/bnb/newsletters`, data);
+      if (response?.data?.success === true) {
+        //Empty editor state
+        clearStatsDate();
+        setNotifySuccess(true);
+      }
+    } catch (error) {
+      //Empty editor state
+      clearStatsDate();
 
-          setNotifyError(true);
-        }
-      });
+      setNotifyError(true);
+    }
   };
 
   //handle editor state change
@@ -135,6 +112,7 @@ const Submit = metaTags => {
                   </label>
                   <div className="mt-1">
                     <input
+                      disabled
                       type="text"
                       name="author-name"
                       id="author-name"
@@ -194,7 +172,7 @@ const Submit = metaTags => {
                     htmlFor="content_markdown"
                     className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                   >
-                    Long Description
+                    Newsletter Content
                   </label>
                   <div className="mt-1 ">
                     <EditorComponent editorState={editor} EditorChange={handleEditorChange} />
@@ -207,9 +185,6 @@ const Submit = metaTags => {
                       onChange={e => setData({ ...data, ContentMarkdown: e.target.value })}
                       className="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
                     /> */}
-                    <p className="mt-2 text-sm text-gray-500 dark:text-gray-500">
-                      Brief description about the content. ~20000 characters
-                    </p>
                   </div>
                 </div>
 

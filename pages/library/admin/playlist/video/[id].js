@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { Container } from '../../../../../components/layout';
+import { http } from '../../../../../utils/http';
 
 const NotificationSuccess = dynamic(() =>
   import('../../../../../components/notifications/success')
@@ -16,26 +17,21 @@ const PlaylistForm = () => {
     Title: '',
     Author: '',
     Description: '',
-    Url: ''
+    Url: '',
+    ImageUrl: ''
   });
   const [notifySuccess, setNotifySuccess] = useState(false);
   const [notifyError, setNotifyError] = useState(false);
 
   const createPlaylist = async event => {
     event.preventDefault();
-    const key = localStorage.getItem('PublicKey');
-
-    await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/content`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: key
-      },
-      body: JSON.stringify({
+    try {
+      const response = await http.post(`/content`, {
         Title: data.Title,
         Author: data.Author,
         Description: data.Description,
         Url: data.Url,
+        ImageUrl: data.ImageUrl,
         PlaylistID: id,
         Tags: [],
         SpecialTag: '0',
@@ -43,36 +39,33 @@ const PlaylistForm = () => {
         List: '',
         ContentType: 'playlist',
         ContentStatus: 'active'
-      })
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success === true) {
-          //Empty editor state
-
-          setData({
-            Title: '',
-            Author: '',
-            Description: '',
-            Url: ''
-          });
-          setNotifySuccess(true);
-          setTimeout(() => {
-            router.back();
-          }, '1500');
-        } else {
-          //Empty editor state
-
-          setData({
-            Title: '',
-            Author: '',
-            Description: '',
-            Url: ''
-          });
-
-          setNotifyError(true);
-        }
       });
+      if (response?.data?.success === true) {
+        //Empty editor state
+
+        setData({
+          Title: '',
+          Author: '',
+          Description: '',
+          Url: ''
+        });
+        setNotifySuccess(true);
+        setTimeout(() => {
+          router.back();
+        }, '1500');
+      }
+    } catch (error) {
+      //Empty editor state
+
+      setData({
+        Title: '',
+        Author: '',
+        Description: '',
+        Url: ''
+      });
+
+      setNotifyError(true);
+    }
   };
 
   return (
@@ -145,6 +138,25 @@ const PlaylistForm = () => {
                       value={data.Url}
                       autoComplete="given-name"
                       onChange={e => setData({ ...data, Url: e.target.value })}
+                      className="block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
+                    />
+                  </div>
+                </div>
+                <div className="col-span-12 sm:col-span-4 lg:col-span-12">
+                  <label
+                    htmlFor="content_markdown"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >
+                    Image Preview Url
+                  </label>
+                  <div className="mt-1">
+                    <input
+                      type="text"
+                      name="author-name"
+                      id="author-name"
+                      value={data.ImageUrl}
+                      autoComplete="given-name"
+                      onChange={e => setData({ ...data, ImageUrl: e.target.value })}
                       className="block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
                     />
                   </div>
