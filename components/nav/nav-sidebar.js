@@ -8,7 +8,8 @@ import {
   PaperClipIcon,
   SparklesIcon,
   AcademicCapIcon,
-  NewspaperIcon
+  NewspaperIcon,
+  UserCircleIcon
 } from '@heroicons/react/outline';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -27,7 +28,7 @@ const navigation = [
   {
     name: 'Profile',
     href: '/user/profile',
-    icon: LibraryIcon,
+    icon: UserCircleIcon,
     disabled: false
   },
   {
