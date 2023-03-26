@@ -574,13 +574,17 @@ aside {
   .martian-admin {
 
     .dark\:text-gray-500,
-    td,
-    p {
+    td{
       color: #d7d7d7;
     }
     nav {
       p {
         color: #000;
+      }
+    }
+    .profile-page {
+      p {
+        color: #d7d7d7;
       }
     }
   }
@@ -885,6 +889,7 @@ aside {
   align-items: center;
   justify-content: space-between;
   position: relative;
+  z-index: 999999;
   .left {
     width: 100%;
     display: flex;
@@ -902,4 +907,8 @@ aside {
       top: 15px;
     }
   }
+}
+
+.z-index-max {
+  z-index: 99999999 !important;
 }
