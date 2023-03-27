@@ -1,3 +1,3 @@
 const dev = process.env.NODE_ENV !== 'production';
 
-export const server = dev ? 'http://localhost:3000' : 'https://staging.bnbdev.community';
+export const server = dev ? 'https://bnbdev.community' : 'https://staging.bnbdev.community';
