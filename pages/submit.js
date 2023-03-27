@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react';
-import dynamic from 'next/dynamic';
-import { EditorState, convertToRaw } from 'draft-js';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+import { EditorState } from 'draft-js';
 
 import ContentForm from '../components/publications/content-form';
 import { Container } from '../components/layout';
 
-const NotificationSuccess = dynamic(() => import('../components/notifications/success'));
 export default function Submit() {
   const [data, setData] = useState({
     Title: '',
@@ -21,7 +20,6 @@ export default function Submit() {
     SpecialTag: 'New',
     ContentStatus: 'submitted'
   });
-  const [notifySuccess, setNotifySuccess] = useState(false);
 
   const metaTags = {
     title: 'BNBChainDev - Submit',
@@ -39,16 +37,9 @@ export default function Submit() {
             type="submit"
             data={data}
             setData={setData}
-            setNotifySuccess={setNotifySuccess}
+            setNotifySuccess={() => toast.success('Successfully posted!, Thank you')}
           />
         </main>
-
-        <NotificationSuccess
-          show={notifySuccess}
-          setShow={setNotifySuccess}
-          text="Successfully submitted!"
-          subText="Thank you"
-        />
       </div>
     </Container>
   );

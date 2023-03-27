@@ -1,6 +1,5 @@
 import {
   BriefcaseIcon,
-  ChatAlt2Icon,
   ClipboardCheckIcon,
   ExternalLinkIcon,
   FolderAddIcon,
@@ -13,10 +12,10 @@ import {
 } from '@heroicons/react/outline';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import dynamic from 'next/dynamic';
 import { memo, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+
 import { useAppDispatch, useAppState } from '../../context/AppContext';
-const Notification = dynamic(() => import('../notifications/error'));
 
 const navigation = [
   {
@@ -187,7 +186,6 @@ function classNames(...classes) {
 }
 
 function NavSidebar() {
-  const [notification, setNotification] = useState({ message: '', show: false });
   const [current, setCurrent] = useState('');
   const [isMartian, setIsMartian] = useState(false);
   const appState = useAppState();
@@ -260,10 +258,7 @@ function NavSidebar() {
         <button
           onClick={() => {
             if (!appState.publicKey) {
-              setNotification({ message: 'Please Connect Wallet', show: true });
-              setTimeout(() => {
-                setNotification({ message: 'Please Connect Wallet', show: false });
-              }, 1500);
+              toast.info('Please Connect Wallet');
             } else {
               setCurrent('Submit Content');
               window.localStorage.setItem('main-navigation', 'Submit Content');
@@ -305,10 +300,7 @@ function NavSidebar() {
                   key={item.name}
                   onClick={() => {
                     if (!appState.publicKey) {
-                      setNotification({ message: 'Please Connect Wallet', show: true });
-                      setTimeout(() => {
-                        setNotification({ message: 'Please Connect Wallet', show: false });
-                      }, 1500);
+                      toast.info('Please Connect Wallet');
                     } else {
                       //setCurrent('Submit Content');
                       //window.localStorage.setItem('main-navigation', 'Submit Content');
@@ -487,11 +479,6 @@ function NavSidebar() {
           </div>
         )}
       </div>
-      <Notification
-        show={notification.show}
-        setShow={isShow => setNotification({ message: '', show: isShow })}
-        text={notification.message}
-      />
     </nav>
   );
 }

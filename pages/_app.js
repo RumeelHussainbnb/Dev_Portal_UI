@@ -1,6 +1,8 @@
 import Router from 'next/router';
 import { useState, useEffect } from 'react';
 import NextNProgress from 'nextjs-progressbar';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 import '../style.css';
 import '../styles.scss';
@@ -47,6 +49,15 @@ export default function App({ Component, pageProps }) {
           {isLoading && <Loader />}
           {/* <NextNProgress /> */}
           <Component {...pageProps} />
+          <ToastContainer
+            position={'top-right'}
+            autoClose={5000}
+            hideProgressBar={false}
+            closeOnClick={true}
+            pauseOnHover={true}
+            draggable={true}
+            newestOnTop={true}
+          />
         </AppWrapper>
       </Web3ReactProvider>
     </div>

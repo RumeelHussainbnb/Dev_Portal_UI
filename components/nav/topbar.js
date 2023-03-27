@@ -1,4 +1,12 @@
+import Link from 'next/link';
+import Image from 'next/image';
+import { ethers } from 'ethers';
+import Cookies from 'js-cookie';
+import dynamic from 'next/dynamic';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 import { Menu, Popover, Transition } from '@headlessui/react';
+import React, { Fragment, memo, useState, useEffect } from 'react';
 import {
   CogIcon,
   ColorSwatchIcon,
@@ -12,17 +20,10 @@ import {
   ExclamationIcon
 } from '@heroicons/react/outline';
 
-import dynamic from 'next/dynamic';
-import Image from 'next/image';
-import Link from 'next/link';
-import React, { Fragment, memo, useState, useEffect } from 'react';
-import { useAppDispatch, useAppState } from '../../context/AppContext';
-import useTheme from '../../hooks/useTheme';
-import { useRouter } from 'next/router';
-import { ethers } from 'ethers';
+//* Local Imports
 import { http } from '../../utils/http';
-
-import Cookies from 'js-cookie';
+import useTheme from '../../hooks/useTheme';
+import { useAppDispatch, useAppState } from '../../context/AppContext';
 
 const Search = dynamic(() => import('./search'));
 const NavSidebar = dynamic(() => import('./nav-sidebar'));
@@ -31,12 +32,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-// ETHEREUM ERROR start
-const NotificationError = dynamic(() => import('../notifications/error'));
-// ETHEREUM ERROR end
-
 function TopBar({ childrens }) {
-  const [ethereumError, setEthereumError] = useState({ message: '', show: false });
   const [editModeNotificationOn, setEditModeNotificationOn] = useState(false);
   const [editModeNotificationOff, setEditModeNotificationOff] = useState(false);
 
@@ -119,23 +115,19 @@ function TopBar({ childrens }) {
               }
             })
             .catch(err => {
-              setEthereumError({
-                message: 'Failed to register user',
-                show: true
-              });
+              toast.error('Failed to register user');
             });
         }
       } else {
         //if not meta mask on browser
-        setEthereumError({
-          message: 'Failed connecting to wallet, please install MetaMask.',
-          show: true
-        });
+        toast.error('Failed connecting to wallet, please install MetaMask.');
       }
     } catch (error) {
-      setEthereumError({ message: 'Upgrade Plans Failed: ' + error.message, show: true });
+      toast.error(`Failed connecting to wallet, please install MetaMask. ${error.message}`);
+
       if (error.message === 'Already processing eth_requestAccounts. Please wait.') {
-        setEthereumError({ message: 'Please sign in to your MetaMask.', show: true });
+        toast.warn(`Please sign in to your MetaMask.`);
+
         window.ethereum.request({
           method: 'wallet_requestPermissions',
           params: [{ eth_accounts: {} }]
@@ -440,13 +432,6 @@ function TopBar({ childrens }) {
           </div>
         </div>
       </div>
-      {/* ETHEREUM ERROR start */}
-      <NotificationError
-        show={ethereumError.show}
-        setShow={isShow => setEthereumError({ message: '', show: isShow })}
-        text={ethereumError.message}
-      />
-      {/* ETHEREUM ERROR end */}
     </>
   );
 }

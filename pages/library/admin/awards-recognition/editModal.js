@@ -1,20 +1,13 @@
-import { Fragment, useEffect, useState } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
 import PropTypes from 'prop-types';
-import dynamic from 'next/dynamic';
+import { toast } from 'react-toastify';
+import { Fragment, useState } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
 
-import { RecognizationsAndAwards } from '../../../../constant/enums';
 import { http } from '../../../../utils/http';
-
-const NotificationSuccess = dynamic(() => import('../../../../components/notifications/success'));
-const NotificationError = dynamic(() => import('../../../../components/notifications/error'));
+import { RecognizationsAndAwards } from '../../../../constant/enums';
 
 export default function Modal({ open, setOpen, content }) {
   const [data, setData] = useState({ ...content });
-  const [notifySuccess, setNotifySuccess] = useState(false);
-  const [notifyError, setNotifyError] = useState(false);
-
-  // setData({ ...content });
 
   const setAwards = award => {
     let copyUserData = { ...data };
@@ -37,9 +30,9 @@ export default function Modal({ open, setOpen, content }) {
 
     const response = await http.put(`/user/updateUserProfile/${data._id}`, data);
     if (response.data.success) {
-      setNotifySuccess(true);
+      toast.success('Successfully posted!, Thank you');
     } else {
-      setNotifyError(true);
+      toast.error('Posting Failed!, Please try again');
     }
     setTimeout(() => {
       setOpen(false);
@@ -134,19 +127,6 @@ export default function Modal({ open, setOpen, content }) {
             </div>
           </Transition.Child>
         </div>
-        <NotificationError
-          show={notifyError}
-          setShow={setNotifyError}
-          text="Posting Failed"
-          subText="Please try again"
-        />
-
-        <NotificationSuccess
-          show={notifySuccess}
-          setShow={setNotifySuccess}
-          text="Successfully posted!"
-          subText="Thank you"
-        />
       </Dialog>
     </Transition.Root>
   );

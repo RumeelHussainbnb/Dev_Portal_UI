@@ -1,18 +1,14 @@
-import dynamic from 'next/dynamic';
-import { useState, useId, useEffect } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import { format } from 'date-fns';
-import { PencilAltIcon } from '@heroicons/react/solid';
-import fetch from '../../../../utils/fetcher';
-// import Image from 'next/image';
 import Select from 'react-select';
+import { toast } from 'react-toastify';
+import DatePicker from 'react-datepicker';
+import { useState, useId, useEffect } from 'react';
+import 'react-datepicker/dist/react-datepicker.css';
+
+import { http } from '../../../../utils/http';
+import fetch from '../../../../utils/fetcher';
 import { Container } from '../../../../components/layout';
 import DeleteModal from '../../../../components/deleteModal/index';
-import { http } from '../../../../utils/http';
-
-const NotificationSuccess = dynamic(() => import('../../../../components/notifications/success'));
-const NotificationError = dynamic(() => import('../../../../components/notifications/error'));
 
 const ActivityForm = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -29,8 +25,6 @@ const ActivityForm = () => {
   const [mode, setMode] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [model, setModel] = useState(false);
-  const [notifySuccess, setNotifySuccess] = useState({ message: '', show: false });
-  const [notifyError, setNotifyError] = useState({ message: '', show: false });
 
   useEffect(() => {
     let userData = JSON.parse(localStorage.getItem('userData') || '{}');
@@ -125,10 +119,8 @@ const ActivityForm = () => {
       //Same Name Validation
       let sameNameActivity = activity.find(f => f.activity === data.activity);
       if (sameNameActivity) {
-        setNotifyError({ message: 'Activity with dupliate name found!', show: true });
-        setTimeout(() => {
-          setNotifyError({ message: '', show: false });
-        }, 1500);
+        toast.error('Activity with dupliate name found!');
+
         return;
       }
       let newActivity = {
@@ -158,10 +150,7 @@ const ActivityForm = () => {
             primaryContributionArea: { label: '', name: '' },
             additionalContributionArea: { label: '', name: '' }
           });
-          setNotifySuccess({ message: 'Successfully posted!', show: true });
-          setTimeout(() => {
-            setNotifySuccess({ message: '', show: false });
-          }, 1500);
+          toast.success('Successfully posted!, Thank you');
         }
       } catch (error) {
         //Empty editor state
@@ -175,11 +164,7 @@ const ActivityForm = () => {
           primaryContributionArea: { label: '', name: '' },
           additionalContributionArea: { label: '', name: '' }
         });
-
-        setNotifyError({ message: 'Something went wrong!', show: true });
-        setTimeout(() => {
-          setNotifyError({ message: '', show: false });
-        }, 1500);
+        toast.error('Something went wrong!');
       }
     }
     //edit Mode
@@ -219,10 +204,7 @@ const ActivityForm = () => {
             primaryContributionArea: { label: '', name: '' },
             additionalContributionArea: { label: '', name: '' }
           });
-          setNotifySuccess({ message: 'Successfully updated!', show: true });
-          setTimeout(() => {
-            setNotifySuccess({ message: '', show: false });
-          }, 1500);
+          toast.success('Successfully updated!');
         }
       } catch (error) {
         //Empty editor state
@@ -238,10 +220,7 @@ const ActivityForm = () => {
           additionalContributionArea: { label: '', name: '' }
         });
         setMode(false);
-        setNotifyError({ message: 'Something went wrong!', show: true });
-        setTimeout(() => {
-          setNotifyError({ message: '', show: false });
-        }, 1500);
+        toast.error('Something went wrong!');
       }
     }
   };
@@ -265,19 +244,11 @@ const ActivityForm = () => {
         let copyActivityState = [...activity];
 
         setActivity(copyActivityState.filter(d => d._id !== deleteId));
-
-        setNotifySuccess({ message: 'Successfully deleted!', show: true });
-        setTimeout(() => {
-          setNotifySuccess({ message: '', show: false });
-        }, 1500);
+        toast.success('Successfully deleted!');
       }
     } catch (error) {
       //Empty editor state
-
-      setNotifyError({ message: 'Something went wrong!', show: true });
-      setTimeout(() => {
-        setNotifyError({ message: '', show: false });
-      }, 1500);
+      toast.error('Something went wrong!');
     }
   };
 
@@ -604,17 +575,6 @@ const ActivityForm = () => {
           </div>
         </div>
       </main>
-      <NotificationError
-        show={notifyError.show}
-        setShow={isShow => setNotifyError({ message: '', show: isShow })}
-        text={notifyError.message}
-      />
-
-      <NotificationSuccess
-        show={notifySuccess.show}
-        setShow={isShow => setNotifySuccess({ message: '', show: isShow })}
-        text={notifySuccess.message}
-      />
     </div>
   );
 };

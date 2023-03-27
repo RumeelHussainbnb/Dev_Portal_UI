@@ -54,6 +54,7 @@
     "react-paginate": "^8.1.4",
     "react-player": "^2.10.1",
     "react-select": "^5.7.0",
+    "react-toastify": "^9.1.2",
     "remark": "^14.0.2",
     "remark-gfm": "^3.0.1",
     "remark-html": "^15.0.1",

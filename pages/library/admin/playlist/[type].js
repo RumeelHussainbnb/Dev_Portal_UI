@@ -1,14 +1,8 @@
-import dynamic from 'next/dynamic';
 import { useState } from 'react';
-import draftToHtml from 'draftjs-to-html';
-import { EditorState, convertToRaw } from 'draft-js';
+import { toast } from 'react-toastify';
 
-import { Container } from '../../../../components/layout';
-import EditorComponent from '../../../../components/Editor/Editor';
 import { http } from '../../../../utils/http';
-
-const NotificationSuccess = dynamic(() => import('../../../../components/notifications/success'));
-const NotificationError = dynamic(() => import('../../../../components/notifications/error'));
+import { Container } from '../../../../components/layout';
 
 const PlaylistForm = () => {
   const [data, setData] = useState({
@@ -17,8 +11,6 @@ const PlaylistForm = () => {
     Description: '',
     Provider: ''
   });
-  const [notifySuccess, setNotifySuccess] = useState(false);
-  const [notifyError, setNotifyError] = useState(false);
 
   const createPlaylist = async event => {
     event.preventDefault();
@@ -33,7 +25,7 @@ const PlaylistForm = () => {
           Description: '',
           Provider: ''
         });
-        setNotifySuccess(true);
+        toast.success('Successfully posted!, Thank you');
       }
     } catch (error) {
       //Empty editor state
@@ -44,7 +36,7 @@ const PlaylistForm = () => {
         Provider: ''
       });
 
-      setNotifyError(true);
+      toast.error('Posting Failed!, Please try again');
     }
   };
 
@@ -158,20 +150,6 @@ const PlaylistForm = () => {
           </div>
         </div>
       </main>
-
-      <NotificationError
-        show={notifyError}
-        setShow={setNotifyError}
-        text="Posting Failed"
-        subText="Please try again"
-      />
-
-      <NotificationSuccess
-        show={notifySuccess}
-        setShow={setNotifySuccess}
-        text="Successfully posted!"
-        subText="Thank you"
-      />
     </div>
   );
 };

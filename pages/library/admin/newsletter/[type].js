@@ -1,18 +1,14 @@
-import dynamic from 'next/dynamic';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 import draftToHtml from 'draftjs-to-html';
 import { EditorState, convertToRaw } from 'draft-js';
 
+import { http } from '../../../../utils/http';
 import { Container } from '../../../../components/layout';
 import EditorComponent from '../../../../components/Editor/Editor';
-import { http } from '../../../../utils/http';
-
-const NotificationSuccess = dynamic(() => import('../../../../components/notifications/success'));
-const NotificationError = dynamic(() => import('../../../../components/notifications/error'));
 
 const Submit = metaTags => {
   const [editor, setEditor] = useState(() => EditorState.createEmpty());
-  // const [convertedContent, setConvertedContent] = useState('');
   const [data, setData] = useState({
     Title: '',
     Author: 'BNB Chain',
@@ -20,8 +16,6 @@ const Submit = metaTags => {
     ContentMarkdown: '',
     Description: ''
   });
-  const [notifySuccess, setNotifySuccess] = useState(false);
-  const [notifyError, setNotifyError] = useState(false);
 
   //Clear States
   const clearStatsDate = () => {
@@ -42,13 +36,13 @@ const Submit = metaTags => {
       if (response?.data?.success === true) {
         //Empty editor state
         clearStatsDate();
-        setNotifySuccess(true);
+        toast.success('Successfully posted!, Thank you');
       }
     } catch (error) {
       //Empty editor state
       clearStatsDate();
 
-      setNotifyError(true);
+      toast.error('Posting Failed!, Please try again');
     }
   };
 
@@ -202,20 +196,6 @@ const Submit = metaTags => {
           </div>
         </div>
       </main>
-
-      <NotificationError
-        show={notifyError}
-        setShow={setNotifyError}
-        text="Posting Failed"
-        subText="Please try again"
-      />
-
-      <NotificationSuccess
-        show={notifySuccess}
-        setShow={setNotifySuccess}
-        text="Successfully posted!"
-        subText="Thank you"
-      />
     </div>
   );
 };
