@@ -39,7 +39,7 @@ const navigation = [
   },
   {
     name: 'Bounty Board',
-    href: 'https://bugcrowd.com/binance',
+    href: 'https://app.dework.xyz/bnbchain',
     icon: ClipboardCheckIcon,
     disabled: false,
     rel: 'noreferrer',
