@@ -90,7 +90,7 @@ const GridContainer = ({ groupTitle, selectedItem, handleCloseModal, handleShowM
                 </Text>
               </div>
               <Spacer y={0.5} />
-              <div className="overflow-y-auto text-center">{selectedItem.desc}</div>
+              <div className="overflow-y-auto text-center"><p className='dark:text-gray-800'>{selectedItem.desc}</p></div>
               <Spacer y={0.5} />
               <div>
                 <a className="webLink" href={selectedItem.website}>
