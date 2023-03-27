@@ -333,6 +333,12 @@ const MvpForm = () => {
     if (allowedExtensions.includes(fileType)) {
       // I've kept this example simple by using the first image instead of multiple
       setSelectedFile(e.target.files);
+    } else {
+      //through image type error
+      setNotifyError({
+        message: 'invalid Image Type. [Supported jpg, jpeg, png]',
+        show: true
+      });
     }
   };
 

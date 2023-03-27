@@ -29,7 +29,7 @@ const MvpForm = ({ router }) => {
     bioGraphy: routerData?.Bio
   });
   const [notifySuccess, setNotifySuccess] = useState(false);
-  const [notifyError, setNotifyError] = useState(false);
+  const [notificationError, setNotificationError] = useState({ message: '', show: false });
   const [imageURL, setImageURl] = useState(routerData?.ProfilePicture);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -81,7 +81,7 @@ const MvpForm = ({ router }) => {
         bioGraphy: ''
       });
 
-      setNotifyError(true);
+      setNotificationError({ message: 'Posting Failed!', show: true });
     }
   };
 
@@ -140,6 +140,11 @@ const MvpForm = ({ router }) => {
         setImageURl(imageUrl);
         setData({ ...data, imageUrl: imageUrl });
       } else {
+        //through image type error
+        setNotificationError({
+          message: 'invalid Image Type. [Supported jpg, jpeg, png]',
+          show: true
+        });
       }
     }
     setIsLoading(false);
@@ -401,10 +406,9 @@ const MvpForm = ({ router }) => {
       </main>
 
       <NotificationError
-        show={notifyError}
-        setShow={setNotifyError}
-        text="Posting Failed"
-        subText="Please try again"
+        show={notificationError.show}
+        setShow={isShow => setNotificationError({ message: '', show: isShow })}
+        text={notificationError.message}
       />
 
       <NotificationSuccess

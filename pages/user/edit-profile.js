@@ -7,7 +7,6 @@ import Image from 'next/image';
 import { TrashIcon, XIcon } from '@heroicons/react/solid';
 import 'react-circular-progressbar/dist/styles.css';
 import { http } from '../../utils/http';
-import EndPoint from '../../constant/endPoints';
 import InputField from '../../components/InputField';
 import MultiSelection from '../../components/MultiSelection';
 import validation from '../../utils/validation';
@@ -129,7 +128,7 @@ export default function Profile() {
 
       //sucess
       if (allowedExtensions.includes(fileType)) {
-        const response = await http.get(`${EndPoint.BASE_URL}/martian/s3Url`);
+        const response = await http.get(`/martian/s3Url`);
         const imageResponse = await fetch(response.data.url, {
           method: 'PUT',
           headers: {
