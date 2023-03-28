@@ -14,7 +14,6 @@ import 'react-circular-progressbar/dist/styles.css';
 
 import Loader from '../../components/Loader/Loader';
 import { http } from '../../utils/http';
-import EndPoint from '../../constant/endPoints';
 import Link from 'next/link';
 import moment from 'moment';
 import { useRouter } from 'next/router';

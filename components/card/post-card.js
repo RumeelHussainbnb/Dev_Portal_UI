@@ -1,27 +1,25 @@
-import { useEffect } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { useEffect, useState, memo } from 'react';
+import dynamic from 'next/dynamic';
+import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
+import ReactHtmlParser from 'react-html-parser';
+import { HeartIcon as Unliked } from '@heroicons/react/outline';
 import {
   HeartIcon as Liked,
-  DocumentTextIcon,
   PlayIcon,
   ExternalLinkIcon,
   FilmIcon,
   EyeOffIcon,
   InboxInIcon
 } from '@heroicons/react/solid';
-import { HeartIcon as Unliked, ChatIcon, ShareIcon } from '@heroicons/react/outline';
-import dynamic from 'next/dynamic';
-import Image from 'next/image';
-import Link from 'next/link';
-import PropTypes from 'prop-types';
-import { memo } from 'react';
-import defineImage from '../../utils/content-imagen';
+
 import Audio from '../audio';
-import { useState } from 'react';
-import { http } from '../../utils/http';
-import ReactHtmlParser from 'react-html-parser';
-const Notification = dynamic(() => import('../notifications/error'));
-import { useAppDispatch, useAppState } from '../../context/AppContext';
 import tagList from '../../utils/tags';
+import { http } from '../../utils/http';
+import defineImage from '../../utils/content-imagen';
+import { useAppState } from '../../context/AppContext';
 
 const Badge = dynamic(() => import('../badges/badge.js'));
 const CopyLink = dynamic(() => import('./copy-link.js'));
@@ -37,7 +35,6 @@ function PostWide({ content, mode }) {
   let isExternalLink = tagList.externalContentTypes.includes(content.ContentType);
   const [isS3Audio, setIsS3Audio] = useState(false);
   const [contentState, setContentState] = useState(content);
-  const [notification, setNotification] = useState({ message: '', show: false });
   const imageUrl = defineImage(content);
   const appState = useAppState();
 
@@ -53,10 +50,7 @@ function PostWide({ content, mode }) {
     event.preventDefault();
 
     if (!appState.publicKey) {
-      setNotification({ message: 'Please Connect Wallet', show: true });
-      setTimeout(() => {
-        setNotification({ message: 'Please Connect Wallet', show: false });
-      }, 1500);
+      toast.info('Please Connect Wallet');
     } else {
       content.PublicKey = localStorage.getItem('PublicKey');
       try {
@@ -347,11 +341,6 @@ function PostWide({ content, mode }) {
           </div> */}
         </div>
       </div>
-      <Notification
-        show={notification.show}
-        setShow={isShow => setNotification({ message: '', show: isShow })}
-        text={notification.message}
-      />
     </div>
   );
 }

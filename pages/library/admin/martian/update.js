@@ -1,17 +1,13 @@
-import dynamic from 'next/dynamic';
-import { useState, useId, useRef } from 'react';
+import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
+import { useState, useId, useRef } from 'react';
 
 import Image from 'next/image';
 import Select from 'react-select';
-import { Container } from '../../../../components/layout';
 import { Country } from 'country-state-city';
-import Loader from '../../../../components/Loader/Loader';
-
 import { http } from '../../../../utils/http';
-
-const NotificationSuccess = dynamic(() => import('../../../../components/notifications/success'));
-const NotificationError = dynamic(() => import('../../../../components/notifications/error'));
+import Loader from '../../../../components/Loader/Loader';
+import { Container } from '../../../../components/layout';
 
 const MvpForm = ({ router }) => {
   const inputFile = useRef(null);
@@ -28,8 +24,6 @@ const MvpForm = ({ router }) => {
     expertise: routerData?.Skills,
     bioGraphy: routerData?.Bio
   });
-  const [notifySuccess, setNotifySuccess] = useState(false);
-  const [notifyError, setNotifyError] = useState(false);
   const [imageURL, setImageURl] = useState(routerData?.ProfilePicture);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -62,7 +56,7 @@ const MvpForm = ({ router }) => {
           expertise: '',
           bioGraphy: ''
         });
-        setNotifySuccess(true);
+        toast.success('Successfully posted!, Thank you');
         setTimeout(() => {
           router.back();
         }, '1500');
@@ -80,8 +74,7 @@ const MvpForm = ({ router }) => {
         expertise: '',
         bioGraphy: ''
       });
-
-      setNotifyError(true);
+      toast.error('Posting Failed!');
     }
   };
 
@@ -140,6 +133,8 @@ const MvpForm = ({ router }) => {
         setImageURl(imageUrl);
         setData({ ...data, imageUrl: imageUrl });
       } else {
+        //through image type error
+        toast.error('Invalid Image Type. [Supported jpg, jpeg, png]');
       }
     }
     setIsLoading(false);
@@ -399,20 +394,6 @@ const MvpForm = ({ router }) => {
           </div>
         </div>
       </main>
-
-      <NotificationError
-        show={notifyError}
-        setShow={setNotifyError}
-        text="Posting Failed"
-        subText="Please try again"
-      />
-
-      <NotificationSuccess
-        show={notifySuccess}
-        setShow={setNotifySuccess}
-        text="Successfully posted!"
-        subText="Thank you"
-      />
     </div>
   );
 };

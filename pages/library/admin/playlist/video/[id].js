@@ -1,14 +1,9 @@
-import dynamic from 'next/dynamic';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 
-import { Container } from '../../../../../components/layout';
 import { http } from '../../../../../utils/http';
-
-const NotificationSuccess = dynamic(() =>
-  import('../../../../../components/notifications/success')
-);
-const NotificationError = dynamic(() => import('../../../../../components/notifications/error'));
+import { Container } from '../../../../../components/layout';
 
 const PlaylistForm = () => {
   const router = useRouter();
@@ -20,8 +15,6 @@ const PlaylistForm = () => {
     Url: '',
     ImageUrl: ''
   });
-  const [notifySuccess, setNotifySuccess] = useState(false);
-  const [notifyError, setNotifyError] = useState(false);
 
   const createPlaylist = async event => {
     event.preventDefault();
@@ -49,7 +42,8 @@ const PlaylistForm = () => {
           Description: '',
           Url: ''
         });
-        setNotifySuccess(true);
+        toast.success('Successfully posted!, Thank you');
+
         setTimeout(() => {
           router.back();
         }, '1500');
@@ -63,8 +57,7 @@ const PlaylistForm = () => {
         Description: '',
         Url: ''
       });
-
-      setNotifyError(true);
+      toast.error('Posting Failed!, Please try again');
     }
   };
 
@@ -195,20 +188,6 @@ const PlaylistForm = () => {
           </div>
         </div>
       </main>
-
-      <NotificationError
-        show={notifyError}
-        setShow={setNotifyError}
-        text="Posting Failed"
-        subText="Please try again"
-      />
-
-      <NotificationSuccess
-        show={notifySuccess}
-        setShow={setNotifySuccess}
-        text="Successfully posted!"
-        subText="Thank you"
-      />
     </div>
   );
 };

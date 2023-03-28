@@ -1,28 +1,24 @@
-import dynamic from 'next/dynamic';
-import { useEffect, useState, useRef, useId } from 'react';
-import { Country, State, City } from 'country-state-city';
-import Select from 'react-select';
-import { Container } from '../../components/layout';
 import Image from 'next/image';
-import { TrashIcon, XIcon } from '@heroicons/react/solid';
-import 'react-circular-progressbar/dist/styles.css';
-import { http } from '../../utils/http';
-import EndPoint from '../../constant/endPoints';
-import InputField from '../../components/InputField';
-import MultiSelection from '../../components/MultiSelection';
-import validation from '../../utils/validation';
+import Select from 'react-select';
+import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
-const Notification = dynamic(() => import('../../components/notifications/error'));
+import { Country } from 'country-state-city';
+import 'react-circular-progressbar/dist/styles.css';
+import { TrashIcon, XIcon } from '@heroicons/react/solid';
+import { useEffect, useState, useRef, useId } from 'react';
 
+//*Local Imports
+import { http } from '../../utils/http';
+import validation from '../../utils/validation';
+import { Container } from '../../components/layout';
 import Loader from '../../components/Loader/Loader';
+import InputField from '../../components/InputField';
 
 export default function Profile() {
   const inputFile = useRef(null);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [notification, setNotification] = useState({ message: '', show: false });
   const [state, setState] = useState({});
-  const [loader, setloader] = useState(false);
   const [certificateArray, setcertificateArray] = useState([
     {
       _id: '1',
@@ -129,7 +125,7 @@ export default function Profile() {
 
       //sucess
       if (allowedExtensions.includes(fileType)) {
-        const response = await http.get(`${EndPoint.BASE_URL}/martian/s3Url`);
+        const response = await http.get(`/martian/s3Url`);
         const imageResponse = await fetch(response.data.url, {
           method: 'PUT',
           headers: {
@@ -142,7 +138,7 @@ export default function Profile() {
         setState({ ...state, ProfilePicture: profilePicture });
       } else {
         //through image type error
-        setNotification({ message: 'invalid Image Type. [Supported jpg, jpeg, png]', show: true });
+        toast.info('Invalid Image Type. [Supported jpg, jpeg, png]');
       }
     }
     setIsLoading(false);
@@ -192,7 +188,7 @@ export default function Profile() {
   };
   const _updateProfile = item => {
     let mergedArray = [...certificateArray];
-    setloader(true);
+
     let payload = {
       ...item,
       Username: item.Username,
@@ -231,13 +227,9 @@ export default function Profile() {
     http
       .put(`/user/updateUserProfile/${state._id}`, payload)
       .then(response => {
-        setloader(false);
-
         router.push('/user/profile');
       })
-      .catch(error => {
-        setloader(false);
-      });
+      .catch(error => {});
   };
   //create location
   //add certificate
@@ -256,10 +248,7 @@ export default function Profile() {
       // // update state
       setcertificateArray(tempArr);
     } else {
-      setNotification({ message: 'Please fill out certification fields', show: true });
-      setTimeout(() => {
-        setNotification({ message: '', show: false });
-      }, 1000);
+      toast.warning('Please fill out certification fields');
     }
   };
 
@@ -664,11 +653,6 @@ export default function Profile() {
          
         </aside> */}
       </div>
-      <Notification
-        show={notification.show}
-        setShow={isShow => setNotification({ message: '', show: isShow })}
-        text={notification.message}
-      />
     </Container>
   );
 }

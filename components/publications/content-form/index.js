@@ -87,7 +87,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
     });
 
     // Send success notification
-    setNotifySuccess(true);
+    setNotifySuccess();
     setIsLoading(false);
   };
 

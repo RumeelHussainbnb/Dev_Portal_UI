@@ -1,17 +1,13 @@
-import dynamic from 'next/dynamic';
+import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { useState, useId, useRef, useEffect } from 'react';
 
 import Image from 'next/image';
 import Select from 'react-select';
-import { Container } from '../../../../components/layout';
 import { Country } from 'country-state-city';
-import Loader from '../../../../components/Loader/Loader';
-
 import { http } from '../../../../utils/http';
-
-const NotificationSuccess = dynamic(() => import('../../../../components/notifications/success'));
-const NotificationError = dynamic(() => import('../../../../components/notifications/error'));
+import { Container } from '../../../../components/layout';
+import Loader from '../../../../components/Loader/Loader';
 
 const MvpForm = () => {
   const router = useRouter();
@@ -30,8 +26,6 @@ const MvpForm = () => {
     skills: [],
     bioGraphy: ''
   });
-  const [notifySuccess, setNotifySuccess] = useState({ message: '', show: false });
-  const [notifyError, setNotifyError] = useState({ message: '', show: false });
   const [imageURL, setImageURl] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [isPublicKeyError, setIsPublicKeyError] = useState(false);
@@ -85,17 +79,11 @@ const MvpForm = () => {
             if (response.data?.MartianType) {
               setIsMartian(true);
               setDisableFields(true);
-              setNotifySuccess({ message: 'Martian Already Exist!', show: true });
-              setTimeout(() => {
-                setNotifySuccess({ message: '', show: false });
-              }, 1000);
+              toast.info('Martian Already Exist!');
             } else {
               setIsMartian(false);
               setDisableFields(true);
-              setNotifySuccess({ message: 'User Data Successfully Fetched!', show: true });
-              setTimeout(() => {
-                setNotifySuccess({ message: '', show: false });
-              }, 1000);
+              toast.info('User Data Successfully Fetched!');
             }
 
             setIsNewUser(false);
@@ -116,20 +104,16 @@ const MvpForm = () => {
               bioGraphy: ''
             });
             setImageURl();
-            setNotifyError({ message: 'No data found against public key', show: true });
-            setTimeout(() => {
-              setNotifyError({ message: '', show: false });
-            }, 1000);
+            toast.info('No data found against public key');
+
             setIsNewUser(true);
             setDisableFields(false);
             setIsMartian(false);
           }
         })
         .catch(err => {
-          setNotifyError({ message: 'Error Occured!', show: true });
-          setTimeout(() => {
-            setNotifyError({ message: '', show: false });
-          }, 1000);
+          toast.error('Error Occured!');
+
           setDisableFields(false);
         });
     }
@@ -178,7 +162,7 @@ const MvpForm = () => {
             bioGraphy: ''
           });
           setImageURl();
-          setNotifySuccess({ message: 'Successfully posted!', show: true });
+          toast.success('Successfully posted!');
           setDisableFields(false);
         }
       }
@@ -216,7 +200,7 @@ const MvpForm = () => {
             bioGraphy: ''
           });
           setImageURl('');
-          setNotifySuccess({ message: 'Successfully created!', show: true });
+          toast.success('Successfully created!');
           setDisableFields(false);
         }
       }
@@ -236,7 +220,8 @@ const MvpForm = () => {
         bioGraphy: ''
       });
       setImageURl('');
-      setNotifyError({ message: 'Posting Failed!', show: true });
+      toast.error('Posting Failed!');
+
       setDisableFields(false);
     }
     setIsLoading(false);
@@ -333,6 +318,9 @@ const MvpForm = () => {
     if (allowedExtensions.includes(fileType)) {
       // I've kept this example simple by using the first image instead of multiple
       setSelectedFile(e.target.files);
+    } else {
+      //through image type error
+      toast.info('Invalid Image Type. [Supported jpg, jpeg, png]');
     }
   };
 
@@ -742,17 +730,6 @@ const MvpForm = () => {
           </div>
         </div>
       </main>
-      <NotificationError
-        show={notifyError.show}
-        setShow={isShow => setNotifyError({ message: '', show: isShow })}
-        text={notifyError.message}
-      />
-
-      <NotificationSuccess
-        show={notifySuccess.show}
-        setShow={isShow => setNotifySuccess({ message: '', show: isShow })}
-        text={notifySuccess.message}
-      />
     </div>
   );
 };

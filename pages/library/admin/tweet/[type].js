@@ -1,15 +1,11 @@
-import dynamic from 'next/dynamic';
 import { useState } from 'react';
-import { Container } from '../../../../components/layout';
-import { http } from '../../../../utils/http';
+import { toast } from 'react-toastify';
 
-const NotificationSuccess = dynamic(() => import('../../../../components/notifications/success'));
-const NotificationError = dynamic(() => import('../../../../components/notifications/error'));
+//*Local Imports
+import { http } from '../../../../utils/http';
+import { Container } from '../../../../components/layout';
 
 const Submit = metaTags => {
-  const [notifySuccess, setNotifySuccess] = useState(false);
-  const [notifyError, setNotifyError] = useState(false);
-
   const [data, setData] = useState({
     id: '',
     category: 'project'
@@ -25,7 +21,7 @@ const Submit = metaTags => {
           id: '',
           category: 'project'
         });
-        setNotifySuccess(true);
+        toast.success('Successfully posted!');
       }
     } catch (error) {
       //Empty editor state
@@ -33,8 +29,7 @@ const Submit = metaTags => {
         id: '',
         category: 'project'
       });
-
-      setNotifyError(true);
+      toast.error('Posting Failed, Please try again');
     }
   };
 
@@ -111,19 +106,6 @@ const Submit = metaTags => {
           </div>
         </div>
       </main>
-
-      <NotificationError
-        show={notifyError}
-        setShow={setNotifyError}
-        text="Posting Failed"
-        subText="Please try again"
-      />
-      <NotificationSuccess
-        show={notifySuccess}
-        setShow={setNotifySuccess}
-        text="Successfully posted!"
-        subText="Thank you"
-      />
     </div>
   );
 };
