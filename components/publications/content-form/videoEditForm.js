@@ -1,9 +1,7 @@
 import { memo, useState } from 'react';
 import { useRouter } from 'next/router';
 import fetch from 'isomorphic-unfetch';
-
-import { convertToRaw } from 'draft-js';
-import draftToHtml from 'draftjs-to-html';
+import { toast } from 'react-toastify';
 
 import Status from './status';
 import { http } from '../../../utils/http';
@@ -17,10 +15,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
-  //convert editor raw data to html
-  const convertContentToHTML = () => {
-    return draftToHtml(convertToRaw(data.ContentMarkdown.getCurrentContent()));
-  };
+
   const updateContent = async event => {
     event.preventDefault();
     setIsLoading(true);
@@ -31,13 +26,14 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
       ...copyState,
       ContentType: data.ContentType.value,
       Img: data.ImageUrl,
-      ContentMarkdown: convertContentToHTML()
+      ContentMarkdown: ''
     });
 
     // call preview mode
     await fetch(`/api/preview?type=${data.ContentType}`);
 
     // Edit happens inside a modal, we need to close it after
+    toast.success('successfully updated!');
     setOpen(false);
     setIsLoading(false);
     router.reload();

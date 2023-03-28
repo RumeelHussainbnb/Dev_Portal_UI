@@ -50,9 +50,14 @@ function Publications({
   }, [data]);
 
   const editContent = data => {
-    const contentBlock = htmlToDraft(data.ContentMarkdown);
-    const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
-    setContent({ ...data, ContentMarkdown: EditorState.createWithContent(contentState) });
+    if (data.ContentType != 'playlist') {
+      const contentBlock = htmlToDraft(data.ContentMarkdown);
+      const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+      setContent({ ...data, ContentMarkdown: EditorState.createWithContent(contentState) });
+    } else {
+      setContent({ ...data });
+    }
+
     setOpen(true);
   };
 
