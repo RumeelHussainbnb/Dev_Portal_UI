@@ -72,7 +72,7 @@ export default function Publications({ data, title, contentType, tags }) {
     "Learn to Develop using BNBChain. Tutorials, SDK's, Frameworks, Developer Tools, Security, Scaffolds, and Projects implementations";
   if (contentType === 'playlist') {
     pageDescription = title;
-    title = playlistTitle;
+    title = data?.length > 0 ? data[0]?.PlaylistTitle : 'No Data Available For Current Playlist';
   }
 
   const metaTags = {

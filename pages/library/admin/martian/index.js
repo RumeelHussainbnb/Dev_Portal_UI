@@ -128,7 +128,7 @@ const Index = ({ userData }) => {
     }
   };
   return (
-    <div className="px-4 search-martian-wrapper">
+    <div className="search-martian-wrapper px-4">
       <main className="max-w-7 xl mx-auto mb-5 shadow">
         <div className="relative overflow-hidden bg-white py-16 px-4 dark:bg-gray-800 sm:px-6 lg:px-8 lg:py-14">
           <div className="">
