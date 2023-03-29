@@ -4,7 +4,7 @@ import Banner from '../../components/course/banner';
 
 export default function Course() {
   const metaTags = {
-    title: 'BNBChain Development Course',
+    title: 'BNB Chain 101 Dev Course',
     description:
       'This course is designed to be the absolute best starting point for Web Developers looking to learn Web3 Development. BNBChain is the ideal network for starting your Web3 journey because of its high speed, low cost, energy efficiency, and more.',
     url: `${process.env.HOME_URL}/course`,
