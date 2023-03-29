@@ -16,7 +16,7 @@ export default function Course() {
       <div className="mx-2">
         <div className="flex justify-center">
           <h1 className="text-2xl font-bold capitalize text-gray-900 dark:text-gray-200 md:text-3xl 2xl:text-4xl">
-            BNBChain Development Course
+            BNB Chain 101 Dev Course
           </h1>
         </div>
 
