@@ -8,7 +8,6 @@ function Table() {
     <div className="mx-auto my-20 flex max-w-4xl flex-col gap-10">
       <div>
         <TableHeader ready title="Introduction" subTitle="Module 1" />
-
         {modules[0].map((item, index) => {
           return <TableRow ready item={item} index={index} key={index} />;
         })}
