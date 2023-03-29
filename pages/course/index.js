@@ -13,6 +13,7 @@ export default function Course() {
 
   return (
     <Container metaTags={metaTags}>
+      <div className='bg-white dark:border-gray-600 dark:bg-gray-800 shadow-lg p-4 w-full'>
       <div className="mx-2">
         <div className="flex justify-center">
           <h1 className="text-2xl font-bold capitalize text-gray-900 dark:text-gray-200 md:text-3xl 2xl:text-4xl">
@@ -31,6 +32,7 @@ export default function Course() {
         {/*<Banner />*/}
 
         <Table />
+      </div>
       </div>
     </Container>
   );
