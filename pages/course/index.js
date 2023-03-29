@@ -23,7 +23,7 @@ export default function Course() {
         <div className="mx-auto mt-5 max-w-4xl">
           <p className="prose mx-auto mt-3 text-center text-lg dark:prose-invert">
             This course is designed to be the absolute best starting point for Web Developers
-            looking to learn Web3 Development. BNBChain is the ideal network for starting your Web3
+            looking to learn Web3 Development. BNB Chain is the ideal network for starting your Web3
             journey because of its high speed, low cost, energy efficiency, and more.
           </p>
         </div>
