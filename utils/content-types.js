@@ -24,8 +24,8 @@ export default [
   //   value: 'Tools'
   // },
   {
-    label: 'Implementations',
-    value: 'implementations'
+    label: 'Projects',
+    value: 'projects'
   },
   {
     label: 'Security',

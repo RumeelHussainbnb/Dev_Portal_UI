@@ -94,7 +94,7 @@ export default function Contents() {
   };
 
   const generateUrl = data => {
-    return tagList.externalContentTypes.includes(data.ContentType)
+    return tagList.externalContentTypes.includes(data.ContentType.toLowerCase())
       ? data.Url
       : `/library/content/${data._id}`;
   };

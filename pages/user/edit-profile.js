@@ -13,8 +13,11 @@ import validation from '../../utils/validation';
 import { Container } from '../../components/layout';
 import Loader from '../../components/Loader/Loader';
 import InputField from '../../components/InputField';
+import DeleteModal from '../../components/deleteModal/index';
 
 export default function Profile() {
+  const [deleteModel, setDeleteModel] = useState(false);
+  const [deleteIndex, setDeleteIndex] = useState(null);
   const inputFile = useRef(null);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -252,9 +255,13 @@ export default function Profile() {
     }
   };
 
-  const DeleteCertifcate = index => {
+  const handleDeleteModel = index => {
+    setDeleteIndex(index);
+    setDeleteModel(true);
+  };
+  const DeleteCertifcate = () => {
     const tempArr = [...certificateArray];
-    tempArr.splice(index, 1);
+    tempArr.splice(deleteIndex, 1);
     setcertificateArray(tempArr);
   };
 
@@ -298,6 +305,14 @@ export default function Profile() {
   return (
     <Container className="page-overlay" metaTags={metaTags}>
       {isLoading && <Loader />}
+      {deleteModel && (
+        <DeleteModal
+          handleConfirmation={DeleteCertifcate}
+          setShowModal={setDeleteModel}
+          showModel={deleteModel}
+          nameOfTheDeleted="Certificate"
+        />
+      )}
       <div className="edit-profile-page flex w-full justify-around gap-3 md:pl-0">
         <main className="w-full">
           <div className="px-1 sm:px-6">
@@ -610,7 +625,7 @@ export default function Profile() {
                       )}
                     {array.length !== 1 && (
                       <TrashIcon
-                        onClick={() => DeleteCertifcate(index)}
+                        onClick={() => handleDeleteModel(index)}
                         className="h-6 w-6 fill-yellow-500"
                         aria-hidden="true"
                       />

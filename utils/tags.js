@@ -37,5 +37,5 @@ export default {
     'Vue.js'
   ],
   levelsInTags: ['Beginner', 'Intermediate', 'Expert'],
-  externalContentTypes: ['Ama', 'Sdk', 'Podcasts', 'Scaffolds', 'Implementations']
+  externalContentTypes: ['ama', 'sdk', 'podcasts', 'scaffolds', 'projects']
 };

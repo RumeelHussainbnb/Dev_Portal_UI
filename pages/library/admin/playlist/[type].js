@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useId } from 'react';
+import Select from 'react-select';
 import { toast } from 'react-toastify';
 
 import { http } from '../../../../utils/http';
@@ -9,21 +10,37 @@ const PlaylistForm = () => {
     Title: '',
     Author: '',
     Description: '',
-    Provider: ''
+    Provider: { label: '', name: '' }
   });
+
+  const type = [
+    {
+      label: 'Youtube',
+      value: 'Youtube'
+    },
+
+    {
+      label: 'Twitch',
+      value: 'Twitch'
+    }
+  ];
 
   const createPlaylist = async event => {
     event.preventDefault();
-
+    let newVideo = {
+      ...data,
+      Provider: data.Provider.label
+    };
     try {
-      const response = await http.post(`/playlists/bnb`, data);
+      const response = await http.post(`/playlists/bnb`, newVideo);
       if (response?.data?.success === true) {
         //Empty editor state
         setData({
           Title: '',
           Author: '',
           Description: '',
-          Provider: ''
+
+          Provider: { label: '', name: '' }
         });
         toast.success('Successfully posted!, Thank you');
       }
@@ -33,7 +50,7 @@ const PlaylistForm = () => {
         Title: '',
         Author: '',
         Description: '',
-        Provider: ''
+        Provider: { label: '', name: '' }
       });
 
       toast.error('Posting Failed!, Please try again');
@@ -124,7 +141,28 @@ const PlaylistForm = () => {
                     Provider
                   </label>
                   <div className="mt-1">
-                    <input
+                    <Select
+                      placeholder="Select a provider"
+                      instanceId={useId()}
+                      name="type"
+                      label="type"
+                      required
+                      classNames={{
+                        control: state =>
+                          'py-1.5 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500',
+                        option: state =>
+                          'dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500'
+                      }}
+                      options={type}
+                      value={data.Provider.label ? data.Provider.type : ''}
+                      onChange={typeObject => {
+                        setData({
+                          ...data,
+                          Provider: typeObject
+                        });
+                      }}
+                    />
+                    {/* <input
                       type="text"
                       name="author-name"
                       id="author-name"
@@ -132,7 +170,7 @@ const PlaylistForm = () => {
                       autoComplete="given-name"
                       onChange={e => setData({ ...data, Provider: e.target.value })}
                       className="block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
-                    />
+                    /> */}
                   </div>
                 </div>
 

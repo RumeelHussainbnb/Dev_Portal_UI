@@ -29,7 +29,7 @@ function Inputs({
 }) {
   let isEditorDisblaed = false;
   if (data.ContentType.label)
-    isEditorDisblaed = tagList.externalContentTypes.includes(data.ContentType.label);
+    isEditorDisblaed = tagList.externalContentTypes.includes(data.ContentType.label?.toLowerCase());
 
   //handle editor state change
   const handleEditorChange = state => {

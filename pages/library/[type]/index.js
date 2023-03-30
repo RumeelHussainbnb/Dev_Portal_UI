@@ -73,6 +73,7 @@ export default function Publications({ data, title, contentType, tags }) {
   if (contentType === 'playlist') {
     pageDescription = title;
     title = data?.length > 0 ? data[0]?.PlaylistTitle : 'No Data Available For Current Playlist';
+    title = title === '' ? playlistTitle : title;
   }
 
   const metaTags = {
