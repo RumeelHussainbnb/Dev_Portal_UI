@@ -59,7 +59,7 @@ export const modules = [
     //module 3
     {
       title: 'Programmability Giant - BNB Smart Chain',
-      link: '/course/giant-bsc'
+      link: '/course/gaint-bsc'
     },
     {
       title: 'Architecture Overview',
