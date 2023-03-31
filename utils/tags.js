@@ -24,18 +24,11 @@ export default {
     'Security',
     'Scaling'
   ],
-  protocols: ['IPFS', 'Arweave', 'BNBChainPay'],
-  language: ['Rust', 'JavaScript', 'C#', 'Golang', 'Python', 'Java', 'Swift'],
+  protocols: ['IPFS'],
+  blockChain: ['BNB Smart Chain', 'BNB Greenfield', 'BNB Sidechain', 'ZkBNB'],
+  language: ['JavaScript', 'C#', 'Golang', 'Python', 'Java', 'Rust', 'React.js'],
   badge: ['New', 'Hot', 'Best', 'Old', 'Trending', 'Releases'],
-  framework: [
-    'Truffle',
-    'OpenZeppelin',
-    'Hardhat',
-    'Band Protocol',
-    'Web3.js',
-    'React.js',
-    'Vue.js'
-  ],
+  framework: ['Truffle', 'OpenZeppelin', 'Hardhat', 'Web3.js', 'React.js'],
   levelsInTags: ['Beginner', 'Intermediate', 'Expert'],
   externalContentTypes: ['ama', 'sdk', 'podcasts', 'scaffolds', 'projects']
 };
