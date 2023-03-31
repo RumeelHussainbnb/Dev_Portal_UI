@@ -18,8 +18,8 @@ function TableRow({ item, index, ready }) {
     >
       <Link href={item.link} passHref>
         <div className="w-full">
-          <span className="mr-3 text-xl text-gray-400 dark:text-gray-500">{++index}.</span>
-          <span className=" tracking-wide text-gray-700 dark:text-gray-300">{item.title}</span>
+          <span className="mr-3 text-xl text-gray-500 dark:text-gray-500">{++index}.</span>
+          <span className=" text-base tracking-wide text-gray-700 dark:text-gray-300">{item.title}</span>
         </div>
       </Link>
 

@@ -581,8 +581,11 @@ aside {
 .dark {
   .martian-admin {
 
-    .dark\:text-gray-500,
-    td{
+    // .dark\:text-gray-500,
+    // td{
+    //   color: #d7d7d7;
+    // }
+    p {
       color: #d7d7d7;
     }
     nav {
@@ -920,3 +923,8 @@ aside {
 .z-index-max {
   z-index: 99999999 !important;
 }
+
+// input {
+//   min-width: 100% !important;
+//   grid-area: auto !important;
+// }
