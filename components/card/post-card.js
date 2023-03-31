@@ -32,7 +32,7 @@ const myLoader = ({ src, width, quality }) => {
 };
 
 function PostWide({ content, mode }) {
-  let isExternalLink = tagList.externalContentTypes.includes(content.ContentType);
+  let isExternalLink = tagList.externalContentTypes.includes(content.ContentType.toLowerCase());
   const [isS3Audio, setIsS3Audio] = useState(false);
   const [contentState, setContentState] = useState(content);
   const imageUrl = defineImage(content);

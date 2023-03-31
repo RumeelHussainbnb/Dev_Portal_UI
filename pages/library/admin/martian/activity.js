@@ -1,4 +1,5 @@
 import { format } from 'date-fns';
+import { useRouter } from 'next/router';
 import Select from 'react-select';
 import { toast } from 'react-toastify';
 import DatePicker from 'react-datepicker';
@@ -11,6 +12,7 @@ import { Container } from '../../../../components/layout';
 import DeleteModal from '../../../../components/deleteModal/index';
 
 const ActivityForm = () => {
+  const router = useRouter();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [data, setData] = useState({
     id: null,
@@ -477,17 +479,22 @@ const ActivityForm = () => {
                     {mode == false ? 'Add' : 'Edit'}
                   </button>
                 </div>
-                {mode != false && (
-                  <div className="mx-auto flex max-w-3xl justify-center">
-                    <button
-                      type="button"
-                      onClick={e => handleCancel(e)}
-                      className="inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-3 px-16 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200"
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                )}
+
+                <div className="mx-auto flex max-w-3xl justify-center">
+                  <button
+                    type="button"
+                    onClick={e => {
+                      if (mode != false) {
+                        handleCancel(e);
+                      } else {
+                        router.back();
+                      }
+                    }}
+                    className="inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-3 px-16 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200"
+                  >
+                    {mode != false ? 'Clear' : 'Cancel'}
+                  </button>
+                </div>
               </form>
             </div>
 
@@ -556,9 +563,6 @@ const ActivityForm = () => {
                             </a>
                             /
                             <a
-                              data-modal-target="popup-modal"
-                              data-modal-toggle="popup-modal"
-                              href="#"
                               onClick={() => hadnleDeleteConfirmationModal(data._id)}
                               className="font-medium text-red-600 hover:underline dark:text-red-500"
                             >

@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+
 import fetcher from '../../../utils/fetcher';
 import { Container } from '../../../components/layout';
 import markdownToHtml from '../../../utils/markdown';
@@ -46,6 +48,7 @@ export async function getStaticProps({ params }) {
 }
 
 export default function Article({ content }) {
+  const router = useRouter();
   const metaTags = {
     title: content.Title,
     description: content.Description,
@@ -58,6 +61,12 @@ export default function Article({ content }) {
     <Container metaTags={metaTags}>
       <div className="lg:mr-5">
         <div className="prose mx-auto max-w-6xl rounded-lg px-10 py-20 dark:border-none dark:prose-invert lg:border lg:bg-white dark:lg:bg-gray-800">
+          <div className="mb-2" onClick={() => router.back()}>
+            <span className="text-md cursor-pointer pb-4 text-yellow-600 hover:text-yellow-700 hover:underline lg:text-lg">
+              <>&larr; Go Back</>
+            </span>
+          </div>
+
           <div className="align-center flex flex-col content-center items-center pb-10">
             <h1 className="mb-4">{content.Title}</h1>
             <h3 className="mt-0 tracking-wide text-gray-500 dark:text-gray-400">
