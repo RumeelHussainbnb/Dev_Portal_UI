@@ -552,7 +552,10 @@ aside {
       min-height: 50px;
     }
   }
-
+  .profile-aside {
+    min-width: 320px;
+    max-width: 100%;
+  }
   .profile-wrapper {
     min-width: 700px;
   }
@@ -939,3 +942,17 @@ aside {
 .rdw-dropdownoption-default {
   color: #333 !important;
 }
+
+.tags {
+  button {
+    background-color: #eab308;
+    color: #fff;
+    padding: 1px 6px;
+    margin-right: 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    span {
+      display: none;
+    }
+  }
+} 
