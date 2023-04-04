@@ -248,7 +248,7 @@ const MvpForm = ({ router }) => {
                         option: state =>
                           state.isSelected
                             ? ' dark:bg-gray-400 bg-white dark:text-gray-800 '
-                            : 'bg-white'
+                            : 'bg-white select-value'
                       }}
                       options={updatedCountries}
                       value={data.country.label ? data.country : ''}
@@ -301,7 +301,7 @@ const MvpForm = ({ router }) => {
                         option: state =>
                           state.isSelected
                             ? ' dark:bg-gray-400 bg-white dark:text-gray-800 '
-                            : 'bg-white'
+                            : 'bg-white select-value'
                       }}
                       options={martianOptions}
                       value={data.martian.label ? data.martian : ''}

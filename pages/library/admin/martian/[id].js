@@ -177,7 +177,7 @@ export default function Profile() {
                   <button
                     type="button"
                     onClick={() => router.push('/library/admin/martian/activity')}
-                    className="inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-2 px-4 text-sm text-lg font-medium font-medium text-white text-gray-500 shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200 dark:text-gray-500"
+                    className="inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-2 px-4 text-sm text-lg font-medium font-medium text-white text-white-500 shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-white-500"
                   >
                     Add Activities
                   </button>

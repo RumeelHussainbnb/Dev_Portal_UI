@@ -168,8 +168,8 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
 
                   option: state =>
                     state.isSelected
-                      ? 'capitalize dark:bg-gray-400 bg-white dark:text-gray-800 '
-                      : 'bg-white'
+                      ? 'capitalize dark:bg-gray-400 bg-white dark:text-gray-500'
+                      : 'bg-white dark:text-black-500 select-value'
                 }}
                 options={contentType}
                 value={data.ContentType.label ? data.ContentType : ''}
@@ -202,7 +202,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
                     'py-1.5 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500',
 
                   option: state =>
-                    state.isSelected ? ' dark:bg-gray-400 bg-white dark:text-gray-800 ' : 'bg-white'
+                    state.isSelected ? ' dark:bg-gray-400 bg-white dark:text-gray-800 ' : 'bg-white dark:text-black-500 select-value'
                 }}
                 options={tagList.level}
                 value={data.Level.label ? data.Level : ''}

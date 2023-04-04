@@ -552,7 +552,10 @@ aside {
       min-height: 50px;
     }
   }
-
+  .profile-aside {
+    min-width: 320px;
+    max-width: 100%;
+  }
   .profile-wrapper {
     min-width: 700px;
   }
@@ -577,7 +580,10 @@ aside {
     }
   }
 }
-
+.select-value {
+  color: #000;
+  text-shadow: 0 0 #000;
+}
 .dark {
   .martian-admin {
 
@@ -585,6 +591,10 @@ aside {
     // td{
     //   color: #d7d7d7;
     // }
+    .select-value {
+      color: #000;
+      text-shadow: 0 0 #000;
+    }
     p {
       color: #d7d7d7;
     }
@@ -928,3 +938,21 @@ aside {
 //   min-width: 100% !important;
 //   grid-area: auto !important;
 // }
+
+.rdw-dropdownoption-default {
+  color: #333 !important;
+}
+
+.tags {
+  button {
+    background-color: #eab308;
+    color: #fff;
+    padding: 1px 6px;
+    margin-right: 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    span {
+      display: none;
+    }
+  }
+} 

@@ -453,7 +453,7 @@ export default function Profile() {
                         option: state =>
                           state.isSelected
                             ? ' dark:bg-white-400 bg-white dark:text-gray-800 '
-                            : 'bg-white'
+                            : 'bg-white select-value'
                       }}
                       options={updatedCountries}
                       value={state.Country?.label ? state.Country : ''}
@@ -516,7 +516,7 @@ export default function Profile() {
                         option: state =>
                           state.isSelected
                             ? ' dark:bg-gray-400 bg-white dark:text-gray-800 '
-                            : 'bg-white'
+                            : 'bg-white select-value'
                       }}
                       isMulti
                       value={state.Skills}
