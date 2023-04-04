@@ -230,7 +230,7 @@ export default function Profile() {
     http
       .put(`/user/updateUserProfile/${state._id}`, payload)
       .then(response => {
-        router.push('/user/profile');
+        router.push(`/user/profile/${state._id}`);
       })
       .catch(error => {});
   };
@@ -655,7 +655,7 @@ export default function Profile() {
               </div>
               <div
                 onClick={() => {
-                  router.push('/user/profile');
+                  router.push(`/user/profile/${state._id}`);
                 }}
                 className={`mt-2 ml-4 cursor-pointer rounded bg-[#FACC15] p-2 px-4 font-bold text-white`}
               >

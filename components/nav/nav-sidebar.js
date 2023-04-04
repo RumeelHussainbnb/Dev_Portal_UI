@@ -17,7 +17,7 @@ import { toast } from 'react-toastify';
 
 import { useAppDispatch, useAppState } from '../../context/AppContext';
 
-const navigation = [
+let navigation = [
   {
     name: 'Home',
     href: '/library',
@@ -26,7 +26,7 @@ const navigation = [
   },
   {
     name: 'Profile',
-    href: '/user/profile',
+    href: '/user/profile/',
     icon: UserCircleIcon,
     disabled: false
   },
@@ -195,6 +195,12 @@ function NavSidebar() {
   const fetchData = async () => {
     let key = localStorage.getItem('PublicKey' || '');
     let userState = JSON.parse(localStorage.getItem('userData' || '{}'));
+    //* Update side nav links
+    if (userState) {
+      navigation = navigation.map(d =>
+        d.name === 'Profile' ? { ...d, href: `/user/profile/${userState.data?._id}` } : d
+      );
+    }
     const admin = userState?.data?.Roles.includes('Admin');
 
     await appDispatch({ type: 'handleAdminMode', payload: admin });

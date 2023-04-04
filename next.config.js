@@ -2,6 +2,9 @@
  * @type {import('next').NextConfig}
  */
 const moduleExports = {
+  experimental: {
+    scrollRestoration: true
+  },
   env: {
     HOME_URL: process.env.SITE_URL
   },
