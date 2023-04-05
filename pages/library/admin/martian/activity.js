@@ -471,16 +471,10 @@ const ActivityForm = () => {
                   </div>
                 </div>
 
-                <div className="mx-auto flex max-w-3xl justify-center">
-                  <button
-                    type="submit"
-                    className="inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-3 px-16 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200"
-                  >
+                <div className="button-wrapper">
+                  <button type="submit" >
                     {mode == false ? 'Add' : 'Edit'}
                   </button>
-                </div>
-
-                <div className="mx-auto flex max-w-3xl justify-center">
                   <button
                     type="button"
                     onClick={e => {
@@ -490,7 +484,7 @@ const ActivityForm = () => {
                         router.back();
                       }
                     }}
-                    className="inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-3 px-16 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200"
+                    className=""
                   >
                     {mode != false ? 'Clear' : 'Cancel'}
                   </button>

@@ -163,7 +163,6 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
                 <button
                   disabled={isLoading}
                   type="button"
-                  className="rounded-md border border-gray-300 bg-white py-3 px-6 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
                   onClick={() => {
                     if (type === 'edit') setOpen(false);
                   }}
@@ -174,9 +173,6 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
 
               <button
                 type="submit"
-                className={classNames(
-                  'ml-3 inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-3 px-16 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200'
-                )}
               >
                 {type === 'submit' ? 'Submit' : 'Save'}
               </button>

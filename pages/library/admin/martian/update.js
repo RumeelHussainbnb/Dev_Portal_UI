@@ -377,14 +377,12 @@ const MvpForm = ({ router }) => {
                 <div className="button-wrapper">
                   <button
                     type="submit"
-                    className="inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-3 px-16 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200"
                   >
                     Save
                   </button>
                   <button
                     type="button"
                     onClick={() => router.back()}
-                    className="inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-3 px-16 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200"
                   >
                     Cancel
                   </button>

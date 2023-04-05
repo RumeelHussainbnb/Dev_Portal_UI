@@ -891,6 +891,19 @@ aside {
   width: 100%;
   button {
     margin-right: 15px;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: #fff;
+    padding-left: 4rem;
+    padding-right: 4rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    background-color: rgb(202, 138, 4);
+    border-radius: 0.375rem;
+    border: 1px solid transparent;
+    &:hover {
+      background-color: rgb(161, 98, 7);
+    }
   }
 }
 .newsletter-page {
@@ -956,3 +969,43 @@ aside {
     }
   }
 } 
+.pagination-wrapper {
+  ul {
+    li {
+      height: 32px;
+      text-align: center;
+      margin: auto 4px;
+      color: #000;
+      letter-spacing: 0.01071em;
+      border-radius: 20px;
+      font-size: 13px;
+      min-width: 32px;
+      background-color: transparent;
+      &.disabled {
+        a {
+          color: #000 !important;
+        }
+      }
+      a {
+        color: #fff;
+      }
+      &:hover {
+        background-color: #CA8A04;
+        a {
+          color: #fff !important;
+        }
+      }
+    }
+  }
+}
+.dark {
+  .pagination-wrapper {
+    li {
+      &.disabled {
+        a {
+          color: #fff !important;
+        }
+      }
+    }
+  }
+}
