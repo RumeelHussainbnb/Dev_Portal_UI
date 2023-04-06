@@ -181,7 +181,7 @@ function CardWide({ content, mode }) {
 
         {/*Tags*/}
         {Array.isArray(content.Tags) && (
-          <div className="mb-1 mt-2 cursor-pointer text-yellow-500 dark:text-yellow-600 tags">
+          <div className="tags mb-1 mt-2 cursor-pointer text-yellow-500 dark:text-yellow-600">
             {content.Tags.map((tag, index) => (
               <Link key={tag} href={`/library/${content.ContentType}/filter/?tag=${tag}`} passHref>
                 <button className="lowercase decoration-yellow-500 hover:underline">

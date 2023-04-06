@@ -270,7 +270,7 @@ function PostWide({ content, mode }) {
 
         {/*Tags*/}
         {Array.isArray(contentState.Tags) && (
-          <div className="mb-1 mt-2 cursor-pointer text-yellow-500 dark:text-yellow-600 tags">
+          <div className="tags mb-1 mt-2 cursor-pointer text-yellow-500 dark:text-yellow-600">
             {contentState.Tags.map((tag, index) => (
               <Link
                 key={tag}

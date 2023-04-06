@@ -50,6 +50,7 @@ const MvpForm = () => {
   const getDataByPublicKey = event => {
     event.preventDefault();
     let isError = data?.publicKey?.trim() == '' ? true : false;
+    isError && toast.warn('Please Add public key');
     setIsPublicKeyError(isError);
     if (!isError) {
       http
@@ -418,6 +419,7 @@ const MvpForm = () => {
                       onChange={e => {
                         setData({ ...data, publicKey: e.target.value.toLowerCase() });
                         let isError = e.target.value.trim() == '' ? true : false;
+                        isError && toast.warn('Please Add public key');
                         setIsPublicKeyError(isError);
                       }}
                       className="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
@@ -442,9 +444,9 @@ const MvpForm = () => {
                       </svg>
                       <span className="sr-only">Search</span>
                     </button>
-                    {isPublicKeyError && (
+                    {/* {isPublicKeyError && (
                       <span className="absolute text-red-700">Please Add public key</span>
-                    )}
+                    )} */}
                   </div>
                 </div>
                 <div className="col-span-12 sm:col-span-4 lg:col-span-5">
