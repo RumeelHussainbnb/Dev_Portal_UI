@@ -35,7 +35,7 @@ function Pagination({
     doc = document;
   }
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center pagination-wrapper">
       <ReactPaginate
         previousLabel={PREVIOUS_LABEL}
         nextLabel={NEXT_LABEL}
@@ -60,9 +60,9 @@ function Pagination({
           instanceId="pagination_Id"
           classNames={{
             control: state =>
-              'w-42 h-4 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500',
+              'pagination-test w-42 h-4 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500',
             option: state =>
-              'dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500'
+              'pagination-test-2 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500'
           }}
           defaultValue={selectedOption}
           onChange={handlePageSizeChange}
