@@ -188,7 +188,16 @@ export default function AttemptQuiz({ quiz, id }) {
                 <p>
                   Percentage:<span> {percentage}%</span>
                 </p>
-                {percentage >= 80 && <button onClick={claimNFT}>Claim NFT</button>}
+                {percentage >= 80 && (
+                  <a
+                    href="https://s6qhfybgn4y.typeform.com/to/NM6iSxjq"
+                    rel="noreferrer"
+                    target="_blank"
+                    className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-400 dark:text-gray-300 dark:hover:text-gray-500"
+                  >
+                    <button onClick={claimNFT}> Claim NFT</button>
+                  </a>
+                )}
               </div>
             )}
           </div>
@@ -213,7 +222,7 @@ export async function getStaticProps({ params }) {
     const quiz = await http.get(`/quiz/getOne?id=${id}`);
     let { Questions, Title, Description } = quiz?.data?.data[0];
     //Randomizer
-    Questions = Questions.sort((a, b) => 0.5 - Math.random());
+    Questions = Questions.sort((a, b) => 0.5 - Math.random())?.slice(0, 20);
     return {
       props: {
         quiz: { Questions, Title, Description },
