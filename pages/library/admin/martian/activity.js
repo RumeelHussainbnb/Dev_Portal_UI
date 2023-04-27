@@ -472,16 +472,14 @@ const ActivityForm = () => {
                 </div>
 
                 <div className="button-wrapper">
-                  <button type="submit" >
-                    {mode == false ? 'Add' : 'Edit'}
-                  </button>
+                  <button type="submit">{mode == false ? 'Add' : 'Edit'}</button>
                   <button
                     type="button"
                     onClick={e => {
                       if (mode != false) {
                         handleCancel(e);
                       } else {
-                        router.back();
+                        router.push('/');
                       }
                     }}
                     className=""

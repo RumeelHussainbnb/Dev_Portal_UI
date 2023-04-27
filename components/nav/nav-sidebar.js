@@ -179,6 +179,10 @@ const courses = [
     name: 'BNB Chain 101',
     href: '/course'
   }
+  // {
+  //   name: 'Add Quiz',
+  //   href: '/course/quiz'
+  // }
 ];
 
 function classNames(...classes) {

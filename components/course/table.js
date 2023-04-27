@@ -1,9 +1,12 @@
 import { memo, useId } from 'react';
 import TableHeader from './table-header';
 import TableRow from './table-row';
+import AttemptQuizHeader from './attemptQuizHeader';
 import { modules } from '../../utils/course-map';
+import { useAppDispatch, useAppState } from '../../context/AppContext';
 
-function Table() {
+function Table({ showQuiz, quizId }) {
+  const appState = useAppState();
   return (
     <div className="mx-auto my-20 flex max-w-4xl flex-col gap-10">
       <div>
@@ -28,7 +31,6 @@ function Table() {
           return <TableRow ready item={item} index={index} key={index} />;
         })}
       </div>
-
 
       <div>
         <TableHeader ready title="BNB Chain Dev Tools" subTitle="Module 4" />
@@ -85,15 +87,11 @@ function Table() {
           return <TableRow ready item={item} index={index} key={index} />;
         })}
       </div>
-
-      {/*<div>
-        <TableHeader ready title="Conclusion" subTitle="Module 11" />
-
-        {modules[7].map((item, index) => {
-          return <TableRow ready item={item} index={index} key={index} />;
-        })}
-      </div>*/}
-
+      {appState.publicKey && (
+        <div>
+          <AttemptQuizHeader showQuiz={showQuiz} link={`/course/quiz/attempt/${quizId}`} />
+        </div>
+      )}
     </div>
   );
 }
