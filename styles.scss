@@ -1021,9 +1021,10 @@ aside {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255/var(--tw-bg-opacity));
   padding: 30px 50px;
+  margin-top: 15px;
   box-sizing: border-box;
   ul {
-      margin-left: 0;
+      margin-left: 0 !important;
       li {
           background: #fff;
           &.selected-answer {
