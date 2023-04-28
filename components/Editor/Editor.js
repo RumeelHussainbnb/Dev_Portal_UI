@@ -26,7 +26,7 @@ const EditorComponent = ({ editorState, EditorChange, readOnly = false }) => {
             body: file
           });
           const imageUrl = response.data.url.split('?')[0];
-          // console.log('imageUrl ==> ', imageUrl);
+          console.log('dd ==> ');
           resolve({ data: { link: imageUrl } });
         }
         // console.log('file ==> ', file);
