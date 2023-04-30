@@ -6,10 +6,11 @@ import DatePicker from 'react-datepicker';
 import { useState, useId, useEffect } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import { http } from '../../../../utils/http';
-import fetch from '../../../../utils/fetcher';
-import { Container } from '../../../../components/layout';
-import DeleteModal from '../../../../components/deleteModal/index';
+import { Container } from '../../components/layout';
+import { http } from '../../utils/http';
+
+import fetch from '../../utils/fetcher';
+import DeleteModal from '../../components/deleteModal/index';
 
 const ActivityForm = () => {
   const router = useRouter();
@@ -577,8 +578,8 @@ const ActivityForm = () => {
 
 export default function ContentMartians({ martian }) {
   const metaTags = {
-    title: 'BNB Chain - Library Admin Martians',
-    description: 'Library Admin Martians',
+    title: 'BNB Chain - Martian Activities',
+    description: 'BNB Chain - Martian Activities',
     url: `${process.env.NEXT_PUBLIC_API_ENDPOINT}/admin/martian/create`,
     shouldIndex: false
   };

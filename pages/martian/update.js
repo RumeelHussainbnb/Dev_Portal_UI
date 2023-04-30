@@ -5,9 +5,10 @@ import { useState, useId, useRef } from 'react';
 import Image from 'next/image';
 import Select from 'react-select';
 import { Country } from 'country-state-city';
-import { http } from '../../../../utils/http';
-import Loader from '../../../../components/Loader/Loader';
-import { Container } from '../../../../components/layout';
+
+import { http } from '../../utils/http';
+import { Container } from '../../components/layout';
+import Loader from '../../components/Loader/Loader';
 
 const MvpForm = ({ router }) => {
   const inputFile = useRef(null);
@@ -375,15 +376,8 @@ const MvpForm = ({ router }) => {
                   </div>
                 </div>
                 <div className="button-wrapper">
-                  <button
-                    type="submit"
-                  >
-                    Save
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => router.back()}
-                  >
+                  <button type="submit">Save</button>
+                  <button type="button" onClick={() => router.back()}>
                     Cancel
                   </button>
                 </div>
@@ -398,8 +392,8 @@ const MvpForm = ({ router }) => {
 
 export default function UpdateMartians({}) {
   const metaTags = {
-    title: 'BNB Chain - Library Admin Martians',
-    description: 'Library Admin Martians',
+    title: 'BNB Chain - Update Martian',
+    description: 'BNB Chain - Update Martian',
     url: `${process.env.NEXT_PUBLIC_API_ENDPOINT}/admin/mvp/update`,
     shouldIndex: false
   };

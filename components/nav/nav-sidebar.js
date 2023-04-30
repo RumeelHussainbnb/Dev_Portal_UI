@@ -102,7 +102,7 @@ const adminFeatures = [
   },
   {
     name: 'Add Martian',
-    href: '/library/admin/martian/create'
+    href: '/martian/create'
   },
   {
     name: 'Add Playlist',
@@ -166,11 +166,11 @@ const categories = [
 const martian = [
   {
     name: 'Martian Tracker',
-    href: '/library/admin/martian'
+    href: '/martian'
   },
   {
     name: 'Add Martian Activities',
-    href: '/library/admin/martian/activity'
+    href: '/martian/activity'
   }
 ];
 

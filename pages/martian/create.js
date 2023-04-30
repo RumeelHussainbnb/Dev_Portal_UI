@@ -5,9 +5,9 @@ import { useState, useId, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import Select from 'react-select';
 import { Country } from 'country-state-city';
-import { http } from '../../../../utils/http';
-import { Container } from '../../../../components/layout';
-import Loader from '../../../../components/Loader/Loader';
+import { http } from '../../utils/http';
+import { Container } from '../../components/layout';
+import Loader from '../../components/Loader/Loader';
 
 const MvpForm = () => {
   const router = useRouter();
@@ -712,16 +712,10 @@ const MvpForm = () => {
                 </div>
 
                 <div className="button-wrapper">
-                  <button
-                    disabled={disableFields && isMartian}
-                    type="submit"
-                    >
+                  <button disabled={disableFields && isMartian} type="submit">
                     Save
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => router.back()}
-                    >
+                  <button type="button" onClick={() => router.back()}>
                     Cancel
                   </button>
                 </div>
@@ -736,8 +730,8 @@ const MvpForm = () => {
 
 export default function ContentMartians({}) {
   const metaTags = {
-    title: 'BNB Chain - Library Admin Martians',
-    description: 'Library Admin Martians',
+    title: 'BNB Chain - Create Martian',
+    description: 'BNB Chain - Create Martian',
     url: `${process.env.NEXT_PUBLIC_API_ENDPOINT}/admin/martian/create`,
     shouldIndex: false
   };
