@@ -87,11 +87,12 @@ function Table({ showQuiz, quizId }) {
           return <TableRow ready item={item} index={index} key={index} />;
         })}
       </div>
-      {appState.publicKey && (
+      {/*       {appState.publicKey && (
         <div>
           <AttemptQuizHeader showQuiz={showQuiz} link={`/course/quiz/attempt/${quizId}`} />
         </div>
       )}
+ */}
     </div>
   );
 }

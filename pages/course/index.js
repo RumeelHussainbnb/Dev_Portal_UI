@@ -24,10 +24,8 @@ export default function Course() {
       `${process.env.NEXT_PUBLIC_API_ENDPOINT}/quiz/getCompletedQuizByUserId?userId=${userState.data?._id}`
     );
     setIsLoading(false);
-    console.log('data ==> ', data);
     if (data?.success) {
       let userCompletedQuizzes = data?.data?.filter(f => f.QuizId === quizId);
-      console.log('userCompletedQuizzes ==> ', userCompletedQuizzes);
       let isQuizCompletedOver80 = userCompletedQuizzes.some(el => el?.Percentage >= 80); // return true or false if user scroed more then 80 true else false
       if (isQuizCompletedOver80) setShowQuiz(false);
     }
