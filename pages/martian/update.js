@@ -5,9 +5,10 @@ import { useState, useId, useRef } from 'react';
 import Image from 'next/image';
 import Select from 'react-select';
 import { Country } from 'country-state-city';
-import { http } from '../../../../utils/http';
-import Loader from '../../../../components/Loader/Loader';
-import { Container } from '../../../../components/layout';
+
+import { http } from '../../utils/http';
+import { Container } from '../../components/layout';
+import Loader from '../../components/Loader/Loader';
 
 const MvpForm = ({ router }) => {
   const inputFile = useRef(null);
@@ -248,7 +249,7 @@ const MvpForm = ({ router }) => {
                         option: state =>
                           state.isSelected
                             ? ' dark:bg-gray-400 bg-white dark:text-gray-800 '
-                            : 'bg-white'
+                            : 'bg-white select-value'
                       }}
                       options={updatedCountries}
                       value={data.country.label ? data.country : ''}
@@ -301,7 +302,7 @@ const MvpForm = ({ router }) => {
                         option: state =>
                           state.isSelected
                             ? ' dark:bg-gray-400 bg-white dark:text-gray-800 '
-                            : 'bg-white'
+                            : 'bg-white select-value'
                       }}
                       options={martianOptions}
                       value={data.martian.label ? data.martian : ''}
@@ -375,17 +376,8 @@ const MvpForm = ({ router }) => {
                   </div>
                 </div>
                 <div className="button-wrapper">
-                  <button
-                    type="submit"
-                    className="inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-3 px-16 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200"
-                  >
-                    Save
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => router.back()}
-                    className="inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-3 px-16 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200"
-                  >
+                  <button type="submit">Save</button>
+                  <button type="button" onClick={() => router.back()}>
                     Cancel
                   </button>
                 </div>
@@ -400,8 +392,8 @@ const MvpForm = ({ router }) => {
 
 export default function UpdateMartians({}) {
   const metaTags = {
-    title: 'BNB Chain - Library Admin Martians',
-    description: 'Library Admin Martians',
+    title: 'BNB Chain - Update Martian',
+    description: 'BNB Chain - Update Martian',
     url: `${process.env.NEXT_PUBLIC_API_ENDPOINT}/admin/mvp/update`,
     shouldIndex: false
   };

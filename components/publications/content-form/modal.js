@@ -3,7 +3,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import PropTypes from 'prop-types';
 import tagList from '../../../utils/tags';
 import ContentForm from './index';
-
+import VideoEditForm from './videoEditForm';
 export default function Modal({ open, setOpen, content, positions }) {
   const [data, setData] = useState({});
 
@@ -65,13 +65,23 @@ export default function Modal({ open, setOpen, content, positions }) {
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <div className="inline-block max-w-4xl transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all dark:bg-gray-800 sm:my-8 sm:p-6 sm:align-middle">
-              <ContentForm
-                type="edit"
-                setOpen={setOpen}
-                data={data}
-                setData={setData}
-                positions={positions}
-              />
+              {content.ContentType == 'playlist' ? (
+                <VideoEditForm
+                  type="edit"
+                  setOpen={setOpen}
+                  data={data}
+                  setData={setData}
+                  positions={positions}
+                />
+              ) : (
+                <ContentForm
+                  type="edit"
+                  setOpen={setOpen}
+                  data={data}
+                  setData={setData}
+                  positions={positions}
+                />
+              )}
             </div>
           </Transition.Child>
         </div>

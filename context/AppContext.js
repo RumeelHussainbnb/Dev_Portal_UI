@@ -3,59 +3,61 @@ import { createContext, useContext, useMemo, useReducer, useEffect } from 'react
 const AppStateContext = createContext();
 const AppDispatchContext = createContext();
 
-
 // get stored values from localstorage
 const getStoredEditMode = async () => {
   try {
     const editModeData = localStorage.getItem('editMode');
-    return editModeData ? editModeData : "false"
+    return editModeData ? editModeData : 'false';
+  } catch (err) {
+    return 'false';
   }
-  catch (err) {
-    return "false"
+};
+
+// get stored values from localstorage
+const getStoredUserId = async () => {
+  try {
+    let userData = JSON.parse(localStorage.getItem('userData') || '{}');
+    return userData ? userData.data?._id : '';
+  } catch (err) {
+    return 'false';
   }
 };
 
 const getStoredVertical = async () => {
   try {
     const verticalData = localStorage.getItem('vertical');
-    return verticalData ? verticalData : 'BNBChain'
-  }
-  catch (err) {
-    return 'BNBChain'
+    return verticalData ? verticalData : 'BNBChain';
+  } catch (err) {
+    return 'BNBChain';
   }
 };
 
 const getStoredWalletConnection = async () => {
   try {
     const walletConnectionData = localStorage.getItem('handleWalletConnection');
-    return walletConnectionData ? walletConnectionData : false
-  }
-  catch (err) {
-    return false
+    return walletConnectionData ? walletConnectionData : false;
+  } catch (err) {
+    return false;
   }
 };
 
 const getStoredAdminMode = async () => {
   try {
     const adminModeData = localStorage.getItem('handleAdminMode');
-    return adminModeData ? adminModeData : false
-  }
-  catch (err) {
-    return false
+    return adminModeData ? adminModeData : false;
+  } catch (err) {
+    return false;
   }
 };
 
 const getStoredPublicKey = async () => {
   try {
     const publicKey = localStorage.getItem('PublicKey');
-    return publicKey ? publicKey : ''
-  }
-  catch (err) {
-    return ''
+    return publicKey ? publicKey : '';
+  } catch (err) {
+    return '';
   }
 };
-
-
 
 function AppReducer(state, action) {
   switch (action.type) {
@@ -89,6 +91,20 @@ function AppReducer(state, action) {
         ...state,
         publicKey: action.payload
       };
+    case 'saveUserId':
+      return {
+        ...state,
+        userId: action.payload
+      };
+    case 'clearState':
+      return {
+        editMode: false,
+        vertical: 'BNBChain',
+        isConnectedToWallet: false,
+        isAdminMode: false,
+        publicKey: '',
+        userId: ''
+      };
     default:
       throw new Error(`Unknown action: ${action.type}`);
   }
@@ -100,7 +116,8 @@ export function AppWrapper({ children }) {
     vertical: 'BNBChain',
     isConnectedToWallet: false,
     isAdminMode: false,
-    publicKey: ""
+    publicKey: '',
+    userId: ''
   });
 
   const contextValue = useMemo(() => {
@@ -112,15 +129,14 @@ export function AppWrapper({ children }) {
     const fetchAdminMode = await getStoredAdminMode();
     const fetchPublicKey = await getStoredPublicKey();
     const fetchEditMode = await getStoredEditMode();
-
+    const fetchUserId = await getStoredUserId();
 
     dispatch({ type: 'handleWalletConnection', payload: fetchWalletConnection });
     dispatch({ type: 'handleAdminMode', payload: fetchAdminMode });
     dispatch({ type: 'savePublicKey', payload: fetchPublicKey });
     dispatch({ type: 'editMode', payload: fetchEditMode });
-
-  }
-
+    dispatch({ type: 'saveUserId', payload: fetchUserId });
+  };
 
   // Rehydrate state with the values present in the localstorage on page refresh
   useEffect(() => {

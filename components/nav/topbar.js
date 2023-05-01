@@ -102,7 +102,10 @@ function TopBar({ childrens }) {
                   type: 'handleAdminMode',
                   payload: isAdmin
                 });
-
+                await appDispatch({
+                  type: 'saveUserId',
+                  payload: res.data?.data?._id
+                });
                 // update state
                 localStorage.setItem('PublicKey', accounts[0]);
                 localStorage.setItem('userData', JSON.stringify(res.data));
@@ -137,16 +140,8 @@ function TopBar({ childrens }) {
   };
 
   const removeConnection = async () => {
-    await appDispatch({
-      type: 'handleWalletConnection',
-      payload: false
-    });
-    await appDispatch({ type: 'savePublicKey', payload: '' });
-    await appDispatch({
-      type: 'handleAdminMode',
-      payload: false
-    });
-    await appDispatch({ type: 'editMode', payload: 'false' });
+    await appDispatch({ type: 'clearState' });
+
     localStorage.removeItem('handleWalletConnection');
     localStorage.removeItem('handleAdminMode');
     localStorage.removeItem('PublicKey');
@@ -360,7 +355,7 @@ function TopBar({ childrens }) {
                                       active && 'bg-gray-100 hover:opacity-80 dark:bg-gray-700',
                                       'text-md block flex w-full px-4 py-2 text-gray-700 dark:text-gray-300'
                                     )}
-                                    onClick={() => router.push('/user/profile')}
+                                    onClick={() => router.push(`/user/profile/${appState.userId}`)}
                                   >
                                     <UserCircleIcon
                                       className="block h-7 w-7 text-gray-700 dark:text-gray-300"

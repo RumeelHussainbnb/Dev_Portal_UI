@@ -5,9 +5,9 @@ import { useState, useId, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import Select from 'react-select';
 import { Country } from 'country-state-city';
-import { http } from '../../../../utils/http';
-import { Container } from '../../../../components/layout';
-import Loader from '../../../../components/Loader/Loader';
+import { http } from '../../utils/http';
+import { Container } from '../../components/layout';
+import Loader from '../../components/Loader/Loader';
 
 const MvpForm = () => {
   const router = useRouter();
@@ -50,6 +50,7 @@ const MvpForm = () => {
   const getDataByPublicKey = event => {
     event.preventDefault();
     let isError = data?.publicKey?.trim() == '' ? true : false;
+    isError && toast.warn('Please Add public key');
     setIsPublicKeyError(isError);
     if (!isError) {
       http
@@ -418,6 +419,7 @@ const MvpForm = () => {
                       onChange={e => {
                         setData({ ...data, publicKey: e.target.value.toLowerCase() });
                         let isError = e.target.value.trim() == '' ? true : false;
+                        isError && toast.warn('Please Add public key');
                         setIsPublicKeyError(isError);
                       }}
                       className="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
@@ -442,9 +444,9 @@ const MvpForm = () => {
                       </svg>
                       <span className="sr-only">Search</span>
                     </button>
-                    {isPublicKeyError && (
+                    {/* {isPublicKeyError && (
                       <span className="absolute text-red-700">Please Add public key</span>
-                    )}
+                    )} */}
                   </div>
                 </div>
                 <div className="col-span-12 sm:col-span-4 lg:col-span-5">
@@ -520,7 +522,7 @@ const MvpForm = () => {
                         option: state =>
                           state.isSelected
                             ? ' dark:bg-gray-400 bg-white dark:text-gray-800 '
-                            : 'bg-white'
+                            : 'bg-white select-value'
                       }}
                       options={updatedCountries}
                       value={data.country.label ? data.country : ''}
@@ -581,7 +583,7 @@ const MvpForm = () => {
                         option: state =>
                           state.isSelected
                             ? ' dark:bg-gray-400 bg-white dark:text-gray-800 '
-                            : 'bg-white'
+                            : 'bg-white select-value'
                       }}
                       options={martianOptions}
                       value={data.martian.label ? data.martian : ''}
@@ -659,7 +661,7 @@ const MvpForm = () => {
                         option: state =>
                           state.isSelected
                             ? ' dark:bg-gray-400 bg-white dark:text-gray-800 '
-                            : 'bg-white'
+                            : 'bg-white select-value'
                       }}
                       isMulti
                       value={data.skills}
@@ -710,18 +712,10 @@ const MvpForm = () => {
                 </div>
 
                 <div className="button-wrapper">
-                  <button
-                    disabled={disableFields && isMartian}
-                    type="submit"
-                    className="inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-3 px-16 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200"
-                  >
+                  <button disabled={disableFields && isMartian} type="submit">
                     Save
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => router.back()}
-                    className="inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-3 px-16 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200"
-                  >
+                  <button type="button" onClick={() => router.back()}>
                     Cancel
                   </button>
                 </div>
@@ -736,8 +730,8 @@ const MvpForm = () => {
 
 export default function ContentMartians({}) {
   const metaTags = {
-    title: 'BNB Chain - Library Admin Martians',
-    description: 'Library Admin Martians',
+    title: 'BNB Chain - Create Martian',
+    description: 'BNB Chain - Create Martian',
     url: `${process.env.NEXT_PUBLIC_API_ENDPOINT}/admin/martian/create`,
     shouldIndex: false
   };

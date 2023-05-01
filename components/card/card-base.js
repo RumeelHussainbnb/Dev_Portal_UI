@@ -13,6 +13,7 @@ import PropTypes from 'prop-types';
 import { memo, useState } from 'react';
 import defineImage from '../../utils/content-imagen';
 import ReactHtmlParser from 'react-html-parser';
+import tagList from '../../utils/tags';
 
 const Badge = dynamic(() => import('../badges/badge.js'));
 const CopyLink = dynamic(() => import('./copy-link.js'));
@@ -69,7 +70,7 @@ const NewsLetterContent = ({ imageUrl, content, mode, editContent, closeSearch }
 
           {/*Tags*/}
           {Array.isArray(content.Tags) && (
-            <div className="mb-1 mt-2 cursor-pointer text-yellow-500 dark:text-yellow-600">
+            <div className="tags mb-1 mt-2 cursor-pointer text-yellow-500 dark:text-yellow-600">
               {content.Tags.map((tag, index) => (
                 <Link
                   key={tag}
@@ -170,7 +171,7 @@ const PlaylistContent = ({ imageUrl, content, mode, editContent, closeSearch }) 
 
           {/*Tags*/}
           {Array.isArray(content.Tags) && (
-            <div className="mb-1 mt-2 cursor-pointer text-yellow-500 dark:text-yellow-600">
+            <div className="tags mb-1 mt-2 cursor-pointer text-yellow-500 dark:text-yellow-600">
               {content.Tags.map((tag, index) => (
                 <Link
                   key={tag}
@@ -240,27 +241,47 @@ const PlaylistContent = ({ imageUrl, content, mode, editContent, closeSearch }) 
 };
 
 const BaseContent = ({ imageUrl, content, mode, editContent, closeSearch }) => {
+  let isExternalLink = tagList.externalContentTypes.includes(content.ContentType.toLowerCase());
   const badgeUrl =
     mode === 'search'
       ? `/library/${content.ContentType}`
       : `/library/${content.ContentType}/filter?badge=${content.SpecialTag}`;
   return (
     <>
-      {/* <a href={content.Url} rel="noreferrer" target="_blank"> */}
-      <Link href={`/library/content/${content._id}`}>
-        <Image
-          className="cursor-pointer rounded-t-lg object-cover hover:opacity-90"
-          src={imageUrl}
-          alt=""
-          height="200"
-          width="400"
-          quality="100"
-          placeholder="blur"
-          blurDataURL={imageUrl}
-          loader={myLoader}
-        />
-      </Link>
-      {/* </a> */}
+      {isExternalLink ? (
+        <Link className="focus:outline-none" href={content.Url}>
+          <a className="focus:outline-none" target="_blank" rel="noreferrer">
+            <div>
+              <Image
+                className="cursor-pointer rounded-t-lg object-cover hover:opacity-90"
+                src={imageUrl}
+                alt=""
+                height="350"
+                width="700"
+                quality="100"
+                placeholder="blur"
+                blurDataURL={imageUrl}
+                loader={myLoader}
+              />
+            </div>
+          </a>
+        </Link>
+      ) : (
+        <Link href={`/library/content/${content._id}`}>
+          <Image
+            className="cursor-pointer rounded-t-lg object-cover hover:opacity-90"
+            src={imageUrl}
+            alt=""
+            height="200"
+            width="400"
+            quality="100"
+            placeholder="blur"
+            blurDataURL={imageUrl}
+            loader={myLoader}
+          />
+        </Link>
+      )}
+
       <div className="px-5 pt-5">
         <div className="h-[275px] overflow-hidden">
           <div className="border-b-2 border-dashed border-gray-700 dark:border-gray-500">
@@ -299,7 +320,7 @@ const BaseContent = ({ imageUrl, content, mode, editContent, closeSearch }) => {
 
           {/*Tags*/}
           {Array.isArray(content.Tags) && (
-            <div className="mb-1 mt-2 cursor-pointer text-yellow-500 dark:text-yellow-600">
+            <div className="tags mb-1 mt-2 cursor-pointer text-yellow-500 dark:text-yellow-600">
               {content.Tags.map((tag, index) => (
                 <Link
                   key={tag}

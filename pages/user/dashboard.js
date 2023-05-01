@@ -1,13 +1,12 @@
-import { useState, useEffect } from 'react';
 import moment from 'moment';
+import { useState, useEffect } from 'react';
 import { CheckCircleIcon, XCircleIcon, InformationCircleIcon } from '@heroicons/react/solid';
 
 import tagList from '../../utils/tags';
 import { http } from '../../utils/http';
+import Loader from '../../components/Loader/Loader';
 import { Container } from '../../components/layout';
 import Pagination from '../../components/pagination/Pagination';
-import Image from 'next/image';
-import Loader from '../../components/Loader/Loader';
 
 export default function Contents() {
   const [isLoading, setIsLoading] = useState(false);
@@ -94,7 +93,7 @@ export default function Contents() {
   };
 
   const generateUrl = data => {
-    return tagList.externalContentTypes.includes(data.ContentType)
+    return tagList.externalContentTypes.includes(data.ContentType.toLowerCase())
       ? data.Url
       : `/library/content/${data._id}`;
   };
@@ -275,7 +274,7 @@ export default function Contents() {
               )}
             </div>
 
-            {activeContent?.length > 0 && (
+            {activeContent?.length > 0 && activeContentCount > 10 && (
               <Pagination
                 showPerPage={false}
                 pageCount={Math.ceil(activeContentCount / 10)}
@@ -355,7 +354,7 @@ export default function Contents() {
                 </div>
               )}
             </div>
-            {inactiveContent?.length > 0 && (
+            {inactiveContent?.length > 0 && inactiveContentCount > 10 && (
               <Pagination
                 showPerPage={false}
                 pageCount={Math.ceil(inactiveContentCount / 10)}
@@ -438,7 +437,7 @@ export default function Contents() {
                 </div>
               )}
             </div>
-            {submittedContent?.length > 0 && (
+            {submittedContent?.length > 0 && submittedContentCount > 10 && (
               <Pagination
                 showPerPage={false}
                 pageCount={Math.ceil(submittedContentCount / 10)}

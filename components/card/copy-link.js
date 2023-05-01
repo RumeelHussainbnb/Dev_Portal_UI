@@ -1,13 +1,9 @@
-import { memo, useState } from 'react';
-import { ShareIcon } from '@heroicons/react/outline';
-import dynamic from 'next/dynamic';
+import { memo } from 'react';
 import PropTypes from 'prop-types';
-
-const NotificationSuccess = dynamic(() => import('../notifications/success'));
+import { toast } from 'react-toastify';
+import { ShareIcon } from '@heroicons/react/outline';
 
 function CopyLink({ content }) {
-  const [showNotification, setShowNotification] = useState(false);
-
   let url = '';
   if (content.ContentType === 'playlist') {
     url = `${process.env.HOME_URL}/library/${content?.PlaylistID}/video/${content?.SK}`;
@@ -24,7 +20,14 @@ function CopyLink({ content }) {
         className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-400 dark:text-gray-300 dark:hover:text-gray-500"
         onClick={() => {
           navigator.clipboard.writeText(url ? url : '');
-          setShowNotification(true);
+
+          toast.info(
+            <div>
+              Link copied successfully
+              <br /> {`The link to: ${content.Title} was copied to the clipboard.`}
+            </div>,
+            { position: toast.POSITION.UPPER_RIGHT }
+          );
         }}
       >
         <ShareIcon
@@ -32,14 +35,6 @@ function CopyLink({ content }) {
           aria-hidden="true"
         />
       </button>
-
-      <NotificationSuccess
-        type="link"
-        show={showNotification}
-        setShow={setShowNotification}
-        text="Link copied successfully"
-        subText={`The link to: ${content.Title} was copied to the clipboard.`}
-      />
     </>
   );
 }

@@ -4,7 +4,7 @@ import { memo } from 'react';
 function TableHeader({ title, subTitle, ready }) {
   return (
     <div>
-      <div className="text-gray-9 flex justify-between border border-gray-300 bg-gray-200 py-3 px-4 font-medium tracking-wide dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400">
+      <div className="text-lg text-gray-800 flex justify-between border border-gray-300 bg-gray-200 py-3 px-4 font-medium tracking-wide dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300">
         <span>
           {title}
 

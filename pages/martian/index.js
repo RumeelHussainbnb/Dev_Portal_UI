@@ -4,10 +4,10 @@ import { useState, useId } from 'react';
 import Select from 'react-select';
 import { Country } from 'country-state-city';
 import { useRouter } from 'next/router';
-import Pagination from '../../../../components/pagination/Pagination';
-import { Container } from '../../../../components/layout';
-import { http } from '../../../../utils/http';
-import { useAppState } from '../../../../context/AppContext';
+import Pagination from '../../components/pagination/Pagination';
+import { Container } from '../../components/layout';
+import { http } from '../../utils/http';
+import { useAppState } from '../../context/AppContext';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -95,10 +95,10 @@ const Index = ({ userData }) => {
     event.preventDefault();
     router.push(
       {
-        pathname: '/library/admin/martian/update',
+        pathname: '/martian/update',
         query: eachMartian
       },
-      '/library/admin/martian/update'
+      '/martian/update'
     );
     // query:eachMartian,
   };
@@ -128,7 +128,7 @@ const Index = ({ userData }) => {
     }
   };
   return (
-    <div className="px-4 search-martian-wrapper">
+    <div className="search-martian-wrapper px-4">
       <main className="max-w-7 xl mx-auto mb-5 shadow">
         <div className="relative overflow-hidden bg-white py-16 px-4 dark:bg-gray-800 sm:px-6 lg:px-8 lg:py-14">
           <div className="">
@@ -251,7 +251,7 @@ const Index = ({ userData }) => {
                   key={index}
                   css={{ justifyItems: 'center', maxwidth: '500' }}
                 >
-                  <Link href={`/library/admin/martian/${eachMartian._id}`} passHref key={index}>
+                  <Link href={`/martian/${eachMartian._id}`} passHref key={index}>
                     <a>
                       <div className="martian-card h-70 flex w-48 max-w-xs flex-col rounded-xl p-2 shadow-md dark:bg-gray-900 dark:text-gray-100 sm:px-3">
                         {eachMartian?.ProfilePicture ? (
@@ -348,9 +348,9 @@ Martians.getInitialProps = async ({ query }) => {
 
 export default function Martians({ userData }) {
   const metaTags = {
-    title: 'BNB Chain - Library Admin Martians',
-    description: 'Library Admin Martians',
-    url: `${process.env.NEXT_PUBLIC_API_ENDPOINT}/admin/martian/index`,
+    title: 'BNB Chain - Martians',
+    description: 'BNB Chain Martians',
+    url: `${process.env.NEXT_PUBLIC_API_ENDPOINT}/martian/index`,
     shouldIndex: false
   };
 

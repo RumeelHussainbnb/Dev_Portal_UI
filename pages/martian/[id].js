@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Container } from '../../../../components/layout';
+import { Container } from '../../components/layout';
 import {
   ClockIcon,
   UserCircleIcon,
@@ -8,10 +8,10 @@ import {
 } from '@heroicons/react/solid';
 import moment from 'moment';
 import Image from 'next/image';
-import Pagination from '../../../../components/pagination/Pagination';
-import { http } from '../../../../utils/http';
+import Pagination from '../../components/pagination/Pagination';
+import { http } from '../../utils/http';
 import { useRouter } from 'next/router';
-import Loader from '../../../../components/Loader/Loader';
+import Loader from '../../components/Loader/Loader';
 
 export default function Profile() {
   const [page, setPage] = useState(1);
@@ -145,7 +145,7 @@ export default function Profile() {
             <div className="mt-2 flex flex-row justify-between ">
               <div className="relative z-0 flex w-[49%] flex-col items-center justify-center divide-x divide-gray-200 rounded-md bg-white p-2 shadow dark:divide-gray-700 dark:bg-gray-800">
                 <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Social</p>
-                <div className="flex flex-row">
+                <div className="flex flex-row items-center">
                   <div className="mr-1 h-6 w-6 hover:cursor-pointer">
                     <Image alt="" src={'/facebook.png'} width="250px" height="250px" />
                   </div>
@@ -159,16 +159,16 @@ export default function Profile() {
               </div>
               <div className="relative z-0 flex w-[49%] flex-col items-center justify-center rounded-md bg-white p-2 shadow dark:divide-gray-700 dark:bg-gray-800">
                 <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Languages</p>
-                <div className="flex flex-row">
-                  <div className="mr-1 h-6 w-6 text-sm text-gray-500 hover:cursor-pointer dark:text-gray-500">
+                <div className="flex-column flex items-center">
+                  <p className="mr-1 text-sm text-gray-500 hover:cursor-pointer dark:text-gray-500">
                     {user?.Languages}
-                  </div>
+                  </p>
                 </div>
               </div>
             </div>
             <div className="relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md bg-white p-4 p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
               <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Biography</p>
-              {user?.Bio}
+              <p>{user?.Bio}</p>
             </div>
             <div className="relative z-0 mt-2 flex flex-col divide-gray-200 rounded-md bg-white p-6 p-2 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
               {isMartian && (
@@ -176,8 +176,8 @@ export default function Profile() {
                   <p className="text-lg font-medium text-gray-500 dark:text-gray-500">Activities</p>
                   <button
                     type="button"
-                    onClick={() => router.push('/library/admin/martian/activity')}
-                    className="inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-2 px-4 text-sm text-lg font-medium font-medium text-white text-gray-500 shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200 dark:text-gray-500"
+                    onClick={() => router.push('/martian/activity')}
+                    className="text-white-500 dark:text-white-500 inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-2 px-4 text-sm text-lg font-medium font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
                   >
                     Add Activities
                   </button>

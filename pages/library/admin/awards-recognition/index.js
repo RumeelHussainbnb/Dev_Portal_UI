@@ -25,17 +25,17 @@ export default function AwardsRecognition({ data, user }) {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    makeApiCall();
+    makeApiCall(search);
   }, [page]);
 
   const handlePageChange = page => {
     setPage(page + 1);
   };
 
-  const makeApiCall = async () => {
+  const makeApiCall = async searchKey => {
     try {
       const { data } = await http.get(
-        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/user/getAllUsers?&page=${page}&name=${search}`
+        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/user/getAllUsers?&page=${page}&name=${searchKey}`
       );
       if (data?.success === true) {
         setUsers(data.data?.users);
@@ -62,15 +62,15 @@ export default function AwardsRecognition({ data, user }) {
 
   return (
     <Container metaTags={metaTags}>
-      <div className="awards-recognition relative z-0 mt-2 w-full divide-gray-200 rounded-md bg-white sm:p-3 lg:p-8 text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
-        <h2 className="text-black text-center">Active users</h2>
+      <div className="awards-recognition relative z-0 mt-2 w-full divide-gray-200 rounded-md bg-white text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500 sm:p-3 lg:p-8">
+        <h2 className="text-center text-black">Active users</h2>
         <form
           action="#"
           method="GET"
           className="my-4 flex items-center"
           onSubmit={e => {
             e.preventDefault();
-            makeApiCall();
+            makeApiCall(search);
           }}
         >
           <label htmlFor="simple-search" className="sr-only">
@@ -87,6 +87,35 @@ export default function AwardsRecognition({ data, user }) {
               onChange={e => setSearch(e.target.value)}
             />
           </div>
+          {search.length !== 0 && (
+            <button
+              onClick={() => {
+                setSearch('');
+
+                makeApiCall('');
+              }}
+              type="button"
+              className="ml-2 rounded-lg border border-yellow-700 bg-yellow-700 p-2.5 text-sm font-medium text-white hover:bg-yellow-800 focus:outline-none focus:ring-4 focus:ring-yellow-300 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                className="h-5 w-5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+
+              <span className="sr-only">Search</span>
+            </button>
+          )}
+
           <button
             type="submit"
             className="ml-2 rounded-lg border border-yellow-700 bg-yellow-700 p-2.5 text-sm font-medium text-white hover:bg-yellow-800 focus:outline-none focus:ring-4 focus:ring-yellow-300 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800"

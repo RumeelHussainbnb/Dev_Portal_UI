@@ -552,7 +552,10 @@ aside {
       min-height: 50px;
     }
   }
-
+  .profile-aside {
+    min-width: 320px;
+    max-width: 100%;
+  }
   .profile-wrapper {
     min-width: 700px;
   }
@@ -577,12 +580,22 @@ aside {
     }
   }
 }
-
+.select-value {
+  color: #000;
+  text-shadow: 0 0 #000;
+}
 .dark {
   .martian-admin {
 
-    .dark\:text-gray-500,
-    td{
+    // .dark\:text-gray-500,
+    // td{
+    //   color: #d7d7d7;
+    // }
+    .select-value {
+      color: #000;
+      text-shadow: 0 0 #000;
+    }
+    p {
       color: #d7d7d7;
     }
     nav {
@@ -878,6 +891,19 @@ aside {
   width: 100%;
   button {
     margin-right: 15px;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: #fff;
+    padding-left: 4rem;
+    padding-right: 4rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    background-color: rgb(202, 138, 4);
+    border-radius: 0.375rem;
+    border: 1px solid transparent;
+    &:hover {
+      background-color: rgb(161, 98, 7);
+    }
   }
 }
 .newsletter-page {
@@ -919,4 +945,190 @@ aside {
 
 .z-index-max {
   z-index: 99999999 !important;
+}
+
+// input {
+//   min-width: 100% !important;
+//   grid-area: auto !important;
+// }
+
+.rdw-dropdownoption-default {
+  color: #333 !important;
+}
+
+.tags {
+  button {
+    background-color: #eab308;
+    color: #fff;
+    padding: 1px 6px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    display: inline-block;
+    border-radius: 12px;
+    font-size: 11px;
+    span {
+      display: none;
+    }
+  }
+} 
+.pagination-wrapper {
+  ul {
+    li {
+      height: 32px;
+      text-align: center;
+      margin: auto 4px;
+      color: #000;
+      letter-spacing: 0.01071em;
+      border-radius: 20px;
+      font-size: 13px;
+      min-width: 32px;
+      background-color: transparent;
+      &.disabled {
+        a {
+          color: #000 !important;
+        }
+      }
+      a {
+        color: #fff;
+      }
+      &:hover {
+        background-color: #CA8A04;
+        a {
+          color: #fff !important;
+        }
+      }
+    }
+  }
+}
+.dark {
+  .pagination-wrapper {
+    li {
+      &.disabled {
+        a {
+          color: #fff !important;
+        }
+      }
+    }
+  }
+  .quiz-container {
+    --tw-bg-opacity: 1;
+    background-color: rgb(31 41 55/var(--tw-bg-opacity));
+}
+}
+
+.quiz-container  {
+  max-width: calc(100% - 200px);
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255/var(--tw-bg-opacity));
+  padding: 30px 50px;
+  margin-top: 15px;
+  box-sizing: border-box;
+  ul {
+      margin-left: 0 !important;
+      li {
+          background: #fff;
+          &.selected-answer {
+              background: #fff2d5;
+              font-weight: 600;
+          }
+      }
+  }
+}
+
+.quiz-container .active-question-no {
+  font-size: 32px;
+  font-weight: 500;
+  color: #eab308;
+}
+
+.quiz-container .total-question {
+  font-size: 16px;
+  font-weight: 500;
+  color: #e0dee3;
+}
+
+.quiz-container h2 {
+  font-size: 20px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.quiz-container ul {
+  margin-top: 20px;
+  margin-left: -40px;
+}
+
+.quiz-container ul li {
+  text-decoration: none;
+  list-style: none;
+  color: #CA8A04;
+  font-size: 16px;
+  background: #ffffff;
+  border: 1px solid #eaeaea;
+  border-radius: 16px;
+  padding: 11px;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+.quiz-container ul .selected-answer {
+  background: #e9cf98;
+  border: 1px solid #eab308;
+}
+
+.quiz-container button {
+  background: linear-gradient(90.04deg, #eab308 0.03%, #ffc0cb 99.96%);
+  border-radius: 9px;
+  font-size: 18px;
+  color: #ffffff;
+  padding: 10px 42px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.quiz-container button:disabled {
+  background: #e7e8e9;
+  color: #9fa3a9;
+  cursor: not-allowed;
+}
+
+.flex-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.flex-left{
+  display: flex;
+  justify-content: flex-start;
+}
+
+.result h3 {
+  font-size: 24px;
+  letter-spacing: 1.4px;
+  text-align: center;
+}
+
+.result p {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.result p span {
+  color: #eab308;
+  font-size: 22px;
+}
+
+@media (max-width: 768px) {
+  .quiz-container {
+      max-width: 100%;
+      padding: 20px;
+      h2 {
+          font-size: 16px;
+      }
+      li {
+          font-size: 14px;
+      }
+  }
 }

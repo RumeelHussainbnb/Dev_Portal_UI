@@ -32,7 +32,7 @@ const myLoader = ({ src, width, quality }) => {
 };
 
 function PostWide({ content, mode }) {
-  let isExternalLink = tagList.externalContentTypes.includes(content.ContentType);
+  let isExternalLink = tagList.externalContentTypes.includes(content.ContentType.toLowerCase());
   const [isS3Audio, setIsS3Audio] = useState(false);
   const [contentState, setContentState] = useState(content);
   const imageUrl = defineImage(content);
@@ -270,7 +270,7 @@ function PostWide({ content, mode }) {
 
         {/*Tags*/}
         {Array.isArray(contentState.Tags) && (
-          <div className="mb-1 mt-2 cursor-pointer text-yellow-500 dark:text-yellow-600">
+          <div className="tags mb-1 mt-2 cursor-pointer text-yellow-500 dark:text-yellow-600">
             {contentState.Tags.map((tag, index) => (
               <Link
                 key={tag}

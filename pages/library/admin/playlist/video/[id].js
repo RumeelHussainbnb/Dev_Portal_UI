@@ -177,10 +177,16 @@ const PlaylistForm = () => {
                 <div className="mx-auto flex max-w-3xl justify-end">
                   <button
                     type="submit"
-                    className="inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-3 px-16 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200"
+                    className="mr-2 inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-3 px-16 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200"
                   >
-                    {' '}
                     Save
+                  </button>
+                  <button
+                    className="inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-3 px-16 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200"
+                    type="button"
+                    onClick={() => router.back()}
+                  >
+                    Cancel
                   </button>
                 </div>
               </form>

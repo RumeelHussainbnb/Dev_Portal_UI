@@ -8,10 +8,14 @@ export default function Player({ content }) {
   const router = useRouter();
 
   return (
-    <div className="xs:text-xs mx-auto flex max-w-screen-3xl flex-col px-5 text-base w-full">
+    <div className="xs:text-xs mx-auto flex w-full max-w-screen-3xl flex-col px-5 text-base">
       <div className="flex justify-between">
         {/* <Link href={`/library/${content?.PlaylistID}`} passHref> */}
-        <div onClick={() => router.back()}>
+        <div
+          onClick={() => {
+            router.push(`/library/${content?.PlaylistID}`);
+          }}
+        >
           <p className="text-md cursor-pointer pb-4 text-yellow-600 hover:text-yellow-700 hover:underline lg:text-lg">
             {content?.PlaylistID && <>&larr; Back to Playlist</>}
           </p>
@@ -25,7 +29,7 @@ export default function Player({ content }) {
         </a>
       </div>
 
-      <div className="w-full shadow-lg videoplayer-wrapper">
+      <div className="videoplayer-wrapper w-full shadow-lg">
         <ReactPlayer
           height="100%"
           width="100%"
@@ -38,7 +42,7 @@ export default function Player({ content }) {
       </div>
 
       <div className="self-start">
-        <h2 className="font-medium text-gray-800 dark:text-gray-200 sm:mt-4 text-lg-4xl">
+        <h2 className="text-lg-4xl font-medium text-gray-800 dark:text-gray-200 sm:mt-4">
           {content?.Title}
         </h2>
         <p className="mt-2 text-gray-600 dark:text-gray-300 sm:mt-4">{content?.Description}</p>

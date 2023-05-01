@@ -44,7 +44,7 @@ export default function Content({ content }) {
   return (
     <Container metaTags={metaTags}>
       <div className="lg:mr-5">
-        <div className="prose mx-auto max-w-6xl rounded-lg py-8 px-10 dark:prose-invert dark:border-none lg:border lg:bg-white dark:lg:bg-gray-800 xl:px-32">
+        <div className="prose mx-auto max-w-6xl rounded-lg py-8 px-10 dark:border-none dark:prose-invert lg:border lg:bg-white dark:lg:bg-gray-800 xl:px-32">
           <div onClick={() => router.push(`/library/${content?.ContentType}`)}>
             <span className="text-md cursor-pointer pb-4 text-yellow-600 hover:text-yellow-700 hover:underline lg:text-lg">
               <>&larr; Back to {content?.ContentType}</>

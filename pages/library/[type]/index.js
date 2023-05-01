@@ -74,10 +74,10 @@ export default function Publications({ data, title, contentType, tags }) {
     "Learn to Develop using BNBChain. Tutorials, SDK's, Frameworks, Developer Tools, Security, Scaffolds, and Projects implementations";
   if (contentType === 'playlist') {
     pageDescription = title;
-    title = playlistTitle;
-    //pageTitle = playlistTitle;
+    title = data?.length > 0 ? data[0]?.PlaylistTitle : 'No Data Available For Current Playlist';
+    title = title === '' ? playlistTitle : title;
   }
- /* else if (contentType === 'tutorials') {
+  /* else if (contentType === 'tutorials') {
     pageDescription = "BNB Chain Dev platform is one of the best websites where you will get tutorials to understand Web3 Development and Smart Contract Development. Visit the website today!";
     title = "Learn Smart Contract & Dapp Development - BNB Chain Dev";
     pageTitle = "Tutorials";
@@ -119,7 +119,7 @@ export default function Publications({ data, title, contentType, tags }) {
     <Container metaTags={metaTags}>
       <PublicationsComponent
         data={data}
-       // title={pageTitle}
+        // title={pageTitle}
         title={title}
         contentType={contentType}
         isLoading={false}

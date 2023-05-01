@@ -50,9 +50,14 @@ function Publications({
   }, [data]);
 
   const editContent = data => {
-    const contentBlock = htmlToDraft(data.ContentMarkdown);
-    const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
-    setContent({ ...data, ContentMarkdown: EditorState.createWithContent(contentState) });
+    if (data.ContentType != 'playlist') {
+      const contentBlock = htmlToDraft(data.ContentMarkdown);
+      const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+      setContent({ ...data, ContentMarkdown: EditorState.createWithContent(contentState) });
+    } else {
+      setContent({ ...data });
+    }
+
     setOpen(true);
   };
 
@@ -75,7 +80,7 @@ function Publications({
           <CardWide mode="dashboard" content={lastNewsletter} />
         </div>
       )}
-      {contentType === 'newsletters' && (
+      {contentType === 'newsletters' && data?.length > 0 && (
         <div className="prose mx-auto flex w-full justify-center text-xl dark:prose-invert">
           Previous Issues
         </div>

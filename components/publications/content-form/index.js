@@ -97,16 +97,24 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
     if (editorLimitError) {
       return;
     }
-    //data['PublishedAt'] = new Date();
+
     let copyState = { ...data };
+    copyState.ContentMarkdown = convertContentToHTML();
+    //set image privew
+    let elem = document.createElement('div');
+    elem.style.display = 'none';
+    document.body.appendChild(elem);
+    elem.innerHTML = copyState.ContentMarkdown;
+    let isImageUrl = elem.querySelector('img')?.src;
+    copyState.ImageUrl = isImageUrl ? isImageUrl : '';
     let updatedTags = copyState?.Tags?.filter(e => e !== copyState.currentLevel);
     updatedTags.push(copyState?.Level?.value);
     copyState.Tags = updatedTags;
     await http.put(`/content`, {
       ...copyState,
-      Img: data.ImageUrl,
+      Img: copyState.ImageUrl,
       ContentType: data.ContentType.value,
-      ContentMarkdown: convertContentToHTML()
+      ContentMarkdown: copyState.ContentMarkdown
     });
 
     // call preview mode
@@ -168,8 +176,8 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
 
                   option: state =>
                     state.isSelected
-                      ? 'capitalize dark:bg-gray-400 bg-white dark:text-gray-800 '
-                      : 'bg-white'
+                      ? 'capitalize dark:bg-gray-400 bg-white dark:text-gray-500'
+                      : 'bg-white dark:text-black-500 select-value'
                 }}
                 options={contentType}
                 value={data.ContentType.label ? data.ContentType : ''}
@@ -202,7 +210,9 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
                     'py-1.5 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800 focus:border-yellow-500 focus:ring-yellow-500',
 
                   option: state =>
-                    state.isSelected ? ' dark:bg-gray-400 bg-white dark:text-gray-800 ' : 'bg-white'
+                    state.isSelected
+                      ? ' dark:bg-gray-400 bg-white dark:text-gray-800 '
+                      : 'bg-white dark:text-black-500 select-value'
                 }}
                 options={tagList.level}
                 value={data.Level.label ? data.Level : ''}
