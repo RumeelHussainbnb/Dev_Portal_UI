@@ -63,7 +63,7 @@ export default function AwardsRecognition({ data, user }) {
   return (
     <Container metaTags={metaTags}>
       <div className="awards-recognition relative z-0 mt-2 w-full divide-gray-200 rounded-md bg-white text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500 sm:p-3 lg:p-8">
-        <h2 className="text-center text-black">Active users</h2>
+        <h2 className="text-center text-black">Awards and recognition</h2>
         <form
           action="#"
           method="GET"

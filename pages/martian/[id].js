@@ -185,67 +185,80 @@ export default function Profile() {
               )}
 
               {activities?.length > 0 ? (
-                <div className="table-wrapper mb-1 w-full py-8">
-                  <div className="relative shadow-md  sm:rounded-lg ">
-                    <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
-                      <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                          <th scope="col" className="px-4 py-3">
-                            Date
-                          </th>
-                          <th scope="col" className="px-4 py-3">
-                            Activity
-                          </th>
-                          <th scope="col" className="px-4 py-3">
-                            Type
-                          </th>
-                          <th scope="col" className="px-4 py-3">
-                            Primary Contribution Area
-                          </th>
-                          <th scope="col" className="px-4 py-3">
-                            Additional Contribution Areas
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {activities.map((data, index) => (
-                          <tr
-                            key={index}
-                            className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
-                          >
-                            <th
-                              scope="row"
-                              className="whitespace-nowrap px-1 py-4 font-medium text-gray-900 dark:text-white"
-                            >
-                              {data.date}
+                <>
+                  <div className="table-wrapper mb-1 w-full py-8">
+                    <div className="relative shadow-md  sm:rounded-lg ">
+                      {/* <div className="relative mb-1 flex flex-col divide-gray-200 rounded-md bg-white  text-sm text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-500">
+                        <p className="text-lg font-medium text-gray-500 dark:text-gray-500">
+                          Activities
+                        </p>
+                      </div> */}
+                      <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
+                        <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+                          <tr>
+                            <th scope="col" className="px-4 py-3">
+                              Date
                             </th>
-                            <td className="px-4 py-4">
-                              <a
-                                href={data.activityLink}
-                                rel="noreferrer"
-                                target="_blank"
-                                className=" hover:underline "
-                              >
-                                {data.activity}
-                              </a>
-                            </td>
-                            <td className="px-4 py-4">{data.type}</td>
-                            <td className="px-4 py-4">{data.primaryContributionArea}</td>
-
-                            <td className="px-4 py-4">{data.additionalContributionArea}</td>
+                            <th scope="col" className="px-4 py-3">
+                              Activity
+                            </th>
+                            <th scope="col" className="px-4 py-3">
+                              Type
+                            </th>
+                            <th scope="col" className="px-4 py-3">
+                              Primary Contribution Area
+                            </th>
+                            <th scope="col" className="px-4 py-3">
+                              Additional Contribution Areas
+                            </th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                        </thead>
+                        <tbody>
+                          {activities.map((data, index) => (
+                            <tr
+                              key={index}
+                              className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
+                            >
+                              <th
+                                scope="row"
+                                className="whitespace-nowrap px-1 py-4 font-medium text-gray-900 dark:text-white"
+                              >
+                                {data.date}
+                              </th>
+                              <td className="px-4 py-4">
+                                <a
+                                  href={data.activityLink}
+                                  rel="noreferrer"
+                                  target="_blank"
+                                  className=" hover:underline "
+                                >
+                                  {data.activity}
+                                </a>
+                              </td>
+                              <td className="px-4 py-4">{data.type}</td>
+                              <td className="px-4 py-4">{data.primaryContributionArea}</td>
+
+                              <td className="px-4 py-4">{data.additionalContributionArea}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <Pagination
+                    pageCount={Math.ceil(totalActivities / perPage)}
+                    pageSize={perPage}
+                    onPageChange={handlePageChange}
+                    onPageSizeChange={handlePageSizeChange}
+                  />
+                </>
+              ) : (
+                <div className="flex justify-center">
+                  <div className="sm:pl-6 dark:sm:border-gray-500">
+                    <p>No Data Found</p>
                   </div>
                 </div>
-              ) : null}
-              <Pagination
-                pageCount={Math.ceil(totalActivities / perPage)}
-                pageSize={perPage}
-                onPageChange={handlePageChange}
-                onPageSizeChange={handlePageSizeChange}
-              />
+              )}
             </div>
           </div>
         </main>
