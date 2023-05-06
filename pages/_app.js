@@ -8,6 +8,7 @@ import '../style.css';
 import '../styles.scss';
 import Script from 'next/script';
 import { AppWrapper } from '../context/AppContext';
+import { CourseProgressProvider } from '../context/CourseProgressContext';
 import Loader from '../components/Loader/Loader';
 
 import { Web3ReactProvider } from '@web3-react/core';
@@ -46,18 +47,20 @@ export default function App({ Component, pageProps }) {
       </Script>
       <Web3ReactProvider getLibrary={getLibrary}>
         <AppWrapper>
-          {isLoading && <Loader />}
-          {/* <NextNProgress /> */}
-          <Component {...pageProps} />
-          <ToastContainer
-            position={'top-right'}
-            autoClose={5000}
-            hideProgressBar={false}
-            closeOnClick={true}
-            pauseOnHover={true}
-            draggable={true}
-            newestOnTop={true}
-          />
+          <CourseProgressProvider>
+            {isLoading && <Loader />}
+            {/* <NextNProgress /> */}
+            <Component {...pageProps} />
+            <ToastContainer
+              position={'top-right'}
+              autoClose={5000}
+              hideProgressBar={false}
+              closeOnClick={true}
+              pauseOnHover={true}
+              draggable={true}
+              newestOnTop={true}
+            />
+          </CourseProgressProvider>
         </AppWrapper>
       </Web3ReactProvider>
     </div>

@@ -1,5 +1,6 @@
 import { Container } from '../../components/layout';
-import Table from '../../components/course/table';
+// import Table from '../../components/course/table';
+import Table from '../../components/course/table-new';
 import { http } from '../../utils/http';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppState } from '../../context/AppContext';
@@ -55,6 +56,7 @@ export default function Course() {
 
           {/*<Banner />*/}
 
+          {/* <Table showQuiz={showQuiz} quizId={quizId} /> */}
           <Table showQuiz={showQuiz} quizId={quizId} />
         </div>
       </div>
