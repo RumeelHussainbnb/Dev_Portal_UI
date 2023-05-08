@@ -314,7 +314,7 @@ function NavSidebar() {
                     } else {
                       //setCurrent('Submit Content');
                       //window.localStorage.setItem('main-navigation', 'Submit Content');
-                      router.push(`/${item.href}`);
+                      router.push(`${item.href}`);
                     }
                   }}
                   className={classNames(

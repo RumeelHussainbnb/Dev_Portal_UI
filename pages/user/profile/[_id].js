@@ -154,7 +154,8 @@ export default function Profile({ userData, _id }) {
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
                       fill="currentColor"
-                      className={MemberMedals[userData?.Author?.Member]}
+                      color={MemberMedals[userData?.Author?.Member]}
+                      className="mr-2 h-9 w-9"
                     >
                       <path
                         fillRule="evenodd"
@@ -566,7 +567,8 @@ export async function getStaticProps({ params }) {
       props: {
         userData: user?.data?.data,
         _id: _id
-      }
+      },
+      revalidate: 1 // 1 seconds
     };
   } catch (error) {
     if (error.response.status === 404) {

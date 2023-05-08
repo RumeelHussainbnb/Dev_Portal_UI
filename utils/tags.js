@@ -26,7 +26,7 @@ export default {
   ],
   protocols: ['IPFS'],
   blockChain: ['BNB Smart Chain', 'BNB Greenfield', 'BNB Sidechain', 'ZkBNB'],
-  language: ['JavaScript', 'C#', 'Golang', 'Python', 'Java', 'Rust', 'React.js'],
+  language: ['JavaScript', 'C#', 'Golang', 'Python', 'Java', 'Rust', 'React.js', 'Solidity'],
   badge: ['New', 'Hot', 'Best', 'Old', 'Trending', 'Releases'],
   framework: ['Truffle', 'OpenZeppelin', 'Hardhat', 'Web3.js', 'React.js'],
   levelsInTags: ['Beginner', 'Intermediate', 'Expert'],

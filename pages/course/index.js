@@ -9,7 +9,7 @@ export default function Course() {
   const appState = useAppState();
   const [isLoading, setIsLoading] = useState(false);
   const [showQuiz, setShowQuiz] = useState(true);
-  const [quizId, setQuizId] = useState('64496fc215b3f42368a5b431');
+  const [quizId, setQuizId] = useState('6431ee6a718a4957188ae4f8');
   const metaTags = {
     title: 'BNB Chain 101 Dev Course',
     description:
