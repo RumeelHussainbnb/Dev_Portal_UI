@@ -568,7 +568,7 @@ export async function getStaticProps({ params }) {
         userData: user?.data?.data,
         _id: _id
       },
-      revalidate: 5 // 5 seconds
+      revalidate: 1 // 1 seconds
     };
   } catch (error) {
     if (error.response.status === 404) {
