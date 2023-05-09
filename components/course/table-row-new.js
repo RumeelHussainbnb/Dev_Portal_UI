@@ -1,12 +1,15 @@
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { memo } from 'react';
+import StatusButton from './statusButton';
+import { useRouter } from 'next/router';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
-
 function TableRow({ item, index, ready }) {
+  const router = useRouter();
+
   return (
     <div
       className={classNames(
@@ -16,16 +19,16 @@ function TableRow({ item, index, ready }) {
           : 'cursor-not-allowed blur-sm'
       )}
     >
-      <Link href={item.link} passHref>
+      <Link href={`/course/${item._id}`} passHref>
         <div className="w-full">
           <span className="mr-3 text-xl text-gray-500 dark:text-gray-500">{++index}.</span>
           <span className=" text-base tracking-wide text-gray-700 dark:text-gray-300">
-            {item.title}
+            {item.name}
           </span>
         </div>
       </Link>
 
-      {/*<CheckMark item={item.link} />*/}
+      <StatusButton item={item} sectionCourse={null} />
     </div>
   );
 }

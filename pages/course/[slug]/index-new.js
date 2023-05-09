@@ -1,32 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Container } from '../../../components/layout';
 import markdownToHtml from '../../../utils/markdown';
-import { loadCourseBySlug } from '../../../lib/load-course';
-import { useAppState } from '../../../context/AppContext';
-import { onCourseStatusCheck } from '../../../lib/load-courseProgress';
-
-export async function getServerSideProps({ params }) {
-  const course = await loadCourseBySlug(params.slug);
-  const markdown = await markdownToHtml(course.markDownContent);
-  return {
-    props: {
-      content: {
-        markdown,
-        id: params.slug,
-        title: course.name,
-        description: course.name
-      }
-    }
-  };
-}
 
 export default function CourseContent({ content }) {
   const router = useRouter();
-  const appState = useAppState();
-  const [isCompleted, setIsCompleted] = useState(false);
-
+  console.log(content);
   const metaTags = {
     title: `BNBChain101 - ${content.title}`,
     description: content.description,
@@ -34,15 +12,14 @@ export default function CourseContent({ content }) {
     shouldIndex: true
   };
 
+  const getCourse = async () => {
+    const courseId = router.query.id;
+    console.log(courseId);
+  };
+
   useEffect(() => {
-    console.log(appState?.userId);
-    if (appState?.userId) {
-      onCourseStatusCheck(appState.userId, content.id).then(res => {
-        console.log(res);
-        setIsCompleted(res);
-      });
-    }
-  }, [appState, content.id]);
+    getCourse();
+  }, [router.query.id]);
 
   return (
     <Container metaTags={metaTags}>
@@ -56,7 +33,10 @@ export default function CourseContent({ content }) {
           </div>
 
           <div className="py-5">
-            <span dangerouslySetInnerHTML={{ __html: content.markdown }} />
+            {/* <span dangerouslySetInnerHTML={{ __html: content.markdown }} /> */}
+            <div>
+              Hi
+            </div>
           </div>
 
           <div
