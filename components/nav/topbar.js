@@ -19,6 +19,7 @@ import {
   UserCircleIcon,
   ExclamationIcon
 } from '@heroicons/react/outline';
+import { useCourseProgress } from '../../context/CourseProgressContext';
 
 //* Local Imports
 import { http } from '../../utils/http';
@@ -39,6 +40,7 @@ function TopBar({ childrens }) {
   let { mode, setSetting } = useTheme();
   const appDispatch = useAppDispatch();
   const appState = useAppState();
+  const courseProgress = useCourseProgress();
   const router = useRouter();
 
   const accountChecker = async () => {
@@ -90,6 +92,7 @@ function TopBar({ childrens }) {
           let payload = {
             PublicKey: accounts[0]
           };
+          let userId;
           http
             .post(`/auth/register`, payload)
             .then(async res => {
@@ -106,6 +109,7 @@ function TopBar({ childrens }) {
                   type: 'saveUserId',
                   payload: res.data?.data?._id
                 });
+
                 // update state
                 localStorage.setItem('PublicKey', accounts[0]);
                 localStorage.setItem('userData', JSON.stringify(res.data));
@@ -116,6 +120,16 @@ function TopBar({ childrens }) {
                   router.push('/user/edit-profile');
                 }
               }
+              userId = res.data?.data?._id;
+              http
+                .post(`/userProgress/batch`, {
+                  userId: userId
+                })
+                .then(res => {
+                  if (res?.data?.success == true) {
+                    courseProgress.setCourseProgress(res?.data?.data);
+                  }
+                });
             })
             .catch(err => {
               toast.error('Failed to register user');
@@ -388,7 +402,7 @@ function TopBar({ childrens }) {
                       ) : (
                         <div className="items-center">
                           <button
-                            className="rounded bg-gradient-to-r from-gray-800 to-gray-600 py-2 px-4 font-bold text-white hover:to-yellow-600"
+                            className="rounded bg-gradient-to-r from-gray-800 to-gray-600 px-4 py-2 font-bold text-white hover:to-yellow-600"
                             id="connectButton"
                             onClick={connectButton}
                           >
@@ -404,7 +418,7 @@ function TopBar({ childrens }) {
               {/* Mobile Menu*/}
               <Popover.Panel as="nav" className="mobile-nav lg:hidden" aria-label="Global">
                 {({ close }) => (
-                  <div className="mx-auto max-w-3xl space-y-1 px-2 pt-2 pb-3 sm:px-4">
+                  <div className="mx-auto max-w-3xl space-y-1 px-2 pb-3 pt-2 sm:px-4">
                     <NavSidebar />
                   </div>
                 )}

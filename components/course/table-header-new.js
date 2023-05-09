@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import ProgressSVG from './progressSVG';
+import { useCourseProgress } from '../../context/CourseProgressContext';
 
-function TableHeader({ title, index, ready }) {
+function TableHeader({ title, index, total, progressCount, ready }) {
   return (
     <div>
       <div className="flex justify-between border border-gray-300 bg-gray-200 px-4 py-3 text-lg font-medium tracking-wide text-gray-800 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300">
@@ -15,7 +16,7 @@ function TableHeader({ title, index, ready }) {
           )}
         </span>
 
-        <ProgressSVG progress={1} courseTotal={2} radius={16} stroke={2} />
+        <ProgressSVG progress={progressCount} courseTotal={total} radius={16} stroke={2} />
       </div>
     </div>
   );

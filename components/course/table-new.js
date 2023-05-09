@@ -8,7 +8,7 @@ import { useCourseProgress } from '../../context/CourseProgressContext';
 
 function Table({ showQuiz, quizId }) {
   const { course, setCourse } = useCourseProgress();
-  const appState = useAppState();
+  const { courseProgress } = useCourseProgress();
 
   useEffect(() => {
     loadCourse().then(data => {
@@ -16,35 +16,69 @@ function Table({ showQuiz, quizId }) {
 
       header.forEach(headerItem => {
         const matchedDataItems = data.filter(dataItem => dataItem.section === headerItem.title);
+
+        // Match the courseId from the userProgress to the _id from the courseData
+        const matchedUserProgressItems = courseProgress.filter(progressItem => {
+          const matchedCourseData = data.find(
+            courseItem => courseItem._id === progressItem.CourseId
+          );
+          return matchedCourseData && matchedCourseData.section === headerItem.title;
+        });
+
+        const updatedMatchedDataItems = matchedDataItems.map(dataItem => {
+          const matchedProgressItem = matchedUserProgressItems.find(
+            progressItem => progressItem.CourseId === dataItem._id
+          );
+          return {
+            ...dataItem,
+            completed: matchedProgressItem?.completed || false
+          };
+        });
+
+        const completedCount = matchedUserProgressItems.filter(
+          progressItem => progressItem.completed
+        ).length;
+
         matchedItems.push({
           title: headerItem.title,
-          items: matchedDataItems
+          items: updatedMatchedDataItems,
+          count: updatedMatchedDataItems.length || 0,
+          completedCount: completedCount
         });
       });
-
       setCourse(matchedItems);
     });
-  }, [setCourse]);
+  }, [setCourse, courseProgress]);
 
   return (
     <div className="mx-auto my-20 flex max-w-4xl flex-col gap-10">
       {course.map((section, sectionIndex) => {
-        return (
-          <div key={sectionIndex}>
-            <TableHeader ready title={section.title} index={sectionIndex} />
-            {section.items.map((item, rowIndex) => {
-              return <TableRow ready item={item} index={rowIndex} key={rowIndex} />;
-            })}
-          </div>
-        );
+        if (section.count > 0) {
+          return (
+            <div key={sectionIndex}>
+              <TableHeader
+                ready
+                title={section.title}
+                index={sectionIndex}
+                total={section.count}
+                progressCount={section.completedCount}
+              />
+              {section.items.map((item, rowIndex) => {
+                return <TableRow ready item={item} index={rowIndex} key={rowIndex} />;
+              })}
+            </div>
+          );
+        } else {
+          return null;
+        }
       })}
 
       {/*       {appState.publicKey && (
-        <div>
-          <AttemptQuizHeader showQuiz={showQuiz} link={`/course/quiz/attempt/${quizId}`} />
-        </div>
-      )}
- */}
+    <div>
+      <AttemptQuizHeader showQuiz={showQuiz} link={`/course/quiz/attempt/${quizId}`} />
+    </div>
+  )}
+  */}
     </div>
   );
 }

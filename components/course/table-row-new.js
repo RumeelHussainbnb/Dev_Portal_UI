@@ -1,20 +1,21 @@
 import Link from 'next/link';
 import PropTypes from 'prop-types';
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import StatusButton from './statusButton';
 import { useRouter } from 'next/router';
-
+import { useCourseProgress } from '../../context/CourseProgressContext';
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 function TableRow({ item, index, ready }) {
-  const router = useRouter();
+  const { courseProgress } = useCourseProgress();
+  const [status, setStatus] = useState(false);
 
   return (
     <div
       className={classNames(
         'flex justify-between border-x border-b border-gray-300 py-3 pl-8  dark:border-gray-600 dark:bg-gray-900',
-        ready
+        ready && !status
           ? 'cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700'
           : 'cursor-not-allowed blur-sm'
       )}
@@ -28,7 +29,7 @@ function TableRow({ item, index, ready }) {
         </div>
       </Link>
 
-      <StatusButton item={item} sectionCourse={null} />
+      <StatusButton item={item} courseProgress={courseProgress} setLock={setStatus} />
     </div>
   );
 }

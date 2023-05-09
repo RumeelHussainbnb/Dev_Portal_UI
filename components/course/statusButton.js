@@ -1,30 +1,38 @@
-function StatusButton({ item, sectionCourse }) {
-  //   const previousCourse = sectionCourse.filter(course => course.id === item.previousCourse) || null;
-  const previousCourse = undefined;
+function StatusButton({ item, courseProgress, setLock }) {
+  const currentCourse = courseProgress.find(course => {
+    return course.CourseId === item._id;
+  });
+  const previousCourse = courseProgress.find(course => {
+    return course.CourseId === item.previousCourse;
+  });
+
   if (previousCourse === undefined) {
     // Always show the first item as complete
-    return item.completed ? (
-      <button className="mx-2 my-auto h-[32px] w-[100px] rounded-md bg-green-500 px-2 text-white">
+    return currentCourse.completed ? (
+      <div className="mx-2 my-auto flex h-[32px] w-[100px] items-center justify-center rounded-md bg-green-500 px-2 align-middle text-white">
         Complete
-      </button>
+      </div>
     ) : (
-      <button className="mx-2 my-auto h-[32px] w-[100px] rounded-md bg-gray-500 px-2 text-white">
+      <div className="mx-2 my-auto flex h-[32px] w-[100px] items-center justify-center rounded-md bg-gray-500 px-2 align-middle text-white">
         Not Read
-      </button>
+      </div>
     );
   } else {
-    return item.completed ? (
-      <button className="mx-2 my-auto h-[32px] w-[100px] rounded-md bg-green-500 px-2 text-white">
+    return currentCourse.completed ? (
+      <div className="mx-2 my-auto flex h-[32px] w-[100px] items-center justify-center rounded-md bg-green-500 px-2 align-middle text-white">
         Complete
-      </button>
+      </div>
     ) : previousCourse.completed ? (
-      <button className="mx-2 my-auto h-[32px] w-[100px] rounded-md bg-gray-500 px-2 text-white">
+      <div className="mx-2 my-auto flex h-[32px] w-[100px] items-center justify-center rounded-md bg-gray-500 px-2 align-middle text-white">
         Not Read
-      </button>
+      </div>
     ) : (
-      <button className="mx-2 my-auto h-[32px] w-[100px] rounded-md bg-red-500 px-2 text-white">
-        Locked
-      </button>
+      (setLock(true),
+      (
+        <div className="mx-2 my-auto flex h-[32px] w-[100px] items-center justify-center rounded-md bg-red-500 px-2 align-middle text-white">
+          Locked
+        </div>
+      ))
     );
   }
 }

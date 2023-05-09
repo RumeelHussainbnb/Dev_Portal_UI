@@ -4,10 +4,12 @@ import Table from '../../components/course/table-new';
 import { http } from '../../utils/http';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppState } from '../../context/AppContext';
+import { useCourseProgress } from '../../context/CourseProgressContext';
 import Loader from '../../components/Loader/Loader';
 
 export default function Course() {
   const appState = useAppState();
+  const courseProgress = useCourseProgress();
   const [isLoading, setIsLoading] = useState(false);
   const [showQuiz, setShowQuiz] = useState(true);
   const [quizId, setQuizId] = useState('64496fc215b3f42368a5b431');
@@ -31,8 +33,22 @@ export default function Course() {
       if (isQuizCompletedOver80) setShowQuiz(false);
     }
   };
+
+  const getUserCourseProgress = async () => {
+    let userState = JSON.parse(localStorage.getItem('userData' || '{}'));
+    setIsLoading(true);
+    const { data } = await http.get(
+      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/userProgress/allprogress/${userState.data?._id}`
+    );
+    setIsLoading(false);
+    if (data?.success) {
+      courseProgress.setCourseProgress(data?.data);
+    }
+  };
+
   useEffect(() => {
     getCompletedQuizByUser();
+    getUserCourseProgress();
   }, []);
 
   return (
