@@ -10,15 +10,18 @@ import Progress from '../../../components/course/progressBar';
 import { http } from '../../../utils/http';
 
 export async function getServerSideProps({ params }) {
-  const course = await loadCourseBySlug(params.slug);
+  const { course, nextCourse } = await loadCourseBySlug(params.slug);
   const markdown = await markdownToHtml(course.markDownContent);
+
   return {
     props: {
       content: {
         markdown,
         id: params.slug,
         title: course.name,
-        description: course.name
+        description: course.name,
+        previousCourse: course.previousCourse,
+        nextCourse: nextCourse
       }
     }
   };
@@ -38,10 +41,8 @@ export default function CourseContent({ content }) {
   };
 
   useEffect(() => {
-    console.log(appState?.userId);
     if (appState?.userId) {
       onCourseStatusCheck(content.id, appState.userId).then(res => {
-        console.log(res);
         setIsCompleted(res);
       });
     }
@@ -56,7 +57,6 @@ export default function CourseContent({ content }) {
           complete: true
         })
         .then(res => {
-          console.log('res', res);
           setIsCompleted(res.data.complete);
           location.reload();
         });
@@ -95,12 +95,25 @@ export default function CourseContent({ content }) {
             <button
               className="mt-4 w-auto border-spacing-x-1 rounded-md bg-gray-200 p-2 hover:bg-gray-400"
               onClick={() => {
-                console.log(onComplete);
+                if (content.previousCourse !== null) {
+                  router.push(`/course/${content.previousCourse}`);
+                } else {
+                  router.push(`/course/`);
+                }
               }}
             >
               Back
             </button>
-            <button className="mt-4 w-auto border-spacing-x-1 rounded-md bg-gray-200 p-2 hover:bg-gray-400">
+            <button
+              className="mt-4 w-auto border-spacing-x-1 rounded-md bg-gray-200 p-2 hover:bg-gray-400"
+              onClick={() => {
+                if (content.nextCourse !== null) {
+                  router.push(`/course/${content.nextCourse}`);
+                } else {
+                  router.push(`/course/`);
+                }
+              }}
+            >
               Next
             </button>
           </div>

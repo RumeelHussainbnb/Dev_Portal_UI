@@ -1,15 +1,30 @@
 import Link from 'next/link';
 import PropTypes from 'prop-types';
-import { memo, useState } from 'react';
+import { memo, useState, useEffect } from 'react';
 import StatusButton from './statusButton';
-import { useRouter } from 'next/router';
 import { useCourseProgress } from '../../context/CourseProgressContext';
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
+
 function TableRow({ item, index, ready }) {
   const { courseProgress } = useCourseProgress();
   const [status, setStatus] = useState(false);
+
+  const handleLock = () => {
+    setStatus(true);
+  };
+
+  useEffect(() => {
+    const previousCourse = courseProgress.find(course => {
+      return course.CourseId === item.previousCourse;
+    });
+
+    if (!previousCourse?.completed && previousCourse !== undefined) {
+      setStatus(true);
+    }
+  }, [courseProgress, item.previousCourse]);
 
   return (
     <div
@@ -29,7 +44,12 @@ function TableRow({ item, index, ready }) {
         </div>
       </Link>
 
-      <StatusButton item={item} courseProgress={courseProgress} setLock={setStatus} />
+      <StatusButton
+        item={item}
+        courseProgress={courseProgress}
+        setLock={handleLock}
+        isLocked={status}
+      />
     </div>
   );
 }
