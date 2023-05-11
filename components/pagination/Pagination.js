@@ -9,6 +9,7 @@ function Pagination({
   pageSize,
   onPageChange,
   onPageSizeChange,
+  forcePage = 0,
   classNamePrefix = '',
   showPerPage = true
 }) {
@@ -35,13 +36,14 @@ function Pagination({
     doc = document;
   }
   return (
-    <div className="flex items-center justify-center pagination-wrapper">
+    <div className="pagination-wrapper flex items-center justify-center">
       <ReactPaginate
         previousLabel={PREVIOUS_LABEL}
         nextLabel={NEXT_LABEL}
         breakLabel={'...'}
         breakClassName={'break-me'}
         pageCount={pageCount}
+        forcePage={forcePage}
         marginPagesDisplayed={MARGIN_PAGES_DISPLAYED}
         pageRangeDisplayed={PAGE_RANGE_DISPLAYED}
         onPageChange={onPageChange}

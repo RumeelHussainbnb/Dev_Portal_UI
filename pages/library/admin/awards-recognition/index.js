@@ -19,6 +19,7 @@ export default function AwardsRecognition({ data, user }) {
   //console.log('data ==> ', data);
 
   const [users, setUsers] = useState(data.users);
+  const [usersCount, setUsersCount] = useState(data.usersCount);
   const [selectedUsers, setSelectedUsers] = useState();
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState('');
@@ -39,6 +40,7 @@ export default function AwardsRecognition({ data, user }) {
       );
       if (data?.success === true) {
         setUsers(data.data?.users);
+        setUsersCount(data.data?.usersCount);
       }
     } catch (error) {}
   };
@@ -70,6 +72,7 @@ export default function AwardsRecognition({ data, user }) {
           className="my-4 flex items-center"
           onSubmit={e => {
             e.preventDefault();
+            setPage(1);
             makeApiCall(search);
           }}
         >
@@ -91,7 +94,6 @@ export default function AwardsRecognition({ data, user }) {
             <button
               onClick={() => {
                 setSearch('');
-
                 makeApiCall('');
               }}
               type="button"
@@ -204,7 +206,8 @@ export default function AwardsRecognition({ data, user }) {
         ) : null}
         <Pagination
           showPerPage={false}
-          pageCount={Math.ceil(data.usersCount / 10)}
+          pageCount={Math.ceil(usersCount / 10)}
+          forcePage={page - 1}
           // pageSize={10}
           onPageChange={page => handlePageChange(page.selected)}
           onPageSizeChange={page => handlePageSizeChange(page)}

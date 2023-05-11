@@ -52,7 +52,7 @@ export default function Content({ content }) {
           </div>
 
           <div className="align-center mt-2 flex flex-col content-center items-center ">
-            <h1 className="mb-4">{content.Title}</h1>
+            <h1 className="mb-4 text-center">{content.Title}</h1>
             <h3 className="mt-0 tracking-wide text-gray-500 dark:text-gray-400">
               by {content.Author}
               {' · '}
