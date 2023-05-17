@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import PropTypes from 'prop-types';
-import { memo, useState, useEffect } from 'react';
+import { memo, useState, useEffect, useCallback } from 'react';
 import StatusButton from './statusButton';
 import { useCourseProgress } from '../../context/CourseProgressContext';
 
@@ -24,7 +24,7 @@ function TableRow({ item, index, ready }) {
     if (!previousCourse?.completed && previousCourse !== undefined) {
       setStatus(true);
     }
-  }, [courseProgress, item.previousCourse]);
+  }, [courseProgress, item.previousCourse, item._id, status]);
 
   return (
     <div
@@ -34,15 +34,25 @@ function TableRow({ item, index, ready }) {
           ? 'cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700'
           : 'cursor-not-allowed blur-sm'
       )}
+      aria-disabled={status}
     >
-      <Link href={`/course/${item._id}`} passHref>
+      {status ? (
         <div className="w-full">
           <span className="mr-3 text-xl text-gray-500 dark:text-gray-500">{++index}.</span>
           <span className=" text-base tracking-wide text-gray-700 dark:text-gray-300">
             {item.name}
           </span>
         </div>
-      </Link>
+      ) : (
+        <Link href={`/course/${item._id}`} passHref>
+          <div className="w-full">
+            <span className="mr-3 text-xl text-gray-500 dark:text-gray-500">{++index}.</span>
+            <span className=" text-base tracking-wide text-gray-700 dark:text-gray-300">
+              {item.name}
+            </span>
+          </div>
+        </Link>
+      )}
 
       <StatusButton
         item={item}

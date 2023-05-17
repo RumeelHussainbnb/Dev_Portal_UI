@@ -70,7 +70,7 @@ export default function CourseContent({ content }) {
         <div className="prose mx-auto max-w-6xl rounded-lg px-10 py-8 dark:prose-invert dark:border-none lg:border lg:bg-white dark:lg:bg-gray-800 xl:px-32">
           <div className="grid-cols-6 gap-4">
             <div
-              onClick={() => router.back()}
+              onClick={() => router.push('/course')}
               className="text-md flex cursor-pointer justify-center text-yellow-600 hover:text-yellow-700 hover:underline lg:text-lg"
             >
               Table of Content
@@ -119,7 +119,7 @@ export default function CourseContent({ content }) {
           </div>
 
           <div
-            onClick={() => router.back()}
+            onClick={() => router.push('/course')}
             className="text-md flex cursor-pointer justify-center text-yellow-600 hover:text-yellow-700 hover:underline lg:text-lg"
           >
             Table of Content

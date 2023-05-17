@@ -64,7 +64,9 @@ function Table({ showQuiz, quizId }) {
                 progressCount={section.completedCount}
               />
               {section.items.map((item, rowIndex) => {
-                return <TableRow ready item={item} index={rowIndex} key={rowIndex} />;
+                return (
+                  <TableRow ready item={item} index={rowIndex} key={rowIndex} section={section} />
+                );
               })}
             </div>
           );

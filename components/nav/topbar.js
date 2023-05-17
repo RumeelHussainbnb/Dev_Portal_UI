@@ -40,7 +40,7 @@ function TopBar({ childrens }) {
   let { mode, setSetting } = useTheme();
   const appDispatch = useAppDispatch();
   const appState = useAppState();
-  const courseProgress = useCourseProgress();
+  const { setCourseProgress } = useCourseProgress();
   const router = useRouter();
 
   const accountChecker = async () => {
@@ -127,7 +127,8 @@ function TopBar({ childrens }) {
                 })
                 .then(res => {
                   if (res?.data?.success == true) {
-                    courseProgress.setCourseProgress(res?.data?.data);
+                    console.log(res.data.data);
+                    setCourseProgress(res.data.data);
                   }
                 });
             })

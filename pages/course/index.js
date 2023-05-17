@@ -9,7 +9,7 @@ import Loader from '../../components/Loader/Loader';
 
 export default function Course() {
   const appState = useAppState();
-  const courseProgress = useCourseProgress();
+  const { courseProgress, setCourseProgress } = useCourseProgress();
   const [isLoading, setIsLoading] = useState(false);
   const [showQuiz, setShowQuiz] = useState(true);
   const [quizId, setQuizId] = useState('64496fc215b3f42368a5b431');
@@ -37,13 +37,13 @@ export default function Course() {
   const getUserCourseProgress = async () => {
     let userState = JSON.parse(localStorage.getItem('userData' || '{}'));
     setIsLoading(true);
-    const { data } = await http.get(
-      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/userProgress/allprogress/${userState.data?._id}`
-    );
-    setIsLoading(false);
-    if (data?.success) {
-      courseProgress.setCourseProgress(data?.data);
+    if (courseProgress.length == 0) {
+      const { data } = await http.get(
+        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/userProgress/allprogress?userId=${userState.data?._id}`
+      );
+      setCourseProgress(data.data);
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
