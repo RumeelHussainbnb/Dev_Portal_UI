@@ -32,7 +32,7 @@ function ProgressSVG({ progress, courseTotal, radius, stroke }) {
           strokeDashoffset={strokeDashoffset ? strokeDashoffset : 0}
         />
       </svg>
-      <span className="absolute text-xs">{`${getPercentage()}%`}</span>
+      <span className="absolute text-[8px]">{`${getPercentage()}%`}</span>
     </div>
   );
 }

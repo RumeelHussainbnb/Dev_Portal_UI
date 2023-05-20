@@ -7,7 +7,7 @@ const StatusButton = ({ item, courseProgress, isLocked }) => {
     return course.CourseId === item._id;
   });
 
-  return currentCourse.completed ? (
+  return currentCourse?.completed ? (
     <div className="mx-2 my-auto flex h-[32px] w-[100px] items-center justify-center rounded-md bg-green-500 px-2 align-middle text-white">
       Complete
     </div>

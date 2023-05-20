@@ -7,8 +7,7 @@ import { header } from '../../utils/course-title';
 import { useCourseProgress } from '../../context/CourseProgressContext';
 
 function Table({ showQuiz, quizId }) {
-  const { course, setCourse } = useCourseProgress();
-  const { courseProgress } = useCourseProgress();
+  const { course, setCourse, courseProgress } = useCourseProgress();
 
   useEffect(() => {
     loadCourse().then(data => {
@@ -53,8 +52,8 @@ function Table({ showQuiz, quizId }) {
   return (
     <div className="mx-auto my-20 flex max-w-4xl flex-col gap-10">
       {course.map((section, sectionIndex) => {
-        if (section.count > 0) {
-          return (
+        return (
+          section.count > 0 && (
             <div key={sectionIndex}>
               <TableHeader
                 ready
@@ -69,10 +68,8 @@ function Table({ showQuiz, quizId }) {
                 );
               })}
             </div>
-          );
-        } else {
-          return null;
-        }
+          )
+        );
       })}
 
       {/*       {appState.publicKey && (
