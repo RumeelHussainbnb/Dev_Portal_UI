@@ -10,18 +10,18 @@ import Progress from '../../../components/course/progressBar';
 import { http } from '../../../utils/http';
 
 export async function getServerSideProps({ params }) {
-  const { course, nextCourse } = await loadCourseBySlug(params.slug);
-  const markdown = await markdownToHtml(course.markDownContent);
+  const { lesson, nextLesson } = await loadCourseBySlug(params.slug);
+  const markdown = await markdownToHtml(lesson?.markDownContent);
 
   return {
     props: {
       content: {
         markdown,
         id: params.slug,
-        title: course.name,
-        description: course.name,
-        previousCourse: course.previousCourse,
-        nextCourse: nextCourse
+        title: lesson.name,
+        description: lesson.name,
+        previousCourse: lesson.previousLesson,
+        nextCourse: nextLesson
       }
     }
   };
@@ -53,7 +53,7 @@ export default function CourseContent({ content }) {
       http
         .put('/userProgress/', {
           userId: appState.userId,
-          courseId: content.id,
+          lessonId: content.id,
           complete: true
         })
         .then(res => {

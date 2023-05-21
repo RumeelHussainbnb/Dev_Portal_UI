@@ -45,3 +45,4 @@ yarn.lock
 public/robots.txt
 public/*.xml
 /.vs
+/data

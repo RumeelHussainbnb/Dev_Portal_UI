@@ -6,7 +6,7 @@ import { loadCourse } from '../../lib/load-course';
 import { header } from '../../utils/course-title';
 import { useCourseProgress } from '../../context/CourseProgressContext';
 
-function Table({ showQuiz, quizId }) {
+function Table({ showQuiz, quizId, courseContent }) {
   const { course, setCourse, courseProgress } = useCourseProgress();
 
   useEffect(() => {
@@ -51,24 +51,22 @@ function Table({ showQuiz, quizId }) {
 
   return (
     <div className="mx-auto my-20 flex max-w-4xl flex-col gap-10">
-      {course.map((section, sectionIndex) => {
+      {courseContent?.map((section, sectionIndex) => {
         return (
-          section.count > 0 && (
-            <div key={sectionIndex}>
-              <TableHeader
-                ready
-                title={section.title}
-                index={sectionIndex}
-                total={section.count}
-                progressCount={section.completedCount}
-              />
-              {section.items.map((item, rowIndex) => {
-                return (
-                  <TableRow ready item={item} index={rowIndex} key={rowIndex} section={section} />
-                );
-              })}
-            </div>
-          )
+          <div key={sectionIndex}>
+            <TableHeader
+              ready
+              title={section.name}
+              index={sectionIndex}
+              total={section.length}
+              progressCount={section.completedCount}
+            />
+            {section.lessons.map((item, rowIndex) => {
+              return (
+                <TableRow ready item={item} index={rowIndex} key={rowIndex} section={section} />
+              );
+            })}
+          </div>
         );
       })}
 

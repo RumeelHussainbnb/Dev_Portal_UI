@@ -6,13 +6,16 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppState } from '../../context/AppContext';
 import { useCourseProgress } from '../../context/CourseProgressContext';
 import Loader from '../../components/Loader/Loader';
+import { useRouter } from 'next/router';
 
 export default function Course() {
   const appState = useAppState();
+  const router = useRouter();
   const { courseProgress, setCourseProgress } = useCourseProgress();
   const [isLoading, setIsLoading] = useState(false);
   const [showQuiz, setShowQuiz] = useState(true);
   const [quizId, setQuizId] = useState('64496fc215b3f42368a5b431');
+  const [courseContent, setCourseContent] = useState([]);
   const metaTags = {
     title: 'BNB Chain 101 Dev Course',
     description:
@@ -46,9 +49,24 @@ export default function Course() {
     setIsLoading(false);
   };
 
+  const getFullCourseContetn = async () => {
+    const routerData = router.query?.courseId;
+    console.log('routerData', routerData);
+    setIsLoading(true);
+    const { data } = await http.get(
+      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/course/full-course/${routerData}`
+    );
+    setIsLoading(false);
+    if (data?.success) {
+      console.log('course', data?.data[0]);
+      setCourseContent(data?.data);
+    }
+  };
+
   useEffect(() => {
     getCompletedQuizByUser();
     getUserCourseProgress();
+    getFullCourseContetn();
   }, []);
 
   return (
@@ -58,22 +76,20 @@ export default function Course() {
         <div className="mx-2">
           <div className="flex justify-center">
             <h1 className="text-2xl font-bold capitalize text-gray-900 dark:text-gray-200 md:text-3xl 2xl:text-4xl">
-              BNB Chain 101 Dev Course
+              {courseContent?.title}
             </h1>
           </div>
 
           <div className="mx-auto mt-5 max-w-4xl">
             <p className="prose mx-auto mt-3 text-center text-lg dark:prose-invert">
-              This course is designed to be the absolute best starting point for Web Developers
-              looking to learn Web3 Development. BNB Chain is the ideal network for starting your
-              Web3 journey because of its high speed, low cost, energy efficiency, and more.
+              {courseContent?.description}
             </p>
           </div>
 
           {/*<Banner />*/}
 
           {/* <Table showQuiz={showQuiz} quizId={quizId} /> */}
-          <Table showQuiz={showQuiz} quizId={quizId} />
+          <Table showQuiz={showQuiz} quizId={quizId} courseContent={courseContent?.modules} />
         </div>
       </div>
     </Container>
