@@ -6,7 +6,7 @@ import { loadCourse } from '../../lib/load-course';
 import { header } from '../../utils/course-title';
 import { useCourseProgress } from '../../context/CourseProgressContext';
 
-function Table({ showQuiz, quizId, courseContent }) {
+function Table({ showQuiz, quizId, courseContent, isAdmin }) {
   const { course, setCourse, courseProgress } = useCourseProgress();
 
   useEffect(() => {
@@ -62,10 +62,18 @@ function Table({ showQuiz, quizId, courseContent }) {
                 index={sectionIndex}
                 total={section.length}
                 progressCount={section.completedCount}
+                isAdmin={isAdmin}
               />
               {section.lessons.map((item, rowIndex) => {
                 return (
-                  <TableRow ready item={item} index={rowIndex} key={rowIndex} section={section} />
+                  <TableRow
+                    ready
+                    item={item}
+                    index={rowIndex}
+                    key={rowIndex}
+                    section={section}
+                    isAdmin={isAdmin}
+                  />
                 );
               })}
             </div>

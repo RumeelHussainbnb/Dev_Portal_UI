@@ -36,7 +36,9 @@ const EditCourseForm = ({ content }) => {
     <main className="mx-auto mb-5 shadow">
       <div className="relative overflow-hidden bg-white px-4 py-16 dark:bg-gray-800 sm:px-6 lg:px-8 lg:py-14">
         <div className="mx-auto max-w-4xl">
-          <div onClick={() => router.back()}>back</div>
+          <div className="cursor-pointer hover:text-yellow-500" onClick={() => router.back()}>
+            back
+          </div>
           <div className="mx-auto max-w-max text-center dark:prose-invert prose-h1:mb-2 prose-p:text-lg">
             <h1>Add a Course</h1>
           </div>
