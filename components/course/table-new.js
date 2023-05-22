@@ -52,21 +52,24 @@ function Table({ showQuiz, quizId, courseContent }) {
   return (
     <div className="mx-auto my-20 flex max-w-4xl flex-col gap-10">
       {courseContent?.map((section, sectionIndex) => {
+        console.log(typeof section.lessons);
         return (
-          <div key={sectionIndex}>
-            <TableHeader
-              ready
-              title={section.name}
-              index={sectionIndex}
-              total={section.length}
-              progressCount={section.completedCount}
-            />
-            {section.lessons.map((item, rowIndex) => {
-              return (
-                <TableRow ready item={item} index={rowIndex} key={rowIndex} section={section} />
-              );
-            })}
-          </div>
+          Object.keys(section.lessons).length > 0 && (
+            <div key={sectionIndex}>
+              <TableHeader
+                ready
+                title={section.name}
+                index={sectionIndex}
+                total={section.length}
+                progressCount={section.completedCount}
+              />
+              {section.lessons.map((item, rowIndex) => {
+                return (
+                  <TableRow ready item={item} index={rowIndex} key={rowIndex} section={section} />
+                );
+              })}
+            </div>
+          )
         );
       })}
 

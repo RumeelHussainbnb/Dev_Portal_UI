@@ -10,6 +10,7 @@ import {
   NewspaperIcon,
   UserCircleIcon
 } from '@heroicons/react/outline';
+import { onOnlyGetName } from '../../lib/load-course';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { memo, useEffect, useState } from 'react';
@@ -119,6 +120,10 @@ const adminFeatures = [
   {
     name: 'Awards & Recognition',
     href: '/library/admin/awards-recognition'
+  },
+  {
+    name: 'Add Course',
+    href: '/course/admin/'
   }
 ];
 
@@ -190,6 +195,7 @@ function classNames(...classes) {
 function NavSidebar() {
   const [current, setCurrent] = useState('');
   const [isMartian, setIsMartian] = useState(false);
+  const [isCourse, setIsCourse] = useState([]);
   const appState = useAppState();
   const appDispatch = useAppDispatch();
   const router = useRouter();
@@ -222,6 +228,11 @@ function NavSidebar() {
     router.pathname === '/library'
       ? setCurrent('Home')
       : setCurrent(localStorage.getItem('main-navigation' || ''));
+
+    onOnlyGetName().then(res => {
+      console.log(res.data);
+      setIsCourse(res.data);
+    });
   }, [appState.publicKey]);
 
   return (
@@ -303,18 +314,21 @@ function NavSidebar() {
             Courses
           </p>
           <div className="mt-2 " aria-labelledby="communities-headline">
-            {courses.map(item => {
+            {isCourse.map(item => {
               return (
                 // <Link href={appState.publicKey ? item.href : ''} passHref key={item.name}>
                 <button
-                  key={item.name}
+                  key={item.shortTitle}
                   onClick={() => {
                     if (!appState.publicKey) {
                       toast.info('Please Connect Wallet');
                     } else {
                       //setCurrent('Submit Content');
                       //window.localStorage.setItem('main-navigation', 'Submit Content');
-                      router.push(`/${item.href}`);
+                      router.push({
+                        pathname: '/course',
+                        query: { courseId: item._id }
+                      });
                     }
                   }}
                   className={classNames(
@@ -327,10 +341,10 @@ function NavSidebar() {
                       className="h-6 w-6 text-yellow-400 dark:text-yellow-500"
                       aria-hidden="true"
                     />
-                    <span className="truncate leading-6" title={item.name}>
-                      {item.name}
+                    <span className="truncate leading-6" title={item.title}>
+                      {item.shortTitle}
                     </span>
-                    {item.name === '"The" Course' && (
+                    {item.shortTitle === '"The" Course' && (
                       <span className="ml-1 inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800 dark:bg-red-500 dark:text-red-50">
                         New
                       </span>
@@ -473,7 +487,7 @@ function NavSidebar() {
         </div>
 
         {/* Admin */}
-        {appState.isAdminMode === true && appState.editMode === 'true' && (
+        {appState.isAdminMode === true && (
           <div className="mt-3 w-full">
             <p
               className="text-md rounded-md bg-[#FACC15] px-3 py-2 font-semibold uppercase tracking-wider text-black lg:text-sm"
