@@ -28,6 +28,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
   const [isLoading, setIsLoading] = useState(false);
   const { isAdmin = false } = useUser();
   const router = useRouter();
+  console.log('data', data);
 
   //convert editor raw data to html
   const convertContentToHTML = () => {
@@ -127,13 +128,13 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
   };
 
   return (
-    <div className="content-page-wrapper relative h-full overflow-hidden bg-white py-16 px-4 dark:bg-gray-800 sm:px-6 lg:px-8 lg:py-14">
+    <div className="content-page-wrapper relative h-full overflow-hidden bg-white px-4 py-16 dark:bg-gray-800 sm:px-6 lg:px-8 lg:py-14">
       <div className=" mx-auto max-w-5xl">
         {isLoading && <Loader />}
-        <div className="absolute top-0 right-1">
+        <div className="absolute right-1 top-0">
           {type === 'edit' && <Position data={data} setData={setData} list={positions} />}
         </div>
-        <div className="prose prose mx-auto max-w-max text-center prose-h1:mb-2 prose-p:text-lg dark:prose-invert">
+        <div className="prose prose mx-auto max-w-max text-center dark:prose-invert prose-h1:mb-2 prose-p:text-lg">
           <h1>{type === 'submit' ? 'Submit new content' : 'Edit Content'}</h1>
 
           <p>
@@ -249,7 +250,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
                 <button
                   disabled={isLoading}
                   type="button"
-                  className="rounded-md border border-gray-300 bg-white py-3 px-6 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+                  className="rounded-md border border-gray-300 bg-white px-6 py-3 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
                   onClick={() => {
                     if (type === 'edit') setOpen(false);
                   }}
@@ -262,7 +263,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
                 type="submit"
                 disabled={contentExist || isLoading}
                 className={classNames(
-                  'ml-3 inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-3 px-16 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200',
+                  'ml-3 inline-flex justify-center rounded-md border border-transparent bg-yellow-600 px-16 py-3 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200',
                   contentExist && 'disabled:opacity-50'
                 )}
               >
@@ -271,7 +272,7 @@ function ContentForm({ type, setOpen, data, setData, setNotifySuccess, positions
               {type !== 'edit' && (
                 <button
                   className={classNames(
-                    'ml-3 inline-flex justify-center rounded-md border border-transparent bg-yellow-600 py-3 px-16 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200'
+                    'ml-3 inline-flex justify-center rounded-md border border-transparent bg-yellow-600 px-16 py-3 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:text-gray-200'
                   )}
                   type="button"
                   onClick={() => router.back()}

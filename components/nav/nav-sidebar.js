@@ -230,7 +230,6 @@ function NavSidebar() {
       : setCurrent(localStorage.getItem('main-navigation' || ''));
 
     onOnlyGetName().then(res => {
-      console.log(res.data);
       setIsCourse(res.data);
     });
   }, [appState.publicKey]);
@@ -487,6 +486,7 @@ function NavSidebar() {
         </div>
 
         {/* Admin */}
+        {/* appState.isAdminMode === true && appState.editMode === 'true' */}
         {appState.isAdminMode === true && (
           <div className="mt-3 w-full">
             <p

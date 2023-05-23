@@ -30,7 +30,7 @@ export default function CourseAdmin({}) {
       <div className=" mx-auto w-full rounded-lg px-10 py-8 dark:prose-invert dark:border-none lg:border lg:bg-white dark:lg:bg-gray-800 xl:px-32">
         <CourseAdminHeader />
 
-        <CourseContent content={course} />
+        {course?.length > 0 && <CourseContent content={course} />}
       </div>
     </Container>
   );

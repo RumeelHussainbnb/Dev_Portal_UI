@@ -8,7 +8,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-function TableRow({ item, index, ready, isAdmin }) {
+function TableRow({ item, index, ready, isAdmin, slug }) {
   const { courseProgress } = useCourseProgress();
   const [status, setStatus] = useState(false);
 
@@ -53,10 +53,11 @@ function TableRow({ item, index, ready, isAdmin }) {
           </div>
         </Link>
       )}
+
       {isAdmin ? (
         <div>
-          <Link href={`/course/admin/edit/${item._id}`} passHref>
-            <div className="mx-2 my-auto flex h-[32px] w-[100px] items-center justify-center rounded-md bg--500 px-2 align-middle text-white">
+          <Link href={`/course/admin/${slug}/${item._id}`} passHref>
+            <div className="mx-2 my-auto flex h-[32px] w-[100px] items-center justify-center rounded-md bg-yellow-500 px-2 align-middle text-white">
               Edit
             </div>
           </Link>

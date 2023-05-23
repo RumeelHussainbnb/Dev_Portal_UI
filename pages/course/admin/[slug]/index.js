@@ -21,8 +21,7 @@ const CourseDetailAdmin = () => {
     const getCourse = async () => {
       if (slug) {
         const { data } = await http.get(`/course/full-course-slug/${slug}`);
-        console.log('data', data);
-        setCourse(data.data);
+        setCourse(data.data[0]);
       }
     };
     getCourse();
@@ -31,14 +30,14 @@ const CourseDetailAdmin = () => {
   return (
     <Container metaTags={metaTags}>
       <div className="w-full bg-white p-4 shadow-lg dark:border-gray-600 dark:bg-gray-800">
-        {course && (
-          <ViewCourseDetailAdmin
-            longTitle={course.longTitle}
-            shortTitle={course.shortTitle}
-            description={course.description}
-          />
-        )}
-        <Table courseContent={course?.modules} isAdmin={true} />
+        <div onClick={() => router.back()}>back</div>
+
+        <ViewCourseDetailAdmin
+          longTitle={course?.longTitle}
+          shortTitle={course?.shortTitle}
+          description={course?.description}
+        />
+        <Table courseContent={course?.modules} isAdmin={true} slug={slug} />
       </div>
     </Container>
   );

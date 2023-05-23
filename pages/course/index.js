@@ -16,6 +16,8 @@ export default function Course() {
   const [showQuiz, setShowQuiz] = useState(true);
   const [quizId, setQuizId] = useState('64496fc215b3f42368a5b431');
   const [courseContent, setCourseContent] = useState([]);
+  const [courseIdNow, setCourseIdNow] = useState(null);
+
   const metaTags = {
     title: 'BNB Chain 101 Dev Course',
     description:
@@ -23,6 +25,7 @@ export default function Course() {
     url: `${process.env.HOME_URL}/course`,
     shouldIndex: true
   };
+
   const getCompletedQuizByUser = async () => {
     let userState = JSON.parse(localStorage.getItem('userData' || '{}'));
     setIsLoading(true);
@@ -49,24 +52,28 @@ export default function Course() {
     setIsLoading(false);
   };
 
-  const getFullCourseContetn = async () => {
-    const routerData = router.query?.courseId;
-    console.log('routerData', routerData);
+  const getFullCourseContent = async courseId => {
     setIsLoading(true);
     const { data } = await http.get(
-      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/course/full-course/${routerData}`
+      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/course/full-course/${courseId}`
     );
     setIsLoading(false);
     if (data?.success) {
-      console.log('course', data?.data[0]);
-      setCourseContent(data?.data);
+      setCourseContent(data?.data[0]);
     }
   };
 
   useEffect(() => {
+    const courseId = router.query.courseId;
+    console.log('courseId', courseId);
+    if (courseId) {
+      getFullCourseContent(courseId); // use the local variable directly
+    }
+  }, [router.query.courseId]); // only run the hook when courseId change
+
+  useEffect(() => {
     getCompletedQuizByUser();
     getUserCourseProgress();
-    getFullCourseContetn();
   }, []);
 
   return (

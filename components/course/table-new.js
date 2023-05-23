@@ -1,60 +1,28 @@
 import { memo, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import TableHeader from './table-header-new';
 import TableRow from './table-row-new';
 import { useAppState } from '../../context/AppContext';
-import { loadCourse } from '../../lib/load-course';
-import { header } from '../../utils/course-title';
 import { useCourseProgress } from '../../context/CourseProgressContext';
 
-function Table({ showQuiz, quizId, courseContent, isAdmin }) {
+function Table({ showQuiz, quizId, courseContent, isAdmin, slug }) {
+  const router = useRouter();
   const { course, setCourse, courseProgress } = useCourseProgress();
+  const appState = useAppState();
 
-  useEffect(() => {
-    loadCourse().then(data => {
-      const matchedItems = [];
-
-      header.forEach(headerItem => {
-        const matchedDataItems = data.filter(dataItem => dataItem.section === headerItem.title);
-
-        // Match the courseId from the userProgress to the _id from the courseData
-        const matchedUserProgressItems = courseProgress.filter(progressItem => {
-          const matchedCourseData = data.find(
-            courseItem => courseItem._id === progressItem.CourseId
-          );
-          return matchedCourseData && matchedCourseData.section === headerItem.title;
-        });
-
-        const updatedMatchedDataItems = matchedDataItems.map(dataItem => {
-          const matchedProgressItem = matchedUserProgressItems.find(
-            progressItem => progressItem.CourseId === dataItem._id
-          );
-          return {
-            ...dataItem,
-            completed: matchedProgressItem?.completed || false
-          };
-        });
-
-        const completedCount = matchedUserProgressItems.filter(
-          progressItem => progressItem.completed
-        ).length;
-
-        matchedItems.push({
-          title: headerItem.title,
-          items: updatedMatchedDataItems,
-          count: updatedMatchedDataItems.length || 0,
-          completedCount: completedCount
-        });
-      });
-      setCourse(matchedItems);
+  const handleCreateNew = () => {
+    const { slug } = router.query;
+    router.push({
+      pathname: `/course/admin/${slug}/create-module`,
+      query: { slug: slug }
     });
-  }, [setCourse, courseProgress]);
+  };
 
   return (
     <div className="mx-auto my-20 flex max-w-4xl flex-col gap-10">
       {courseContent?.map((section, sectionIndex) => {
-        console.log(typeof section.lessons);
         return (
-          Object.keys(section.lessons).length > 0 && (
+          (Object.keys(section.lessons).length > 0 || isAdmin) && (
             <div key={sectionIndex}>
               <TableHeader
                 ready
@@ -62,9 +30,11 @@ function Table({ showQuiz, quizId, courseContent, isAdmin }) {
                 index={sectionIndex}
                 total={section.length}
                 progressCount={section.completedCount}
+                moduleId={section._id}
                 isAdmin={isAdmin}
               />
               {section.lessons.map((item, rowIndex) => {
+                console.log(isAdmin);
                 return (
                   <TableRow
                     ready
@@ -73,6 +43,7 @@ function Table({ showQuiz, quizId, courseContent, isAdmin }) {
                     key={rowIndex}
                     section={section}
                     isAdmin={isAdmin}
+                    slug={slug}
                   />
                 );
               })}
@@ -80,6 +51,16 @@ function Table({ showQuiz, quizId, courseContent, isAdmin }) {
           )
         );
       })}
+      {appState.isAdminMode === true && isAdmin === true && (
+        <div className="mx-auto">
+          <button
+            className="rounded bg-yellow-500 px-6 py-3 text-white hover:bg-yellow-700"
+            onClick={handleCreateNew}
+          >
+            + Add New modules
+          </button>
+        </div>
+      )}
 
       {/*       {appState.publicKey && (
     <div>
