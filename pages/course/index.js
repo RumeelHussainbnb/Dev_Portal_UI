@@ -1,5 +1,4 @@
 import { Container } from '../../components/layout';
-// import Table from '../../components/course/table';
 import Table from '../../components/course/table-new';
 import { http } from '../../utils/http';
 import { useEffect, useState } from 'react';
@@ -9,10 +8,11 @@ import { useRouter } from 'next/router';
 
 export default function Course() {
   const router = useRouter();
-  const { setCourseProgress, setCourse, course } = useCourseProgress();
+  const { setCourseProgress, setCourse, course, courseProgress } = useCourseProgress();
   const [isLoading, setIsLoading] = useState(false);
   const [showQuiz, setShowQuiz] = useState(true);
   const [quizId, setQuizId] = useState('64496fc215b3f42368a5b431');
+  const [updateCourse, setUpdateCourse] = useState(null);
 
   const metaTags = {
     title: 'BNB Chain 101 Dev Course',
@@ -31,7 +31,7 @@ export default function Course() {
     setIsLoading(false);
     if (data?.success) {
       let userCompletedQuizzes = data?.data?.filter(f => f.QuizId === quizId);
-      let isQuizCompletedOver80 = userCompletedQuizzes.some(el => el?.Percentage >= 80); // return true or false if user scroed more then 80 true else false
+      let isQuizCompletedOver80 = userCompletedQuizzes.some(el => el?.Percentage >= 80);
       if (isQuizCompletedOver80) setShowQuiz(false);
     }
   };
@@ -63,14 +63,44 @@ export default function Course() {
 
   useEffect(() => {
     const courseId = router.query.id;
-    console.log('courseId', courseId);
-    getFullCourseContent(courseId); // use the local variable directly
-    getUserCourseProgress(courseId);
-  }, [router.query.id]); // only run the hook when courseId change
+    if (courseId) {
+      getFullCourseContent(courseId);
+      getUserCourseProgress(courseId);
+    }
+  }, [router.query.id]);
 
   useEffect(() => {
     getCompletedQuizByUser();
   }, []);
+
+  useEffect(() => {
+    const visualizeCourseLock = (courseContent, courseProgressData) => {
+      const updatedCourseData = JSON.parse(JSON.stringify(courseContent));
+      for (let moduleid of updatedCourseData.modules) {
+        const moduleProgress = courseProgressData.moduleId.find(
+          progressModule => progressModule._id === moduleid._id
+        );
+        if (moduleProgress) {
+          moduleid.totalLessons = moduleProgress.totalLesson;
+          moduleid.totalComplete = moduleProgress.totalCompletedLesson;
+          for (let lesson of moduleid.lessons) {
+            const lessonProgress = moduleProgress.lessonId.find(
+              progressLesson => progressLesson._id === lesson._id
+            );
+            if (lessonProgress) {
+              lesson.isLocked = lessonProgress.locked;
+              lesson.completed = lessonProgress.completed;
+              lesson.isNotRead = lessonProgress.isNotRead;
+            }
+          }
+        }
+      }
+      setUpdateCourse(updatedCourseData);
+    };
+    if (course && courseProgress) {
+      visualizeCourseLock(course, courseProgress);
+    }
+  }, [course, courseProgress, setUpdateCourse]);
 
   return (
     <Container metaTags={metaTags}>
@@ -91,12 +121,12 @@ export default function Course() {
 
           {/*<Banner />*/}
 
-          {/* <Table
+          <Table
             showQuiz={showQuiz}
             quizId={quizId}
-            courseId={router.query.id}
-            courseContent={course?.modules}
-          /> */}
+            courses={updateCourse?.modules}
+            courseId={updateCourse?._id}
+          />
         </div>
       </div>
     </Container>

@@ -7,7 +7,7 @@ export function useCourseProgress() {
 }
 
 export function CourseProgressProvider({ children }) {
-  const [courseProgress, setCourseProgress] = useState([]);
+  const [courseProgress, setCourseProgress] = useState(null);
   const [courseTotal, setCourseTotal] = useState(0);
   const [course, setCourse] = useState(null);
 
