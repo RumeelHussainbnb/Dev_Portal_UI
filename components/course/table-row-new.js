@@ -2,13 +2,41 @@ import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { memo, useState, useEffect, useCallback } from 'react';
 import StatusButton from './statusButton';
-import { useCourseProgress } from '../../context/CourseProgressContext';
+import { http } from '../../utils/http';
+import { useAppState } from '../../context/AppContext';
+import { useRouter } from 'next/router';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
 function TableRow({ item, index, ready, isAdmin, slug }) {
+  const appState = useAppState();
+  const router = useRouter();
+  const handleCreateUserProgress = async () => {
+    try {
+      const res = await http.post('/userProgress/', {
+        CourseId: item.courseId,
+        LessonId: item._id,
+        ModuleId: item.moduleId,
+        UserId: appState.userId
+      });
+      if (res.data.success) {
+        console.log('success');
+        router.push({
+          pathname: `/course/${item._id}`,
+          query: { id: item._id }
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    // router.push({
+    //   pathname: `/course/${item._id}`,
+    //   query: { slug: slug }
+    // });
+  };
+
   return (
     <div
       className={classNames(
@@ -26,14 +54,12 @@ function TableRow({ item, index, ready, isAdmin, slug }) {
           </span>
         </div>
       ) : (
-        <Link href={`/course/${item._id}`} passHref>
-          <div className="w-full">
-            <span className="mr-3 text-xl text-gray-500 dark:text-gray-500">{++index}.</span>
-            <span className=" text-base tracking-wide text-gray-700 dark:text-gray-300">
-              {item.name}
-            </span>
-          </div>
-        </Link>
+        <div className="w-full" onClick={handleCreateUserProgress}>
+          <span className="mr-3 text-xl text-gray-500 dark:text-gray-500">{++index}.</span>
+          <span className=" text-base tracking-wide text-gray-700 dark:text-gray-300">
+            {item.name}
+          </span>
+        </div>
       )}
 
       {isAdmin ? (

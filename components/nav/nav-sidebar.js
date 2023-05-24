@@ -215,6 +215,16 @@ function NavSidebar() {
     setIsMartian(userState?.data?.Roles.includes('Martian'));
   };
 
+  const fetchCourseTitle = async () => {
+    try {
+      onOnlyGetName().then(res => {
+        setIsCourse(res.data);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     //* if wallet connected fetch data
     if (appState.publicKey) {
@@ -229,9 +239,7 @@ function NavSidebar() {
       ? setCurrent('Home')
       : setCurrent(localStorage.getItem('main-navigation' || ''));
 
-    onOnlyGetName().then(res => {
-      setIsCourse(res.data);
-    });
+    fetchCourseTitle();
   }, [appState.publicKey]);
 
   return (
@@ -325,8 +333,8 @@ function NavSidebar() {
                       //setCurrent('Submit Content');
                       //window.localStorage.setItem('main-navigation', 'Submit Content');
                       router.push({
-                        pathname: '/course',
-                        query: { courseId: item._id }
+                        pathname: `/course/`,
+                        query: { id: item._id }
                       });
                     }
                   }}

@@ -2,66 +2,59 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Container } from '../../../components/layout';
-import markdownToHtml from '../../../utils/markdown';
-import { loadCourseBySlug } from '../../../lib/load-course';
 import { useAppState } from '../../../context/AppContext';
-import { onCourseStatusCheck } from '../../../lib/load-courseProgress';
 import Progress from '../../../components/course/progressBar';
 import { http } from '../../../utils/http';
 
-export async function getServerSideProps({ params }) {
-  const { lesson, nextLesson } = await loadCourseBySlug(params.slug);
-  const markdown = await markdownToHtml(lesson?.markDownContent);
-
-  return {
-    props: {
-      content: {
-        markdown,
-        id: params.slug,
-        title: lesson.name,
-        description: lesson.name,
-        previousCourse: lesson.previousLesson,
-        nextCourse: nextLesson
-      }
-    }
-  };
-}
-
-export default function CourseContent({ content }) {
-  const router = useRouter();
-  const appState = useAppState();
+export default function CreateModule({}) {
   const [isCompleted, setIsCompleted] = useState(false);
   const [onComplete, setOnComplete] = useState(false);
+  const [courseContent, setCourseContent] = useState({});
+  const router = useRouter();
+  const appState = useAppState();
+  const { id } = router.query;
 
   const metaTags = {
-    title: `BNBChain101 - ${content.title}`,
-    description: content.description,
-    url: `${process.env.HOME_URL}/newsletters/${content.id}`,
-    shouldIndex: true
+    title: 'BNB Chain - Course',
+    description: 'Course Content',
+    url: `${process.env.NEXT_PUBLIC_API_ENDPOINT}/course/${id}`,
+    shouldIndex: false
   };
 
   useEffect(() => {
-    if (appState?.userId) {
-      onCourseStatusCheck(content.id, appState.userId).then(res => {
-        setIsCompleted(res);
-      });
-    }
-  }, [appState, content.id]);
+    const getFullLesson = async () => {
+      try {
+        const id = router.query.id;
+        console.log(id);
+        const res = await http.get(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/lesson/${id}`);
+        console.log(res);
+        const courseProgress = await http.get(
+          `${process.env.NEXT_PUBLIC_API_ENDPOINT}/userProgress/${appState.userId}/${id}`
+        );
+        setIsCompleted(courseProgress.data.data.completed);
+        setCourseContent(res.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getFullLesson();
+  }, [appState.userId, router.query]);
 
   useEffect(() => {
     if (onComplete) {
       http
         .put('/userProgress/', {
           userId: appState.userId,
-          lessonId: content.id,
-          complete: true
+          lessonId: courseContent.lesson._id,
+          completed: true
         })
         .then(res => {
           setIsCompleted(res.data.complete);
           location.reload();
         });
     }
-  });
+  }, [appState.userId, onComplete]);
 
   return (
     <Container metaTags={metaTags}>
@@ -76,27 +69,25 @@ export default function CourseContent({ content }) {
               Table of Content
             </div>
             {isCompleted && (
-              <div
-                className="mt-4 flex w-max border-spacing-x-1 justify-end rounded-md bg-green-500 p-2 text-white"
-                onClick={() => {
-                  console.log(onComplete);
-                }}
-              >
+              <div className="mt-4 flex w-max border-spacing-x-1 justify-end rounded-md bg-green-500 p-2 text-white">
                 Completed
               </div>
             )}
           </div>
 
           <div className="py-5">
-            <span dangerouslySetInnerHTML={{ __html: content.markdown }} />
+            <div className="flex flex-row items-center justify-between">
+              <div>{courseContent.lesson?.markDownContent}</div>
+            </div>
           </div>
 
           <div className="flex flex-row items-center justify-between">
             <button
               className="mt-4 w-auto border-spacing-x-1 rounded-md bg-gray-200 p-2 hover:bg-gray-400"
               onClick={() => {
-                if (content.previousCourse !== null) {
-                  router.push(`/course/${content.previousCourse}`);
+                console.log(courseContent.lesson.previousLesson);
+                if (courseContent.lesson.previousLesson !== undefined) {
+                  router.push(`/course/${courseContent.lesson.previousLesson}`);
                 } else {
                   router.push(`/course/`);
                 }
@@ -107,8 +98,8 @@ export default function CourseContent({ content }) {
             <button
               className="mt-4 w-auto border-spacing-x-1 rounded-md bg-gray-200 p-2 hover:bg-gray-400"
               onClick={() => {
-                if (content.nextCourse !== null) {
-                  router.push(`/course/${content.nextCourse}`);
+                if (courseContent.nextLesson !== null) {
+                  router.push(`/course/${courseContent.nextLesson}`);
                 } else {
                   router.push(`/course/`);
                 }

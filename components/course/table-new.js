@@ -1,42 +1,41 @@
-import { memo, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import TableHeader from './table-header-new';
 import TableRow from './table-row-new';
 import { useAppState } from '../../context/AppContext';
 import { useCourseProgress } from '../../context/CourseProgressContext';
 
-function Table({ showQuiz, quizId, courseContent, isAdmin, slug, courseId }) {
+function Table({ showQuiz, quizId, isAdmin, slug, courseId }) {
   const router = useRouter();
-  const { courseProgress } = useCourseProgress();
+  const { courseProgress, course } = useCourseProgress();
   const [courseData, setCourseData] = useState(null);
+  console.log(course);
+  console.log(courseProgress);
 
   const appState = useAppState();
 
-  useEffect(() => {
-    const visualizeCourseLock = (courseData, courseProgressData) => {
-      const updatedCourseData = courseData;
-      for (let modules in courseProgressData['moduleId']) {
-        for (let lesson in courseProgressData['moduleId'][modules].lessonId) {
-          if (
-            courseProgressData['moduleId'][modules]['lessonId'][lesson]?._id ===
-            courseData[modules]['lessons'][lesson]?._id
-          ) {
-            updatedCourseData[modules]['lessons'][lesson].isLocked =
-              courseProgressData['moduleId'][modules]['lessonId'][lesson].locked;
-            updatedCourseData[modules]['lessons'][lesson].completed =
-              courseProgressData['moduleId'][modules]['lessonId'][lesson].completed;
-            updatedCourseData[modules]['lessons'][lesson].isNotRead =
-              courseProgressData['moduleId'][modules]['lessonId'][lesson].isNotRead;
-          }
-        }
-      }
-      setCourseData(updatedCourseData);
-    };
-    visualizeCourseLock(courseContent, courseProgress);
-  }, [courseProgress, courseContent]);
+  // useEffect(() => {
+  //   const visualizeCourseLock = (courseContnt, courseProgressData) => {
+  //     const updatedCourseData = JSON.parse(JSON.stringify(courseContnt));
+  //     for (let modules in courseProgressData.moduleId) {
+  //       const moduleId = courseProgressData.moduleId[modules];
+  //       for (let lesson in moduleId.lessonId) {
+  //         const lessonId = moduleId.lessonId[lesson];
+  //         if (lessonId._id === updatedCourseData[modules].lessons[lesson]._id) {
+  //           Object.assign(updatedCourseData[modules].lessons[lesson], {
+  //             isLocked: lessonId.locked,
+  //             completed: lessonId.completed,
+  //             isNotRead: lessonId.isNotRead
+  //           });
+  //         }
+  //       }
+  //     }
+  //     setCourseData(updatedCourseData);
+  //   };
+  //   visualizeCourseLock(courseContent, courseProgress);
+  // }, [courseProgress, courseContent]);
 
   const handleCreateNew = () => {
-    const { slug } = router.query;
     router.push({
       pathname: `/course/admin/${slug}/create-module`,
       query: { slug: slug }
@@ -45,8 +44,8 @@ function Table({ showQuiz, quizId, courseContent, isAdmin, slug, courseId }) {
 
   return (
     <div className="mx-auto my-20 flex max-w-4xl flex-col gap-10">
-      {courseData?.map((section, sectionIndex) => {
-        return (
+      {course?.map(
+        (section, sectionIndex) =>
           (Object.keys(section.lessons).length > 0 || isAdmin) && (
             <div key={sectionIndex}>
               <TableHeader
@@ -58,24 +57,21 @@ function Table({ showQuiz, quizId, courseContent, isAdmin, slug, courseId }) {
                 moduleId={section._id}
                 isAdmin={isAdmin}
               />
-              {section.lessons.map((item, rowIndex) => {
-                return (
-                  <TableRow
-                    ready
-                    item={{ ...item, moduleId: section._id, courseId: courseId }}
-                    index={rowIndex}
-                    key={rowIndex}
-                    section={section}
-                    isAdmin={isAdmin}
-                    slug={slug}
-                  />
-                );
-              })}
+              {section.lessons.map((item, rowIndex) => (
+                <TableRow
+                  ready
+                  item={{ ...item, moduleId: section._id, courseId: courseId }}
+                  index={rowIndex}
+                  key={rowIndex}
+                  section={section}
+                  isAdmin={isAdmin}
+                  slug={slug}
+                />
+              ))}
             </div>
           )
-        );
-      })}
-      {appState.isAdminMode === true && isAdmin === true && (
+      )}
+      {appState.isAdminMode && isAdmin && (
         <div className="mx-auto">
           <button
             className="rounded bg-yellow-500 px-6 py-3 text-white hover:bg-yellow-700"
@@ -85,13 +81,6 @@ function Table({ showQuiz, quizId, courseContent, isAdmin, slug, courseId }) {
           </button>
         </div>
       )}
-
-      {/*       {appState.publicKey && (
-    <div>
-      <AttemptQuizHeader showQuiz={showQuiz} link={`/course/quiz/attempt/${quizId}`} />
-    </div>
-  )}
-  */}
     </div>
   );
 }

@@ -3,19 +3,16 @@ import { Container } from '../../components/layout';
 import Table from '../../components/course/table-new';
 import { http } from '../../utils/http';
 import { useEffect, useState } from 'react';
-import { useAppDispatch, useAppState } from '../../context/AppContext';
 import { useCourseProgress } from '../../context/CourseProgressContext';
 import Loader from '../../components/Loader/Loader';
 import { useRouter } from 'next/router';
 
 export default function Course() {
-  const appState = useAppState();
   const router = useRouter();
-  const { courseProgress, setCourseProgress } = useCourseProgress();
+  const { setCourseProgress, setCourse, course } = useCourseProgress();
   const [isLoading, setIsLoading] = useState(false);
   const [showQuiz, setShowQuiz] = useState(true);
   const [quizId, setQuizId] = useState('64496fc215b3f42368a5b431');
-  const [courseContent, setCourseContent] = useState([]);
 
   const metaTags = {
     title: 'BNB Chain 101 Dev Course',
@@ -41,34 +38,35 @@ export default function Course() {
 
   const getUserCourseProgress = async courseId => {
     let userState = JSON.parse(localStorage.getItem('userData' || '{}'));
-    if (courseProgress.length == 0) {
+    if (!isLoading) {
+      setIsLoading(true);
       const { data } = await http.get(
         `${process.env.NEXT_PUBLIC_API_ENDPOINT}/userProgress/all-progress/${userState.data?._id}/${courseId}`
       );
-      console.log('data', data);
-
+      setIsLoading(false);
       setCourseProgress(data.data);
     }
   };
 
   const getFullCourseContent = async courseId => {
-    const { data } = await http.get(
-      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/course/full-course/${courseId}`
-    );
-    if (data?.success) {
-      setCourseContent(data?.data[0]);
+    if (!isLoading) {
+      setIsLoading(true);
+      const { data } = await http.get(
+        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/course/full-course/${courseId}`
+      );
+      setIsLoading(false);
+      if (data?.success) {
+        setCourse(data.data[0]);
+      }
     }
   };
 
   useEffect(() => {
-    setIsLoading(true);
-    const courseId = router.query.courseId;
-    if (courseId) {
-      getFullCourseContent(courseId); // use the local variable directly
-      getUserCourseProgress(courseId);
-    }
-    setIsLoading(false);
-  }, [router.query.courseId]); // only run the hook when courseId change
+    const courseId = router.query.id;
+    console.log('courseId', courseId);
+    getFullCourseContent(courseId); // use the local variable directly
+    getUserCourseProgress(courseId);
+  }, [router.query.id]); // only run the hook when courseId change
 
   useEffect(() => {
     getCompletedQuizByUser();
@@ -81,25 +79,24 @@ export default function Course() {
         <div className="mx-2">
           <div className="flex justify-center">
             <h1 className="text-2xl font-bold capitalize text-gray-900 dark:text-gray-200 md:text-3xl 2xl:text-4xl">
-              {courseContent?.title}
+              {course?.title}
             </h1>
           </div>
 
           <div className="mx-auto mt-5 max-w-4xl">
             <p className="prose mx-auto mt-3 text-center text-lg dark:prose-invert">
-              {courseContent?.description}
+              {course?.description}
             </p>
           </div>
 
           {/*<Banner />*/}
 
-          {/* <Table showQuiz={showQuiz} quizId={quizId} /> */}
-          <Table
+          {/* <Table
             showQuiz={showQuiz}
             quizId={quizId}
-            courseId={router.query.courseId}
-            courseContent={courseContent?.modules}
-          />
+            courseId={router.query.id}
+            courseContent={course?.modules}
+          /> */}
         </div>
       </div>
     </Container>

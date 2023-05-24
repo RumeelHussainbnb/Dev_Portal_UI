@@ -37,7 +37,7 @@ const CourseDetailAdmin = () => {
           shortTitle={course?.shortTitle}
           description={course?.description}
         />
-        <Table courseContent={course?.modules} isAdmin={true} slug={slug} />
+        <Table courseContent={course.modules} isAdmin={true} slug={slug} />
       </div>
     </Container>
   );
