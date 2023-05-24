@@ -9,34 +9,16 @@ function classNames(...classes) {
 }
 
 function TableRow({ item, index, ready, isAdmin, slug }) {
-  const { courseProgress } = useCourseProgress();
-  const [status, setStatus] = useState(false);
-
-  const handleLock = () => {
-    setStatus(true);
-  };
-
-  useEffect(() => {
-    const previousCourse = courseProgress.find(course => {
-      return course.CourseId === item.previousCourse;
-    });
-
-    if (!previousCourse?.completed && previousCourse !== undefined) {
-      setStatus(true);
-    }
-  }, [courseProgress, item.previousCourse, item._id, status]);
-
   return (
     <div
       className={classNames(
         'flex justify-between border-x border-b border-gray-300 py-3 pl-8  dark:border-gray-600 dark:bg-gray-900',
-        ready && !status
+        ready && !item.isLocked
           ? 'cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700'
           : 'cursor-not-allowed blur-sm'
       )}
-      aria-disabled={status}
     >
-      {status ? (
+      {item.isLocked ? (
         <div className="w-full">
           <span className="mr-3 text-xl text-gray-500 dark:text-gray-500">{++index}.</span>
           <span className=" text-base tracking-wide text-gray-700 dark:text-gray-300">
@@ -63,12 +45,7 @@ function TableRow({ item, index, ready, isAdmin, slug }) {
           </Link>
         </div>
       ) : (
-        <StatusButton
-          item={item}
-          courseProgress={courseProgress}
-          setLock={handleLock}
-          isLocked={status}
-        />
+        <StatusButton item={item} />
       )}
     </div>
   );

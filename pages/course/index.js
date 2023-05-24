@@ -16,7 +16,6 @@ export default function Course() {
   const [showQuiz, setShowQuiz] = useState(true);
   const [quizId, setQuizId] = useState('64496fc215b3f42368a5b431');
   const [courseContent, setCourseContent] = useState([]);
-  const [courseIdNow, setCourseIdNow] = useState(null);
 
   const metaTags = {
     title: 'BNB Chain 101 Dev Course',
@@ -40,40 +39,39 @@ export default function Course() {
     }
   };
 
-  const getUserCourseProgress = async () => {
+  const getUserCourseProgress = async courseId => {
     let userState = JSON.parse(localStorage.getItem('userData' || '{}'));
-    setIsLoading(true);
     if (courseProgress.length == 0) {
       const { data } = await http.get(
-        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/userProgress/allprogress?userId=${userState.data?._id}`
+        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/userProgress/all-progress/${userState.data?._id}/${courseId}`
       );
+      console.log('data', data);
+
       setCourseProgress(data.data);
     }
-    setIsLoading(false);
   };
 
   const getFullCourseContent = async courseId => {
-    setIsLoading(true);
     const { data } = await http.get(
       `${process.env.NEXT_PUBLIC_API_ENDPOINT}/course/full-course/${courseId}`
     );
-    setIsLoading(false);
     if (data?.success) {
       setCourseContent(data?.data[0]);
     }
   };
 
   useEffect(() => {
+    setIsLoading(true);
     const courseId = router.query.courseId;
-    console.log('courseId', courseId);
     if (courseId) {
       getFullCourseContent(courseId); // use the local variable directly
+      getUserCourseProgress(courseId);
     }
+    setIsLoading(false);
   }, [router.query.courseId]); // only run the hook when courseId change
 
   useEffect(() => {
     getCompletedQuizByUser();
-    getUserCourseProgress();
   }, []);
 
   return (
@@ -96,7 +94,12 @@ export default function Course() {
           {/*<Banner />*/}
 
           {/* <Table showQuiz={showQuiz} quizId={quizId} /> */}
-          <Table showQuiz={showQuiz} quizId={quizId} courseContent={courseContent?.modules} />
+          <Table
+            showQuiz={showQuiz}
+            quizId={quizId}
+            courseId={router.query.courseId}
+            courseContent={courseContent?.modules}
+          />
         </div>
       </div>
     </Container>

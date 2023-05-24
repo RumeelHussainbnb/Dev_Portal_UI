@@ -120,17 +120,6 @@ function TopBar({ childrens }) {
                   router.push('/user/edit-profile');
                 }
               }
-              userId = res.data?.data?._id;
-              http
-                .post(`/userProgress/batch`, {
-                  userId: userId
-                })
-                .then(res => {
-                  if (res?.data?.success == true) {
-                    console.log(res.data.data);
-                    setCourseProgress(res.data.data);
-                  }
-                });
             })
             .catch(err => {
               toast.error('Failed to register user');

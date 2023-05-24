@@ -1,14 +1,39 @@
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import TableHeader from './table-header-new';
 import TableRow from './table-row-new';
 import { useAppState } from '../../context/AppContext';
 import { useCourseProgress } from '../../context/CourseProgressContext';
 
-function Table({ showQuiz, quizId, courseContent, isAdmin, slug }) {
+function Table({ showQuiz, quizId, courseContent, isAdmin, slug, courseId }) {
   const router = useRouter();
-  const { course, setCourse, courseProgress } = useCourseProgress();
+  const { courseProgress } = useCourseProgress();
+  const [courseData, setCourseData] = useState(null);
+
   const appState = useAppState();
+
+  useEffect(() => {
+    const visualizeCourseLock = (courseData, courseProgressData) => {
+      const updatedCourseData = courseData;
+      for (let modules in courseProgressData['moduleId']) {
+        for (let lesson in courseProgressData['moduleId'][modules].lessonId) {
+          if (
+            courseProgressData['moduleId'][modules]['lessonId'][lesson]?._id ===
+            courseData[modules]['lessons'][lesson]?._id
+          ) {
+            updatedCourseData[modules]['lessons'][lesson].isLocked =
+              courseProgressData['moduleId'][modules]['lessonId'][lesson].locked;
+            updatedCourseData[modules]['lessons'][lesson].completed =
+              courseProgressData['moduleId'][modules]['lessonId'][lesson].completed;
+            updatedCourseData[modules]['lessons'][lesson].isNotRead =
+              courseProgressData['moduleId'][modules]['lessonId'][lesson].isNotRead;
+          }
+        }
+      }
+      setCourseData(updatedCourseData);
+    };
+    visualizeCourseLock(courseContent, courseProgress);
+  }, [courseProgress, courseContent]);
 
   const handleCreateNew = () => {
     const { slug } = router.query;
@@ -20,7 +45,7 @@ function Table({ showQuiz, quizId, courseContent, isAdmin, slug }) {
 
   return (
     <div className="mx-auto my-20 flex max-w-4xl flex-col gap-10">
-      {courseContent?.map((section, sectionIndex) => {
+      {courseData?.map((section, sectionIndex) => {
         return (
           (Object.keys(section.lessons).length > 0 || isAdmin) && (
             <div key={sectionIndex}>
@@ -34,11 +59,10 @@ function Table({ showQuiz, quizId, courseContent, isAdmin, slug }) {
                 isAdmin={isAdmin}
               />
               {section.lessons.map((item, rowIndex) => {
-                console.log(isAdmin);
                 return (
                   <TableRow
                     ready
-                    item={item}
+                    item={{ ...item, moduleId: section._id, courseId: courseId }}
                     index={rowIndex}
                     key={rowIndex}
                     section={section}
@@ -72,4 +96,4 @@ function Table({ showQuiz, quizId, courseContent, isAdmin, slug }) {
   );
 }
 
-export default memo(Table);
+export default Table;
