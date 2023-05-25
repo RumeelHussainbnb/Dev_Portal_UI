@@ -3,25 +3,26 @@ import React, { useState, memo } from 'react';
 import { toast } from 'react-toastify';
 import EditorComponent from '../Editor/Editor';
 import { http } from '../../utils/http';
-import { convertToRaw } from 'draft-js';
+import { convertToRaw, EditorState } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
 
 const AddLessonForm = () => {
   const router = useRouter();
   const { moduleId } = router.query;
   const [data, setData] = useState({
     name: '',
-    markDownContent: ''
+    markDownContent: EditorState.createEmpty()
   });
 
-  const convertContentToRaw = () => {
-    return convertToRaw(data.markDownContent.getCurrentContent());
+  const convertContentToHTML = () => {
+    return draftToHtml(convertToRaw(data.markDownContent.getCurrentContent()));
   };
 
   const createLesson = async event => {
     event.preventDefault();
     try {
       if (true) {
-        const content = convertContentToRaw();
+        const content = convertContentToHTML();
         const markdownContent = content.blocks[0].text;
         const response = await http.post('/lesson', {
           name: data.name,

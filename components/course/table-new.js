@@ -1,9 +1,7 @@
-import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import TableHeader from './table-header-new';
 import TableRow from './table-row-new';
 import { useAppState } from '../../context/AppContext';
-import { useCourseProgress } from '../../context/CourseProgressContext';
 
 function Table({ showQuiz, quizId, isAdmin, slug, courses, courseId }) {
   console.log('courses', courseId);
@@ -15,6 +13,13 @@ function Table({ showQuiz, quizId, isAdmin, slug, courses, courseId }) {
     router.push({
       pathname: `/course/admin/${slug}/create-module`,
       query: { slug: slug }
+    });
+  };
+
+  const handleCreateNewLesson = moduleId => {
+    router.push({
+      pathname: `/course/admin/${slug}/create-lesson`,
+      query: { slug: slug, moduleId: moduleId }
     });
   };
 
@@ -45,6 +50,20 @@ function Table({ showQuiz, quizId, isAdmin, slug, courses, courseId }) {
                     slug={slug}
                   />
                 ))}
+                {isAdmin && (
+                  <div className="flex cursor-pointer justify-between border-x border-b border-gray-300 py-3 pl-8  text-center hover:bg-gray-200 dark:border-gray-600 dark:bg-gray-900 dark:hover:bg-gray-700">
+                    <div
+                      className="w-full"
+                      onClick={() => {
+                        handleCreateNewLesson(section._id);
+                      }}
+                    >
+                      <span className=" text-base tracking-wide text-gray-700 dark:text-gray-300">
+                        + Add New Lesson
+                      </span>
+                    </div>
+                  </div>
+                )}
               </div>
             )
         )}

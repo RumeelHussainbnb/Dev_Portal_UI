@@ -3,31 +3,35 @@ import React, { useState, memo, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import EditorComponent from '../Editor/Editor';
 import { http } from '../../utils/http';
-import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
-import { markdownToDraft, draftToMarkdown } from 'markdown-draft-js';
+import { EditorState, ContentState, convertToRaw, convertFromHTML } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
 
 const EditLessonForm = () => {
   const router = useRouter();
   const { id, slug } = router.query;
   const [data, setData] = useState({
     name: '',
-    markDownContent: ''
+    markDownContent: EditorState.createEmpty()
   });
 
-  const convertContentToRaw = () => {
-    return draftToMarkdown(convertToRaw(data.markDownContent.getCurrentContent()));
+  const convertHtmlToDraftJs = html => {
+    const contentBlock = convertFromHTML(html);
+    if (contentBlock) {
+      const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+      return EditorState.createWithContent(contentState);
+    }
+    return EditorState.createEmpty();
   };
 
-  const convertContentFromRaw = markDownContent => {
-    const rawContent = markdownToDraft(markDownContent);
-    return EditorState.createWithContent(convertFromRaw(rawContent));
+  const convertContentToHTML = () => {
+    return draftToHtml(convertToRaw(data.markDownContent.getCurrentContent()));
   };
 
   useEffect(() => {
     const getLesson = async () => {
       if (id) {
         const { data } = await http.get(`/lesson/${id}`);
-        const convertedMarkdown = convertContentFromRaw(data.data.lesson.markDownContent);
+        const convertedMarkdown = convertHtmlToDraftJs(data.data.lesson.markDownContent);
         setData({
           name: data.data.lesson.name,
           markDownContent: convertedMarkdown
@@ -41,7 +45,7 @@ const EditLessonForm = () => {
     event.preventDefault();
     try {
       if (true) {
-        const content = convertContentToRaw();
+        const content = convertContentToHTML();
         const response = await http.put(`/lesson/${id}`, {
           name: data.name,
           markDownContent: content

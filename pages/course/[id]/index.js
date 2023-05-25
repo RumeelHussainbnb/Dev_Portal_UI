@@ -5,6 +5,7 @@ import { Container } from '../../../components/layout';
 import { useAppState } from '../../../context/AppContext';
 import Progress from '../../../components/course/progressBar';
 import { http } from '../../../utils/http';
+import ReactHtmlParser from 'react-html-parser';
 
 export default function CreateModule({}) {
   const [isCompleted, setIsCompleted] = useState(false);
@@ -77,7 +78,7 @@ export default function CreateModule({}) {
 
           <div className="py-5">
             <div className="flex flex-row items-center justify-between">
-              <div>{courseContent.lesson?.markDownContent}</div>
+              <div>{ReactHtmlParser(courseContent.lesson?.markDownContent)}</div>
             </div>
           </div>
 
