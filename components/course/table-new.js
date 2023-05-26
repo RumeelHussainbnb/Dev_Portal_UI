@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
 import TableHeader from './table-header-new';
+import AttemptQuizHeader from './attemptQuizHeader';
 import TableRow from './table-row-new';
 import { useAppState } from '../../context/AppContext';
 
 function Table({ showQuiz, quizId, isAdmin, slug, courses, courseId }) {
-  console.log('courses', courseId);
   const router = useRouter();
 
   const appState = useAppState();
@@ -75,6 +75,11 @@ function Table({ showQuiz, quizId, isAdmin, slug, courses, courseId }) {
           >
             + Add New modules
           </button>
+        </div>
+      )}
+      {appState.publicKey && (
+        <div>
+          <AttemptQuizHeader showQuiz={showQuiz} link={`/course/quiz/attempt/${quizId}`} />
         </div>
       )}
     </div>

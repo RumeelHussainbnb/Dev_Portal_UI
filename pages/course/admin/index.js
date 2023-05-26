@@ -12,7 +12,6 @@ export default function CourseAdmin({}) {
   useEffect(() => {
     const getCourse = async () => {
       const { data } = await http.get(`/course/`);
-      console.log('data', data);
       setCourse(data.data);
     };
     getCourse();

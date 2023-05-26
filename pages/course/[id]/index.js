@@ -26,9 +26,7 @@ export default function CreateModule({}) {
     const getFullLesson = async () => {
       try {
         const id = router.query.id;
-        console.log(id);
         const res = await http.get(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/lesson/${id}`);
-        console.log(res);
         const courseProgress = await http.get(
           `${process.env.NEXT_PUBLIC_API_ENDPOINT}/userProgress/${appState.userId}/${id}`
         );
@@ -86,8 +84,7 @@ export default function CreateModule({}) {
             <button
               className="mt-4 w-auto border-spacing-x-1 rounded-md bg-gray-200 p-2 hover:bg-gray-400"
               onClick={() => {
-                console.log(courseContent.lesson.previousLesson);
-                if (courseContent.lesson.previousLesson !== undefined) {
+                if (courseContent.lesson.previousLesson !== null) {
                   router.push(`/course/${courseContent.lesson.previousLesson}`);
                 } else {
                   router.push(`/course/`);
@@ -99,7 +96,8 @@ export default function CreateModule({}) {
             <button
               className="mt-4 w-auto border-spacing-x-1 rounded-md bg-gray-200 p-2 hover:bg-gray-400"
               onClick={() => {
-                if (courseContent.nextLesson !== null) {
+                console.log(courseContent?.lesson.nextLesson);
+                if (courseContent.lesson.nextLesson !== undefined) {
                   router.push(`/course/${courseContent.nextLesson}`);
                 } else {
                   router.push(`/course/`);

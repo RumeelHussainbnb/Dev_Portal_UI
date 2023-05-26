@@ -19,7 +19,6 @@ const CourseEditAdmin = () => {
     const getCourse = async () => {
       if (slug) {
         const { data } = await http.get(`/course/${slug}`);
-        console.log('data', data);
         setCourse(data.data);
       }
     };

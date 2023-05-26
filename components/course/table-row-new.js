@@ -22,7 +22,6 @@ function TableRow({ item, index, ready, isAdmin, slug }) {
         UserId: appState.userId
       });
       if (res.data.success) {
-        console.log('success');
         router.push({
           pathname: `/course/${item._id}`,
           query: { id: item._id }
@@ -31,10 +30,6 @@ function TableRow({ item, index, ready, isAdmin, slug }) {
     } catch (error) {
       console.log(error);
     }
-    // router.push({
-    //   pathname: `/course/${item._id}`,
-    //   query: { slug: slug }
-    // });
   };
 
   return (

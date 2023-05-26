@@ -64,7 +64,11 @@ const EditCourseForm = ({ content }) => {
                     name="shortTitle"
                     id="shortTitle"
                     value={data.shortTitle}
-                    onChange={e => setData({ ...data, shortTitle: e.target.value })}
+                    onChange={e => {
+                      const shortTitle = e.target.value;
+                      const slug = shortTitle.replace(/\s+/g, '-'); // Replace whitespaces with hyphens
+                      setData({ ...data, shortTitle: e.target.value, slug });
+                    }}
                     className="block w-full rounded-md border-gray-300 px-4 py-3 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
                   />
                 </div>
@@ -103,8 +107,8 @@ const EditCourseForm = ({ content }) => {
                     type="text"
                     name="title"
                     id="title"
+                    disabled={true}
                     value={data.slug}
-                    onChange={e => setData({ ...data, slug: e.target.value })}
                     className="block w-full rounded-md border-gray-300 px-4 py-3 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-500 dark:bg-gray-400 dark:text-gray-800"
                   />
                 </div>
