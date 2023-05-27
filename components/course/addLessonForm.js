@@ -23,10 +23,9 @@ const AddLessonForm = () => {
     try {
       if (true) {
         const content = convertContentToHTML();
-        const markdownContent = content.blocks[0].text;
         const response = await http.post('/lesson', {
           name: data.name,
-          markDownContent: markdownContent,
+          markDownContent: content,
           moduleId: moduleId
         });
         if (response?.data?.success === true) {
