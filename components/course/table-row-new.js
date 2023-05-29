@@ -23,8 +23,7 @@ function TableRow({ item, index, ready, isAdmin, slug }) {
       });
       if (res.data.success) {
         router.push({
-          pathname: `/course/${item._id}`,
-          query: { id: item._id }
+          pathname: `/course/${item._id}`
         });
       }
     } catch (error) {

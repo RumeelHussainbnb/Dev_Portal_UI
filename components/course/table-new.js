@@ -3,11 +3,13 @@ import TableHeader from './table-header-new';
 import AttemptQuizHeader from './attemptQuizHeader';
 import TableRow from './table-row-new';
 import { useAppState } from '../../context/AppContext';
+import { useEffect, useState } from 'react';
 
 function Table({ showQuiz, quizId, isAdmin, slug, courses, courseId }) {
   const router = useRouter();
 
   const appState = useAppState();
+  const [setQuizShow, setQuizShowState] = useState(false);
 
   const handleCreateNew = () => {
     router.push({
@@ -22,6 +24,19 @@ function Table({ showQuiz, quizId, isAdmin, slug, courses, courseId }) {
       query: { slug: slug, moduleId: moduleId }
     });
   };
+
+  useEffect(() => {
+    let total = 0;
+    let complete = 0;
+    courses &&
+      courses.map((section, sectionIndex) => {
+        total += section.totalLessons;
+        complete += section.totalComplete;
+      });
+    if (total === complete) {
+      setQuizShowState(true);
+    }
+  }, [courses]);
 
   return (
     <div className="mx-auto my-20 flex max-w-4xl flex-col gap-10">
@@ -77,7 +92,7 @@ function Table({ showQuiz, quizId, isAdmin, slug, courses, courseId }) {
           </button>
         </div>
       )}
-      {appState.publicKey && (
+      {appState.publicKey && !setQuizShow && (
         <div>
           <AttemptQuizHeader showQuiz={showQuiz} link={`/course/quiz/attempt/${quizId}`} />
         </div>

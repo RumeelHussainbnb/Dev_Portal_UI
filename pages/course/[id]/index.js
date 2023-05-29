@@ -11,6 +11,7 @@ export default function CreateModule({}) {
   const [isCompleted, setIsCompleted] = useState(false);
   const [onComplete, setOnComplete] = useState(false);
   const [courseContent, setCourseContent] = useState({});
+  const [courseId, setCourseId] = useState('');
   const router = useRouter();
   const appState = useAppState();
   const { id } = router.query;
@@ -27,9 +28,11 @@ export default function CreateModule({}) {
       try {
         const id = router.query.id;
         const res = await http.get(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/lesson/${id}`);
+
         const courseProgress = await http.get(
           `${process.env.NEXT_PUBLIC_API_ENDPOINT}/userProgress/${appState.userId}/${id}`
         );
+        setCourseId(courseProgress.data.data.CourseId);
         setIsCompleted(courseProgress.data.data.completed);
         setCourseContent(res.data.data);
       } catch (error) {
@@ -62,7 +65,12 @@ export default function CreateModule({}) {
         <div className="prose mx-auto max-w-6xl rounded-lg px-10 py-8 dark:prose-invert dark:border-none lg:border lg:bg-white dark:lg:bg-gray-800 xl:px-32">
           <div className="grid-cols-6 gap-4">
             <div
-              onClick={() => router.push('/course')}
+              onClick={() =>
+                router.push({
+                  pathname: '/course',
+                  query: { id: courseId }
+                })
+              }
               className="text-md flex cursor-pointer justify-center text-yellow-600 hover:text-yellow-700 hover:underline lg:text-lg"
             >
               Table of Content
@@ -87,7 +95,10 @@ export default function CreateModule({}) {
                 if (courseContent.lesson.previousLesson !== null) {
                   router.push(`/course/${courseContent.lesson.previousLesson}`);
                 } else {
-                  router.push(`/course/`);
+                  router.push({
+                    pathname: '/course',
+                    query: { id: courseId }
+                  });
                 }
               }}
             >
@@ -96,11 +107,13 @@ export default function CreateModule({}) {
             <button
               className="mt-4 w-auto border-spacing-x-1 rounded-md bg-gray-200 p-2 hover:bg-gray-400"
               onClick={() => {
-                console.log(courseContent?.lesson.nextLesson);
-                if (courseContent.lesson.nextLesson !== undefined) {
+                if (courseContent.nextLesson !== undefined && isCompleted) {
                   router.push(`/course/${courseContent.nextLesson}`);
                 } else {
-                  router.push(`/course/`);
+                  router.push({
+                    pathname: '/course',
+                    query: { id: courseId }
+                  });
                 }
               }}
             >
@@ -109,7 +122,12 @@ export default function CreateModule({}) {
           </div>
 
           <div
-            onClick={() => router.push('/course')}
+            onClick={() =>
+              router.push({
+                pathname: '/course',
+                query: { id: courseId }
+              })
+            }
             className="text-md flex cursor-pointer justify-center text-yellow-600 hover:text-yellow-700 hover:underline lg:text-lg"
           >
             Table of Content
