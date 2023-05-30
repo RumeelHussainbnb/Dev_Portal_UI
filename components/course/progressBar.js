@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 
-export default function Progress({ setOnComplete, isCompleted }) {
+export default function Progress({ setOnComplete, isCompleted, progressRef }) {
   const [progress, setProgress] = useState(0);
   const [scrollPosition, setScrollPosition] = useState(0);
 
   useEffect(() => {
     const calculateProgress = () => {
-      const scrollTop = Math.max(0, document.documentElement.scrollTop - 60); // Subtract 60px offset
-      const height =
-        document.documentElement.scrollHeight - document.documentElement.clientHeight - 60; // Subtract 60px offset
+      if (!progressRef.current) return;
+      const scrollTop = Math.max(0, window.scrollY - progressRef.current.offsetTop);
+      const height = progressRef.current.clientHeight - window.innerHeight;
       const scrolled = (scrollTop / height) * 100;
       setScrollPosition(document.documentElement.scrollTop); // store actual scroll position
       setProgress(scrolled);
@@ -22,10 +22,10 @@ export default function Progress({ setOnComplete, isCompleted }) {
     return () => {
       window.removeEventListener('scroll', calculateProgress);
     };
-  }, [isCompleted, setOnComplete]);
+  }, [isCompleted, setOnComplete, progressRef]);
 
   return (
-    scrollPosition > 60 && (
+    scrollPosition > progressRef?.current?.offsetTop && (
       <div className="fixed left-0 top-0 z-10 h-2 w-full bg-gray-200">
         {' '}
         {/* Adjusted top value to 60px */}

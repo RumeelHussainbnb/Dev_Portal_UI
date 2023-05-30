@@ -4,6 +4,7 @@ import AttemptQuizHeader from './attemptQuizHeader';
 import TableRow from './table-row-new';
 import { useAppState } from '../../context/AppContext';
 import { useEffect, useState } from 'react';
+import { set } from 'mongoose';
 
 function Table({ showQuiz, quizId, isAdmin, slug, courses, courseId }) {
   const router = useRouter();
@@ -26,6 +27,7 @@ function Table({ showQuiz, quizId, isAdmin, slug, courses, courseId }) {
   };
 
   useEffect(() => {
+    setQuizShowState(false);
     let total = 0;
     let complete = 0;
     courses &&
@@ -33,10 +35,12 @@ function Table({ showQuiz, quizId, isAdmin, slug, courses, courseId }) {
         total += section.totalLessons;
         complete += section.totalComplete;
       });
+    console.log(total, complete);
     if (total === complete) {
       setQuizShowState(true);
     }
-  }, [courses]);
+    console.log(setQuizShow);
+  }, [courses, setQuizShow]);
 
   return (
     <div className="mx-auto my-20 flex max-w-4xl flex-col gap-10">
@@ -92,7 +96,7 @@ function Table({ showQuiz, quizId, isAdmin, slug, courses, courseId }) {
           </button>
         </div>
       )}
-      {appState.publicKey && !setQuizShow && (
+      {setQuizShow && (
         <div>
           <AttemptQuizHeader showQuiz={showQuiz} link={`/course/quiz/attempt/${quizId}`} />
         </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Container } from '../../../components/layout';
@@ -11,7 +11,9 @@ export default function CreateModule({}) {
   const [isCompleted, setIsCompleted] = useState(false);
   const [onComplete, setOnComplete] = useState(false);
   const [courseContent, setCourseContent] = useState({});
-  const [courseId, setCourseId] = useState('');
+  const [moduleId, setModuleId] = useState('');
+  const markDownContentRef = useRef(null);
+  const [course, setCourse] = useState({});
   const router = useRouter();
   const appState = useAppState();
   const { id } = router.query;
@@ -32,7 +34,12 @@ export default function CreateModule({}) {
         const courseProgress = await http.get(
           `${process.env.NEXT_PUBLIC_API_ENDPOINT}/userProgress/${appState.userId}/${id}`
         );
-        setCourseId(courseProgress.data.data.CourseId);
+        const moduleId = await http.get(
+          `${process.env.NEXT_PUBLIC_API_ENDPOINT}/modules/lesson/${id}`
+        );
+        console.log(courseProgress.data.data);
+        setCourse(courseProgress.data.data);
+        setModuleId(moduleId.data.data);
         setIsCompleted(courseProgress.data.data.completed);
         setCourseContent(res.data.data);
       } catch (error) {
@@ -41,7 +48,7 @@ export default function CreateModule({}) {
     };
 
     getFullLesson();
-  }, [appState.userId, router.query]);
+  }, [appState.userId, router.query.id]);
 
   useEffect(() => {
     if (onComplete) {
@@ -61,14 +68,21 @@ export default function CreateModule({}) {
   return (
     <Container metaTags={metaTags}>
       <div className="lg:mr-5">
-        <Progress setOnComplete={setOnComplete} isCompleted={isCompleted} />
-        <div className="prose mx-auto max-w-6xl rounded-lg px-10 py-8 dark:prose-invert dark:border-none lg:border lg:bg-white dark:lg:bg-gray-800 xl:px-32">
+        <Progress
+          setOnComplete={setOnComplete}
+          isCompleted={isCompleted}
+          progressRef={markDownContentRef}
+        />
+        <div
+          className="prose mx-auto max-w-6xl rounded-lg px-10 py-8 dark:prose-invert dark:border-none lg:border lg:bg-white dark:lg:bg-gray-800 xl:px-32"
+          ref={markDownContentRef}
+        >
           <div className="grid-cols-6 gap-4">
             <div
               onClick={() =>
                 router.push({
                   pathname: '/course',
-                  query: { id: courseId }
+                  query: { id: course.CourseId }
                 })
               }
               className="text-md flex cursor-pointer justify-center text-yellow-600 hover:text-yellow-700 hover:underline lg:text-lg"
@@ -97,7 +111,7 @@ export default function CreateModule({}) {
                 } else {
                   router.push({
                     pathname: '/course',
-                    query: { id: courseId }
+                    query: { id: course.CourseId }
                   });
                 }
               }}
@@ -106,13 +120,24 @@ export default function CreateModule({}) {
             </button>
             <button
               className="mt-4 w-auto border-spacing-x-1 rounded-md bg-gray-200 p-2 hover:bg-gray-400"
-              onClick={() => {
-                if (courseContent.nextLesson !== undefined && isCompleted) {
-                  router.push(`/course/${courseContent.nextLesson}`);
+              onClick={async () => {
+                console.log(courseContent.nextLesson);
+                if (courseContent.nextLesson !== 'null' && isCompleted) {
+                  const res = await http.post('/userProgress/', {
+                    CourseId: course.CourseId,
+                    LessonId: courseContent.nextLesson,
+                    ModuleId: moduleId._id,
+                    UserId: appState.userId
+                  });
+                  if (res.data.success) {
+                    router.push({
+                      pathname: `/course/${courseContent.nextLesson}`
+                    });
+                  }
                 } else {
                   router.push({
                     pathname: '/course',
-                    query: { id: courseId }
+                    query: { id: course.CourseId }
                   });
                 }
               }}
@@ -125,7 +150,7 @@ export default function CreateModule({}) {
             onClick={() =>
               router.push({
                 pathname: '/course',
-                query: { id: courseId }
+                query: { id: course.CourseId }
               })
             }
             className="text-md flex cursor-pointer justify-center text-yellow-600 hover:text-yellow-700 hover:underline lg:text-lg"
